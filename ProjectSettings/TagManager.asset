@@ -11,12 +11,12 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Ground Hard
+  - Wall
+  - Enemies
+  - Interactables
+  - Ground Soft
   - 
   - 
   - 
