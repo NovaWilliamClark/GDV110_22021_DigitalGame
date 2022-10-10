@@ -5,11 +5,11 @@ public class SanityMeter : MonoBehaviour
 {
     [SerializeField] private Slider m_SanityMeter;
     private bool m_DecreaseSlider = false;
-    private CharacterController m_Player;
+    private Player m_Player;
 
     private void Awake()
     {
-        m_Player = FindObjectOfType<CharacterController>();
+        m_Player = FindObjectOfType<Player>();
     }
 
     private void Start()
