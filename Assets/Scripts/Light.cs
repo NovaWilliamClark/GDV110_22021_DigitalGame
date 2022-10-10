@@ -14,12 +14,12 @@ public class Light : MonoBehaviour
 {
     public static event Action<Collider2D> onLightEnter;
     public static event Action<Collider2D> onLightExit;
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         onLightEnter?.Invoke(other);
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    protected virtual void OnTriggerExit2D(Collider2D other)
     {
         onLightExit?.Invoke(other);
     }
