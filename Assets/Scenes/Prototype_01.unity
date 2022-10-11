@@ -674,7 +674,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685188394}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.025137, y: -0.28065538, z: -11}
+  m_LocalPosition: {x: -3.92, y: 0.42999935, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1049,7 +1049,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193380862}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.025137, y: -0.28065538, z: -11}
+  m_LocalPosition: {x: -3.92, y: 0.42999935, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1485,7 +1485,7 @@ GameObject:
   - component: {fileID: 1842684740}
   - component: {fileID: 1842684741}
   m_Layer: 6
-  m_Name: Player
+  m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1499,8 +1499,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1842684736}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.027, y: -2.885, z: -1}
-  m_LocalScale: {x: 0.12, y: 0.12, z: 1}
+  m_LocalPosition: {x: -8.921864, y: -2.1743453, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1528963701}
@@ -1547,12 +1547,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 70528044ee57d994ea501f7528b66f51, type: 3}
+  m_Sprite: {fileID: -9095717837082945937, guid: cf80d49faad8abc4ea62a27de7343dc8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 7.91, y: 15}
+  m_Size: {x: 1, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1573,7 +1573,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   puppet: {fileID: 0}
   sanityLossRate: 0.01
-  sanityGainRate: 0.0075
   acceleration: 30
   maxSpeed: 5
   minFlipSpeed: 0.1
@@ -1590,8 +1589,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.809104, y: -0.0985678}
-  m_Size: {x: 6.1836505, y: 13.181999}
+  m_Offset: {x: 0.0000009536743, y: 0.00000023841858}
+  m_Size: {x: 1, y: 1.9999998}
   m_Direction: 0
 --- !u!50 &1842684741
 Rigidbody2D:
