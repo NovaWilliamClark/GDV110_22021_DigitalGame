@@ -29,7 +29,6 @@ public class CharacterController : MonoBehaviour
 
     [Header("Sanity")]
     [SerializeField] private float sanityLossRate = 0.01f;
-    [SerializeField] private float sanityGainRate = 0.0075f;
     private bool isInLight = false;
     private float sanity = 100f;
     public float getSanity => sanity;
@@ -99,18 +98,10 @@ public class CharacterController : MonoBehaviour
         {
             sanity -= sanityLossRate;
         }
-        else
-        {
-            sanity += sanityGainRate;
-        }
 
         if (sanity <= 1f)
         {
             sanity = 1f;
-        }
-        else if (sanity > 100)
-        {
-            sanity = 100f;
         }
     }
 

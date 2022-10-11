@@ -1,13 +1,4 @@
-﻿/*******************************************************************************************
-*
-*    File: SanityMeter.cs
-*    Purpose: UI Element to show Player Sanity Levels
-*    Author: Sam Blakely
-*    Date: 10/10/2022
-*
-**********************************************************************************************/
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SanityMeter : MonoBehaviour
