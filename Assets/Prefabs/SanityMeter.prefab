@@ -392,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011856df0f7409f4ab5d72103a51b2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SanityMeter: {fileID: 4554480250011748024}
+  sanityMeter: {fileID: 4554480250011748024}
 --- !u!1 &4554480250447366940
 GameObject:
   m_ObjectHideFlags: 0
