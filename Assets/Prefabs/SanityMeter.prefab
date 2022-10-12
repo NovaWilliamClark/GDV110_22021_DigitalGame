@@ -389,10 +389,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4554480250011748023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 011856df0f7409f4ab5d72103a51b2e1, type: 3}
+  m_Script: {fileID: 11500000, guid: cc190552970822e4da844a3b7709d221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sanityMeter: {fileID: 4554480250011748024}
+  m_SanityMeter: {fileID: 4554480250011748024}
 --- !u!1 &4554480250447366940
 GameObject:
   m_ObjectHideFlags: 0

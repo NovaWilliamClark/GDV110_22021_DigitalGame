@@ -11,18 +11,37 @@
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class InteractableSwitch : MonoBehaviour
 {
-    [SerializeField] private GameObject promptMessage;
-    [SerializeField] private GameObject resultGameObject;
-    [SerializeField] private Collider2D collider;
+    [Header("Prompt")]
+    [SerializeField] private GameObject promptBox;
+    [SerializeField] private string promptMessage;
+    
+    [Header("Result Activation")]
+    [SerializeField] private GameObject objectToActivate;
+    
+     private BoxCollider2D collider;
      private bool canInteract = true;
-    private void OnTriggerEnter2D(Collider2D other)
+
+     private void Awake()
+     {
+         collider = GetComponent<BoxCollider2D>();
+         if (collider)
+         {
+             collider.isTrigger = true;
+         }
+     }
+
+     private void OnTriggerEnter2D(Collider2D other)
     {
         if (canInteract)
         {
-            promptMessage.GetComponentInChildren<TMP_Text>().text = "Interact - 'E'";
-            promptMessage.SetActive(true);
+            if (promptBox)
+            {
+                promptBox.GetComponentInChildren<TMP_Text>().text = promptMessage;
+                promptBox.SetActive(true);
+            }
         }
     }
 
@@ -36,12 +55,22 @@ public class InteractableSwitch : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        promptMessage.SetActive(false);
+        if (promptBox)
+        {
+            promptBox.SetActive(false);
+        }
     }
 
     private void Interact()
     {
-        promptMessage.SetActive(false);
-        resultGameObject.SetActive(true);
+        if (promptBox)
+        {
+            promptBox.SetActive(false);
+        }
+        
+        if (objectToActivate)
+        {
+            objectToActivate.SetActive(true);
+        }
     }
 }
