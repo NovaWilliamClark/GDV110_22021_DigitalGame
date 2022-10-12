@@ -3,7 +3,7 @@
 *    File: SanityMeter.cs
 *    Purpose: UI Element to show Player Sanity Levels
 *    Author: Sam Blakely
-*    Date: 11/10/2022
+*    Date: 10/10/2022
 *
 **********************************************************************************************/
 
@@ -12,32 +12,32 @@ using UnityEngine.UI;
 
 public class SanityMeter : MonoBehaviour
 {
-    [SerializeField] private Slider sanityMeter;
-    private bool decreaseSlider = false;
-    private CharacterController player;
+    [SerializeField] private Slider m_SanityMeter;
+    private bool m_DecreaseSlider = false;
+    private CharacterController m_Player;
 
     private void Awake()
     {
-        player = FindObjectOfType<CharacterController>();
+        m_Player = FindObjectOfType<CharacterController>();
     }
 
     private void Start()
     {
-        decreaseSlider = true;
+        m_DecreaseSlider = true;
     }
 
     private void Update()
     {
-        if (!decreaseSlider)
+        if (!m_DecreaseSlider)
         {
             return;
         }
 
-        if (sanityMeter.value <= 0f)
+        if (m_SanityMeter.value <= 0f)
         {
             return;
         }
-        
-        sanityMeter.value = player.getSanity;
+
+        m_SanityMeter.value = m_Player.getSanity;
     }
 }
