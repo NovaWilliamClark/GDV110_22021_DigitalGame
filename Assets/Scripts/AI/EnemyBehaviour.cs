@@ -1,7 +1,7 @@
 /*******************************************************************************************
 *
 *    File: EnemyBehaviour.cs
-*    Purpose: Character Controller Movement and Interaction
+*    Purpose: Enemy movement and interaction
 *    Author: Joshua Stephens
 *    Date: 11/10/2022
 *
@@ -9,6 +9,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using AI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -24,6 +25,7 @@ public class EnemyBehaviour : MonoBehaviour
     
     private RaycastHit2D hit;
     private GameObject target;
+    private Animator weaponAnimator;
     private float distance;
     private bool attackMode;
     private bool inRange;
@@ -32,6 +34,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     private bool CanAttack { get; set; }
 
+    void Start()
+    {
+        weaponAnimator = GetComponentInChildren<EnemyWeapon>().GetComponent<Animator>();
+    }
+    
     void Awake()
     {
         intTimer = timer;
@@ -43,7 +50,6 @@ public class EnemyBehaviour : MonoBehaviour
         if (inRange)
         {
             hit = Physics2D.Raycast(rayCast.position, Vector2.left, rayCastLength, raycastMask);
-            RaycastDebugger();
         }
 
         if (hit.collider != null)
@@ -63,7 +69,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D trig)
     {
-        if (trig.gameObject.tag == "Player")
+        if (trig.gameObject.CompareTag("Player"))
         {
             target = trig.gameObject;
             inRange = true;
@@ -101,13 +107,15 @@ public class EnemyBehaviour : MonoBehaviour
     {
         timer = intTimer;
         attackMode = true;
+        isInCooldown = true;
+        weaponAnimator.SetTrigger("MeleeSwipe");
     }
 
     void Cooldown()
     {
         timer -= Time.deltaTime;
 
-        if (timer <= 0 && isInCooldown && attackMode)
+        if (timer <= 0 && isInCooldown)
         {
             isInCooldown = false;
             timer = intTimer;
@@ -116,19 +124,6 @@ public class EnemyBehaviour : MonoBehaviour
     
     void StopAttack()
     {
-        isInCooldown = false;
         attackMode = false;
-    }
-    
-    void RaycastDebugger()
-    {
-        if (distance > attackDistance)
-        {
-            Debug.DrawRay(rayCast.position, Vector2.left * rayCastLength, Color.red);
-        }
-        else if (attackDistance > distance)
-        {
-            Debug.DrawRay(rayCast.position, Vector2.left * rayCastLength, Color.green);
-        }
     }
 }
