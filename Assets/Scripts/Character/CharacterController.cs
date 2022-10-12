@@ -9,7 +9,6 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Light = Core.Light;
 
 public enum GroundType
 {
@@ -30,7 +29,6 @@ public class CharacterController : MonoBehaviour
 
     [Header("Sanity")]
     [SerializeField] private float sanityLossRate = 0.01f;
-    [SerializeField] private float sanityGainRate = 0.0075f;
     private bool isInLight = false;
     private float sanity = 100f;
     public float getSanity => sanity;
@@ -39,16 +37,15 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float acceleration = 30.0f;
     [SerializeField] private float maxSpeed = 5.0f;
     [SerializeField] private float minFlipSpeed = 0.1f;
-
-
+    
     private Rigidbody2D controllerRigidBody;
     private Collider2D controllerCollider;
     private LayerMask softGroundMask;
     private LayerMask hardGroundMask;
-    private GroundType groundType;
 
     private Vector2 movementInput;
     private Vector2 prevVelocity;
+    private GroundType groundType;
     private bool isFlipped;
 
     private int animatorRunningSpeed;
@@ -101,18 +98,10 @@ public class CharacterController : MonoBehaviour
         {
             sanity -= sanityLossRate;
         }
-        else
-        {
-            sanity += sanityGainRate;
-        }
 
         if (sanity <= 1f)
         {
             sanity = 1f;
-        }
-        else if (sanity > 100)
-        {
-            sanity = 100f;
         }
     }
 
@@ -201,6 +190,8 @@ public class CharacterController : MonoBehaviour
         Light.onLightEnter -= Light_OnLightEnter;
         Light.onLightExit -= Light_OnLightExit;
     }
+<<<<<<< Updated upstream:Assets/Scripts/CharacterController.cs
+=======
 
     public bool IsGrounded()
     {
@@ -216,4 +207,10 @@ public class CharacterController : MonoBehaviour
     {
         return isFlipped;
     }
+    
+    public void TakeSanityDamage(float damageTaken)
+    {
+        sanity -= damageTaken;
+    }
+>>>>>>> Stashed changes:Assets/Scripts/Character/CharacterController.cs
 }
