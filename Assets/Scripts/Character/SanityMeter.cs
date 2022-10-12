@@ -1,34 +1,38 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class SanityMeter : MonoBehaviour
+namespace Character
 {
-    [SerializeField] private Slider m_SanityMeter;
-    private bool m_DecreaseSlider = false;
-    private CharacterController m_Player;
-
-    private void Awake()
+    [RequireComponent(typeof(Slider))]
+    public class SanityMeter : MonoBehaviour
     {
-        m_Player = FindObjectOfType<CharacterController>();
-    }
+        [SerializeField] private Slider m_SanityMeter;
+        private bool m_DecreaseSlider = false;
+        private CharacterController m_Player;
 
-    private void Start()
-    {
-        m_DecreaseSlider = true;
-    }
-
-    private void Update()
-    {
-        if (!m_DecreaseSlider)
+        private void Awake()
         {
-            return;
+            m_Player = FindObjectOfType<CharacterController>();
         }
 
-        if (m_SanityMeter.value <= 0f)
+        private void Start()
         {
-            return;
+            m_DecreaseSlider = true;
         }
+
+        private void Update()
+        {
+            if (!m_DecreaseSlider)
+            {
+                return;
+            }
+
+            if (m_SanityMeter.value <= 0f)
+            {
+                return;
+            }
         
-        m_SanityMeter.value = m_Player.getSanity;
+            m_SanityMeter.value = m_Player.getSanity;
+        }
     }
 }

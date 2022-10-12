@@ -10,17 +10,20 @@
 using System;
 using UnityEngine;
 
-public class Light : MonoBehaviour
+namespace Core
 {
-    public static event Action<Collider2D> onLightEnter;
-    public static event Action<Collider2D> onLightExit;
-    protected virtual void OnTriggerEnter2D(Collider2D other)
+    internal class Light : MonoBehaviour
     {
-        onLightEnter?.Invoke(other);
-    }
+        public static event Action<Collider2D> onLightEnter;
+        public static event Action<Collider2D> onLightExit;
+        protected virtual void OnTriggerEnter2D(Collider2D other)
+        {
+            onLightEnter?.Invoke(other);
+        }
 
-    protected virtual void OnTriggerExit2D(Collider2D other)
-    {
-        onLightExit?.Invoke(other);
+        protected virtual void OnTriggerExit2D(Collider2D other)
+        {
+            onLightExit?.Invoke(other);
+        }
     }
 }

@@ -1,45 +1,57 @@
+/*******************************************************************************************
+*
+*    File: EnemyHealth.cs
+*    Purpose: Handles Enemy Health and Damage
+*    Author: William Clark
+*    Date: 10/10/2022
+*
+**********************************************************************************************/
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+namespace AI
 {
-    [Header("Defaults")]
-    [SerializeField] private bool isDamageable = true;
-    [SerializeField] private int healthAmount = 100;
-    [SerializeField] private float invulnerabilityTime = .2f;
+    public class EnemyHealth : MonoBehaviour
+    {
+        [Header("Defaults")]
+        [SerializeField] private bool isDamageable = true;
+        [SerializeField] private int healthAmount = 100;
+        [SerializeField] private float invulnerabilityTime = .2f;
     
-    private bool hasBeenHit;
-    private bool IsDead;
-    private int currentHealth;
+        private bool hasBeenHit;
+        private bool IsDead;
+        private int currentHealth;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        currentHealth = healthAmount;
-    }
-
-    void TakeDamage(int damage)
-    {
-        if (damage > 0 && !hasBeenHit && currentHealth > 0)
+        // Start is called before the first frame update
+        void Start()
         {
-            hasBeenHit = true;
-            currentHealth -= damage;
-            if (currentHealth <= 0)
+            currentHealth = healthAmount;
+        }
+
+        public void TakeDamage(int damage)
+        {
+            if (damage > 0 && !hasBeenHit && currentHealth > 0)
             {
-                // Death Call
-                Destroy(gameObject);
-            }
-            else
-            {
-                StartCoroutine(TurnOffHitStun());
+                hasBeenHit = true;
+                currentHealth -= damage;
+                Debug.Log("No Hit to Enemy Health");
+                if (currentHealth <= 0)
+                {
+                    // Death Call
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    StartCoroutine(TurnOffHitStun());
+                }
             }
         }
-    }
 
-    private IEnumerator TurnOffHitStun()
-    {
-        yield return new WaitForSeconds(invulnerabilityTime);
-        hasBeenHit = false;
+        private IEnumerator TurnOffHitStun()
+        {
+            yield return new WaitForSeconds(invulnerabilityTime);
+            hasBeenHit = false;
+        }
     }
 }
