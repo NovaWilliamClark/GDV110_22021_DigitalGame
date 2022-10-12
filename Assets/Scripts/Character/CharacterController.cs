@@ -216,4 +216,10 @@ public class CharacterController : MonoBehaviour
     {
         return isFlipped;
     }
+    
+    public void TakeSanityDamage(float damageTaken)
+    {
+        sanity -= damageTaken;
+    }
+>>>>>>> Stashed changes:Assets/Scripts/Character/CharacterController.cs
 }

@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/AI.meta
 guid: 7ff9ba431fe4573419dafbd5686d2e6e
 folderAsset: yes
+========
+guid: efdc39f3694dd72458cf23558028aaba
+>>>>>>>> origin/Feature-#2:Assets/Scenes/Prototype_Enemy 2.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
