@@ -190,4 +190,27 @@ public class CharacterController : MonoBehaviour
         Light.onLightEnter -= Light_OnLightEnter;
         Light.onLightExit -= Light_OnLightExit;
     }
+<<<<<<< Updated upstream:Assets/Scripts/CharacterController.cs
+=======
+
+    public bool IsGrounded()
+    {
+        if (groundType == GroundType.Hard || groundType == GroundType.Soft)
+        {
+            return true;
+        }
+        
+        return false;
+    }
+
+    public bool IsFacingLeft()
+    {
+        return isFlipped;
+    }
+    
+    public void TakeSanityDamage(float damageTaken)
+    {
+        sanity -= damageTaken;
+    }
+>>>>>>> Stashed changes:Assets/Scripts/Character/CharacterController.cs
 }
