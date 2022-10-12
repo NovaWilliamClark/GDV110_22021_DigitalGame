@@ -9,6 +9,7 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Light = Core.Light;
 
 public enum GroundType
 {
@@ -38,15 +39,16 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float acceleration = 30.0f;
     [SerializeField] private float maxSpeed = 5.0f;
     [SerializeField] private float minFlipSpeed = 0.1f;
-    
+
+
     private Rigidbody2D controllerRigidBody;
     private Collider2D controllerCollider;
     private LayerMask softGroundMask;
     private LayerMask hardGroundMask;
+    private GroundType groundType;
 
     private Vector2 movementInput;
     private Vector2 prevVelocity;
-    private GroundType groundType;
     private bool isFlipped;
 
     private int animatorRunningSpeed;
@@ -198,5 +200,20 @@ public class CharacterController : MonoBehaviour
     {
         Light.onLightEnter -= Light_OnLightEnter;
         Light.onLightExit -= Light_OnLightExit;
+    }
+
+    public bool IsGrounded()
+    {
+        if (groundType == GroundType.Hard || groundType == GroundType.Soft)
+        {
+            return true;
+        }
+        
+        return false;
+    }
+
+    public bool IsFacingLeft()
+    {
+        return isFlipped;
     }
 }
