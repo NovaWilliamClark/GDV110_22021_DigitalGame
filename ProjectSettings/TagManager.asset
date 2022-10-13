@@ -38,6 +38,24 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Walls
+    uniqueID: 939928237
+    locked: 0
+  - name: Walls2
+    uniqueID: 2592605111
+    locked: 0
+  - name: Walls3
+    uniqueID: 2883865703
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Midground
+    uniqueID: 2755530175
+    locked: 0
+  - name: Foreground
+    uniqueID: 858629103
+    locked: 0
+  - name: Close
+    uniqueID: 3281208079
     locked: 0

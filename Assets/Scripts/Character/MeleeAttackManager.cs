@@ -11,12 +11,15 @@ namespace Character
         private Animator meleeAnimator;
         private Animator animator;
         private CharacterController playerCharacter;
+        public GameObject meleeSprite;
+        private MeleeWeapon _meleeWeapon;
 
         private void Start()
         {
-            animator = GetComponent<Animator>();
             playerCharacter = GetComponent<CharacterController>();
-            meleeAnimator = playerCharacter.GetComponentInChildren<MeleeWeapon>().GetComponent<Animator>();
+            animator = playerCharacter.animator;
+            _meleeWeapon = GetComponentInChildren<MeleeWeapon>();
+            
         }
 
         private void Update()
@@ -37,8 +40,7 @@ namespace Character
             
             if (meleeAttack && playerCharacter.IsGrounded())
             {
-                animator.SetTrigger("Melee");
-                meleeAnimator.SetTrigger("MeleeSwipe");
+                _meleeWeapon.Attack();
             }
         }
     }

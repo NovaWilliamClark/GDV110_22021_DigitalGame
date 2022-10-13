@@ -7,6 +7,7 @@
 *
 **********************************************************************************************/
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -130,5 +131,15 @@ public class EnemyBehaviour : MonoBehaviour
         {
             Debug.DrawRay(rayCast.position, Vector2.left * rayCastLength, Color.green);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        // if (inRange && target)
+        // {
+        //     Gizmos.DrawLine(rayCast.position, target.transform.position);
+        // }
+        //
+        // Gizmos.DrawWireSphere(transform.position,attackDistance);
     }
 }

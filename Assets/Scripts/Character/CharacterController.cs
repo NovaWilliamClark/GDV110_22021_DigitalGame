@@ -7,6 +7,7 @@
 *
 **********************************************************************************************/
 
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Light = Core.Light;
@@ -24,7 +25,7 @@ public class CharacterController : MonoBehaviour
     private readonly Quaternion flippedRotation = new Quaternion(0, 0, 1, 0);
 
     [Header("Character")]
-    [SerializeField] private Animator animator = null;
+    public Animator animator = null;
     [SerializeField] private Transform puppet = null;
     //[SerializeField] private CharacterAudio audioPlayer = null;
 
@@ -51,7 +52,7 @@ public class CharacterController : MonoBehaviour
     private Vector2 prevVelocity;
     private bool isFlipped;
 
-    private int animatorRunningSpeed;
+    private int animatorMoveSpeed;
 
     private bool CanMove { get; set; }
 
@@ -63,7 +64,7 @@ public class CharacterController : MonoBehaviour
         softGroundMask = LayerMask.GetMask("Ground Soft");
         hardGroundMask = LayerMask.GetMask("Ground Hard");
     
-        animatorRunningSpeed = Animator.StringToHash("RunningSpeed");
+        animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
     
         CanMove = true;
         //controllerCollider.isTrigger = true;
@@ -114,13 +115,14 @@ public class CharacterController : MonoBehaviour
         {
             sanity = 100f;
         }
+        UpdateDirection();
     }
 
     private void FixedUpdate()
     {
         UpdateGrounding();
         UpdateVelocity();
-        UpdateDirection();
+        
     }
 
     
@@ -152,13 +154,14 @@ public class CharacterController : MonoBehaviour
         
         // Clamp horizontal speed
         velocity.x = Mathf.Clamp(velocity.x, -maxSpeed, maxSpeed);
+        
         controllerRigidBody.velocity = velocity;
         
         // Update Animator
         if (animator)
         {
             var horizontalSpeedNormalized = Mathf.Abs(velocity.x) / maxSpeed;
-            animator.SetFloat(animatorRunningSpeed, horizontalSpeedNormalized);
+            animator.SetFloat(animatorMoveSpeed, horizontalSpeedNormalized);
         }
 
         // Play Audio
@@ -187,12 +190,20 @@ public class CharacterController : MonoBehaviour
 
     private void Light_OnLightEnter(Collider2D collider)
     {
+        if (collider != controllerCollider)
+        {
+            Debug.Log("Not player collider");
+        }
         isInLight = true; 
         Debug.Log("Light Entered");
     }
 
     private void Light_OnLightExit(Collider2D collider)
     {
+        if (collider != controllerCollider)
+        {
+            Debug.Log("Not player collider");
+        }
         isInLight = false; 
         Debug.Log("Light Exited");
     }

@@ -12,6 +12,7 @@ using UnityEngine;
 
 namespace Core
 {
+    
     public class Light : MonoBehaviour
     {
         public static event Action<Collider2D> onLightEnter;
