@@ -34,6 +34,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float sanityGainRate = 0.0075f;
     private bool isInLight = false;
     private float sanity = 100f;
+    private bool allowLightInteraction = true;
     public float getSanity => sanity;
 
     [Header("Movement")]
@@ -98,22 +99,25 @@ public class CharacterController : MonoBehaviour
         // Roll Dodge
         
         // Sanity
-        if (!isInLight)
+        if (allowLightInteraction)
         {
-            sanity -= sanityLossRate;
-        }
-        else
-        {
-            sanity += sanityGainRate;
-        }
+            if (!isInLight)
+            {
+                sanity -= sanityLossRate;
+            }
+            else
+            {
+                sanity += sanityGainRate;
+            }
 
-        if (sanity <= 1f)
-        {
-            sanity = 1f;
-        }
-        else if (sanity > 100)
-        {
-            sanity = 100f;
+            if (sanity <= 1f)
+            {
+                sanity = 1f;
+            }
+            else if (sanity > 100)
+            {
+                sanity = 100f;
+            }
         }
         UpdateDirection();
     }
@@ -226,5 +230,16 @@ public class CharacterController : MonoBehaviour
     public bool IsFacingLeft()
     {
         return isFlipped;
+    }
+    
+    public void TakeSanityDamage(float damageTaken)
+    {
+        sanity -= damageTaken;
+        if (sanity <= 0)
+        {
+            sanity = 0;
+            allowLightInteraction = false; //Stop processing sanity light interaction 
+            //Handle Player "Death" here.
+        }
     }
 }

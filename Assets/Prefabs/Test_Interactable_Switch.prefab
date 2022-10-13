@@ -291,9 +291,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0557d4d8aff7433f969b8419b039f3ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptMessage: {fileID: 1698419999885576315}
-  resultGameObject: {fileID: 2709049141288877421}
-  collider: {fileID: 9131161402097159125}
+  promptBox: {fileID: 1698419999885576315}
+  promptMessage: Interact - 'E'
+  objectToActivate: {fileID: 2709049141288877421}
 --- !u!1 &7523795222293970612
 GameObject:
   m_ObjectHideFlags: 0
