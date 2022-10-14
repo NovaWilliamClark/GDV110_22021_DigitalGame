@@ -10,10 +10,10 @@
 using System;
 using UnityEngine;
 
-namespace Core.Light
+namespace Core.LitArea
 {
     
-    public class Light : MonoBehaviour
+    public class LitArea : MonoBehaviour
     {
         public static event Action<Collider2D> onLightEnter;
         public static event Action<Collider2D> onLightExit;
