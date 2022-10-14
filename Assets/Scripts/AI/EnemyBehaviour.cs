@@ -25,6 +25,7 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] public float atkCooldownTime;
     [SerializeField] public Animator animator = null;
 
+    private Rigidbody2D controllerRigidBody;
     private RaycastHit2D hit;
     private GameObject target;
     private float distance;
@@ -32,10 +33,12 @@ public class EnemyBehaviour : MonoBehaviour
     private bool inRange;
     private bool inCooldown;
     [HideInInspector] public Animator weaponAnimator;
-
+    private static readonly int Melee = Animator.StringToHash("Melee");
+    private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
     void Start()
     {
+        controllerRigidBody = GetComponent<Rigidbody2D>();
         weaponAnimator = GetComponentInChildren<EnemyWeapon>().GetComponent<Animator>();
     }
     
@@ -46,6 +49,10 @@ public class EnemyBehaviour : MonoBehaviour
         {
             hit = Physics2D.Raycast(rayCast.position, Vector2.left, rayCastLength, raycastMask);
             //RaycastDebugger();
+        }
+        else
+        {
+            animator.SetBool(IsMoving, false);
         }
 
         if (hit.collider != null)
@@ -60,7 +67,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D trig)
     {
-        if (trig.gameObject.tag == "Player")
+        if (trig.gameObject.CompareTag("Player"))
         {
             target = trig.gameObject;
             inRange = true;
@@ -79,21 +86,23 @@ public class EnemyBehaviour : MonoBehaviour
         {
             Attack();
         }
-        
+
     }
 
     void Move()
-    { 
-        Vector2 targetPosition = new Vector2(target.transform.position.x, transform.position.y);
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-      
+    {
+        animator.SetBool(IsMoving, true);
+        var position = transform.position;
+        Vector2 targetPosition = new Vector2(target.transform.position.x, position.y);
+        position = Vector2.MoveTowards(position, targetPosition, moveSpeed * Time.deltaTime);
+        transform.position = position;
     }
 
     void Attack()
     {
         inCooldown = true;
         attackMode = true;
-        animator.SetTrigger("Melee");
+        animator.SetTrigger(Melee);
     }
 
     // void RaycastDebugger()

@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using Character;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Light = Core.Light.Light;
@@ -58,6 +59,7 @@ public class CharacterController : MonoBehaviour
     private bool meleeAttack;
 
     private int animatorMoveSpeed;
+    public UnityEvent OnDeath;
     private MeleeWeapon _meleeWeapon;
 
     private bool CanMove { get; set; }
@@ -281,7 +283,8 @@ public class CharacterController : MonoBehaviour
 
     private IEnumerator RestartLevel()
     {
-        yield return new WaitForSeconds(1.5f);
+        OnDeath.Invoke();
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("Prototype_BensBedroom");
     }
 }

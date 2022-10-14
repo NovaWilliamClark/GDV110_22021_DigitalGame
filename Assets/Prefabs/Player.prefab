@@ -558,6 +558,9 @@ MonoBehaviour:
   acceleration: 40
   maxSpeed: 20
   minFlipSpeed: 0.1
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!70 &286041822936246037
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
