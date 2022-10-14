@@ -10,10 +10,10 @@
 using System;
 using System.Collections;
 using Character;
+using Core.LitArea;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using Light = Core.Light.Light;
 
 public enum GroundType
 {
@@ -76,8 +76,8 @@ public class CharacterController : MonoBehaviour
     
         CanMove = true;
         //controllerCollider.isTrigger = true;
-        Light.onLightEnter += Light_OnLightEnter; 
-        Light.onLightExit += Light_OnLightExit;
+        LitArea.onLightEnter += Light_OnLightEnter; 
+        LitArea.onLightExit += Light_OnLightExit;
     }
     
     private void Update()
@@ -219,8 +219,8 @@ public class CharacterController : MonoBehaviour
     }
     private void OnDestroy()
     {
-        Light.onLightEnter -= Light_OnLightEnter;
-        Light.onLightExit -= Light_OnLightExit;
+        LitArea.onLightEnter -= Light_OnLightEnter;
+        LitArea.onLightExit -= Light_OnLightExit;
     }
 
     public bool IsGrounded()
