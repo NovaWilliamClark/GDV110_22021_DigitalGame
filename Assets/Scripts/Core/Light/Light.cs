@@ -10,7 +10,7 @@
 using System;
 using UnityEngine;
 
-namespace Core
+namespace Core.Light
 {
     
     public class Light : MonoBehaviour

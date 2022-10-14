@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using AI;
 using UnityEngine;
@@ -9,36 +8,26 @@ namespace Character
     {
         [Header("Defaults")]
         [SerializeField] private int damageAmount = 20;
+        [SerializeField] private float atkCooldownTime = 0.3f;
+        
+        [SerializeField] private float defaultForce = 250.0f;
+        [SerializeField] private float movementTime = 0.1f;
 
         private CharacterController character;
         private Rigidbody2D playerRigidBody;
-        private MeleeAttackManager meleeAttackManager;
         private Vector2 recoilDirection;
         private bool hasCollided;
-        private Animator _animator;
+        public Animator _animator;
         [SerializeField] private GameObject weaponSprite;
-        public AnimationClip meleeAnimation;
         private bool _attacking;
+        private bool inCooldown;
         private AnimatorClipInfo[] _clipInfo;
 
         private void Start()
         {
             character = GetComponentInParent<CharacterController>();
             playerRigidBody = GetComponentInParent<Rigidbody2D>();
-            meleeAttackManager = GetComponentInParent<MeleeAttackManager>();
             _animator = GetComponent<Animator>();
-        }
-
-        private void FixedUpdate()
-        {
-            HandleMovement();
-            _clipInfo = _animator.GetCurrentAnimatorClipInfo(0);
-            // if (_attacking && _clipInfo[0].clip.name != meleeAnimation.name)
-            // {
-            //     _attacking = false;
-            //     weaponSprite.SetActive(false);
-            // }
-        
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -73,23 +62,33 @@ namespace Character
         {
             if (hasCollided)
             {
-                playerRigidBody.AddForce(recoilDirection * meleeAttackManager.defaultForce);
+                playerRigidBody.AddForce(recoilDirection * defaultForce);
             }
         }
 
         private IEnumerator ColliderClear()
         {
-            yield return new WaitForSeconds(meleeAttackManager.movementTime);
+            yield return new WaitForSeconds(movementTime);
             hasCollided = false;
         }
 
         public void Attack()
         {
-            weaponSprite.SetActive(true);
-            character.animator.SetTrigger("Melee");
-            _attacking = true;
-            _animator.SetTrigger("MeleeSwipe");
+            if (!inCooldown && ! _attacking)
+            {
+                weaponSprite.SetActive(true);
+                character.animator.SetTrigger("Melee");
+                _attacking = true;
+            }
         }
+
+        public IEnumerator AttackCooldownReset()
+        {
+            yield return new WaitForSeconds(atkCooldownTime);
+            inCooldown = false;
+            _attacking = false;
+        }
+        
         
         public void OnAttackFinished()
         {

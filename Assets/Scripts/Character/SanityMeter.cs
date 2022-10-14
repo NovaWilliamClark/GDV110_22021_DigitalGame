@@ -7,6 +7,7 @@
 *
 **********************************************************************************************/
 
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,6 +36,8 @@ public class SanityMeter : MonoBehaviour
 
         if (m_SanityMeter.value <= 0f)
         {
+            Image[] list = GetComponentsInChildren<Image>();
+            list.ElementAt(1).enabled = false;
             return;
         }
 

@@ -29,7 +29,7 @@ namespace AI
         
         private void HandleCollision(CharacterController objController)
         {
-            objController.TakeSanityDamage(damageAmount);
+            objController.TakeSanityDamage(damageAmount, false);
         }
     }
 }

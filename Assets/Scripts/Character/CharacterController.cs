@@ -8,9 +8,12 @@
 **********************************************************************************************/
 
 using System;
+using System.Collections;
+using Character;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Light = Core.Light;
+using UnityEngine.SceneManagement;
+using Light = Core.Light.Light;
 
 public enum GroundType
 {
@@ -25,13 +28,13 @@ public class CharacterController : MonoBehaviour
     private readonly Quaternion flippedRotation = new Quaternion(0, 0, 1, 0);
 
     [Header("Character")]
-    public Animator animator = null;
+    [SerializeField] public Animator animator = null;
     [SerializeField] private Transform puppet = null;
     //[SerializeField] private CharacterAudio audioPlayer = null;
 
     [Header("Sanity")]
-    [SerializeField] private float sanityLossRate = 0.01f;
-    [SerializeField] private float sanityGainRate = 0.0075f;
+    [SerializeField] private float sanityLossRate = 0.5f;
+    [SerializeField] private float sanityGainRate = 0.25f;
     private bool isInLight = false;
     private float sanity = 100f;
     private bool allowLightInteraction = true;
@@ -52,8 +55,10 @@ public class CharacterController : MonoBehaviour
     private Vector2 movementInput;
     private Vector2 prevVelocity;
     private bool isFlipped;
+    private bool meleeAttack;
 
     private int animatorMoveSpeed;
+    private MeleeWeapon _meleeWeapon;
 
     private bool CanMove { get; set; }
 
@@ -64,6 +69,8 @@ public class CharacterController : MonoBehaviour
         controllerCollider = GetComponent<Collider2D>();
         softGroundMask = LayerMask.GetMask("Ground Soft");
         hardGroundMask = LayerMask.GetMask("Ground Hard");
+
+        _meleeWeapon = GetComponentInChildren<MeleeWeapon>();
     
         animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
     
@@ -81,52 +88,52 @@ public class CharacterController : MonoBehaviour
         {
             return;
         }
-        
+
         // Horizontal Movement
         float moveHorizontal = 0.0f;
 
         if (keyboard.leftArrowKey.isPressed || keyboard.aKey.isPressed)
         {
+            isFlipped = true;
             moveHorizontal = -1.0f;
         }
         else if (keyboard.rightArrowKey.isPressed || keyboard.dKey.isPressed)
         {
+            isFlipped = false;
             moveHorizontal = 1.0f;
         }
 
         movementInput = new Vector2(moveHorizontal, 0);
-        
+
         // Roll Dodge
-        
+
+
         // Sanity
         if (allowLightInteraction)
         {
             if (!isInLight)
             {
-                sanity -= sanityLossRate;
+                TakeSanityDamage(sanityLossRate, true);
             }
             else
             {
                 sanity += sanityGainRate;
             }
-
-            if (sanity <= 1f)
-            {
-                sanity = 1f;
-            }
-            else if (sanity > 100)
+            
+            if (sanity >= 100)
             {
                 sanity = 100f;
             }
         }
+        
         UpdateDirection();
+        CheckMeleeInput();
     }
 
     private void FixedUpdate()
     {
         UpdateGrounding();
         UpdateVelocity();
-        
     }
 
     
@@ -174,17 +181,16 @@ public class CharacterController : MonoBehaviour
 
     private void UpdateDirection()
     {
-        if (controllerRigidBody.velocity.x > minFlipSpeed && isFlipped)
+        if (controllerRigidBody.velocity.x > minFlipSpeed && !isFlipped)
         {
-            isFlipped = false;
             if (puppet)
             {
                 puppet.localScale = Vector2.one;
             }
         }
-        else if (controllerRigidBody.velocity.x < -minFlipSpeed && !isFlipped)
+        else if (controllerRigidBody.velocity.x < -minFlipSpeed && isFlipped)
         {
-            isFlipped = true;
+           
             if (puppet)
             {
                 puppet.localScale = flippedScale;
@@ -232,14 +238,50 @@ public class CharacterController : MonoBehaviour
         return isFlipped;
     }
     
-    public void TakeSanityDamage(float damageTaken)
+    public void TakeSanityDamage(float damageTaken, bool fromDarkness)
     {
-        sanity -= damageTaken;
-        if (sanity <= 0)
+        if (fromDarkness)
         {
-            sanity = 0;
-            allowLightInteraction = false; //Stop processing sanity light interaction 
-            //Handle Player "Death" here.
+            sanity -= damageTaken;
+            if (sanity <= 0)
+            {
+                sanity = 1;
+            }
         }
+        else
+        {
+            sanity -= damageTaken;
+            if (sanity <= 0)
+            {
+                sanity = 0;
+                allowLightInteraction = false; //Stop processing sanity light interaction 
+                CanMove = false;
+                // Play Death Animation
+                StartCoroutine(RestartLevel());
+            }
+        }
+    }
+    
+    private void CheckMeleeInput()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            meleeAttack = true;
+        }
+        else
+        {
+            meleeAttack = false;
+        }
+            
+        if (meleeAttack && IsGrounded())
+        {
+            _meleeWeapon.Attack();
+        }
+    }
+
+    private IEnumerator RestartLevel()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("Prototype_BensBedroom");
     }
 }

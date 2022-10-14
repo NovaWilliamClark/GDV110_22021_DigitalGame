@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using AI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,33 +19,33 @@ public class EnemyBehaviour : MonoBehaviour
 {
     public Transform rayCast;
     public LayerMask raycastMask;
-    public float rayCastLength;
-    public float attackDistance;
-    public float moveSpeed;
-    public float timer;
-    
+    [SerializeField] public float rayCastLength;
+    [SerializeField] public float attackDistance;
+    [SerializeField] public float moveSpeed;
+    [SerializeField] public float atkCooldownTime;
+    [SerializeField] public Animator animator = null;
+
     private RaycastHit2D hit;
     private GameObject target;
     private float distance;
     private bool attackMode;
     private bool inRange;
-    private bool isInCooldown;
-    private float intTimer;
+    private bool inCooldown;
+    [HideInInspector] public Animator weaponAnimator;
 
-    private bool CanAttack { get; set; }
 
-    void Awake()
+    void Start()
     {
-        intTimer = timer;
+        weaponAnimator = GetComponentInChildren<EnemyWeapon>().GetComponent<Animator>();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
         if (inRange)
         {
             hit = Physics2D.Raycast(rayCast.position, Vector2.left, rayCastLength, raycastMask);
-            RaycastDebugger();
+            //RaycastDebugger();
         }
 
         if (hit.collider != null)
@@ -54,11 +55,6 @@ public class EnemyBehaviour : MonoBehaviour
         else if (hit.collider == null)
         {
             inRange = false;
-        }
-
-        if (inRange == false)
-        {
-            StopAttack();
         }
     }
 
@@ -75,71 +71,47 @@ public class EnemyBehaviour : MonoBehaviour
     {
         distance = Vector2.Distance(transform.position, target.transform.position);
 
-        if (distance > attackDistance)
+        if (distance > attackDistance && !attackMode)
         {
             Move();
-            StopAttack();
         }
-        else if (attackDistance >= distance && isInCooldown == false)
+        else if (attackDistance >= distance && inCooldown == false)
         {
             Attack();
         }
-
-        if (isInCooldown)
-        {
-            Cooldown();
-        }
+        
     }
 
     void Move()
-    {
+    { 
         Vector2 targetPosition = new Vector2(target.transform.position.x, transform.position.y);
-
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+      
     }
 
     void Attack()
     {
-        timer = intTimer;
+        inCooldown = true;
         attackMode = true;
+        animator.SetTrigger("Melee");
     }
 
-    void Cooldown()
-    {
-        timer -= Time.deltaTime;
+    // void RaycastDebugger()
+   // {
+   //     if (distance > attackDistance)
+   //     {
+   //         Debug.DrawRay(rayCast.position, Vector2.left * rayCastLength, Color.red);
+   //     }
+   //     else if (attackDistance > distance)
+   //     {
+   //         Debug.DrawRay(rayCast.position, Vector2.left * rayCastLength, Color.green);
+   //     }
+   // }
 
-        if (timer <= 0 && isInCooldown && attackMode)
-        {
-            isInCooldown = false;
-            timer = intTimer;
-        }
-    }
-    
-    void StopAttack()
+    public IEnumerator AttackCooldownReset()
     {
-        isInCooldown = false;
+        yield return new WaitForSeconds(atkCooldownTime);
+        inCooldown = false;
         attackMode = false;
-    }
-    
-    void RaycastDebugger()
-    {
-        if (distance > attackDistance)
-        {
-            Debug.DrawRay(rayCast.position, Vector2.left * rayCastLength, Color.red);
-        }
-        else if (attackDistance > distance)
-        {
-            Debug.DrawRay(rayCast.position, Vector2.left * rayCastLength, Color.green);
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        // if (inRange && target)
-        // {
-        //     Gizmos.DrawLine(rayCast.position, target.transform.position);
-        // }
-        //
-        // Gizmos.DrawWireSphere(transform.position,attackDistance);
     }
 }

@@ -31,7 +31,7 @@ namespace AI
 
         public void TakeDamage(int damage)
         {
-            if (damage > 0 && !hasBeenHit && currentHealth > 0)
+            if (isDamageable && !hasBeenHit && currentHealth > 0)
             {
                 hasBeenHit = true;
                 currentHealth -= damage;
