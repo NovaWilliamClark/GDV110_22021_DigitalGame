@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7928201673012255956}
   - component: {fileID: 7928201673012255959}
   - component: {fileID: 7928201673012255958}
+  - component: {fileID: 3706261793672060531}
   m_Layer: 10
   m_Name: Nightlight
   m_TagString: Untagged
@@ -136,6 +137,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 7.32
+--- !u!114 &3706261793672060531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928201673012255963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0ea3158f376aef4d87bf56e820a06b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7928201673909922017
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +159,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7928201673909922016}
   - component: {fileID: 7928201673909922019}
-  - component: {fileID: 7396396294277123727}
   m_Layer: 10
   m_Name: NIghtlight_Light
   m_TagString: Untagged
@@ -633,15 +645,3 @@ MonoBehaviour:
   - {x: 0.4157348, y: -0.27778515, z: 0}
   - {x: 0.46193978, y: -0.19134171, z: 0}
   - {x: 0.49039266, y: -0.09754512, z: 0}
---- !u!114 &7396396294277123727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7928201673909922017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0ea3158f376aef4d87bf56e820a06b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
