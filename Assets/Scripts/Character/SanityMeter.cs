@@ -13,34 +13,39 @@ using UnityEngine.UI;
 
 public class SanityMeter : MonoBehaviour
 {
-    [SerializeField] private Slider m_SanityMeter;
-    private bool m_DecreaseSlider = false;
-    private CharacterController m_Player;
-
-    private void Awake()
-    {
-        m_Player = FindObjectOfType<CharacterController>();
-    }
-
+    [SerializeField] private Slider sanityMeter;
+    public bool decreaseSlider = false;
+    private CharacterController player;
+    
     private void Start()
     {
-        m_DecreaseSlider = true;
+        player = FindObjectOfType<CharacterController>();
+        if (player != null)
+        {
+            decreaseSlider = true;
+        }
     }
 
     private void Update()
     {
-        if (!m_DecreaseSlider)
+        if (!decreaseSlider)
         {
             return;
         }
 
-        if (m_SanityMeter.value <= 0f)
+        if (sanityMeter.value <= 0f)
         {
             Image[] list = GetComponentsInChildren<Image>();
             list.ElementAt(1).enabled = false;
             return;
         }
 
-        m_SanityMeter.value = m_Player.getSanity;
+        sanityMeter.value = player.getSanity;
+    }
+
+    public void SetPlayer(CharacterController characterController)
+    {
+        player = characterController;
+        decreaseSlider = true;
     }
 }
