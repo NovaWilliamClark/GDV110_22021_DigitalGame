@@ -6,7 +6,11 @@ using AudioType = Audio.AudioType;
 
 public class UIMainMenu : MonoBehaviour
 {
-    void Start()
+    public void QuitGame()
     {
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #endif
+            Application.Quit();
     }
 }

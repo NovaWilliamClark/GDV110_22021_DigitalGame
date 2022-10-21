@@ -33,10 +33,20 @@ public class LevelData : MonoBehaviour
             }
         }
 
-        var player = Instantiate(playerPrefab);
+        var existingPlayer = FindObjectOfType<CharacterController>();
+
+        GameObject player;
+        if (existingPlayer)
+        {
+            player = existingPlayer.gameObject;
+        } else
+        {
+            player = Instantiate(playerPrefab);
+            player.transform.position = pos;
+        }
+        
         var playerObj = player.GetComponent<CharacterController>();
         sanityMeter.SetPlayer(playerObj);
-        player.transform.position = pos;
         playerObj.FetchPersistentData();
     }
 }
