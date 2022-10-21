@@ -6,6 +6,8 @@
 *    Date: 19/10/2022
 *
 **********************************************************************************************/
+
+using Audio;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,6 +33,7 @@ public class TransitionManager : MonoBehaviour
 
     public void LoadScene(string sceneToLoad)
     {
+        AudioManager.Instance.Cleanup();
         SceneManager.LoadScene(sceneToLoad);
     }
     

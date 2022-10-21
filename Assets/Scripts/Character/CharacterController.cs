@@ -205,20 +205,12 @@ public class CharacterController : MonoBehaviour
 
     private void Light_OnLightEnter(Collider2D collider)
     {
-        if (collider != controllerCollider)
-        {
-            Debug.Log("Not player collider");
-        }
         isInLight = true; 
         Debug.Log("Light Entered");
     }
 
     private void Light_OnLightExit(Collider2D collider)
     {
-        if (collider != controllerCollider)
-        {
-            Debug.Log("Not player collider");
-        }
         isInLight = false; 
         Debug.Log("Light Exited");
     }

@@ -11,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using AI;
+using Audio;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,6 +36,8 @@ public class EnemyBehaviour : MonoBehaviour
     [HideInInspector] public Animator weaponAnimator;
     private static readonly int Melee = Animator.StringToHash("Melee");
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
+
+    [SerializeField] private AudioClip attackSFX;
 
     void Start()
     {
@@ -103,6 +106,7 @@ public class EnemyBehaviour : MonoBehaviour
         inCooldown = true;
         attackMode = true;
         animator.SetTrigger(Melee);
+        AudioManager.Instance.PlaySound(attackSFX); // TODO: Move to callback driven by animation events
     }
 
     // void RaycastDebugger()

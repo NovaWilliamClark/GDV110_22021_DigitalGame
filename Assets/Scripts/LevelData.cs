@@ -6,12 +6,17 @@
 *    Date: 19/10/2022
 *
 **********************************************************************************************/
+
+using Audio;
 using UnityEngine;
 
 public class LevelData : MonoBehaviour
 {
     [SerializeField] private PlayerSpawnPoint[] playerSpawnPoints;
     [SerializeField] private GameObject playerPrefab;
+
+    public AudioClip LevelBGM;
+    public float BGMVolume;
     private void Start()
     {
         InitPlayer();
@@ -21,6 +26,7 @@ public class LevelData : MonoBehaviour
     {
         var sanityMeter = FindObjectOfType<SanityMeter>();
         sanityMeter.decreaseSlider = false;
+        AudioManager.Instance.PlayMusic(LevelBGM, BGMVolume);
         int spawnIndex = TransitionManager.Instance.GetSpawnIndex;
         Vector2 pos = new Vector2();
         
@@ -32,15 +38,21 @@ public class LevelData : MonoBehaviour
                 break;
             }
         }
-
-        var existingPlayer = FindObjectOfType<CharacterController>();
-
         GameObject player;
-        if (existingPlayer)
+        var existingPlayer = FindObjectOfType<CharacterController>();
+        if (TransitionManager.Instance.GetSpawnIndex == 0) {
+            if (existingPlayer)
+            {
+                player = existingPlayer.gameObject;
+            } else
+            {
+                player = Instantiate(playerPrefab);
+                player.transform.position = pos;
+            } 
+        }
+        else
         {
-            player = existingPlayer.gameObject;
-        } else
-        {
+            if (existingPlayer) Destroy(existingPlayer.gameObject);
             player = Instantiate(playerPrefab);
             player.transform.position = pos;
         }

@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -17,6 +18,8 @@ public class Nightlight : MonoBehaviour
 {
     private Animator _animator;
     private Light2D _light;
+    public AudioClip ActivateSFX;
+    private bool _activated = false;
 
     private void Awake()
     {
@@ -35,7 +38,12 @@ public class Nightlight : MonoBehaviour
     {
         if (_animator && other.CompareTag("Player"))
         {
-            _animator.SetTrigger("Activate");
+            if (!_activated)
+            {
+                _activated = true;
+                _animator.SetTrigger("Activate");
+                AudioManager.Instance.PlaySound(ActivateSFX);
+            }
         }
     }
 }
