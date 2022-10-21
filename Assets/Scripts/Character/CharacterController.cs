@@ -34,6 +34,9 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private Transform puppet = null;
     //[SerializeField] private CharacterAudio audioPlayer = null;
 
+    [Header("Data")] 
+    [SerializeField] private PlayerData_SO playerData;
+
     [Header("Sanity")]
     [SerializeField] private float sanityLossRate = 0.5f;
     [SerializeField] private float sanityGainRate = 0.25f;
@@ -67,7 +70,6 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        
         controllerRigidBody = GetComponent<Rigidbody2D>();
         controllerCollider = GetComponent<Collider2D>();
         softGroundMask = LayerMask.GetMask("Ground Soft");
@@ -287,5 +289,18 @@ public class CharacterController : MonoBehaviour
         OnDeath.Invoke();
         yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("Prototype_BensBedroom");
+    }
+
+    public void FetchPersistentData()
+    {
+        sanity = playerData.sanity;
+        sanityGainRate = playerData.sanityGainRate;
+        sanityLossRate = playerData.sanityLossRate;
+    }
+    public void SetPersistentData()
+    {
+        playerData.sanity = sanity;
+        playerData.sanityGainRate = sanityGainRate;
+        playerData.sanityLossRate = sanityLossRate;
     }
 }

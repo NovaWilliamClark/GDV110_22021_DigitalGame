@@ -346,7 +346,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc190552970822e4da844a3b7709d221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SanityMeter: {fileID: 7752077794529709465}
+  sanityMeter: {fileID: 7752077794529709465}
+  decreaseSlider: 0
 --- !u!1 &5464775415374261092
 GameObject:
   m_ObjectHideFlags: 0

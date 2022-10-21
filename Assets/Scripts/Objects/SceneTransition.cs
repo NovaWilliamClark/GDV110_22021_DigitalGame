@@ -1,17 +1,34 @@
-using System;
+/*******************************************************************************************
+*
+*    File: SceneTransition.cs
+*    Purpose: An area that upon a player entering, starts a transition to a new scene
+*    Author: Sam Blakely
+*    Date: 10/10/2022
+*
+**********************************************************************************************/
+
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Objects
 {
+    [RequireComponent(typeof(BoxCollider2D))]
     public class SceneTransition : MonoBehaviour
     {
-        [SerializeField] private string nextSceneName;
-        private void OnTriggerEnter2D(Collider2D collision)
+        [SerializeField] private string sceneToLoad;
+        [SerializeField] private int spawnPointIndex;
+
+        private void Awake()
         {
-            if (collision.GetComponent<CharacterController>())
+            GetComponent<BoxCollider2D>().isTrigger = true;
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.TryGetComponent<CharacterController>(out var player))
             {
-                SceneManager.LoadScene(nextSceneName);
+                player.SetPersistentData();
+                TransitionManager.Instance.SetSpawnIndex(spawnPointIndex);
+                TransitionManager.Instance.LoadScene(sceneToLoad);
             }
         }
     }
