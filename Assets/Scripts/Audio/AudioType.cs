@@ -16,6 +16,7 @@ namespace Audio
     public enum AudioType
     {
         None,
+        MainMenuSoundtrack,
         BenAttackSound,
         EnemyDeathSound,
         BedroomSoundtrack,
