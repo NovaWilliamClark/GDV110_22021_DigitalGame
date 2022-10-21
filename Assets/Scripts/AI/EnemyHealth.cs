@@ -7,6 +7,7 @@
 *
 **********************************************************************************************/
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -52,6 +53,23 @@ namespace AI
         {
             yield return new WaitForSeconds(invulnerabilityTime);
             hasBeenHit = false;
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.GetComponent<CharacterController>())
+            {
+            //    Debug.Log("Player hit");
+            }
+            
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                Debug.Log("Hitting player");
+            }
         }
     }
 }

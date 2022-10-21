@@ -117,7 +117,12 @@ public class EnemyBehaviour : MonoBehaviour
    //     }
    // }
 
-    public IEnumerator AttackCooldownReset()
+   private void OnDrawGizmos()
+   {
+       
+   }
+
+   public IEnumerator AttackCooldownReset()
     {
         yield return new WaitForSeconds(atkCooldownTime);
         inCooldown = false;
