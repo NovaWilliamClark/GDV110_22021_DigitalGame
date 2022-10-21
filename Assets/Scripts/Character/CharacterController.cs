@@ -15,6 +15,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Core.LitArea;
+using AudioType = UnityEngine.AudioType;
 
 public enum GroundType
 {
