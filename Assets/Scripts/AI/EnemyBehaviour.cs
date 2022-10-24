@@ -7,129 +7,106 @@
 *
 **********************************************************************************************/
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using AI;
 using Audio;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class EnemyBehaviour : MonoBehaviour
+
+// TODO: REFACTOR ENTIRE ENEMY BEHAVIOUR
+
+namespace AI
 {
-    public Transform rayCast;
-    public LayerMask raycastMask;
-    [SerializeField] public float rayCastLength;
-    [SerializeField] public float attackDistance;
-    [SerializeField] public float moveSpeed;
-    [SerializeField] public float atkCooldownTime;
-    [SerializeField] public Animator animator = null;
-
-    private Rigidbody2D controllerRigidBody;
-    private RaycastHit2D hit;
-    private GameObject target;
-    private float distance;
-    private bool attackMode;
-    private bool inRange;
-    private bool inCooldown;
-    [HideInInspector] public Animator weaponAnimator;
-    private static readonly int Melee = Animator.StringToHash("Melee");
-    private static readonly int IsMoving = Animator.StringToHash("IsMoving");
-
-    [SerializeField] private AudioClip attackSFX;
-
-    void Start()
+    public class EnemyBehaviour : MonoBehaviour
     {
-        controllerRigidBody = GetComponent<Rigidbody2D>();
-        weaponAnimator = GetComponentInChildren<EnemyWeapon>().GetComponent<Animator>();
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        if (inRange)
-        {
-            hit = Physics2D.Raycast(rayCast.position, Vector2.left, rayCastLength, raycastMask);
-            //RaycastDebugger();
-        }
-        else
-        {
-            animator.SetBool(IsMoving, false);
-        }
+        public Transform rayCast;
+        public LayerMask raycastMask;
+        [SerializeField] public float rayCastLength;
+        [SerializeField] public float attackDistance;
+        [SerializeField] public float moveSpeed;
+        [SerializeField] public float atkCooldownTime;
+        [SerializeField] public Animator animator;
+        
+        private RaycastHit2D hit;
+        private GameObject target;
+        private float distance;
+        private bool attackMode;
+        private bool inRange;
+        private bool inCooldown;
+        private static readonly int Melee = Animator.StringToHash("Melee");
+        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
-        if (hit.collider != null)
-        {
-            EnemyLogic();
-        }
-        else if (hit.collider == null)
-        {
-            inRange = false;
-        }
-    }
+        [SerializeField] private AudioClip attackSFX;
 
-    void OnTriggerEnter2D(Collider2D trig)
-    {
-        if (trig.gameObject.CompareTag("Player"))
+        // Update is called once per frame
+        void Update()
         {
-            target = trig.gameObject;
-            inRange = true;
-        }
-    }
+            if (inRange)
+            {
+                hit = Physics2D.Raycast(rayCast.position, Vector2.left, rayCastLength, raycastMask);
+                //RaycastDebugger();
+            }
+            else
+            {
+                animator.SetBool(IsMoving, false);
+            }
 
-    void EnemyLogic()
-    {
-        distance = Vector2.Distance(transform.position, target.transform.position);
-
-        if (distance > attackDistance && !attackMode)
-        {
-            Move();
-        }
-        else if (attackDistance >= distance && inCooldown == false)
-        {
-            Attack();
+            if (hit.collider != null)
+            {
+                EnemyLogic();
+            }
+            else if (hit.collider == null)
+            {
+                inRange = false;
+            }
         }
 
-    }
+        void OnTriggerEnter2D(Collider2D trig)
+        {
+            if (trig.gameObject.CompareTag("Player"))
+            {
+                target = trig.gameObject;
+                inRange = true;
+            }
+        }
 
-    void Move()
-    {
-        animator.SetBool(IsMoving, true);
-        var position = transform.position;
-        Vector2 targetPosition = new Vector2(target.transform.position.x, position.y);
-        position = Vector2.MoveTowards(position, targetPosition, moveSpeed * Time.deltaTime);
-        transform.position = position;
-    }
+        void EnemyLogic()
+        {
+            distance = Vector2.Distance(transform.position, target.transform.position);
 
-    void Attack()
-    {
-        inCooldown = true;
-        attackMode = true;
-        animator.SetTrigger(Melee);
-        AudioManager.Instance.PlaySound(attackSFX); // TODO: Move to callback driven by animation events
-    }
+            if (distance > attackDistance && !attackMode)
+            {
+                Move();
+            }
+            else if (attackDistance >= distance && inCooldown == false)
+            {
+                Attack();
+            }
 
-    // void RaycastDebugger()
-   // {
-   //     if (distance > attackDistance)
-   //     {
-   //         Debug.DrawRay(rayCast.position, Vector2.left * rayCastLength, Color.red);
-   //     }
-   //     else if (attackDistance > distance)
-   //     {
-   //         Debug.DrawRay(rayCast.position, Vector2.left * rayCastLength, Color.green);
-   //     }
-   // }
+        }
 
-   private void OnDrawGizmos()
-   {
-       
-   }
+        void Move()
+        {
+            animator.SetBool(IsMoving, true);
+            var position = transform.position;
+            Vector2 targetPosition = new Vector2(target.transform.position.x, position.y);
+            position = Vector2.MoveTowards(position, targetPosition, moveSpeed * Time.deltaTime);
+            transform.position = position;
+        }
 
-   public IEnumerator AttackCooldownReset()
-    {
-        yield return new WaitForSeconds(atkCooldownTime);
-        inCooldown = false;
-        attackMode = false;
+        void Attack()
+        {
+            inCooldown = true;
+            attackMode = true;
+            animator.SetTrigger(Melee);
+            AudioManager.Instance.PlaySound(attackSFX); // TODO: Move to callback driven by animation events
+        }
+        
+
+        public IEnumerator AttackCooldownReset()
+        {
+            yield return new WaitForSeconds(atkCooldownTime);
+            inCooldown = false;
+            attackMode = false;
+        }
     }
 }

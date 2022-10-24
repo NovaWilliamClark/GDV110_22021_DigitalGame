@@ -64,7 +64,6 @@ public class CharacterController : MonoBehaviour
 
     private int animatorMoveSpeed;
     public UnityEvent OnDeath;
-    private MeleeWeapon _meleeWeapon;
 
     private bool CanMove { get; set; }
 
@@ -75,8 +74,6 @@ public class CharacterController : MonoBehaviour
         softGroundMask = LayerMask.GetMask("Ground Soft");
         hardGroundMask = LayerMask.GetMask("Ground Hard");
 
-        _meleeWeapon = GetComponentInChildren<MeleeWeapon>();
-    
         animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
     
         CanMove = true;
@@ -132,7 +129,6 @@ public class CharacterController : MonoBehaviour
         }
         
         UpdateDirection();
-        CheckMeleeInput();
     }
 
     private void FixedUpdate()
@@ -163,7 +159,7 @@ public class CharacterController : MonoBehaviour
         Vector2 velocity = controllerRigidBody.velocity;
         
         // Apply acceleration directly because we will clamp prior to assigning back to the body
-        velocity += movementInput * acceleration * Time.fixedDeltaTime;
+        velocity += movementInput * (acceleration * Time.fixedDeltaTime);
         
         // We've consumed the movement, reset it.
         movementInput = Vector2.zero;
@@ -259,23 +255,6 @@ public class CharacterController : MonoBehaviour
         }
     }
     
-    private void CheckMeleeInput()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            meleeAttack = true;
-        }
-        else
-        {
-            meleeAttack = false;
-        }
-            
-        if (meleeAttack && IsGrounded())
-        {
-            _meleeWeapon.Attack();
-        }
-    }
-
     private IEnumerator RestartLevel()
     {
         OnDeath.Invoke();

@@ -1,19 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMeleeHitbox : MonoBehaviour
+namespace AI
 {
-    private EnemyBehaviour enemy;
-    
-    private void Start()
+    public class EnemyMeleeHitbox : MonoBehaviour
     {
-        enemy = GetComponentInParent<EnemyBehaviour>();
-    }
+        private EnemyBehaviour enemy;
     
-    private void EnableDamageHitbox()
-    {
-        enemy.weaponAnimator.SetTrigger("MeleeSwipe");
-        StartCoroutine(enemy.AttackCooldownReset());
+        private void Start()
+        {
+            enemy = GetComponentInParent<EnemyBehaviour>();
+        }
+    
+        private void EnableDamageHitbox()
+        {
+            StartCoroutine(enemy.AttackCooldownReset());
+        }
     }
 }

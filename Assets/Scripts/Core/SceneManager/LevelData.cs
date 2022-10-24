@@ -8,6 +8,7 @@
 **********************************************************************************************/
 
 using Audio;
+using Objects;
 using UnityEngine;
 
 public class LevelData : MonoBehaviour
