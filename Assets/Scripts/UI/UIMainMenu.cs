@@ -10,6 +10,7 @@
 using System;
 using System.Collections;
 using Audio;
+using Objects;
 using UnityEngine;
 using UnityEngine.UI;
 

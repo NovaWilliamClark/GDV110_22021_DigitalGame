@@ -13,32 +13,36 @@ using UnityEngine.SceneManagement;
 
 namespace Objects
 {
-    public static TransitionManager Instance { get; private set; }
-    public int GetSpawnIndex => indexToSpawnAt;
-    private int indexToSpawnAt;
-    private LevelData data;
-    
-    private void Awake()
+    public class TransitionManager : MonoBehaviour
     {
-        if (Instance == null)
+
+        public static TransitionManager Instance { get; private set; }
+        public int GetSpawnIndex => indexToSpawnAt;
+        private int indexToSpawnAt;
+        private LevelData data;
+
+        private void Awake()
         {
             if (Instance == null)
             {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
+                if (Instance == null)
+                {
+                    Instance = this;
+                    DontDestroyOnLoad(gameObject);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
-
+        
         public void LoadScene(string sceneToLoad)
         {
             AudioManager.Instance.Cleanup();
             SceneManager.LoadScene(sceneToLoad);
         }
-    
+
         public void SetSpawnIndex(int index)
         {
             indexToSpawnAt = index;
