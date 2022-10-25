@@ -13,14 +13,14 @@ using UnityEngine.SceneManagement;
 
 namespace Objects
 {
-    public class TransitionManager : MonoBehaviour
-    {
-        public static TransitionManager Instance { get; private set; }
-        public int GetSpawnIndex => indexToSpawnAt;
-        private int indexToSpawnAt;
-        private LevelData data;
+    public static TransitionManager Instance { get; private set; }
+    public int GetSpawnIndex => indexToSpawnAt;
+    private int indexToSpawnAt;
+    private LevelData data;
     
-        private void Awake()
+    private void Awake()
+    {
+        if (Instance == null)
         {
             if (Instance == null)
             {

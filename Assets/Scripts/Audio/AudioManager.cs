@@ -15,6 +15,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.Pool;
+using UnityEngine.SceneManagement;
 
 namespace Audio
 {
@@ -132,16 +133,18 @@ namespace Audio
             });
         }
 
-        public void StopMusic(bool fade, float duration, UnityAction onComplete = null)
+        public void StopMusic(UnityAction onComplete = null)
         {
-            if (fade)
+            BGMSource.Stop();
+            onComplete?.Invoke();
+        }
+
+        public void StopMusic(float fadeDuration, UnityAction onComplete = null)
+        {
+            FadeMusic(0f, fadeDuration, () =>
             {
-                FadeMusic(0f, duration, () =>
-                {
-                    BGMSource.Stop();
-                    onComplete?.Invoke();
-                });
-            }
+                StopMusic(onComplete);
+            });
         }
         
         private void OnAudioSourceDestroyed(AudioSource obj)
