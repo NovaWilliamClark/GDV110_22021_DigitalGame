@@ -9,9 +9,12 @@
 
 using UnityEngine;
 
-public class PlayerSpawnPoint : MonoBehaviour
+namespace Core.SceneManager
 {
-    public Vector2 GetPosition => gameObject.transform.position;
-    public int GetSpawnIndex => spawnIndex;
-    [SerializeField] private int spawnIndex;
+	public class PlayerSpawnPoint : MonoBehaviour
+	{
+		public Vector2 GetPosition => gameObject.transform.position;
+		public int GetSpawnIndex => spawnIndex;
+		[SerializeField] private int spawnIndex;
+	}   
 }

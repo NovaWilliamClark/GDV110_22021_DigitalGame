@@ -16,10 +16,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Core.LitArea;
 using Objects;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Serialization;
-using AudioType = UnityEngine.AudioType;
-using UnityEngine.Rendering.UI;
 
 public enum GroundType
 {
@@ -43,13 +40,14 @@ public class CharacterController : MonoBehaviour
     [Header("Sanity")]
     [SerializeField] private float sanityLossRate = 0.5f;
     [SerializeField] private float sanityGainRate = 0.25f;
+    private float sanity = 100.0f;
     private bool isInLight = false;
     private bool allowLightInteraction = true;
 
     //[SerializeField] private Inventory inventory;
     public Inventory GetInventory => inventory;
     private Inventory inventory;
-    public float getSanity { get; private set; } = 100f;
+    public float getSanity { get; private set; }
 
     [Header("Movement")]
     [SerializeField] private float acceleration = 30.0f;
@@ -81,23 +79,26 @@ public class CharacterController : MonoBehaviour
 
     private bool CanMove { get; set; }
 
-    private void Start()
+    private void Awake()
     {
-        inventory = GetComponentInChildren<Inventory>();
-        inventory.gameObject.SetActive(false);
-        FetchPersistentData();
-        
         controllerRigidBody = GetComponent<Rigidbody2D>();
         controllerCollider = GetComponent<Collider2D>();
         softGroundMask = LayerMask.GetMask("Ground Soft");
         hardGroundMask = LayerMask.GetMask("Ground Hard");
-
+        
         animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
     
         CanMove = true;
         //controllerCollider.isTrigger = true;
         LitArea.onLightEnter += Light_OnLightEnter; 
         LitArea.onLightExit += Light_OnLightExit;
+    }
+
+    private void Start()
+    {
+        inventory = GetComponentInChildren<Inventory>();
+        inventory.gameObject.SetActive(false);
+        FetchPersistentData();
     }
     
     private void Update()
@@ -262,7 +263,7 @@ public class CharacterController : MonoBehaviour
         if (fromDarkness)
         {
             if (sanity <= 0.001f)
-            sanity -= damageTaken;
+                sanity -= damageTaken;
             {
                 sanity = 0.001f;
             }
@@ -302,7 +303,7 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    private void FetchPersistentData()
+    public void FetchPersistentData()
     {
         getSanity = playerData.sanity;
         sanityGainRate = playerData.sanityGainRate;

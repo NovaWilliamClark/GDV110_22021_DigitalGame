@@ -7,46 +7,50 @@
 *
 **********************************************************************************************/
 
+using Character;
 using UnityEngine;
 
-public class LevelController : MonoBehaviour
+namespace SceneManagement
 {
-    private PlayerSpawnPoint[] playerSpawnPoints;
-    [SerializeField] private GameObject playerPrefab;
-
-    private void Awake()
+    public class LevelController : MonoBehaviour
     {
-        playerSpawnPoints = FindObjectsOfType<PlayerSpawnPoint>();
-    }
+        private PlayerSpawnPoint[] playerSpawnPoints;
+        [SerializeField] private GameObject playerPrefab;
 
-    private void Start()
-    {
-        InitPlayer();
-    }
-
-    private void InitPlayer()
-    {
-        var sanityMeter = FindObjectOfType<SanityMeter>();
-        sanityMeter.decreaseSlider = false;
-        int spawnIndex = TransitionManager.Instance.GetSpawnIndex;
-        Vector2 pos = new Vector2();
-        PlayerSpawnPoint.FacingDirection direction = PlayerSpawnPoint.FacingDirection.Left;
-        
-        foreach (PlayerSpawnPoint spawn in playerSpawnPoints)
+        private void Awake()
         {
-            if (spawn.GetSpawnIndex == spawnIndex)
-            {
-                pos = spawn.GetPosition;
-                direction = spawn.GetFacingDirection;
-                break;
-            }
+            playerSpawnPoints = FindObjectsOfType<PlayerSpawnPoint>();
         }
 
-        var player = Instantiate(playerPrefab);
-        var playerObj = player.GetComponent<CharacterController>();
-        playerObj.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
-        sanityMeter.Init();
-        player.transform.position = pos;
-        //playerObj.FetchPersistentData();
+        private void Start()
+        {
+            InitPlayer();
+        }
+
+        private void InitPlayer()
+        {
+            var sanityMeter = FindObjectOfType<SanityMeter>();
+            sanityMeter.decreaseSlider = false;
+            int spawnIndex = TransitionManager.Instance.GetSpawnIndex;
+            Vector2 pos = new Vector2();
+            PlayerSpawnPoint.FacingDirection direction = PlayerSpawnPoint.FacingDirection.Left;
+        
+            foreach (PlayerSpawnPoint spawn in playerSpawnPoints)
+            {
+                if (spawn.GetSpawnIndex == spawnIndex)
+                {
+                    pos = spawn.GetPosition;
+                    direction = spawn.GetFacingDirection;
+                    break;
+                }
+            }
+
+            var player = Instantiate(playerPrefab);
+            var playerObj = player.GetComponent<CharacterController>();
+            playerObj.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
+            sanityMeter.Init();
+            player.transform.position = pos;
+            //playerObj.FetchPersistentData();
+        }
     }
 }

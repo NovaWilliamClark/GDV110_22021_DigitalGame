@@ -50,5 +50,14 @@ namespace Character
             player = characterController;
             decreaseSlider = true;
         }
+
+        public void Init()
+        {
+            player = FindObjectOfType<CharacterController>();
+            if (player != null)
+            {
+                decreaseSlider = true;
+            }
+        }
     }
 }
