@@ -9,16 +9,13 @@ public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
 
-    [SerializeField] private GameObject dialoguePrefab;
-
-    private GameObject prefabInstance;
+    [SerializeField] private GameObject dialogueManager;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GameObject().CompareTag("Player"))
         {
-            prefabInstance = Instantiate(dialoguePrefab, Vector3.zero, Quaternion.identity);
-            prefabInstance.GetComponent<WorldDialogueManager>().StartDialogue(dialogue);
+            dialogueManager.GetComponent<WorldDialogueManager>().StartDialogue(dialogue);
         }
     }
 
@@ -26,7 +23,8 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (collision.GameObject().CompareTag("Player"))
         {
-            prefabInstance.GetComponent<WorldDialogueManager>().EndDialogue();
+            dialogueManager.GetComponent<WorldDialogueManager>().EndDialogue();
+            Destroy(gameObject);
         }
     }
 }

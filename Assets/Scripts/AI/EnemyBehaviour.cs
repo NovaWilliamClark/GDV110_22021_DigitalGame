@@ -98,7 +98,7 @@ namespace AI
             inCooldown = true;
             attackMode = true;
             animator.SetTrigger(Melee);
-            AudioManager.Instance.PlaySound(attackSFX); // TODO: Move to callback driven by animation events
+            //AudioManager.Instance.PlaySound(attackSFX); // TODO: Move to callback driven by animation events
         }
         
 
