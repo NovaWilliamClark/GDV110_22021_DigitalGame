@@ -15,7 +15,8 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Core.LitArea;
-using AudioType = UnityEngine.AudioType;
+using UnityEngine.Rendering.UI;
+using Objects;
 
 public enum GroundType
 {
@@ -41,15 +42,18 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float sanityLossRate = 0.5f;
     [SerializeField] private float sanityGainRate = 0.25f;
     private bool isInLight = false;
-    private float sanity = 100f;
     private bool allowLightInteraction = true;
-    public float getSanity => sanity;
+
+    //[SerializeField] private Inventory inventory;
+    public Inventory GetInventory => inventory;
+    private Inventory inventory;
+    public float getSanity { get; private set; } = 100f;
 
     [Header("Movement")]
     [SerializeField] private float acceleration = 30.0f;
     [SerializeField] private float maxSpeed = 5.0f;
     [SerializeField] private float minFlipSpeed = 0.1f;
-
+    
 
     private Rigidbody2D controllerRigidBody;
     private Collider2D controllerCollider;
@@ -69,6 +73,10 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
+        inventory = GetComponentInChildren<Inventory>();
+        inventory.gameObject.SetActive(false);
+        FetchPersistentData();
+        
         controllerRigidBody = GetComponent<Rigidbody2D>();
         controllerCollider = GetComponent<Collider2D>();
         softGroundMask = LayerMask.GetMask("Ground Soft");
@@ -107,6 +115,12 @@ public class CharacterController : MonoBehaviour
 
         movementInput = new Vector2(moveHorizontal, 0);
 
+        //Interaction
+        if (Input.GetButtonDown("Inventory"))
+        {
+            ShowInventory();
+        }
+        
         // Roll Dodge
 
 
@@ -119,12 +133,12 @@ public class CharacterController : MonoBehaviour
             }
             else
             {
-                sanity += sanityGainRate;
+                getSanity += sanityGainRate;
             }
             
-            if (sanity >= 100)
+            if (getSanity >= 100)
             {
-                sanity = 100f;
+                getSanity = 100f;
             }
         }
         
@@ -235,18 +249,18 @@ public class CharacterController : MonoBehaviour
     {
         if (fromDarkness)
         {
-            sanity -= damageTaken;
-            if (sanity <= 0)
+            getSanity -= damageTaken;
+            if (getSanity <= 0)
             {
-                sanity = 1;
+                getSanity = 1;
             }
         }
         else
         {
-            sanity -= damageTaken;
-            if (sanity <= 0)
+            getSanity -= damageTaken;
+            if (getSanity <= 0)
             {
-                sanity = 0;
+                getSanity = 0;
                 allowLightInteraction = false; //Stop processing sanity light interaction 
                 CanMove = false;
                 // Play Death Animation
@@ -262,16 +276,42 @@ public class CharacterController : MonoBehaviour
         SceneManager.LoadScene("Prototype_BensBedroom");
     }
 
-    public void FetchPersistentData()
+    public void SetIsFlipped(bool value)
     {
-        sanity = playerData.sanity;
+        if (value == true)
+        {
+            puppet.localScale = flippedScale;
+            isFlipped = true;
+        }
+        else
+        {
+            puppet.localScale = Vector2.one;
+            isFlipped = false;
+        }
+    }
+
+    private void FetchPersistentData()
+    {
+        getSanity = playerData.sanity;
         sanityGainRate = playerData.sanityGainRate;
         sanityLossRate = playerData.sanityLossRate;
+        inventory.Init(playerData.inventoryItems);
     }
     public void SetPersistentData()
     {
-        playerData.sanity = sanity;
+        playerData.sanity = getSanity;
         playerData.sanityGainRate = sanityGainRate;
         playerData.sanityLossRate = sanityLossRate;
+        //playerData.inventoryItems.Clear();
+        playerData.SetItems(inventory);
+    }
+    
+    private void ShowInventory()
+    {
+        GetInventory.gameObject.SetActive(true);
+    }
+    public void AddToInventory(Item item)
+    {
+        GetInventory.AddToInventory(item);
     }
 }

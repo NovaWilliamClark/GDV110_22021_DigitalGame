@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441247640e0c44dda0af2e523e94d683, type: 3}
-  m_Name: PlayerData
+  m_Script: {fileID: 11500000, guid: 9d95557e9ff74689b1b9dfffe93683b8, type: 3}
+  m_Name: TestItem
   m_EditorClassIdentifier: 
-  sanity: 100
-  sanityGainRate: 0.025
-  sanityLossRate: 0.03
-  inventoryItems: []
+  itemID: 0
+  itemName: TestItem
+  itemImage: {fileID: 0}

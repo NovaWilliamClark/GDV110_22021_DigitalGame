@@ -17,12 +17,12 @@ public class SanityMeter : MonoBehaviour
     public bool decreaseSlider = false;
     private CharacterController player;
     
-    private void Start()
+    public void Init()
     {
         player = FindObjectOfType<CharacterController>();
         if (player != null)
         {
-            decreaseSlider = true;
+             decreaseSlider = true;
         }
     }
 
@@ -43,9 +43,9 @@ public class SanityMeter : MonoBehaviour
         sanityMeter.value = player.getSanity;
     }
 
-    public void SetPlayer(CharacterController characterController)
-    {
-        player = characterController;
-        decreaseSlider = true;
-    }
+    //blic void SetPlayer(CharacterController characterController)
+    //{
+        //player = characterController;
+        //decreaseSlider = true;
+    //}
 }
