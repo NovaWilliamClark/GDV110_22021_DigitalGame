@@ -8,8 +8,10 @@
 *
 **********************************************************************************************/
 
+using System.Collections;
 using Objects;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class ItemPickup : InteractionPoint

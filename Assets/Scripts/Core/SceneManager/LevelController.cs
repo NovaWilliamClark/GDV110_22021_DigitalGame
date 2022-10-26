@@ -7,12 +7,16 @@
 *
 **********************************************************************************************/
 
+using Audio;
 using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
     private PlayerSpawnPoint[] playerSpawnPoints;
     [SerializeField] private GameObject playerPrefab;
+
+    public AudioClip LevelBGM;
+    public float BGMVolume;
 
     private void Awake()
     {
@@ -28,8 +32,12 @@ public class LevelController : MonoBehaviour
     {
         var sanityMeter = FindObjectOfType<SanityMeter>();
         sanityMeter.decreaseSlider = false;
+        
+        AudioManager.Instance.PlayMusic(LevelBGM, BGMVolume);
+        
         int spawnIndex = TransitionManager.Instance.GetSpawnIndex;
         Vector2 pos = new Vector2();
+        
         PlayerSpawnPoint.FacingDirection direction = PlayerSpawnPoint.FacingDirection.Left;
         
         foreach (PlayerSpawnPoint spawn in playerSpawnPoints)
@@ -42,11 +50,17 @@ public class LevelController : MonoBehaviour
             }
         }
 
-        var player = Instantiate(playerPrefab);
-        var playerObj = player.GetComponent<CharacterController>();
-        playerObj.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
+        var existingPlayer = FindObjectOfType<CharacterController>();
+
+        if (!existingPlayer)
+        {
+            var player = Instantiate(playerPrefab);
+            var playerController = player.GetComponent<CharacterController>();
+            playerController.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
+            player.transform.position = pos;
+        }
+        
         sanityMeter.Init();
-        player.transform.position = pos;
         //playerObj.FetchPersistentData();
     }
 }

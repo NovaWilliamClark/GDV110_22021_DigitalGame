@@ -9,6 +9,7 @@
 **********************************************************************************************/
 
 
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -22,6 +23,8 @@ public abstract class InteractionPoint : MonoBehaviour
     private BoxCollider2D triggerArea;
     private bool canInteract = true;
 
+    private PlayerInput input;
+
      private void Awake()
      {
          triggerArea = GetComponent<BoxCollider2D>();
@@ -29,6 +32,12 @@ public abstract class InteractionPoint : MonoBehaviour
          {
              triggerArea.isTrigger = true;
          }
+     }
+
+     private void Start()
+     {
+         input = new PlayerInput();
+         input.Enable();
      }
 
      private void OnTriggerEnter2D(Collider2D other)
@@ -44,7 +53,8 @@ public abstract class InteractionPoint : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         if (!other.GetComponent<CharacterController>()) return;
-        if (!(Input.GetButton("Interact"))) return;
+        //if (!(Input.GetButton("Interact"))) return;
+        if (!input.Player.Interact.IsPressed()) return;
         Interact(other.GetComponent<CharacterController>());
     }
 

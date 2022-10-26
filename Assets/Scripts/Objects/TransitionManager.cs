@@ -12,41 +12,45 @@ using Core.SceneManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Objects
+public class TransitionManager : MonoBehaviour
 {
-    public class TransitionManager : MonoBehaviour
+    public static TransitionManager Instance { get; private set; }
+    public int GetSpawnIndex => indexToSpawnAt;
+    private int indexToSpawnAt = 0;
+    private LevelController _controller;
+    
+    private void Awake()
     {
-
-        public static TransitionManager Instance { get; private set; }
-        public int GetSpawnIndex => indexToSpawnAt;
-        private int indexToSpawnAt;
-        private LevelData data;
-
-        private void Awake()
+        if (Instance == null)
         {
-            if (Instance == null)
-            {
-                if (Instance == null)
-                {
-                    Instance = this;
-                    DontDestroyOnLoad(gameObject);
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
-            }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        
-        public void LoadScene(string sceneToLoad)
+        else
         {
-            AudioManager.Instance.Cleanup();
-            SceneManager.LoadScene(sceneToLoad);
+            Destroy(gameObject);
         }
+    }
 
-        public void SetSpawnIndex(int index)
-        {
-            indexToSpawnAt = index;
-        }
+    void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // TODO: Move this into a GameManager for when the level is ready as things might still be loading
+        UIHelpers.Instance.Fader.Fade(0f, 1f);
+    }
+
+    public void LoadScene(string sceneToLoad)
+    {
+        AudioManager.Instance.Cleanup();
+        SceneManager.LoadScene(sceneToLoad);
+    }
+    
+    public void SetSpawnIndex(int index)
+    {
+        indexToSpawnAt = index;
     }
 }
