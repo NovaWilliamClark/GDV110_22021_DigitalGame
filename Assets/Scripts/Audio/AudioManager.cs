@@ -26,7 +26,7 @@ namespace Audio
         private AudioSource previousBGMSource;
         private AudioSource BGMSource;
 
-        private int poolSize = 20;
+        [SerializeField] private int poolSize = 20;
         private ObjectPool<AudioSource> pool;
         public ObjectPool<AudioSource> Pool => pool;
 
@@ -54,7 +54,7 @@ namespace Audio
 
         void Start()
         {
-            pool = new ObjectPool<AudioSource>(CreatePoolAudioSource, OnAudioSourceFromPool, OnAudioSourceReleased, OnAudioSourceDestroyed, true, 20, 100);
+            pool = new ObjectPool<AudioSource>(CreatePoolAudioSource, OnAudioSourceFromPool, OnAudioSourceReleased, OnAudioSourceDestroyed, true, poolSize, 100);
         }
 
         /// <summary>

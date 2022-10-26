@@ -8,6 +8,7 @@
 **********************************************************************************************/
 
 using Audio;
+using Core.SceneManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
