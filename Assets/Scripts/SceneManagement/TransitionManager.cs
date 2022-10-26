@@ -13,8 +13,8 @@ public class TransitionManager : MonoBehaviour
 {
     public static TransitionManager Instance { get; private set; }
     public int GetSpawnIndex => indexToSpawnAt;
-    private int indexToSpawnAt;
-    private LevelData data;
+    private int indexToSpawnAt = 0;
+    private LevelController _controller;
     
     private void Awake()
     {
