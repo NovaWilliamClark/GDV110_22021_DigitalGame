@@ -11,41 +11,44 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SanityMeter : MonoBehaviour
+namespace Character
 {
-    [SerializeField] private Slider sanityMeter;
-    public bool decreaseSlider = false;
-    private CharacterController player;
+    public class SanityMeter : MonoBehaviour
+    {
+        [SerializeField] private Slider sanityMeter;
+        public bool decreaseSlider;
+        private CharacterController player;
     
-    public void Init()
-    {
-        player = FindObjectOfType<CharacterController>();
-        if (player != null)
+        private void Start()
         {
-             decreaseSlider = true;
+            player = FindObjectOfType<CharacterController>();
+            if (player != null)
+            {
+                decreaseSlider = true;
+            }
+        }
+
+        private void Update()
+        {
+            if (!decreaseSlider)
+            {
+                return;
+            }
+
+            if (sanityMeter.value <= 0f)
+            {
+                Image[] list = GetComponentsInChildren<Image>();
+                list.ElementAt(1).enabled = false;
+                return;
+            }
+
+            sanityMeter.value = player.getSanity;
+        }
+
+        public void SetPlayer(CharacterController characterController)
+        {
+            player = characterController;
+            decreaseSlider = true;
         }
     }
-
-    private void Update()
-    {
-        if (!decreaseSlider)
-        {
-            return;
-        }
-
-        if (sanityMeter.value <= 0f)
-        {
-            Image[] list = GetComponentsInChildren<Image>();
-            list.ElementAt(1).enabled = false;
-            return;
-        }
-
-        sanityMeter.value = player.getSanity;
-    }
-
-    //blic void SetPlayer(CharacterController characterController)
-    //{
-        //player = characterController;
-        //decreaseSlider = true;
-    //}
 }

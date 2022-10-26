@@ -15,8 +15,11 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Core.LitArea;
-using UnityEngine.Rendering.UI;
 using Objects;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Serialization;
+using AudioType = UnityEngine.AudioType;
+using UnityEngine.Rendering.UI;
 
 public enum GroundType
 {
@@ -28,7 +31,6 @@ public enum GroundType
 public class CharacterController : MonoBehaviour
 {
     private readonly Vector3 flippedScale = new Vector3(-1, 1, 1);
-    private readonly Quaternion flippedRotation = new Quaternion(0, 0, 1, 0);
 
     [Header("Character")]
     [SerializeField] public Animator animator = null;
@@ -53,8 +55,9 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float acceleration = 30.0f;
     [SerializeField] private float maxSpeed = 5.0f;
     [SerializeField] private float minFlipSpeed = 0.1f;
+    private float moveHorizontal;
+    private Vector2 movementVelocity;
     
-
     private Rigidbody2D controllerRigidBody;
     private Collider2D controllerCollider;
     private LayerMask softGroundMask;
@@ -64,10 +67,17 @@ public class CharacterController : MonoBehaviour
     private Vector2 movementInput;
     private Vector2 prevVelocity;
     private bool isFlipped;
-    private bool meleeAttack;
-
+    
+    [Header("Animation")]
     private int animatorMoveSpeed;
-    public UnityEvent OnDeath;
+    [FormerlySerializedAs("OnDeath")] public UnityEvent onDeath;
+
+    [Header("Push & Pull")]
+    private bool canMoveObject;
+    private bool isMovingObject;
+    private float movementAcceleration;
+    private GameObject objToMove;
+    private MovableObject movableObjScript;
 
     private bool CanMove { get; set; }
 
@@ -100,7 +110,7 @@ public class CharacterController : MonoBehaviour
         }
 
         // Horizontal Movement
-        float moveHorizontal = 0.0f;
+        moveHorizontal = 0.0f;
 
         if (keyboard.leftArrowKey.isPressed || keyboard.aKey.isPressed)
         {
@@ -147,12 +157,11 @@ public class CharacterController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        MoveObject();
         UpdateGrounding();
         UpdateVelocity();
     }
-
     
-    // 
     private void UpdateGrounding()
     {
         // Use Character Collider to check if touching ground layers
@@ -170,23 +179,23 @@ public class CharacterController : MonoBehaviour
 
     private void UpdateVelocity()
     {
-        Vector2 velocity = controllerRigidBody.velocity;
+        movementVelocity = controllerRigidBody.velocity;
         
         // Apply acceleration directly because we will clamp prior to assigning back to the body
-        velocity += movementInput * (acceleration * Time.fixedDeltaTime);
+        movementVelocity += (movementInput * (acceleration * Time.fixedDeltaTime));
         
         // We've consumed the movement, reset it.
         movementInput = Vector2.zero;
         
         // Clamp horizontal speed
-        velocity.x = Mathf.Clamp(velocity.x, -maxSpeed, maxSpeed);
+        movementVelocity.x = Mathf.Clamp(movementVelocity.x, -maxSpeed, maxSpeed);
         
-        controllerRigidBody.velocity = velocity;
+        controllerRigidBody.velocity = movementVelocity;
         
         // Update Animator
         if (animator)
         {
-            var horizontalSpeedNormalized = Mathf.Abs(velocity.x) / maxSpeed;
+            var horizontalSpeedNormalized = Mathf.Abs(movementVelocity.x) / maxSpeed;
             animator.SetFloat(animatorMoveSpeed, horizontalSpeedNormalized);
         }
 
@@ -196,20 +205,23 @@ public class CharacterController : MonoBehaviour
 
     private void UpdateDirection()
     {
-        if (controllerRigidBody.velocity.x > minFlipSpeed && !isFlipped)
+        if (!isMovingObject)
         {
-            if (puppet)
+            if (controllerRigidBody.velocity.x > minFlipSpeed && !isFlipped)
             {
-                puppet.localScale = Vector2.one;
+                if (puppet)
+                {
+                    puppet.localScale = Vector2.one;
+                }
             }
-        }
-        else if (controllerRigidBody.velocity.x < -minFlipSpeed && isFlipped)
-        {
+            else if (controllerRigidBody.velocity.x < -minFlipSpeed && isFlipped)
+            {
            
-            if (puppet)
-            {
-                puppet.localScale = flippedScale;
-            }
+                if (puppet)
+                {
+                    puppet.localScale = flippedScale;
+                }
+            }   
         }
     }
 
@@ -249,10 +261,10 @@ public class CharacterController : MonoBehaviour
     {
         if (fromDarkness)
         {
-            getSanity -= damageTaken;
-            if (getSanity <= 0)
+            if (sanity <= 0.001f)
+            sanity -= damageTaken;
             {
-                getSanity = 1;
+                sanity = 0.001f;
             }
         }
         else
@@ -271,7 +283,7 @@ public class CharacterController : MonoBehaviour
     
     private IEnumerator RestartLevel()
     {
-        OnDeath.Invoke();
+        onDeath.Invoke();
         yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("Prototype_BensBedroom");
     }
@@ -313,5 +325,45 @@ public class CharacterController : MonoBehaviour
     public void AddToInventory(Item item)
     {
         GetInventory.AddToInventory(item);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        movableObjScript = other.gameObject.GetComponent<MovableObject>();
+        if (!movableObjScript)
+        {return;}
+        
+        objToMove = other.gameObject;
+        canMoveObject = true;
+        objToMove.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        Debug.Log("Can Move Object");
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        objToMove.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        canMoveObject = false;
+        objToMove = null;
+        movableObjScript = null;
+    }
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void MoveObject()
+    {
+        if (canMoveObject & Input.GetKey(KeyCode.Mouse1))
+        {
+            isMovingObject = true;
+            // Slow PLayer Movement 
+            acceleration = movableObjScript.moveVelocity;
+            Debug.Log("Velocity Updated:" + movableObjScript.moveVelocity);
+        
+            //Move Object   
+            objToMove.transform.Translate(movementVelocity.x / 50, 0, 0);
+        }
+        else
+        {
+            isMovingObject = false;
+            acceleration = 30.0f;
+        }
     }
 }

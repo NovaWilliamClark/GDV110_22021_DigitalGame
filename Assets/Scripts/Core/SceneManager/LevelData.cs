@@ -8,58 +8,63 @@
 **********************************************************************************************/
 
 using Audio;
+using Character;
 using Objects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class LevelData : MonoBehaviour
+namespace Core.SceneManager
 {
-    [SerializeField] private PlayerSpawnPoint[] playerSpawnPoints;
-    [SerializeField] private GameObject playerPrefab;
-
-    public AudioClip LevelBGM;
-    public float BGMVolume;
-    private void Start()
+    public class LevelData : MonoBehaviour
     {
-        InitPlayer();
-    }
+        [SerializeField] private PlayerSpawnPoint[] playerSpawnPoints;
+        [SerializeField] private GameObject playerPrefab;
 
-    private void InitPlayer()
-    {
-        var sanityMeter = FindObjectOfType<SanityMeter>();
-        sanityMeter.decreaseSlider = false;
-        AudioManager.Instance.PlayMusic(LevelBGM, BGMVolume);
-        int spawnIndex = TransitionManager.Instance.GetSpawnIndex;
-        Vector2 pos = new Vector2();
-        
-        foreach (PlayerSpawnPoint spawn in playerSpawnPoints)
+        [FormerlySerializedAs("LevelBGM")] public AudioClip levelBGM;
+        [FormerlySerializedAs("BGMVolume")] public float bgmVolume;
+        private void Start()
         {
-            if (spawn.GetSpawnIndex == spawnIndex)
-            {
-                pos = spawn.GetPosition;
-                break;
-            }
+            InitPlayer();
         }
-        GameObject player;
-        var existingPlayer = FindObjectOfType<CharacterController>();
-        if (TransitionManager.Instance.GetSpawnIndex == 0) {
-            if (existingPlayer)
+
+        private void InitPlayer()
+        {
+            var sanityMeter = FindObjectOfType<SanityMeter>();
+            sanityMeter.decreaseSlider = false;
+            AudioManager.Instance.PlayMusic(levelBGM, bgmVolume);
+            int spawnIndex = TransitionManager.Instance.GetSpawnIndex;
+            Vector2 pos = new Vector2();
+        
+            foreach (PlayerSpawnPoint spawn in playerSpawnPoints)
             {
-                player = existingPlayer.gameObject;
-            } else
+                if (spawn.GetSpawnIndex == spawnIndex)
+                {
+                    pos = spawn.GetPosition;
+                    break;
+                }
+            }
+            GameObject player;
+            var existingPlayer = FindObjectOfType<CharacterController>();
+            if (TransitionManager.Instance.GetSpawnIndex == 0) {
+                if (existingPlayer)
+                {
+                    player = existingPlayer.gameObject;
+                } else
+                {
+                    player = Instantiate(playerPrefab);
+                    player.transform.position = pos;
+                } 
+            }
+            else
             {
+                if (existingPlayer) Destroy(existingPlayer.gameObject);
                 player = Instantiate(playerPrefab);
                 player.transform.position = pos;
-            } 
-        }
-        else
-        {
-            if (existingPlayer) Destroy(existingPlayer.gameObject);
-            player = Instantiate(playerPrefab);
-            player.transform.position = pos;
-        }
+            }
         
-        var playerObj = player.GetComponent<CharacterController>();
-        sanityMeter.SetPlayer(playerObj);
-        playerObj.FetchPersistentData();
+            var playerObj = player.GetComponent<CharacterController>();
+            sanityMeter.SetPlayer(playerObj);
+            playerObj.FetchPersistentData();
+        }
     }
 }
