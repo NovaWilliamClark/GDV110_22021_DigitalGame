@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 542823a7fe6b47c2b9c744cd85e8e71a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpawnPoints: []
   playerPrefab: {fileID: 286041822936246033, guid: 8d437f5c5ad29412387761640ab65bd2, type: 3}
+  LevelBGM: {fileID: 8300000, guid: dd1159310bba30448afae6bfac464d06, type: 3}
+  BGMVolume: 1

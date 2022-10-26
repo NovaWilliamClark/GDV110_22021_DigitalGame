@@ -8,7 +8,9 @@
 **********************************************************************************************/
 
 using Audio;
+using Character;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class LevelController : MonoBehaviour
 {
@@ -30,8 +32,8 @@ public class LevelController : MonoBehaviour
 
     private void InitPlayer()
     {
-        var sanityMeter = FindObjectOfType<SanityMeter>();
-        sanityMeter.decreaseSlider = false;
+        var sanityMeter = UIHelpers.Instance.SanityMeter;
+        // sanityMeter.decreaseSlider = false;
         
         AudioManager.Instance.PlayMusic(LevelBGM, BGMVolume);
         
@@ -50,17 +52,25 @@ public class LevelController : MonoBehaviour
             }
         }
 
+        GameObject player;
+        CharacterController cc;
         var existingPlayer = FindObjectOfType<CharacterController>();
 
         if (!existingPlayer)
         {
-            var player = Instantiate(playerPrefab);
-            var playerController = player.GetComponent<CharacterController>();
-            playerController.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
+            player = Instantiate(playerPrefab);
             player.transform.position = pos;
         }
-        
-        sanityMeter.Init();
+        else
+        {
+            player = existingPlayer.gameObject;
+        }
+
+        cc = player.GetComponent<CharacterController>();
+        cc.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
+
+        sanityMeter.SetPlayer(cc);
         //playerObj.FetchPersistentData();
+        UIHelpers.Instance.Fader.Fade(0f, 2f);
     }
 }

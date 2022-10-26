@@ -18,15 +18,6 @@ namespace Character
         [SerializeField] private Slider sanityMeter;
         public bool decreaseSlider;
         private CharacterController player;
-    
-        private void Start()
-        {
-            player = FindObjectOfType<CharacterController>();
-            if (player != null)
-            {
-                decreaseSlider = true;
-            }
-        }
 
         private void Update()
         {

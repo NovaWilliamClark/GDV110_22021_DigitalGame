@@ -7,9 +7,11 @@
 *
 **********************************************************************************************/
 
+using System;
 using Audio;
-using Core.SceneManager;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class TransitionManager : MonoBehaviour
@@ -18,6 +20,7 @@ public class TransitionManager : MonoBehaviour
     public int GetSpawnIndex => indexToSpawnAt;
     private int indexToSpawnAt = 0;
     private LevelController _controller;
+    public UnityEvent ev;
     
     private void Awake()
     {
@@ -37,10 +40,15 @@ public class TransitionManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        throw new NotImplementedException();
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // TODO: Move this into a GameManager for when the level is ready as things might still be loading
-        UIHelpers.Instance.Fader.Fade(0f, 1f);
+        
     }
 
     public void LoadScene(string sceneToLoad)

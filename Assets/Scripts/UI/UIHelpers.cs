@@ -7,13 +7,16 @@
 *
 **********************************************************************************************/
 
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIHelpers : MonoBehaviour
 {
     public static UIHelpers Instance { get; private set; }
 
     public UIFader Fader;
+    public SanityVisual SanityMeter;
 
     private void Awake()
     {
@@ -21,6 +24,7 @@ public class UIHelpers : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Fader.gameObject.SetActive(true);
         }
         else
         {
@@ -30,6 +34,11 @@ public class UIHelpers : MonoBehaviour
 
     private void Start()
     {
-        Fader.gameObject.SetActive(true);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu") return;
     }
 }

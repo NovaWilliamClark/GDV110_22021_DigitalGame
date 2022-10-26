@@ -48233,38 +48233,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SanityMeter 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1522832095351354565, guid: 6eec996c457c0c241ae71999f195f8d9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5221036745393382357, guid: 6eec996c457c0c241ae71999f195f8d9, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-    - target: {fileID: 5221036745393382357, guid: 6eec996c457c0c241ae71999f195f8d9, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-    - target: {fileID: 5263393814491641916, guid: 6eec996c457c0c241ae71999f195f8d9, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5263393814491641916, guid: 6eec996c457c0c241ae71999f195f8d9, type: 3}
-      propertyPath: m_ReferenceResolution.x
-      value: 1920
-      objectReference: {fileID: 0}
-    - target: {fileID: 5263393814491641916, guid: 6eec996c457c0c241ae71999f195f8d9, type: 3}
-      propertyPath: m_ReferenceResolution.y
-      value: 1080
-      objectReference: {fileID: 0}
-    - target: {fileID: 6875928539114854482, guid: 6eec996c457c0c241ae71999f195f8d9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 363.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6875928539114854482, guid: 6eec996c457c0c241ae71999f195f8d9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 453.7
-      objectReference: {fileID: 0}
     - target: {fileID: 7070408720034265715, guid: 6eec996c457c0c241ae71999f195f8d9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

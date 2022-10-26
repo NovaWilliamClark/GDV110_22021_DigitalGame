@@ -36,6 +36,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] public Animator animator = null;
     [SerializeField] private Transform puppet = null;
     //[SerializeField] private CharacterAudio audioPlayer = null;
+    [SerializeField] private Inventory inventory;
 
     [Header("Data")] 
     [SerializeField] private PlayerData_SO playerData;
@@ -48,8 +49,8 @@ public class CharacterController : MonoBehaviour
 
     //[SerializeField] private Inventory inventory;
     public Inventory GetInventory => inventory;
-    private Inventory inventory;
     public float getSanity { get; private set; } = 100f;
+    public event EventHandler<float> SanityChanged; 
 
     [Header("Movement")]
     [SerializeField] private float acceleration = 30.0f;
@@ -83,7 +84,7 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        inventory = GetComponentInChildren<Inventory>();
+        //inventory = GetComponentInChildren<Inventory>();
         inventory.gameObject.SetActive(false);
         FetchPersistentData();
         
@@ -143,6 +144,7 @@ public class CharacterController : MonoBehaviour
             }
             else
             {
+                OnSanityChanged(getSanity);
                 getSanity += sanityGainRate;
             }
             
@@ -186,7 +188,7 @@ public class CharacterController : MonoBehaviour
         
         // We've consumed the movement, reset it.
         movementInput = Vector2.zero;
-        
+
         // Clamp horizontal speed
         movementVelocity.x = Mathf.Clamp(movementVelocity.x, -maxSpeed, maxSpeed);
         
@@ -261,11 +263,9 @@ public class CharacterController : MonoBehaviour
     {
         if (fromDarkness)
         {
-            if (sanity <= 0.001f)
-            sanity -= damageTaken;
-            {
-                sanity = 0.001f;
-            }
+            getSanity -= damageTaken;
+            if (getSanity <= 0.001f)
+                getSanity = 0.001f;
         }
         else
         {
@@ -279,6 +279,7 @@ public class CharacterController : MonoBehaviour
                 StartCoroutine(RestartLevel());
             }
         }
+        OnSanityChanged(getSanity);
     }
     
     private IEnumerator RestartLevel()
@@ -330,8 +331,7 @@ public class CharacterController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         movableObjScript = other.gameObject.GetComponent<MovableObject>();
-        if (!movableObjScript)
-        {return;}
+        if (!movableObjScript) return;
         
         objToMove = other.gameObject;
         canMoveObject = true;
@@ -341,6 +341,8 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        // TODO: The controlling of rigidbody values on another object should be moved to the object itself
+        if (!objToMove) return;
         objToMove.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         canMoveObject = false;
         objToMove = null;
@@ -365,5 +367,10 @@ public class CharacterController : MonoBehaviour
             isMovingObject = false;
             acceleration = 30.0f;
         }
+    }
+
+    protected virtual void OnSanityChanged(float e)
+    {
+        SanityChanged?.Invoke(this, e);
     }
 }

@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainAudioMixer: {fileID: 24100000, guid: 6f93440196cec4144b81773112aa99fe, type: 2}
+  sanityBgm: {fileID: 8300000, guid: 6e57362251a204579bf9564158234658, type: 3}
+  poolSize: 20
 --- !u!114 &1963636384838680171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,3 +60,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4d7584a1b244d3b99925c5fa745f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ev:
+    m_PersistentCalls:
+      m_Calls: []

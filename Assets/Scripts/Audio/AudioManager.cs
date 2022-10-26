@@ -25,6 +25,9 @@ namespace Audio
         public AudioMixer MainAudioMixer;
         private AudioSource previousBGMSource;
         private AudioSource BGMSource;
+        private AudioSource sanityBgmSource;
+
+        public AudioClip sanityBgm;
 
         [SerializeField] private int poolSize = 20;
         private ObjectPool<AudioSource> pool;
@@ -36,14 +39,23 @@ namespace Audio
         {
             if (Instance == null)
             {
+                var mixerGroup = MainAudioMixer.FindMatchingGroups("Master/BGM").First();
+                
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
+                
                 BGMSource = new GameObject("BGM").AddComponent<AudioSource>();
                 BGMSource.loop = true;
-                BGMSource.outputAudioMixerGroup = MainAudioMixer.FindMatchingGroups("Master/BGM").First();
+                BGMSource.outputAudioMixerGroup = mixerGroup;
+                
+                sanityBgmSource = BGMSource.gameObject.AddComponent<AudioSource>();
+                sanityBgmSource.loop = true;
+                sanityBgmSource.outputAudioMixerGroup = mixerGroup;
+                sanityBgmSource.clip = sanityBgm; 
+                
                 previousBGMSource = BGMSource.gameObject.AddComponent<AudioSource>();
                 previousBGMSource.loop = true;
-                previousBGMSource.outputAudioMixerGroup = MainAudioMixer.FindMatchingGroups("Master/BGM").First();
+                previousBGMSource.outputAudioMixerGroup = mixerGroup;
                 DontDestroyOnLoad(BGMSource.gameObject);
             }
             else
@@ -146,7 +158,19 @@ namespace Audio
                 StopMusic(onComplete);
             });
         }
-        
+
+        public void PlaySanityBgm(float volume)
+        {
+            sanityBgmSource.volume = volume;
+            BGMSource.volume = 1f - volume;
+            if (!sanityBgmSource.isPlaying) sanityBgmSource.Play();
+        }
+
+        public void ChangeSanityVolume(float volume)
+        {
+            sanityBgmSource.volume = volume;
+        }
+
         private void OnAudioSourceDestroyed(AudioSource obj)
         {
             var pas = obj.GetComponent<PooledAudioSource>();
