@@ -12,10 +12,16 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: cd29f2f07838d46cd91117f26762f669
   - enabled: 1
-    path: Assets/Scenes/Prototype_BensBedroom.unity
+    path: Assets/Scenes/Prototype_MovableObjects.unity
     guid: b6ee3aef49b0e4429b5b8b69865d64c3
   - enabled: 1
     path: Assets/Scenes/Prototype_Hallway.unity
     guid: e4631c10822e0447d8da45ecc4251dd5
+  - enabled: 1
+    path: Assets/Scenes/Level03_ParentsHallway.unity
+    guid: c0963fff4a0304de0b71783b93ad2c8a
+  - enabled: 1
+    path: Assets/Scenes/Level04_ParentsBedroom.unity
+    guid: 70f69ac57a3dc455e8b2bcb96da499be
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c24a1b0f7f11e497bac3bc3de5177911, type: 2}

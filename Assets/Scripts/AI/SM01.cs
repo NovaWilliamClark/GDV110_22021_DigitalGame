@@ -15,7 +15,10 @@ namespace AI
         [SerializeField] private Vector2[] patrolPoints;
         [SerializeField] public Animator animator;
         [SerializeField] private Transform puppet;
+        [SerializeField] private LayerMask lightMask;
 
+        private Collider2D bodyCollider;
+        
         [Header("Movement")]
         private Vector2 direction;
         private bool shouldMove;
@@ -28,7 +31,7 @@ namespace AI
         // Start is called before the first frame update
         private void Awake()
         {
-            
+            bodyCollider = GetComponent<Collider2D>();
         }
 
         // Update is called once per frame
@@ -108,6 +111,16 @@ namespace AI
                     puppet.localScale = Vector2.one;
                 }
             }
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            if ((lightMask & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
+            {
+                Debug.Log("Enemy is in the light");
+                Destroy(gameObject);
+            }
+            
         }
 
         private IEnumerator AttackCooldownReset()
