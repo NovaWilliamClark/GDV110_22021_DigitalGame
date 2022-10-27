@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Time: 1.1
   m_Retroactive: 0
   m_EmitOnce: 0
-  m_Asset: {fileID: 11400000, guid: d00fd19d6db92431ba3b5028e1e57ec3, type: 2}
+  m_Asset: {fileID: 11400000, guid: 45310d4a58e634d179b1d7eee4f5279b, type: 2}
 --- !u!74 &-605791986066127461
 AnimationClip:
   m_ObjectHideFlags: 0

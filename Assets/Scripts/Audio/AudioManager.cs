@@ -163,6 +163,7 @@ namespace Audio
         {
             sanityBgmSource.volume = volume;
             BGMSource.volume = 1f - volume;
+            
             if (!sanityBgmSource.isPlaying) sanityBgmSource.Play();
         }
 
