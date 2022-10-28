@@ -44430,7 +44430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5773459237369273183, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.2400002
+      value: 6.2399993
       objectReference: {fileID: 0}
     - target: {fileID: 5773459237369273183, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -45740,6 +45740,10 @@ PrefabInstance:
       propertyPath: BGMVolume
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8065332137148330602, guid: f65f0e4279bc24646807186b8d4f4fe1, type: 3}
+      propertyPath: levelData
+      value: 
+      objectReference: {fileID: 11400000, guid: c48817120af1a0a4587009e582f1e1d7, type: 2}
     - target: {fileID: 8090536950798057392, guid: f65f0e4279bc24646807186b8d4f4fe1, type: 3}
       propertyPath: m_Name
       value: LevelData
@@ -46233,6 +46237,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ea3158f376aef4d87bf56e820a06b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!4 &1064886345
 Transform:
   m_ObjectHideFlags: 0

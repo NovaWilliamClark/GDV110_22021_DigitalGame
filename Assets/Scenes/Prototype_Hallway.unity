@@ -71507,6 +71507,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8065332137148330602, guid: f65f0e4279bc24646807186b8d4f4fe1, type: 3}
+      propertyPath: levelData
+      value: 
+      objectReference: {fileID: 11400000, guid: f9c3e6d021e96db49b3fbe1bd35687dc, type: 2}
+    - target: {fileID: 8065332137148330602, guid: f65f0e4279bc24646807186b8d4f4fe1, type: 3}
       propertyPath: playerSpawnPoints.Array.size
       value: 1
       objectReference: {fileID: 0}
