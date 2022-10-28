@@ -123,6 +123,15 @@ namespace AI
             
         }
 
+        private void OnCollisionEnter2D(Collision2D col)
+        {
+            var cc = col.gameObject.GetComponent<CharacterController>();
+            if (cc)
+            {
+                cc.TakeSanityDamage(100f, false);
+            }
+        }
+
         private IEnumerator AttackCooldownReset()
         {
             yield return new WaitForSeconds(attackCooldown);
