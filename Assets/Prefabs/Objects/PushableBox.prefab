@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1142725195817309837}
   - component: {fileID: 425603515674280606}
   - component: {fileID: 8707743299149286607}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PushableBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 13.7039175, y: 9.14485}
+  m_Size: {x: 19.23, y: 6.5}
   m_EdgeRadius: 0
 --- !u!114 &425603515674280606
 MonoBehaviour:
@@ -90,7 +90,7 @@ Rigidbody2D:
   m_LinearDrag: 20
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 06749996f365b974da5e6c7b5aae5e9c, type: 2}
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4722376890041055752}
   - component: {fileID: 5224937445879235250}
   - component: {fileID: 5166627024609633004}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -342,13 +342,14 @@ public class CharacterController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         // TODO: The controlling of rigidbody values on another object should be moved to the object itself
+        // TODO: BUG - Box should be declared kinematic when on top - box should store it's state
         if (!objToMove) return;
         objToMove.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         canMoveObject = false;
         objToMove = null;
         movableObjScript = null;
     }
-
+    
     // ReSharper disable Unity.PerformanceAnalysis
     private void MoveObject()
     {
@@ -361,11 +362,22 @@ public class CharacterController : MonoBehaviour
         
             //Move Object   
             objToMove.transform.Translate(movementVelocity.x / 50, 0, 0);
+        } else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            isMovingObject = false;
+            Debug.Log("Pressed space");
+            var col = objToMove.gameObject.GetComponent<Collider2D>();
+            // teleport to above the box
+            var top = col.bounds.center;
+            top.y = col.bounds.max.y;
+            top.y -= GetComponent<Collider2D>().bounds.center.y;
+
+            transform.position = top;
         }
         else
         {
             isMovingObject = false;
-            acceleration = 30.0f;
+            //acceleration = 30.0f;
         }
     }
 
