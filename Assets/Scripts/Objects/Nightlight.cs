@@ -19,6 +19,7 @@ public class Nightlight : MonoBehaviour
     private Animator _animator;
     private Light2D _light;
     public AudioClip ActivateSFX;
+    public float sfxVolume;
     private bool _activated = false;
 
     private void Awake()

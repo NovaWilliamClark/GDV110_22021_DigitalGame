@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Audio;
 using Character;
-using Objects;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -74,7 +74,7 @@ public class LevelController : MonoBehaviour
         int spawnIndex = TransitionManager.Instance.GetSpawnIndex;
         Vector2 pos = new Vector2();
         
-        PlayerSpawnPoint.FacingDirection direction = PlayerSpawnPoint.FacingDirection.Left;
+        PlayerSpawnPoint.FacingDirection direction = PlayerSpawnPoint.FacingDirection.Right;
         
         foreach (PlayerSpawnPoint spawn in playerSpawnPoints)
         {
@@ -92,11 +92,14 @@ public class LevelController : MonoBehaviour
 
         if (!existingPlayer)
         {
+            Debug.Log("No player in scene");
             player = Instantiate(playerPrefab);
             player.transform.position = pos;
+            //player.transform.position = pos;
         }
         else
         {
+            Debug.Log("Player in scene");
             player = existingPlayer.gameObject;
         }
 

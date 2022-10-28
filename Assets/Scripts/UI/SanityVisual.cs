@@ -76,6 +76,12 @@ public class SanityVisual : MonoBehaviour
         canvasObj.gameObject.SetActive(true);
     }
 
+    public void Disable()
+    {
+        player = null;
+        canvasObj.gameObject.SetActive(false);
+    }
+
     private void OnSanityChanged(object sender, float e)
     {
         Value = e / 100f;

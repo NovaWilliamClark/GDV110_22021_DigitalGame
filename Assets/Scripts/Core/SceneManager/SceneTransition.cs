@@ -27,8 +27,11 @@ namespace Objects
             if (other.TryGetComponent<CharacterController>(out var player))
             {
                 player.SetPersistentData();
-                TransitionManager.Instance.SetSpawnIndex(spawnPointIndex);
-                TransitionManager.Instance.LoadScene(sceneToLoad);
+                UIHelpers.Instance.Fader.Fade(1f, 1f, () =>
+                {
+                    TransitionManager.Instance.SetSpawnIndex(spawnPointIndex);
+                    TransitionManager.Instance.LoadScene(sceneToLoad);
+                });
             }
         }
     }

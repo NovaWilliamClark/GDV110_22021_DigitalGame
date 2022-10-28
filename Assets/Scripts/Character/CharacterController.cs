@@ -286,7 +286,7 @@ public class CharacterController : MonoBehaviour
     {
         onDeath.Invoke();
         yield return new WaitForSeconds(5f);
-        SceneManager.LoadScene("Prototype_BensBedroom");
+        TransitionManager.Instance.LoadScene("Prototype_BensBedroom");
     }
 
     public void SetIsFlipped(bool value)

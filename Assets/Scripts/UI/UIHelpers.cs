@@ -39,6 +39,9 @@ public class UIHelpers : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMenu") return;
+        if (scene.name == "MainMenu")
+        {
+            SanityMeter.Disable();
+        }
     }
 }
