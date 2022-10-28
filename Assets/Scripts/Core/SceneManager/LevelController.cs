@@ -12,13 +12,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Audio;
 using Character;
+using Objects;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class LevelController : MonoBehaviour
 {
     private PlayerSpawnPoint[] playerSpawnPoints;
-    private List<InteractionPoint> levelObjects = new List<InteractionPoint>();
+    private List<ItemPickup> levelItems = new List<ItemPickup>();
     private List<GameObject> levelEnemies = new List<GameObject>();
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private LevelData levelData;
@@ -29,7 +30,7 @@ public class LevelController : MonoBehaviour
     private void Awake()
     {
         playerSpawnPoints = FindObjectsOfType<PlayerSpawnPoint>();
-        levelObjects = FindObjectsOfType<InteractionPoint>().ToList();
+        levelItems = FindObjectsOfType<ItemPickup>().ToList();
     }
 
     private void Start()
@@ -40,22 +41,26 @@ public class LevelController : MonoBehaviour
 
     private void OnDestroy()
     {
-        levelData.items = FindObjectsOfType<InteractionPoint>().Select(x => x.gameObject).ToList();
+        //levelData.items = FindObjectsOfType<Item>().ToList();
     }
 
     private void InitLevelData()
     {
-        if (levelData.items.Count == 0)
+        /*if (levelData.items.Count == 0)
         {
             return;
-        }
+        }*/
 
-        foreach (var obj in levelObjects)
+        foreach (var obj in levelItems)
         {
-            if (!levelData.items.Contains(obj.gameObject))
+            if (obj.GetItem.hasBeenPickedUp)
+            {
+                Destroy(obj.gameObject);
+            }
+            /*if (!levelData.items.Contains(obj.gameObject))
             {
                 obj.gameObject.SetActive(false);   
-            }
+            }*/
         }
     }
 

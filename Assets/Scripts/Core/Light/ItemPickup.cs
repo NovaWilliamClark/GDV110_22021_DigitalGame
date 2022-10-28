@@ -16,11 +16,13 @@ using UnityEngine.Events;
 [RequireComponent(typeof(BoxCollider2D))]
 public class ItemPickup : InteractionPoint
 {
+    public Item GetItem => item;
     [SerializeField] private Item item;
 
     protected override void Interact(CharacterController cc)
     {
         cc.AddToInventory(item);
+        item.hasBeenPickedUp = true;
         gameObject.SetActive(false);
     }
 }

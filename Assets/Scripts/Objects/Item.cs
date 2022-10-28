@@ -22,6 +22,7 @@ namespace Objects
         public int itemID;
         public string itemName;
         public Image itemImage;
+        public bool hasBeenPickedUp = false;
     }
 }
 

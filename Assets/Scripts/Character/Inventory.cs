@@ -26,7 +26,10 @@ namespace Character
         {
             foreach (var slot in slots)
             {
-                slot.gameObject.SetActive(true);
+                if (slot != null)
+                {
+                    slot.gameObject.SetActive(true);
+                }
             }
             for (int i = slotCount; i < items.Count; i++)
             {
@@ -42,7 +45,10 @@ namespace Character
         {
             foreach (var slot in slots)
             {
-                slot.gameObject.SetActive(false);
+                if (slot != null)
+                {
+                    slot.gameObject.SetActive(false);
+                }
             }
             slotCount = items.Count;
         }
@@ -60,6 +66,9 @@ namespace Character
         public void UseItem(int id)
         {
             var item = items.Find(x => x.itemID == id);
+            var slot = slots.Find(x => x.GetItem.itemID == item.itemID);
+            Destroy(slot.gameObject);
+            slotCount = slots.Count;
             items.Remove(item);
         }
 
