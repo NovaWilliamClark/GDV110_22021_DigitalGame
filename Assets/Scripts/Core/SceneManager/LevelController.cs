@@ -7,6 +7,9 @@
 *
 **********************************************************************************************/
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Audio;
 using Character;
 using UnityEngine;
@@ -15,7 +18,10 @@ using UnityEngine.PlayerLoop;
 public class LevelController : MonoBehaviour
 {
     private PlayerSpawnPoint[] playerSpawnPoints;
+    private List<InteractionPoint> levelObjects = new List<InteractionPoint>();
+    private List<GameObject> levelEnemies = new List<GameObject>();
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private LevelData levelData;
 
     public AudioClip LevelBGM;
     public float BGMVolume;
@@ -23,11 +29,34 @@ public class LevelController : MonoBehaviour
     private void Awake()
     {
         playerSpawnPoints = FindObjectsOfType<PlayerSpawnPoint>();
+        levelObjects = FindObjectsOfType<InteractionPoint>().ToList();
     }
 
     private void Start()
     {
+        InitLevelData();
         InitPlayer();
+    }
+
+    private void OnDestroy()
+    {
+        levelData.items = FindObjectsOfType<InteractionPoint>().Select(x => x.gameObject).ToList();
+    }
+
+    private void InitLevelData()
+    {
+        if (levelData.items.Count == 0)
+        {
+            return;
+        }
+
+        foreach (var obj in levelObjects)
+        {
+            if (!levelData.items.Contains(obj.gameObject))
+            {
+                obj.gameObject.SetActive(false);   
+            }
+        }
     }
 
     private void InitPlayer()

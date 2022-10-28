@@ -21,6 +21,6 @@ public class ItemPickup : InteractionPoint
     protected override void Interact(CharacterController cc)
     {
         cc.AddToInventory(item);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

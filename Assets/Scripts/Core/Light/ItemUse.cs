@@ -23,6 +23,6 @@ public class ItemUse : InteractionPoint
         cc.GetInventory.UseItem(requiredItem.itemID);
         Debug.Log($"{requiredItem.itemName} used!");
         OnItemUse?.Invoke();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
