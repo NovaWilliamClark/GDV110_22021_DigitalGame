@@ -23,6 +23,7 @@ public class LevelController : MonoBehaviour
     private List<GameObject> levelEnemies = new List<GameObject>();
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private LevelData levelData;
+    private CharacterController instancedPlayer;
 
     public AudioClip LevelBGM;
     //public float BGMVolume;
@@ -87,7 +88,6 @@ public class LevelController : MonoBehaviour
         }
 
         GameObject player;
-        CharacterController cc;
         var existingPlayer = FindObjectOfType<CharacterController>();
 
         if (!existingPlayer)
@@ -103,11 +103,18 @@ public class LevelController : MonoBehaviour
             player = existingPlayer.gameObject;
         }
 
-        cc = player.GetComponent<CharacterController>();
-        cc.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
+        instancedPlayer = player.GetComponent<CharacterController>();
+        instancedPlayer.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
+        instancedPlayer.onDeath.AddListener(OnPlayerDeath);
 
-        sanityMeter.SetPlayer(cc);
+        sanityMeter.SetPlayer(instancedPlayer);
         //playerObj.FetchPersistentData();
         UIHelpers.Instance.Fader.Fade(0f, 2f);
+    }
+
+    private void OnPlayerDeath()
+    {
+        UIHelpers.Instance.SanityMeter.UnsetPlayer();
+        instancedPlayer = null;
     }
 }

@@ -71,9 +71,19 @@ public class SanityVisual : MonoBehaviour
 
     public void SetPlayer(CharacterController cc)
     {
+        Value = 1f;
         player = cc;
         player.SanityChanged += OnSanityChanged;
         canvasObj.gameObject.SetActive(true);
+    }
+
+    public void UnsetPlayer()
+    {
+        player.SanityChanged -= OnSanityChanged;
+        player = null;
+        AudioManager.Instance.StopSanityBgm();
+        canvasObj.gameObject.SetActive(false);
+        
     }
 
     public void Disable()

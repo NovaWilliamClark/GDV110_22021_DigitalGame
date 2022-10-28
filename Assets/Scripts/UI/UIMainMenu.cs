@@ -39,6 +39,8 @@ public class UIMainMenu : MonoBehaviour
         StartCoroutine(StartWithDelay());
 
     }
+    
+    
 
     private IEnumerator StartWithDelay()
     {

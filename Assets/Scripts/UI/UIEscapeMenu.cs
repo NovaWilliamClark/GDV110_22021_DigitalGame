@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIEscapeMenu : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class UIEscapeMenu : MonoBehaviour
 
     private void Update()
     {
+        if (SceneManager.GetActiveScene().name == "MainMenu") return;
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             ShowHide(!Container.activeInHierarchy);
@@ -26,11 +28,13 @@ public class UIEscapeMenu : MonoBehaviour
     {
         Container.SetActive(show);
         Time.timeScale = show ? 0f : 1f;
+        // fade audio down
     }
 
     public void MainMenu()
     {
         ShowHide(false);
+        UIHelpers.Instance.SanityMeter.UnsetPlayer();
         TransitionManager.Instance.LoadScene("MainMenu");
     }
 }

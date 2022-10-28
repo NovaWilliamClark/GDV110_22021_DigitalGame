@@ -21,13 +21,19 @@ public class PlayerData_SO : ScriptableObject
     public float sanity = 100f;
     public float sanityGainRate = 0.025f;
     public float sanityLossRate = 0.03f;
+
+    public float initialSanity = 100f;
+    public float initialGainRate = 0.03f;
+    public float initialLossRate = 0.1f;
+    
     public List<Item> inventoryItems;
 
     private void OnEnable()
     {
-        sanity = 100f;
-        sanityGainRate = 0.025f;
-        sanityLossRate = 0.03f;
+        Debug.Log("PlayerDataSO Fired");
+        sanity = initialSanity;
+        sanityGainRate = initialGainRate;
+        sanityLossRate = initialLossRate;
         inventoryItems.Clear();
     }
 

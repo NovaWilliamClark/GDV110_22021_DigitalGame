@@ -172,6 +172,12 @@ namespace Audio
             sanityBgmSource.volume = volume;
         }
 
+        public void StopSanityBgm()
+        {
+            sanityBgmSource.volume = 0f;
+            sanityBgmSource.Stop();
+        }
+
         private void OnAudioSourceDestroyed(AudioSource obj)
         {
             var pas = obj.GetComponent<PooledAudioSource>();

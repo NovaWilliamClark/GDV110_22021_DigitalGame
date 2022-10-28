@@ -227,7 +227,7 @@ MonoBehaviour:
   inventory: {fileID: 8021154373665883795}
   playerData: {fileID: 11400000, guid: 6a6e040239aaaef4093abdbe5a62e1d1, type: 2}
   sanityLossRate: 0.005
-  sanityGainRate: 0.01
+  sanityGainRate: 0.1
   acceleration: 40
   maxSpeed: 20
   minFlipSpeed: 0.1

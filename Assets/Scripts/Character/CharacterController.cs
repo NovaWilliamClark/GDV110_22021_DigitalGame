@@ -285,6 +285,7 @@ public class CharacterController : MonoBehaviour
     private IEnumerator RestartLevel()
     {
         onDeath.Invoke();
+        
         yield return new WaitForSeconds(5f);
         TransitionManager.Instance.LoadScene("Prototype_BensBedroom");
     }
