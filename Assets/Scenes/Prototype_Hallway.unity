@@ -45101,7 +45101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5773459237369273183, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 66.36
+      value: -16.946482
       objectReference: {fileID: 0}
     - target: {fileID: 5773459237369273183, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -46947,6 +46947,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1376248105, guid: 8d437f5c5ad29412387761640ab65bd2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.5
+      objectReference: {fileID: 0}
     - target: {fileID: 286041822936246032, guid: 8d437f5c5ad29412387761640ab65bd2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -71496,7 +71500,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: e273d16b9c3f6124ea0646453ace1f0b, type: 3}
     - target: {fileID: 8065332137148330602, guid: f65f0e4279bc24646807186b8d4f4fe1, type: 3}
       propertyPath: BGMVolume
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8065332137148330602, guid: f65f0e4279bc24646807186b8d4f4fe1, type: 3}
       propertyPath: levelData
@@ -72437,7 +72441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5239611286187846645, guid: 906fd96cbed65484693696372bcf977b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1862.03
+      value: -1936.9465
       objectReference: {fileID: 0}
     - target: {fileID: 5239611286187846645, guid: 906fd96cbed65484693696372bcf977b, type: 3}
       propertyPath: m_LocalPosition.y

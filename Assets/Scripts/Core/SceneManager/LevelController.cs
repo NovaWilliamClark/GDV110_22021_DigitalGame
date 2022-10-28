@@ -25,7 +25,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] private LevelData levelData;
 
     public AudioClip LevelBGM;
-    public float BGMVolume;
+    //public float BGMVolume;
 
     private void Awake()
     {
@@ -69,7 +69,7 @@ public class LevelController : MonoBehaviour
         var sanityMeter = UIHelpers.Instance.SanityMeter;
         // sanityMeter.decreaseSlider = false;
         
-        AudioManager.Instance.PlayMusic(LevelBGM, BGMVolume);
+        AudioManager.Instance.PlayMusic(LevelBGM);
         
         int spawnIndex = TransitionManager.Instance.GetSpawnIndex;
         Vector2 pos = new Vector2();
