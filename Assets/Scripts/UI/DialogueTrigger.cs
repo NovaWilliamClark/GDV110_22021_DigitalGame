@@ -27,4 +27,12 @@ public class DialogueTrigger : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        foreach (var pos in dialogue.positions)
+        {
+            Gizmos.DrawWireCube(pos, Vector3.one);
+        }
+    }
 }

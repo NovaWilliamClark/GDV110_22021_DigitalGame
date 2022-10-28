@@ -7,13 +7,13 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: 
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: cd29f2f07838d46cd91117f26762f669
   - enabled: 1
-    path: Assets/Scenes/Prototype_MovableObjects.unity
-    guid: b6ee3aef49b0e4429b5b8b69865d64c3
+    path: Assets/Scenes/Prototype_BensBedroom.unity
+    guid: b5667c218737d4d0f997b0b2fb67f95e
   - enabled: 1
     path: Assets/Scenes/Prototype_Hallway.unity
     guid: e4631c10822e0447d8da45ecc4251dd5

@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376248103}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.389999, y: 6.5, z: -30.55}
+  m_LocalPosition: {x: 8.39, y: 6.5, z: -30.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -190,7 +190,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &286041822936246032
 Transform:
   m_ObjectHideFlags: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
   inventory: {fileID: 8021154373665883795}
   playerData: {fileID: 11400000, guid: 6a6e040239aaaef4093abdbe5a62e1d1, type: 2}
   sanityLossRate: 0.005
-  sanityGainRate: 0.0025
+  sanityGainRate: 0.01
   acceleration: 40
   maxSpeed: 20
   minFlipSpeed: 0.1
