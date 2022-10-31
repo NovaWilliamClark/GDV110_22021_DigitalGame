@@ -261,15 +261,16 @@ public class CharacterController : MonoBehaviour
     
     public void TakeSanityDamage(float damageTaken, bool fromDarkness)
     {
+        var dmgToTake = (damageTaken * Time.timeScale);
+        if (dmgToTake == 0) return;
+        getSanity -= dmgToTake;
         if (fromDarkness)
         {
-            getSanity -= damageTaken;
             if (getSanity <= 0.001f)
                 getSanity = 0.001f;
         }
         else
         {
-            getSanity -= damageTaken;
             if (getSanity <= 0)
             {
                 getSanity = 0;

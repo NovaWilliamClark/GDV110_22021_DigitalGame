@@ -45,20 +45,25 @@ public class SanityVisual : MonoBehaviour
         
     }
 
+    float LogLerp(float a, float b, float t)
+    {
+        return a * Mathf.Pow(b / a, t);
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (!Application.isPlaying && !RunInEditor) return;
         var newScale = new Vector3(
-            Mathf.Lerp(MaskScale.x * MinValue, MaskScale.x, Value),
-            Mathf.Lerp(MaskScale.y * MinValue, MaskScale.y, Value),
+            LogLerp(MaskScale.x * MinValue, MaskScale.x, Value),
+            LogLerp(MaskScale.y * MinValue, MaskScale.y, Value),
             1f);
         MaskedImage.localScale = newScale;
         var ps = ScratchyParticles.shape;
         var psSize = ScratchyParticles.main;
         var softps = SoftParticles.shape;
-        ps.radius = Mathf.Lerp(ParticleRadius * MinValue, ParticleRadius, Value);
-        softps.radius =Mathf.Lerp(ParticleRadius * MinValue, ParticleRadius, Value);
+        ps.radius = LogLerp(ParticleRadius * MinValue, ParticleRadius, Value);
+        softps.radius = LogLerp(ParticleRadius * MinValue, ParticleRadius, Value);
 
         tempCurve.constantMin = ParticleMinSize * (1 - Value);
         tempCurve.constantMax = ParticleMaxSize * (1 - Value);
