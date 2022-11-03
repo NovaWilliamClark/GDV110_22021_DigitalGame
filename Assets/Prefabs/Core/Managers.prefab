@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1963636384838680173}
   - component: {fileID: 1963636384838680172}
   - component: {fileID: 1963636384838680171}
+  - component: {fileID: 4846894146716694252}
+  - component: {fileID: 7706939859763190636}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -63,3 +65,32 @@ MonoBehaviour:
   ev:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4846894146716694252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963636384838680175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4017bbd4a33a25d4690db3caf77984d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7706939859763190636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963636384838680175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4672fd1de5a01854abb8350f4a6084b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutsceneDialogue:
+    sentences: []
+    speaker: {fileID: 0}
+    textSpeed: 0
+  audioSource: {fileID: 0}
