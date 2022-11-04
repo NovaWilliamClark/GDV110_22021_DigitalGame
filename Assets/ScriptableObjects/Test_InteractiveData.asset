@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d95557e9ff74689b1b9dfffe93683b8, type: 3}
-  m_Name: TestItem
+  m_Script: {fileID: 11500000, guid: 884bb4ff14df48b2859cab083d05f1a8, type: 3}
+  m_Name: Test_InteractiveData
   m_EditorClassIdentifier: 
-  itemID: 0
-  itemName: TestItem
-  itemSprite: {fileID: 0}
-  hasBeenPickedUp: 0
+  state: 0

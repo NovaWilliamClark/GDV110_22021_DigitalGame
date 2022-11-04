@@ -30,6 +30,7 @@ public enum GroundType
 
 public class CharacterController : MonoBehaviour
 {
+    public static event Action<bool> OnObjectMove;
     private readonly Vector3 flippedScale = new Vector3(-1, 1, 1);
 
     [Header("Character")]
@@ -355,6 +356,7 @@ public class CharacterController : MonoBehaviour
     {
         if (canMoveObject & Input.GetKey(KeyCode.Mouse1))
         {
+            OnObjectMove?.Invoke(true);
             isMovingObject = true;
             // Slow PLayer Movement 
             acceleration = movableObjScript.moveVelocity;
@@ -376,6 +378,7 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
+            OnObjectMove?.Invoke(false);
             isMovingObject = false;
             //acceleration = 30.0f;
         }

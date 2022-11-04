@@ -10,7 +10,6 @@
 
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Objects
 {
@@ -21,8 +20,20 @@ namespace Objects
     {
         public int itemID;
         public string itemName;
-        public Image itemImage;
-        public bool hasBeenPickedUp = false;
+        public Sprite itemSprite;
+        public bool hasBeenPickedUp;
+        public bool disappearsOnCombination;
+        public bool isSingleUse;
+        private void OnEnable()
+        {
+            hasBeenPickedUp = false;
+        }
+
+        public virtual void Buff(Item buff)
+        {
+            Debug.Log($"Buffing {itemName} with {buff.itemName}");
+        }
     }
+    
 }
 

@@ -8,24 +8,24 @@
 *
 **********************************************************************************************/
 
-
-using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class InteractionPoint : MonoBehaviour
 {
     [Header("Prompt")]
     [SerializeField] protected GameObject promptBox;
-    [SerializeField] private string promptMessage;
+    [SerializeField] protected string promptMessage;
 
+    [SerializeField] protected bool automaticInteraction = false;
     private BoxCollider2D triggerArea;
     private bool canInteract = true;
 
     private PlayerInput input;
 
-     private void Awake()
+     protected virtual void Awake()
      {
          triggerArea = GetComponent<BoxCollider2D>();
          if (triggerArea)
@@ -34,42 +34,57 @@ public abstract class InteractionPoint : MonoBehaviour
          }
      }
 
-     private void Start()
+     protected virtual void Start()
      {
          input = new PlayerInput();
          input.Enable();
      }
 
-     private void OnTriggerEnter2D(Collider2D other)
+     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.GetComponent<CharacterController>()) return;
-        if (!canInteract) return;
-        if (!promptBox) return;
+        if (!automaticInteraction)
+        {
+            if (!other.GetComponent<CharacterController>()) return;
+            if (!canInteract) return;
+            if (!promptBox) return;
         
-        promptBox.GetComponentInChildren<TMP_Text>().text = promptMessage;
-        promptBox.SetActive(true);
+            promptBox.GetComponentInChildren<TMP_Text>().text = promptMessage;
+            promptBox.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Auto Interaction!");
+            Interact(other.GetComponent<CharacterController>());
+        }
+        
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!other.GetComponent<CharacterController>()) return;
-        //if (!(Input.GetButton("Interact"))) return;
-        if (!input.Player.Interact.IsPressed()) return;
-        Interact(other.GetComponent<CharacterController>());
+        if (!automaticInteraction)
+        {
+            if (!other.GetComponent<CharacterController>()) return;
+            //if (!(Input.GetButton("Interact"))) return;
+            if (!input.Player.Interact.IsPressed()) return;
+            Interact(other.GetComponent<CharacterController>());
+        }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    protected virtual void OnTriggerExit2D(Collider2D other)
     {
-        if(!other.GetComponent<CharacterController>()) return;
-        DisablePrompt();
+        if (!automaticInteraction)
+        {
+            if(!other.GetComponent<CharacterController>()) return;
+            DisablePrompt();
+        }
     }
 
-    protected void DisableInteraction()
-    {
-        DisablePrompt();
-        canInteract = false;
-        triggerArea.enabled = false;
-    }
+    // protected void DisableInteraction()
+    // {
+    //     DisablePrompt();
+    //     canInteract = false;
+    //     triggerArea.enabled = false;
+    // }
 
     private void DisablePrompt()
     {
