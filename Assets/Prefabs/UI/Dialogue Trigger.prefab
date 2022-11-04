@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: Dialogue Trigger
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -72,7 +72,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    name: 
     sentences:
     - Are those... eyes in the darkness ahead?
-  dialoguePrefab: {fileID: 940429459722377699, guid: 1ca3a5d3693eb97448a9749ea44910b4, type: 3}
+    positions: []
+    holdDuration: 0
+    fadeDuration: 0
+  dialogueManager: {fileID: 0}

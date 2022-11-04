@@ -42,6 +42,7 @@ public class LevelController : MonoBehaviour
     {
         if (onLoadCutscene)
         {
+            UIHelpers.Instance.Fader.Fade(0f,0.1f);
             onLoadCutscene.Completed.AddListener(OnCutsceneCompleted);
             onLoadCutscene.Play();
         }

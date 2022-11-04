@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CutsceneDialogueManager : MonoBehaviour
@@ -80,6 +81,11 @@ public class CutsceneDialogueManager : MonoBehaviour
         {
             onCompleteCallback.Invoke();
         });
+        if (sentenceCounter >= cutsceneDialogue.sentences.Length)
+        {
+            sentenceCounter = 0;
+            cutsceneDialogue = null;
+        }
     }
     
     // Not entirely sure how the EventHandler will link to the DialogueResume function, will need clarification

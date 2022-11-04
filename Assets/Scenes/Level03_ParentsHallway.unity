@@ -3678,6 +3678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptBox: {fileID: 1351424157}
   promptMessage: Activate - E
+  automaticInteraction: 0
   onInteract:
     m_PersistentCalls:
       m_Calls:
@@ -9251,6 +9252,119 @@ Transform:
   m_Father: {fileID: 453563432}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1507264485
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_RootOrder
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 25.512892
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 115.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.6181086
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688188, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688189, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_Size.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogueManager
+      value: 
+      objectReference: {fileID: 1869869336}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.fadeDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.holdDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.positions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: Mamma and Papa's room...
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.sentences.Array.data[1]
+      value: Are those... eyes in the darkness ahead?
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.positions.Array.data[0].x
+      value: 92.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.positions.Array.data[0].y
+      value: 3.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.positions.Array.data[1].x
+      value: 91.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.positions.Array.data[1].y
+      value: 7.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688191, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 9015569112612688191, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_Name
+      value: Parents Room Dialogue
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
 --- !u!1 &1522185875
 GameObject:
   m_ObjectHideFlags: 0
@@ -10336,6 +10450,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688189, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: m_Size.x
+      value: 1.6
+      objectReference: {fileID: 0}
     - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
       propertyPath: dialogueManager
       value: 
@@ -10346,7 +10464,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
       propertyPath: dialogue.holdDuration
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
       propertyPath: dialogue.positions.Array.size
@@ -10357,12 +10475,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
+      propertyPath: dialogue.sentences.Array.data[0]
+      value: I should turn on the light switch
+      objectReference: {fileID: 0}
+    - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
       propertyPath: dialogue.sentences.Array.data[1]
-      value: Try pulling that box up ahead by holding Right Mouse Button near it
+      value: Are those... eyes in the darkness ahead?
       objectReference: {fileID: 0}
     - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
       propertyPath: dialogue.positions.Array.data[0].x
-      value: 32.39
+      value: 17.81
       objectReference: {fileID: 0}
     - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
       propertyPath: dialogue.positions.Array.data[0].y
@@ -10370,7 +10492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
       propertyPath: dialogue.positions.Array.data[1].x
-      value: 35.17
+      value: 38.25
       objectReference: {fileID: 0}
     - target: {fileID: 9015569112612688190, guid: fae984ac06a863e4785af9e0cf1c7595, type: 3}
       propertyPath: dialogue.positions.Array.data[1].y
@@ -10954,6 +11076,10 @@ PrefabInstance:
     - target: {fileID: 3022912342552266208, guid: 21d5db5934fbd4bd2ae30cb2ae3d6a80, type: 3}
       propertyPath: m_Size.x
       value: 24.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3022912342552266209, guid: 21d5db5934fbd4bd2ae30cb2ae3d6a80, type: 3}
+      propertyPath: promptMessage
+      value: Parents Room - RMB
       objectReference: {fileID: 0}
     - target: {fileID: 3022912342552266210, guid: 21d5db5934fbd4bd2ae30cb2ae3d6a80, type: 3}
       propertyPath: m_RootOrder

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -18,6 +19,7 @@ public class UIGammaSlider : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.StopMusic();
         slider.onValueChanged.AddListener(OnSliderChanged);
     }
     

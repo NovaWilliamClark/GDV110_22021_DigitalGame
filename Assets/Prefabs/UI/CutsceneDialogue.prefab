@@ -142,7 +142,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: asdasdasdas
+  m_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam viverra
+    justo nisl. Donec sodales felis mollis tortor luctus, at finibus leo congue.
+    Suspendisse potenti.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
   m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
@@ -169,10 +171,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 31.75
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -205,7 +207,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 56.041016, y: 25, z: 55.2229, w: 25}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -246,8 +248,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -697, y: 0}
-  m_SizeDelta: {x: 282.9935, y: 282.9935}
+  m_AnchoredPosition: {x: -473, y: 104.2}
+  m_SizeDelta: {x: 208.3916, y: 208.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5706091767024890669
 CanvasRenderer:
@@ -277,7 +279,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: e75aca01beaf94657acebbeb94a35b6e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -323,8 +325,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -248.0151}
-  m_SizeDelta: {x: 0, y: -530.0302}
+  m_AnchoredPosition: {x: 3.7197876, y: -430.31567}
+  m_SizeDelta: {x: -31.1818, y: -860.6314}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &7942237826148382651
 CanvasGroup:
@@ -405,7 +407,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 128.75195, y: 0.000030517578}
+  m_AnchoredPosition: {x: 128.75195, y: 0}
   m_SizeDelta: {x: -744.7821, y: -61.7958}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8981784312268299589
