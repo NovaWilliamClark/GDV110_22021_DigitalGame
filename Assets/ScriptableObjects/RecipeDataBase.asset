@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d95557e9ff74689b1b9dfffe93683b8, type: 3}
-  m_Name: TestItem
+  m_Script: {fileID: 11500000, guid: 0fa8209a01f4435d8ea3231cbaddb2c1, type: 3}
+  m_Name: RecipeDataBase
   m_EditorClassIdentifier: 
-  itemID: 0
-  itemName: TestItem
-  itemSprite: {fileID: 0}
-  hasBeenPickedUp: 0
+  recipes:
+  - {fileID: 11400000, guid: 28c3669ae4837a14793999098987e38c, type: 2}

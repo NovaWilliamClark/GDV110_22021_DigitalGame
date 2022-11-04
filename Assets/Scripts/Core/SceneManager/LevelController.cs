@@ -6,20 +6,16 @@
 *    Date: 19/10/2022
 *
 **********************************************************************************************/
-
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Audio;
-using Character;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class LevelController : MonoBehaviour
 {
     private PlayerSpawnPoint[] playerSpawnPoints;
     private List<ItemPickup> levelItems = new List<ItemPickup>();
+    private List<ItemUse> levelItemInteractions = new List<ItemUse>();
     private List<GameObject> levelEnemies = new List<GameObject>();
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private LevelData levelData;
@@ -34,6 +30,12 @@ public class LevelController : MonoBehaviour
     {
         playerSpawnPoints = FindObjectsOfType<PlayerSpawnPoint>();
         levelItems = FindObjectsOfType<ItemPickup>().ToList();
+        levelItemInteractions = FindObjectsOfType<ItemUse>().ToList();
+        List<ItemUseRecipe> itemUseRecipes = FindObjectsOfType<ItemUseRecipe>().ToList();
+        foreach (var recipe in itemUseRecipes)
+        {
+            levelItemInteractions.Add(recipe);
+        }
     }
 
     private void Start()
@@ -60,28 +62,28 @@ public class LevelController : MonoBehaviour
         InitPlayer();
     }
 
-    private void OnDestroy()
-    {
-        //levelData.items = FindObjectsOfType<Item>().ToList();
-    }
-
     private void InitLevelData()
     {
-        /*if (levelData.items.Count == 0)
-        {
-            return;
-        }*/
-
         foreach (var obj in levelItems)
         {
-            if (obj.GetItem.hasBeenPickedUp)
+            if (obj.GetItem != null)
             {
-                Destroy(obj.gameObject);
+                if (obj.GetItem.hasBeenPickedUp)
+                {
+                    Destroy(obj.gameObject);
+                }
             }
-            /*if (!levelData.items.Contains(obj.gameObject))
+        }
+
+        foreach (var interaction in levelItemInteractions)
+        {
+            if (interaction.GetData != null)
             {
-                obj.gameObject.SetActive(false);   
-            }*/
+                if (interaction.GetData.state == InteractiveData.InteractionState.INACTIVE)
+                {
+                    Destroy(interaction.gameObject);
+                }
+            }
         }
     }
 

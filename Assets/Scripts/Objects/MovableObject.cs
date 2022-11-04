@@ -6,6 +6,8 @@ namespace Objects
 {
 	public class MovableObject : MonoBehaviour
 	{
+		public bool isMoving = false;
 		[SerializeField] public float moveVelocity;
 	}
 }
+
