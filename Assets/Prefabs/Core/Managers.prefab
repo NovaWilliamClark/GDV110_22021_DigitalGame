@@ -93,4 +93,4 @@ MonoBehaviour:
     sentences: []
     speaker: {fileID: 0}
     textSpeed: 0
-  audioSource: {fileID: 0}
+  dialogueBoxPrefab: {fileID: 7055575127277419301, guid: bc2a8ba55e67ddc4eaae5d5f27ab90bd, type: 3}

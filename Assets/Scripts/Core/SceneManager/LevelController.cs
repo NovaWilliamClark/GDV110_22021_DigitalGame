@@ -25,6 +25,8 @@ public class LevelController : MonoBehaviour
     [SerializeField] private LevelData levelData;
     private CharacterController instancedPlayer;
 
+    public LevelCutscene onLoadCutscene;
+
     public AudioClip LevelBGM;
     //public float BGMVolume;
 
@@ -35,6 +37,24 @@ public class LevelController : MonoBehaviour
     }
 
     private void Start()
+    {
+        if (onLoadCutscene)
+        {
+            onLoadCutscene.Completed.AddListener(OnCutsceneCompleted);
+            onLoadCutscene.Play();
+        }
+        else
+        {
+            LevelInit();
+        }
+    }
+
+    private void OnCutsceneCompleted()
+    {
+        LevelInit();
+    }
+
+    private void LevelInit()
     {
         InitLevelData();
         InitPlayer();
