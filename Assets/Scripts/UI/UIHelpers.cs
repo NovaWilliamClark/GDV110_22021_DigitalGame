@@ -17,6 +17,7 @@ public class UIHelpers : MonoBehaviour
 
     public UIFader Fader;
     public SanityVisual SanityMeter;
+    public UIBatteryIndicator BatteryIndicator;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class UIHelpers : MonoBehaviour
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        BatteryIndicator.Init();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

@@ -35,7 +35,7 @@ public class PooledAudioSource : MonoBehaviour
             hasStarted = true;
         }
 
-        if (hasStarted && !audioSource.isPlaying)
+        if (hasStarted && !audioSource.isPlaying || !audioSource.clip)
         {
             OnPlayed();
         }

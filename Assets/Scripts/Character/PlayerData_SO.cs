@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using Character;
 using Objects;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 
 [CreateAssetMenu(menuName = "Create PlayerData", fileName = "PlayerData", order = 0)]
@@ -25,12 +27,34 @@ public class PlayerData_SO : ScriptableObject
     public float initialSanity = 100f;
     public float initialGainRate = 0.03f;
     public float initialLossRate = 0.1f;
-    
+
+    [Header("--Battery--")] 
+    public float initialBattery = 0f;
+
+    [SerializeField] private float maxBattery = 100f;
+    public float MaxBattery => maxBattery;
+
+    private float currentBattery = 0f;
+
+    public UnityEvent<float> BatteryValueChanged;
+
+    public float CurrentBattery
+    {
+        get => currentBattery;
+        set
+        {
+            currentBattery = Mathf.Min(value,maxBattery);
+            BatteryValueChanged.Invoke(currentBattery);
+        }
+    }
+
+
     public List<Item> inventoryItems;
 
     private void OnEnable()
     {
         Debug.Log("PlayerDataSO Fired");
+        CurrentBattery = initialBattery;
         sanity = initialSanity;
         sanityGainRate = initialGainRate;
         sanityLossRate = initialLossRate;
