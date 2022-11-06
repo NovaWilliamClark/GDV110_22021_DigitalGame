@@ -15,6 +15,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Core.LitArea;
+using DG.Tweening.Core.Easing;
 using Objects;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Serialization;
@@ -64,6 +65,13 @@ public class CharacterController : MonoBehaviour
     private Vector2 prevVelocity;
     private bool isFlipped;
     
+    [Header("Flashlight")]
+    [SerializeField] private Item flashlightItem;
+    [SerializeField] private GameObject flashlightObject;
+    private PlayerInput input;
+    private bool flashlightCooldownComplete = true;
+    private bool flashlightIsOn = false;
+    
     [Header("Animation")]
     private int animatorMoveSpeed;
     [FormerlySerializedAs("OnDeath")] public UnityEvent onDeath;
@@ -89,6 +97,9 @@ public class CharacterController : MonoBehaviour
         hardGroundMask = LayerMask.GetMask("Ground Hard");
 
         animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
+
+        input = new PlayerInput();
+        input.Enable();
     
         CanMove = true;
     }
@@ -124,7 +135,24 @@ public class CharacterController : MonoBehaviour
             ShowInventory();
         }
         
-        // Roll Dodge
+        // Use Flashlight
+        if (input.Player.UseFlashlight.IsPressed() && flashlightItem.hasBeenPickedUp && flashlightCooldownComplete)
+        {
+            if (!flashlightIsOn)
+            {
+                flashlightObject.SetActive(true);
+                flashlightIsOn = true;
+                flashlightCooldownComplete = false;
+                StartCoroutine(FlashlightCooldown());
+            }
+            else if (flashlightIsOn)
+            {
+                flashlightObject.SetActive(false);
+                flashlightIsOn = false;
+                flashlightCooldownComplete = false;
+                StartCoroutine(FlashlightCooldown());
+            }
+        }
 
         UpdateDirection();
     }
@@ -325,5 +353,12 @@ public class CharacterController : MonoBehaviour
     public void ToggleMovement(bool value)
     {
         CanMove = value == true ? true : false;
+    }
+
+    private IEnumerator FlashlightCooldown()
+    {
+        yield return new WaitForSeconds(1);
+
+        flashlightCooldownComplete = true;
     }
 }

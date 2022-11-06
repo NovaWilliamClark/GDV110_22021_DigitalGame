@@ -337,6 +337,8 @@ MonoBehaviour:
   acceleration: 40
   maxSpeed: 20
   minFlipSpeed: 0.1
+  flashlightItem: {fileID: 11400000, guid: 8a1f604e86ff54b41a1109ee6cfe75c4, type: 2}
+  flashlightObject: {fileID: 3656217044377786656}
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -517,7 +519,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2442337540540467342
 Transform:
   m_ObjectHideFlags: 0
@@ -591,7 +593,7 @@ GameObject:
   - component: {fileID: 3287860270994679228}
   - component: {fileID: 7579297350304321896}
   m_Layer: 6
-  m_Name: Light 2D
+  m_Name: Flashlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
