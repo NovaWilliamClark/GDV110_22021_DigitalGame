@@ -9,6 +9,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Audio;
+using Character;
 using UnityEngine;
 
 public class LevelController : MonoBehaviour
@@ -20,6 +21,8 @@ public class LevelController : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private LevelData levelData;
     private CharacterController instancedPlayer;
+
+    public bool safeZone;
 
     public LevelCutscene onLoadCutscene;
 
@@ -130,7 +133,9 @@ public class LevelController : MonoBehaviour
         instancedPlayer.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
         instancedPlayer.onDeath.AddListener(OnPlayerDeath);
 
-        sanityMeter.SetPlayer(instancedPlayer);
+        var sanity = player.GetComponent<CharacterSanity>();
+        sanity.Enable();
+        sanityMeter.SetPlayer(sanity);
         //playerObj.FetchPersistentData();
         UIHelpers.Instance.Fader.Fade(0f, 2f);
     }

@@ -13,8 +13,8 @@ public class DialogueBoxManager : MonoBehaviour
 
     private void Awake()
     {
-        currentCanvas = gameObject.GetComponentInChildren<CanvasGroup>();
-        currentCanvas.alpha = 0;
+        //currentCanvas = gameObject.GetComponentInChildren<CanvasGroup>();
+        //currentCanvas.alpha = 0;
     }
 
     public void PrintText(string newText, Vector3 newPosition, float holdDuration, float fadeDuration)

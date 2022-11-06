@@ -42,12 +42,6 @@ public class CharacterController : MonoBehaviour
     [Header("Data")] 
     [SerializeField] private PlayerData_SO playerData;
 
-    [Header("Sanity")]
-    [SerializeField] private float sanityLossRate = 0.5f;
-    [SerializeField] private float sanityGainRate = 0.25f;
-    private bool isInLight = false;
-    private bool allowLightInteraction = true;
-
     //[SerializeField] private Inventory inventory;
     public Inventory GetInventory => inventory;
     public float getSanity { get; private set; } = 100f;
@@ -97,9 +91,6 @@ public class CharacterController : MonoBehaviour
         animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
     
         CanMove = true;
-        //controllerCollider.isTrigger = true;
-        LitArea.onLightEnter += Light_OnLightEnter; 
-        LitArea.onLightExit += Light_OnLightExit;
     }
     
     private void Update()
@@ -135,26 +126,6 @@ public class CharacterController : MonoBehaviour
         
         // Roll Dodge
 
-
-        // Sanity
-        if (allowLightInteraction)
-        {
-            if (!isInLight)
-            {
-                TakeSanityDamage(sanityLossRate, true);
-            }
-            else
-            {
-                OnSanityChanged(getSanity);
-                getSanity += sanityGainRate;
-            }
-            
-            if (getSanity >= 100)
-            {
-                getSanity = 100f;
-            }
-        }
-        
         UpdateDirection();
     }
 
@@ -228,23 +199,6 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    private void Light_OnLightEnter(Collider2D collider)
-    {
-        isInLight = true; 
-        Debug.Log("Light Entered");
-    }
-
-    private void Light_OnLightExit(Collider2D collider)
-    {
-        isInLight = false; 
-        Debug.Log("Light Exited");
-    }
-    private void OnDestroy()
-    {
-        LitArea.onLightEnter -= Light_OnLightEnter;
-        LitArea.onLightExit -= Light_OnLightExit;
-    }
-
     public bool IsGrounded()
     {
         if (groundType == GroundType.Hard || groundType == GroundType.Soft)
@@ -259,31 +213,7 @@ public class CharacterController : MonoBehaviour
     {
         return isFlipped;
     }
-    
-    public void TakeSanityDamage(float damageTaken, bool fromDarkness)
-    {
-        var dmgToTake = (damageTaken * Time.timeScale);
-        if (dmgToTake == 0) return;
-        getSanity -= dmgToTake;
-        if (fromDarkness)
-        {
-            if (getSanity <= 0.001f)
-                getSanity = 0.001f;
-        }
-        else
-        {
-            if (getSanity <= 0)
-            {
-                getSanity = 0;
-                allowLightInteraction = false; //Stop processing sanity light interaction 
-                CanMove = false;
-                // Play Death Animation
-                StartCoroutine(RestartLevel());
-            }
-        }
-        OnSanityChanged(getSanity);
-    }
-    
+
     private IEnumerator RestartLevel()
     {
         onDeath.Invoke();
@@ -308,16 +238,16 @@ public class CharacterController : MonoBehaviour
 
     private void FetchPersistentData()
     {
-        getSanity = playerData.sanity;
-        sanityGainRate = playerData.sanityGainRate;
-        sanityLossRate = playerData.sanityLossRate;
+        //getSanity = playerData.sanity;
+        //sanityGainRate = playerData.sanityGainRate;
+        //sanityLossRate = playerData.sanityLossRate;
         inventory.Init(playerData.inventoryItems);
     }
     public void SetPersistentData()
     {
-        playerData.sanity = getSanity;
-        playerData.sanityGainRate = sanityGainRate;
-        playerData.sanityLossRate = sanityLossRate;
+        //playerData.sanity = getSanity;
+        //playerData.sanityGainRate = sanityGainRate;
+        //playerData.sanityLossRate = sanityLossRate;
         //playerData.inventoryItems.Clear();
         playerData.SetItems(inventory);
     }
@@ -329,6 +259,12 @@ public class CharacterController : MonoBehaviour
     public void AddToInventory(Item item)
     {
         GetInventory.AddToInventory(item);
+    }
+
+    public void SetAnimationControl(bool disabled = false)
+    {
+        // quick hack so Timeline director has full control of animations
+        animator.SetBool("Enabled", !disabled);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

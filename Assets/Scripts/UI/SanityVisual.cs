@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Audio;
+using Character;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 [ExecuteInEditMode]
@@ -29,13 +31,13 @@ public class SanityVisual : MonoBehaviour
     
     private ParticleSystem.MinMaxCurve tempCurve = new ParticleSystem.MinMaxCurve(25, 50);
 
-    private CharacterController player;
+    private CharacterSanity player;
 
     public bool ShowSanity = false;
 
     private void Awake()
     {
-        player = FindObjectOfType<CharacterController>();
+        player = FindObjectOfType<CharacterSanity>();
         canvasObj = GetComponentInChildren<Canvas>(true);
     }
 
@@ -53,6 +55,7 @@ public class SanityVisual : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!Application.isPlaying && !RunInEditor) return;
         var newScale = new Vector3(
             LogLerp(MaskScale.x * MinValue, MaskScale.x, Value),
@@ -70,21 +73,22 @@ public class SanityVisual : MonoBehaviour
         psSize.startSize = tempCurve;
 
         if (!player) return;
-        
+        ShowSanity = player.Enabled;
+        canvasObj.gameObject.SetActive(ShowSanity);
         transform.position = player.transform.position;
     }
 
-    public void SetPlayer(CharacterController cc)
+    public void SetPlayer(CharacterSanity cs)
     {
         Value = 1f;
-        player = cc;
-        player.SanityChanged += OnSanityChanged;
+        player = cs;
+        player.SanityValueChanged.AddListener(OnSanityChanged);
         canvasObj.gameObject.SetActive(true);
     }
 
     public void UnsetPlayer()
     {
-        player.SanityChanged -= OnSanityChanged;
+        player.SanityValueChanged.RemoveListener(OnSanityChanged);
         player = null;
         AudioManager.Instance.StopSanityBgm();
         canvasObj.gameObject.SetActive(false);
@@ -97,9 +101,9 @@ public class SanityVisual : MonoBehaviour
         canvasObj.gameObject.SetActive(false);
     }
 
-    private void OnSanityChanged(object sender, float e)
+    private void OnSanityChanged(float value, float max)
     {
-        Value = e / 100f;
+        Value = value / max;
         Value = Mathf.Clamp(Value, 0f, 1.0f);
 
         if (Value <= ValueToPlayBgm)

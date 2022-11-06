@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Character;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
@@ -125,10 +126,10 @@ namespace AI
 
         private void OnCollisionEnter2D(Collision2D col)
         {
-            var cc = col.gameObject.GetComponent<CharacterController>();
+            var cc = col.gameObject.GetComponent<CharacterSanity>();
             if (cc)
             {
-                cc.TakeSanityDamage(100f, false);
+                cc.DecreaseSanity(100f, false);
             }
         }
 

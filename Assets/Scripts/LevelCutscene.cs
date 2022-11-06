@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Character;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
@@ -15,6 +16,8 @@ public class LevelCutscene : MonoBehaviour
 
     public UnityEvent Completed;
 
+    private CharacterController player;
+
     private void Awake()
     {
         director = GetComponent<PlayableDirector>();
@@ -28,6 +31,12 @@ public class LevelCutscene : MonoBehaviour
     private void OnDirectorStopped(PlayableDirector obj)
     {
         Debug.Log("Director has stopped");
+        if (player)
+        {
+            player.enabled = true;
+            player.GetComponent<CharacterSanity>().Enable();
+            player.SetAnimationControl();
+        }
         Completed.Invoke();
         
     }
@@ -43,13 +52,21 @@ public class LevelCutscene : MonoBehaviour
 
     public void Play()
     {
+        player = FindObjectOfType<CharacterController>();
+        player.GetComponent<CharacterSanity>().Disable();
+        if (player)
+        {
+            player.enabled = false;
+            player.SetAnimationControl(true);
+        }
         director.Play();
     }
+    
 
     public void ShowCutsceneDialogue()
     {
         //var dialogue = GetComponent<>()
-        PauseTimeline();
+        //PauseTimeline();
         CutsceneDialogueManager.Instance.ShowDialogue(dialogue,OnSentenceComplete);
     }
 

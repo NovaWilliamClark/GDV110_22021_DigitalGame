@@ -20,7 +20,20 @@ using UnityEngine.Rendering;
 public class PlayerData_SO : ScriptableObject
 {
     [Header("--Sanity--")] 
-    public float sanity = 100f;
+    private float sanity = 100f;
+
+    [SerializeField] private float maxSanity = 100f;
+    public float MaxSanity => maxSanity;
+    
+    public float Sanity
+    {
+        get => sanity;
+        set
+        {
+            sanity = Mathf.Clamp(value, 0f, maxSanity);
+            SanityValueChanged?.Invoke(sanity);
+        }
+    }
     public float sanityGainRate = 0.025f;
     public float sanityLossRate = 0.03f;
 
@@ -36,7 +49,10 @@ public class PlayerData_SO : ScriptableObject
 
     private float currentBattery = 0f;
 
+    [HideInInspector]
     public UnityEvent<float> BatteryValueChanged;
+    [HideInInspector]
+    public UnityEvent<float> SanityValueChanged;
 
     public float CurrentBattery
     {
