@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Character;
+using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class SanityChanger : MonoBehaviour
@@ -9,21 +10,21 @@ public class SanityChanger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.TryGetComponent<CharacterController>(out var player))
+        if (col.TryGetComponent<CharacterSanity>(out var player))
         {
-            player.AdjustSanityDropRate(sanityChangeRate);
+            player.AdjustDecreaseRate(sanityChangeRate);
             if (dealDamageAlso)
             {
-                player.TakeSanityDamage(sanityDamage, false);
+                player.DecreaseSanity(sanityDamage, false);
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (TryGetComponent<CharacterController>(out var player))
+        if (TryGetComponent<CharacterSanity>(out var player))
         {
-            player.AdjustSanityDropRate(0, true);
+            player.AdjustDecreaseRate(0, true);
         }
     }
 }

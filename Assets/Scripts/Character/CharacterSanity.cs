@@ -11,6 +11,11 @@ namespace Character
         public UnityEvent<float, float> SanityValueChanged;
         public UnityEvent SanityReachedZero;
         [SerializeField] bool sanityEnabled = false;
+
+        private float decreaseRate = 0f;
+        private float tempDecreaseRate = 0f;
+        private bool useTempRate = false;
+        
         public bool Enabled => sanityEnabled;
 
         private bool isInLight = false;
@@ -34,7 +39,8 @@ namespace Character
             }
             else
             {
-                DecreaseSanity(playerData.sanityLossRate, true);
+                var rate = useTempRate ? tempDecreaseRate : playerData.sanityLossRate;
+                DecreaseSanity(rate, true);
             }
         }
 
@@ -46,6 +52,12 @@ namespace Character
             {
                 SanityReachedZero?.Invoke();
             }
+        }
+
+        public void AdjustDecreaseRate(float rate, bool reset = false)
+        {
+            useTempRate = !reset;
+            tempDecreaseRate = rate;
         }
 
         public void HealSanity(float amount)

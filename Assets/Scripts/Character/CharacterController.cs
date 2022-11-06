@@ -322,38 +322,8 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    protected virtual void OnSanityChanged(float e)
-    {
-        SanityChanged?.Invoke(this, e);
-    }
-
-    public void AdjustSanityDropRate(float sanityChangeRate, bool backToNormal = false)
-    {
-        if (backToNormal)
-        {
-            sanityLossRate = tempSanityLossRate;
-            return;
-        }
-
-        tempSanityLossRate = sanityLossRate;
-        sanityLossRate = sanityChangeRate;
-    }
-
     public void ToggleMovement(bool value)
     {
         CanMove = value == true ? true : false;
-    }
-
-    public void ToggleSanity(bool value)
-    {
-        if (value)
-        {
-            sanityLossRate = tempSanityLossRate;
-        }
-        else
-        {
-            tempSanityLossRate = sanityLossRate;
-            sanityLossRate = 0f;
-        }
     }
 }

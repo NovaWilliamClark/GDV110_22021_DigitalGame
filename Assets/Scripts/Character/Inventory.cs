@@ -51,7 +51,7 @@ namespace Character
             if (player)
             {
                 player.ToggleMovement(false);
-                player.ToggleSanity(false);
+                //player.ToggleSanity(false);
             }
             InventorySlot.OnSlotClick += InventorySlot_OnSlotClick;
             ShowSlots();
@@ -79,7 +79,7 @@ namespace Character
             if (player)
             {
                 player.ToggleMovement(true);
-                player.ToggleSanity(true);
+                //player.ToggleSanity(true);
             }
         }
 
