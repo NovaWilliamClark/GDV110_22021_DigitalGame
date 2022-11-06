@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Sequence = DG.Tweening.Sequence;
 
@@ -21,7 +23,7 @@ public class UIBatteryIndicator : MonoBehaviour
     [SerializeField] private GameObject icon;
     [SerializeField] private Image iconOn;
     [SerializeField] private Image iconOff;
-
+    
     public PlayerData_SO playerData;
 
     private Sequence _introSequence;
@@ -42,17 +44,18 @@ public class UIBatteryIndicator : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+        fillable.fillAmount = 0f;
         _introSequence = DOTween.Sequence();
         _introSequence
             .Append(background.GetComponent<RectTransform>().DOScale(1f, .5f))
             .Append(icon.GetComponent<RectTransform>().DOScale(1f, .5f))
             .Append(batteryCanvasGroup.DOFade(1f, 1f))
-            .SetAutoKill(false);
-
+            .SetAutoKill(false)
+            .OnComplete(() =>
+            {
+                FlashCritical(4, fillableBg, FinishSetup);
+            });
         _introSequence.Play();
-        
-        fillable.fillAmount = 0f;
-        FlashCritical(4, fillableBg, FinishSetup);
     }
 
     void FinishSetup()
@@ -82,7 +85,6 @@ public class UIBatteryIndicator : MonoBehaviour
         {
             complete?.Invoke();
         });
-        criticalSeq.Play();
     }
 
     // public void SetValue(float value)

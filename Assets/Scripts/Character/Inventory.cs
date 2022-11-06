@@ -44,7 +44,7 @@ namespace Character
                 selectedslots.Add(obj);
             }
         }
-
+        
         private void OnEnable()
         {
             player = FindObjectOfType<CharacterController>();
@@ -114,6 +114,11 @@ namespace Character
         public bool HasItem(int id)
         {
             return items.Exists(x => x.itemID == id);
+        }
+
+        public bool HasItem(Item item)
+        {
+            return HasItem(item.itemID);
         }
 
         public void UseItem(int id)

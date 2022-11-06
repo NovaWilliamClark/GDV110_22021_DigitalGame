@@ -14,7 +14,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Nightlight : MonoBehaviour
+public class Nightlight : InteractionPoint
 {
     private Animator _animator;
     private Light2D _light;
@@ -46,5 +46,10 @@ public class Nightlight : MonoBehaviour
                 AudioManager.Instance.PlaySound(ActivateSFX);
             }
         }
+    }
+
+    protected override void Interact(CharacterController cc)
+    {
+        
     }
 }

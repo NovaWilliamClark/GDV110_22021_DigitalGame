@@ -2,6 +2,7 @@ using System;
 using Core;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.U2D.IK;
 
 namespace Character
 {
@@ -15,6 +16,8 @@ namespace Character
         private float decreaseRate = 0f;
         private float tempDecreaseRate = 0f;
         private bool useTempRate = false;
+
+        public CCDSolver2D solver;
         
         public bool Enabled => sanityEnabled;
 
