@@ -8,11 +8,12 @@
 *
 **********************************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Objects;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Character
@@ -29,17 +30,7 @@ namespace Character
         private int slotCount;
         public List<Item> items { get; private set; } = new List<Item>();
         private List<InventorySlot> slots = new List<InventorySlot>();
-
-        private void Start()
-        {
-            InventorySlot.OnSlotClick += InventorySlot_OnSlotClick;
-        }
-
-        private void OnDestroy()
-        {
-            InventorySlot.OnSlotClick -= InventorySlot_OnSlotClick;
-        }
-
+        private CharacterController player;
         private void InventorySlot_OnSlotClick(InventorySlot obj)
         {
             if (selectedslots.Contains(obj))
@@ -56,10 +47,18 @@ namespace Character
 
         private void OnEnable()
         {
+            player = FindObjectOfType<CharacterController>();
+            if (player)
+            {
+                player.ToggleMovement(false);
+                player.ToggleSanity(false);
+            }
+            InventorySlot.OnSlotClick += InventorySlot_OnSlotClick;
             ShowSlots();
         }
         private void OnDisable()
         {
+            InventorySlot.OnSlotClick -= InventorySlot_OnSlotClick;
             foreach (var slot in selectedslots)
             {
                 if (slot != null)
@@ -77,6 +76,11 @@ namespace Character
                 }
             }
             slotCount = items.Count;
+            if (player)
+            {
+                player.ToggleMovement(true);
+                player.ToggleSanity(true);
+            }
         }
 
         private void ShowSlots()

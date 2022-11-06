@@ -5,11 +5,12 @@ using Objects;
 using UnityEngine;
 using UnityEngine.Rendering.UI;
 
+
 public class JackInTheBox : MovableObject
 {
-    [SerializeField] private float sanityDamage = 10f;
     [SerializeField] private float dragTime = 3f;
     [SerializeField] private GameObject jack;
+    
     private bool isInProgress = false;
     private bool isFinished = false;
 
@@ -47,7 +48,7 @@ public class JackInTheBox : MovableObject
     {
         yield return new WaitForSeconds(dragTime);
         jack.SetActive(true);
-        FindObjectOfType<CharacterController>().TakeSanityDamage(sanityDamage,false);
+        //FindObjectOfType<CharacterController>().TakeSanityDamage(sanityDamage,false);
         Debug.Log("SURPRISE MOTHERFUCKER!!!");
         isFinished = true;
     }

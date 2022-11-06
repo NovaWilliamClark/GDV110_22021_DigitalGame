@@ -45,6 +45,7 @@ public class CharacterController : MonoBehaviour
     [Header("Sanity")]
     [SerializeField] private float sanityLossRate = 0.5f;
     [SerializeField] private float sanityGainRate = 0.25f;
+    private float tempSanityLossRate;
     private bool isInLight = false;
     private bool allowLightInteraction = true;
 
@@ -85,10 +86,10 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
+        
         //inventory = GetComponentInChildren<Inventory>();
         inventory.gameObject.SetActive(false);
         FetchPersistentData();
-        
         controllerRigidBody = GetComponent<Rigidbody2D>();
         controllerCollider = GetComponent<Collider2D>();
         softGroundMask = LayerMask.GetMask("Ground Soft");
@@ -389,5 +390,35 @@ public class CharacterController : MonoBehaviour
     protected virtual void OnSanityChanged(float e)
     {
         SanityChanged?.Invoke(this, e);
+    }
+
+    public void AdjustSanityDropRate(float sanityChangeRate, bool backToNormal = false)
+    {
+        if (backToNormal)
+        {
+            sanityLossRate = tempSanityLossRate;
+            return;
+        }
+
+        tempSanityLossRate = sanityLossRate;
+        sanityLossRate = sanityChangeRate;
+    }
+
+    public void ToggleMovement(bool value)
+    {
+        CanMove = value == true ? true : false;
+    }
+
+    public void ToggleSanity(bool value)
+    {
+        if (value)
+        {
+            sanityLossRate = tempSanityLossRate;
+        }
+        else
+        {
+            tempSanityLossRate = sanityLossRate;
+            sanityLossRate = 0f;
+        }
     }
 }
