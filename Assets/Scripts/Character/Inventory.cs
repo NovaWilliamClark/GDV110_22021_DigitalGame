@@ -65,6 +65,8 @@ namespace Character
             
             useButton.onClick.AddListener(UseButtonClicked);
             ShowSlots();
+            Cursor.visible = true;
+            player.Equipment.DisableInput();
         }
 
         private void UseButtonClicked()
@@ -93,6 +95,9 @@ namespace Character
                 player.ToggleMovement(true);
                 //player.ToggleSanity(true);
             }
+            
+            Cursor.visible = false;
+            player.Equipment.EnableInput();
         }
 
         private void ShowSlots()
@@ -122,6 +127,7 @@ namespace Character
         public void AddToInventory(Item item, bool inventoryIsOpen = false)
         {
             //items.Add(item);
+            ItemAdded?.Invoke(item);
             items.Add(Item.CreateInstance(item));
         }
 

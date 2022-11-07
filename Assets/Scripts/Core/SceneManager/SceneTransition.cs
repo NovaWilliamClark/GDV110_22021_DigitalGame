@@ -19,6 +19,7 @@ namespace Objects
 
         protected override void Interact(CharacterController cc)
         {
+            if (!cc) return;
             cc.SetPersistentData();
             UIHelpers.Instance.Fader.Fade(1f, 1f, () =>
             {

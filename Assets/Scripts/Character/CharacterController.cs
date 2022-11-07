@@ -41,12 +41,14 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private Transform puppet = null;
     //[SerializeField] private CharacterAudio audioPlayer = null;
     [SerializeField] private Inventory inventory;
+    [SerializeField] private CharacterEquipment equipment;
 
     [Header("Data")] 
     [SerializeField] private PlayerData_SO playerData;
 
     //[SerializeField] private Inventory inventory;
     public Inventory GetInventory => inventory;
+    public CharacterEquipment Equipment => equipment;
     public float getSanity { get; private set; } = 100f;
     public event EventHandler<float> SanityChanged; 
 
@@ -68,14 +70,9 @@ public class CharacterController : MonoBehaviour
     private bool isFlipped;
     
     [Header("Flashlight")]
-    [SerializeField] private Item flashlightItem;
-    [SerializeField] private GameObject flashlightObject;
-    [SerializeField] private ArmMouseTracking trackingScript;
     private CharacterSanity characterSanity;
     private PlayerInput input;
-    private bool flashlightCooldownComplete = true;
-    private bool flashlightIsOn = false;
-    
+
     [Header("Animation")]
     private int animatorMoveSpeed;
     [FormerlySerializedAs("OnDeath")] public UnityEvent onDeath;
@@ -141,26 +138,7 @@ public class CharacterController : MonoBehaviour
             ShowInventory();
         }
         
-        // Use Flashlight
-        if (input.Player.UseFlashlight.IsPressed() && flashlightItem.hasBeenPickedUp && flashlightCooldownComplete)
-        {
-            if (!playerData.flashlightIsOn)
-            {
-                flashlightObject.SetActive(true);
-                playerData.flashlightIsOn = true;
-                flashlightCooldownComplete = false;
-                trackingScript.solver.weight = 1;
-                StartCoroutine(FlashlightCooldown());
-            }
-            else if (playerData.flashlightIsOn)
-            {
-                flashlightObject.SetActive(false);
-                playerData.flashlightIsOn = false;
-                flashlightCooldownComplete = false;
-                trackingScript.solver.weight = 0;
-                StartCoroutine(FlashlightCooldown());
-            }
-        }
+
 
         UpdateDirection();
     }
@@ -278,6 +256,7 @@ public class CharacterController : MonoBehaviour
         //sanityGainRate = playerData.sanityGainRate;
         //sanityLossRate = playerData.sanityLossRate;
         inventory.Init(playerData.inventoryItems);
+        equipment.Init(playerData);
     }
     public void SetPersistentData()
     {
@@ -361,12 +340,5 @@ public class CharacterController : MonoBehaviour
     public void ToggleMovement(bool value)
     {
         CanMove = value == true ? true : false;
-    }
-
-    IEnumerator FlashlightCooldown()
-    {
-        yield return new WaitForSeconds(1);
-
-        flashlightCooldownComplete = true;
     }
 }

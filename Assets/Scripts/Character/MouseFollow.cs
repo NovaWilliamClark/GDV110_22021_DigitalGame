@@ -7,6 +7,7 @@ public class MouseFollow : MonoBehaviour
 {
     public GameObject player;
     private CharacterController characterController;
+    [SerializeField] private Transform pivot;
 
     private void Start()
     {
@@ -18,7 +19,7 @@ public class MouseFollow : MonoBehaviour
         var mouseRaw = Mouse.current.position.ReadValue();
         var mouse = new Vector3(mouseRaw.x, mouseRaw.y, Vector3.Distance(player.transform.position, Camera.main.transform.position));
         var mousePos = Camera.main.ScreenToWorldPoint(mouse);
-        Vector3 difference = mousePos - transform.position;
+        Vector3 difference = mousePos - pivot.position;
         
         // Normalize mouse position
         difference.Normalize();

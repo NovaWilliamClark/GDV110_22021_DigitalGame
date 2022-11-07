@@ -36,6 +36,9 @@ public class SanityVisual : MonoBehaviour
 
     public bool ShowSanity = false;
 
+    private bool visible;
+    public bool Visible => visible;
+
     private void Awake()
     {
         player = FindObjectOfType<CharacterSanity>();
@@ -119,7 +122,8 @@ public class SanityVisual : MonoBehaviour
                 SoftParticles.Play();
             }
         });
-        
+        visible = !hide;
+
     }
 
     public void Disable()

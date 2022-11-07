@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Hands
+    m_Hash: -1477501700
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Hand_R
+      m_Hash: -621091376
+      m_Sprite: {fileID: -7415197070230033565, guid: bbf3e33666e864a9e9825ed19f13e484, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -7415197070230033565, guid: bbf3e33666e864a9e9825ed19f13e484, type: 3}
+    - m_Name: Sockey
+      m_Hash: 2096632112
+      m_Sprite: {fileID: 7259685795015330551, guid: cd8282e17ab8a4d1385aef4a00b39037, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 7259685795015330551, guid: cd8282e17ab8a4d1385aef4a00b39037, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  m_PrimaryLibraryGUID: 

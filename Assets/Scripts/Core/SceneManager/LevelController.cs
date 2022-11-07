@@ -65,6 +65,13 @@ public class LevelController : MonoBehaviour
     {
         InitLevelData();
         InitPlayer();
+        FinaliseInit();
+    }
+
+    private void FinaliseInit()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void InitLevelData()
@@ -134,11 +141,17 @@ public class LevelController : MonoBehaviour
         instancedPlayer.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
         instancedPlayer.onDeath.AddListener(OnPlayerDeath);
 
-        var sanity = player.GetComponent<CharacterSanity>();
-        sanity.Enable();
-        sanityMeter.SetPlayer(sanity);
+        if (!safeZone)
+        {
+            var sanity = player.GetComponent<CharacterSanity>();
+            sanity.Enable();
+            sanityMeter.SetPlayer(sanity);
+        }
+
+        if (UIHelpers.Instance.Fader.IsOpaque())
+            UIHelpers.Instance.Fader.Fade(0f, 2f);
         //playerObj.FetchPersistentData();
-        UIHelpers.Instance.Fader.Fade(0f, 2f);
+        
     }
 
     private void OnPlayerDeath()

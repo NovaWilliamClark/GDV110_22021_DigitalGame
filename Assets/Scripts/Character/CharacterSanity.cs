@@ -39,7 +39,7 @@ namespace Character
             {
                 HealSanity(playerData.sanityGainRate);
             }
-            else if (!playerData.flashlightIsOn)
+            else if (!playerData.equipmentState.flashlightIsOn)
             {
                 var rate = useTempRate ? tempDecreaseRate : playerData.sanityLossRate;
                 DecreaseSanity(rate, true);

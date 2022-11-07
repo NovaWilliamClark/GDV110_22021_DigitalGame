@@ -12,10 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441247640e0c44dda0af2e523e94d683, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  sanity: 100
-  sanityGainRate: 0.05
-  sanityLossRate: 0.1
+  maxSanity: 100
+  sanityGainRate: 0.1
+  sanityLossRate: 0.05
   initialSanity: 100
   initialGainRate: 0.1
   initialLossRate: 0.05
+  initialBattery: 0
+  maxBattery: 100
+  BatteryValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  SanityValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  initialState:
+    hasSockey: 0
+    flashlightEquipped: 0
+    flashlightIsOn: 0
+  equipmentState:
+    hasSockey: 0
+    flashlightEquipped: 0
+    flashlightIsOn: 0
   inventoryItems: []

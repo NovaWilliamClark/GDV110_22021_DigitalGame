@@ -19,6 +19,14 @@ public class UIFader : MonoBehaviour
     private Tween tween;
     public bool IsComplete => tween.IsComplete();
 
+    public bool IsOpaque()
+    {
+        if (image)
+            return image.color.a > 0;
+
+        return false;
+    }
+
     private void Awake()
     {
         image = GetComponent<Image>();

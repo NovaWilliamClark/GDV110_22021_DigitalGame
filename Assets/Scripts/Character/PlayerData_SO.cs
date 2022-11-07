@@ -14,6 +14,7 @@ using Objects;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 
 [CreateAssetMenu(menuName = "Create PlayerData", fileName = "PlayerData", order = 0)]
@@ -42,7 +43,6 @@ public class PlayerData_SO : ScriptableObject
     public float initialLossRate = 0.1f;
 
     [Header("--Flashlight--")]
-    public bool flashlightIsOn = false;
     public float initialBattery = 0f;
 
     [SerializeField] private float maxBattery = 100f;
@@ -55,6 +55,9 @@ public class PlayerData_SO : ScriptableObject
     [HideInInspector]
     public UnityEvent<float> SanityValueChanged;
 
+    [Header("Equipment")] public EquipmentState initialState;
+    [FormerlySerializedAs("currentState")] public EquipmentState equipmentState;
+    
     public float CurrentBattery
     {
         get => currentBattery;
@@ -75,6 +78,7 @@ public class PlayerData_SO : ScriptableObject
         sanity = initialSanity;
         sanityGainRate = initialGainRate;
         sanityLossRate = initialLossRate;
+        equipmentState = initialState;
         inventoryItems.Clear();
     }
 
