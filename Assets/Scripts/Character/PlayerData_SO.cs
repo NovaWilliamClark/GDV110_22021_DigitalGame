@@ -41,7 +41,8 @@ public class PlayerData_SO : ScriptableObject
     public float initialGainRate = 0.03f;
     public float initialLossRate = 0.1f;
 
-    [Header("--Battery--")] 
+    [Header("--Flashlight--")]
+    public bool flashlightIsOn = false;
     public float initialBattery = 0f;
 
     [SerializeField] private float maxBattery = 100f;

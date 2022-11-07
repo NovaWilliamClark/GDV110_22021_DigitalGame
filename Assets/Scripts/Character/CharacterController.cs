@@ -71,6 +71,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private Item flashlightItem;
     [SerializeField] private GameObject flashlightObject;
     [SerializeField] private ArmMouseTracking trackingScript;
+    private CharacterSanity characterSanity;
     private PlayerInput input;
     private bool flashlightCooldownComplete = true;
     private bool flashlightIsOn = false;
@@ -103,6 +104,8 @@ public class CharacterController : MonoBehaviour
 
         input = new PlayerInput();
         input.Enable();
+
+        characterSanity = this.GetComponent<CharacterSanity>();
     
         CanMove = true;
     }
@@ -141,18 +144,18 @@ public class CharacterController : MonoBehaviour
         // Use Flashlight
         if (input.Player.UseFlashlight.IsPressed() && flashlightItem.hasBeenPickedUp && flashlightCooldownComplete)
         {
-            if (!flashlightIsOn)
+            if (!playerData.flashlightIsOn)
             {
                 flashlightObject.SetActive(true);
-                flashlightIsOn = true;
+                playerData.flashlightIsOn = true;
                 flashlightCooldownComplete = false;
                 trackingScript.solver.weight = 1;
                 StartCoroutine(FlashlightCooldown());
             }
-            else if (flashlightIsOn)
+            else if (playerData.flashlightIsOn)
             {
                 flashlightObject.SetActive(false);
-                flashlightIsOn = false;
+                playerData.flashlightIsOn = false;
                 flashlightCooldownComplete = false;
                 trackingScript.solver.weight = 0;
                 StartCoroutine(FlashlightCooldown());
