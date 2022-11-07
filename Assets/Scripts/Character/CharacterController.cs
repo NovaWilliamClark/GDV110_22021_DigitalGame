@@ -15,11 +15,14 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Core.LitArea;
+using DG.Tweening;
+using DG.Tweening.Core.Easing;
 using Objects;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Serialization;
 using AudioType = UnityEngine.AudioType;
 using UnityEngine.Rendering.UI;
+using UnityEngine.U2D.IK;
 
 public enum GroundType
 {
@@ -64,6 +67,15 @@ public class CharacterController : MonoBehaviour
     private Vector2 prevVelocity;
     private bool isFlipped;
     
+    [Header("Flashlight")]
+    [SerializeField] private Item flashlightItem;
+    [SerializeField] private GameObject flashlightObject;
+    [SerializeField] private ArmMouseTracking trackingScript;
+    private CharacterSanity characterSanity;
+    private PlayerInput input;
+    private bool flashlightCooldownComplete = true;
+    private bool flashlightIsOn = false;
+    
     [Header("Animation")]
     private int animatorMoveSpeed;
     [FormerlySerializedAs("OnDeath")] public UnityEvent onDeath;
@@ -89,6 +101,11 @@ public class CharacterController : MonoBehaviour
         hardGroundMask = LayerMask.GetMask("Ground Hard");
 
         animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
+
+        input = new PlayerInput();
+        input.Enable();
+
+        characterSanity = this.GetComponent<CharacterSanity>();
     
         CanMove = true;
     }
@@ -124,7 +141,26 @@ public class CharacterController : MonoBehaviour
             ShowInventory();
         }
         
-        // Roll Dodge
+        // Use Flashlight
+        if (input.Player.UseFlashlight.IsPressed() && flashlightItem.hasBeenPickedUp && flashlightCooldownComplete)
+        {
+            if (!playerData.flashlightIsOn)
+            {
+                flashlightObject.SetActive(true);
+                playerData.flashlightIsOn = true;
+                flashlightCooldownComplete = false;
+                trackingScript.solver.weight = 1;
+                StartCoroutine(FlashlightCooldown());
+            }
+            else if (playerData.flashlightIsOn)
+            {
+                flashlightObject.SetActive(false);
+                playerData.flashlightIsOn = false;
+                flashlightCooldownComplete = false;
+                trackingScript.solver.weight = 0;
+                StartCoroutine(FlashlightCooldown());
+            }
+        }
 
         UpdateDirection();
     }
@@ -325,5 +361,12 @@ public class CharacterController : MonoBehaviour
     public void ToggleMovement(bool value)
     {
         CanMove = value == true ? true : false;
+    }
+
+    IEnumerator FlashlightCooldown()
+    {
+        yield return new WaitForSeconds(1);
+
+        flashlightCooldownComplete = true;
     }
 }

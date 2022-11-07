@@ -16,8 +16,7 @@ namespace Character
         private float decreaseRate = 0f;
         private float tempDecreaseRate = 0f;
         private bool useTempRate = false;
-
-        public CCDSolver2D solver;
+        public bool flashlightIsOn = false;
         
         public bool Enabled => sanityEnabled;
 
@@ -40,7 +39,7 @@ namespace Character
             {
                 HealSanity(playerData.sanityGainRate);
             }
-            else
+            else if (!playerData.flashlightIsOn)
             {
                 var rate = useTempRate ? tempDecreaseRate : playerData.sanityLossRate;
                 DecreaseSanity(rate, true);
