@@ -15,12 +15,14 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Core.LitArea;
+using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using Objects;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Serialization;
 using AudioType = UnityEngine.AudioType;
 using UnityEngine.Rendering.UI;
+using UnityEngine.U2D.IK;
 
 public enum GroundType
 {
@@ -68,6 +70,7 @@ public class CharacterController : MonoBehaviour
     [Header("Flashlight")]
     [SerializeField] private Item flashlightItem;
     [SerializeField] private GameObject flashlightObject;
+    [SerializeField] private ArmMouseTracking trackingScript;
     private PlayerInput input;
     private bool flashlightCooldownComplete = true;
     private bool flashlightIsOn = false;
@@ -143,6 +146,7 @@ public class CharacterController : MonoBehaviour
                 flashlightObject.SetActive(true);
                 flashlightIsOn = true;
                 flashlightCooldownComplete = false;
+                trackingScript.solver.weight = 1;
                 StartCoroutine(FlashlightCooldown());
             }
             else if (flashlightIsOn)
@@ -150,6 +154,7 @@ public class CharacterController : MonoBehaviour
                 flashlightObject.SetActive(false);
                 flashlightIsOn = false;
                 flashlightCooldownComplete = false;
+                trackingScript.solver.weight = 0;
                 StartCoroutine(FlashlightCooldown());
             }
         }
@@ -355,7 +360,7 @@ public class CharacterController : MonoBehaviour
         CanMove = value == true ? true : false;
     }
 
-    private IEnumerator FlashlightCooldown()
+    IEnumerator FlashlightCooldown()
     {
         yield return new WaitForSeconds(1);
 

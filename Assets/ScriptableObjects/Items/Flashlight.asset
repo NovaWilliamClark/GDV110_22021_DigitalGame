@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Flashlight
   m_EditorClassIdentifier: 
   itemID: 0
-  itemName: 
-  itemSprite: {fileID: 0}
+  itemName: Flashlight
+  itemSprite: {fileID: -45762582, guid: 2b07e3a0536c14ba8b489ffe221d8aeb, type: 3}
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
   isSingleUse: 0
