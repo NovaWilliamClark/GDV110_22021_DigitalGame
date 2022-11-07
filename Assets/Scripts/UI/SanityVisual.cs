@@ -105,8 +105,8 @@ public class SanityVisual : MonoBehaviour
         {
             if (hide)
             {
-                ScratchyParticles.Stop();
-                SoftParticles.Stop();
+                ScratchyParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+                SoftParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             }
             else
             {
