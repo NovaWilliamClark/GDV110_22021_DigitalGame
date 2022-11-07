@@ -8,22 +8,11 @@ public class ContainerTrigger : InteractionPoint
 {
     [SerializeField] private ContainerInventory containerInventory;
     [SerializeField] private InteractiveData data;
-    [SerializeField] private Material outlineMaterial;
-
-    private bool inRange = false;
-    [SerializeField] private float fxRadius = 10f;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        renderer = GetComponent<SpriteRenderer>();
-        outlineMaterial = renderer.material;
-        outlineMaterial.SetFloat("_varTime", 0f);
-    }
 
     protected override void Interact(CharacterController cc)
     {
         containerInventory.Init(cc);
+        hasInteracted = false;
         containerInventory.gameObject.SetActive(true);
     }
 

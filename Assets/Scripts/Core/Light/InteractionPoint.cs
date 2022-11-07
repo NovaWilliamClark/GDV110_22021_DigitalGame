@@ -12,9 +12,11 @@ using System;
 using DG.Tweening;
 using Objects;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
+using Sequence = DG.Tweening.Sequence;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class InteractionPoint : MonoBehaviour
@@ -33,8 +35,11 @@ public abstract class InteractionPoint : MonoBehaviour
 
     public Color outlineColour = new Color(78f, 93f, 111f, 1f);
     protected SpriteRenderer renderer;
+    protected SpriteRenderer glowRenderer;
+    public Material glowMaterial;
     protected bool tweening;
     private bool outlineActive;
+    private Sequence visualSequence;
 
     protected PlayerInput input;
 
@@ -45,8 +50,22 @@ public abstract class InteractionPoint : MonoBehaviour
          renderer = GetComponent<SpriteRenderer>();
          if (renderer)
          {
-             renderer.material.SetColor("_Outline_Colour", outlineColour);
-             renderer.material.SetFloat("_varTime", 0f);
+             var rend = new GameObject("Sprite Outline");
+             rend.transform.localScale = transform.localScale;
+             rend.transform.position = transform.position;
+             rend.transform.parent = transform;
+             glowRenderer = rend.AddComponent<SpriteRenderer>();
+             glowRenderer.sprite = renderer.sprite;
+             glowRenderer.color = renderer.color;
+             glowRenderer.sortingLayerName = renderer.sortingLayerName;
+             glowRenderer.sortingOrder = renderer.sortingOrder - 1;
+             glowRenderer.material = glowMaterial;
+             glowRenderer.color = outlineColour;
+             glowRenderer.DOFade(0f, 0f);
+             
+             glowRenderer.material.SetColor("_Outline_Colour", outlineColour);
+             glowRenderer.material.SetFloat("_varTime", 0f);
+             
          }
          if (triggerArea)
          {
@@ -96,7 +115,9 @@ public abstract class InteractionPoint : MonoBehaviour
         }
         else
         {
+            if (hasInteracted) return;
             Debug.Log("Auto Interaction!");
+            hasInteracted = true;
             Interact(other.GetComponent<CharacterController>());
         }
         
@@ -113,17 +134,23 @@ public abstract class InteractionPoint : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!renderer) return; 
+        if (!renderer) return;
+        if (hasInteracted) return;
         if (playerInRange)
         {
             if (!tweening && !outlineActive)
             {
                 tweening = true;
-                renderer.material.DOFloat(1f, "_varTime", .5f).OnComplete(() =>
-                {
-                    tweening = false;
-                    outlineActive = true;
-                });
+                visualSequence = DOTween.Sequence();
+                visualSequence
+                    .Insert(0, glowRenderer.material.DOFloat(1f, "_varTime", .5f))
+                    .Insert(0, glowRenderer.DOFade(1f, 0.5f))
+                    .OnComplete(() =>
+                    {
+                        tweening = false;
+                        outlineActive = true;
+                    })
+                    .SetAutoKill(false);
             }
         }
         else
@@ -131,11 +158,12 @@ public abstract class InteractionPoint : MonoBehaviour
             if (!tweening && outlineActive)
             {
                 tweening = true;
-                renderer.material.DOFloat(0f, "_varTime", .5f).OnComplete(() =>
+                visualSequence.OnPlay(() =>
                 {
                     tweening = false;
                     outlineActive = false;
                 });
+                visualSequence.PlayBackwards();
             }
         }
     }
@@ -177,17 +205,17 @@ public abstract class InteractionPoint : MonoBehaviour
 
     protected abstract void Interact(CharacterController cc);
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
-        DrawGizmoDisc(transform,fxRange);
+        DrawGizmoDisc(transform, fxRange);
     }
 
     protected void DrawGizmoDisc(Transform t, float radius)
     {
         Matrix4x4 oldMatrix = Gizmos.matrix;
-        Gizmos.color = new Color(255f, 255f, 255f, 0.2f);
+        Gizmos.color = playerInRange ? Color.green : new Color(255f, 255f, 255f, 0.2f);
         Gizmos.matrix = Matrix4x4.TRS(t.position, t.rotation, new Vector3(1f, 1f, 0.01f));
-        Gizmos.DrawSphere(Vector3.zero, radius);
+        Gizmos.DrawWireSphere(Vector3.zero, radius);
         Gizmos.matrix = oldMatrix;
     }
 }

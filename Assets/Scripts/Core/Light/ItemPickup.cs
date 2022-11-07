@@ -24,7 +24,6 @@ public class ItemPickup : InteractionPoint
 {
     public Item GetItem => item;
     [SerializeField] private Item item;
-    [SerializeField] private SpriteRenderer glowRenderer;
 
     [SerializeField] private float fxRadius = 10f;
     [SerializeField] private Material inactiveMaterial;

@@ -11,6 +11,7 @@ using Audio;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using Core.LitArea;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -21,35 +22,43 @@ public class Nightlight : InteractionPoint
     public AudioClip ActivateSFX;
     public float sfxVolume;
     private bool _activated = false;
+    private float lightIntensity;
 
-    private void Awake()
+    private LitArea litArea;
+    public bool requiresBattery = true;
+    public bool turnedOn = false;
+
+    protected override void Awake()
     {
-        _animator = GetComponent<Animator>();
+        base.Awake();
+        litArea = GetComponent<LitArea>();
         _light = GetComponentInChildren<Light2D>();
-    }
 
-    private void Start()
-    {
-        Debug.Log(_light.intensity);
-        _light.intensity = 0.0f;
     }
-
     
-    private void OnTriggerEnter2D(Collider2D other)
+    protected override void Start()
     {
-        if (_animator && other.CompareTag("Player"))
+        base.Start();
+        litArea.enabled = false;
+        lightIntensity = _light.intensity;
+        _light.intensity = 0f;
+        if (!requiresBattery)
         {
-            if (!_activated)
+            hasInteracted = true;
+            if (automaticInteraction && !turnedOn)
             {
-                _activated = true;
-                _animator.SetTrigger("Activate");
-                AudioManager.Instance.PlaySound(ActivateSFX);
+                Interact(null);
             }
         }
     }
 
+    protected override void Update()
+    {
+    }
+
     protected override void Interact(CharacterController cc)
     {
-        
+        _light.intensity = lightIntensity;
+        litArea.enabled = true; 
     }
 }

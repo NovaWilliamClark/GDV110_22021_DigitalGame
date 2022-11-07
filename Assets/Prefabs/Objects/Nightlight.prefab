@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7928201673012255959}
   - component: {fileID: 7928201673012255958}
   - component: {fileID: 3706261793672060531}
+  - component: {fileID: 6721420024835683875}
   m_Layer: 10
   m_Name: Nightlight
   m_TagString: Untagged
@@ -121,6 +122,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dccdde58782a34c4596b44cc1a44175e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  promptBox: {fileID: 0}
+  promptMessage: 
+  automaticInteraction: 0
+  fxRange: 6.02
+  outlineColour: {r: 78, g: 93, b: 111, a: 1}
+  glowMaterial: {fileID: 2100000, guid: e3fd3a5ce31a64a2b9861a70a4d2a6d5, type: 2}
   ActivateSFX: {fileID: 8300000, guid: 0fa1bb59927e94abdaf32a506cce07b4, type: 3}
   sfxVolume: 0.3
 --- !u!58 &7928201673012255958
@@ -151,9 +158,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ea3158f376aef4d87bf56e820a06b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreLayers:
-    serializedVersion: 2
-    m_Bits: 0
+--- !u!61 &6721420024835683875
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928201673012255963}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5.52, y: 5.84}
+    newSize: {x: 5.52, y: 5.84}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.52, y: 5.84}
+  m_EdgeRadius: 0
 --- !u!1 &7928201673909922017
 GameObject:
   m_ObjectHideFlags: 0
