@@ -39,16 +39,12 @@ public class Nightlight : InteractionPoint
     protected override void Start()
     {
         base.Start();
-        litArea.enabled = false;
+        litArea.isEnabled = false;
         lightIntensity = _light.intensity;
         _light.intensity = 0f;
-        if (!requiresBattery)
+        if (!requiresBattery && automaticInteraction)
         {
-            hasInteracted = true;
-            if (automaticInteraction && !turnedOn)
-            {
                 Interact(null);
-            }
         }
     }
 
@@ -59,6 +55,6 @@ public class Nightlight : InteractionPoint
     protected override void Interact(CharacterController cc)
     {
         _light.intensity = lightIntensity;
-        litArea.enabled = true; 
+        litArea.isEnabled = true; 
     }
 }

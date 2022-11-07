@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Audio;
 using Character;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -76,6 +77,7 @@ public class SanityVisual : MonoBehaviour
         ShowSanity = player.Enabled;
         canvasObj.gameObject.SetActive(ShowSanity);
         transform.position = player.transform.position;
+        
     }
 
     public void SetPlayer(CharacterSanity cs)
@@ -95,10 +97,30 @@ public class SanityVisual : MonoBehaviour
         
     }
 
+    public void ToggleVisibility(bool hide = true, float fadeDuration = 0f)
+    {
+        var endVal = hide ? 0f : 1f;
+        var canvasGroup = GetComponentInChildren<CanvasGroup>();
+        canvasGroup.DOFade(endVal, fadeDuration).OnPlay(() =>
+        {
+            if (hide)
+            {
+                ScratchyParticles.Stop();
+                SoftParticles.Stop();
+            }
+            else
+            {
+                ScratchyParticles.Play();
+                SoftParticles.Play();
+            }
+        });
+    }
+
     public void Disable()
     {
         player = null;
         canvasObj.gameObject.SetActive(false);
+
     }
 
     private void OnSanityChanged(float value, float max)

@@ -30,9 +30,9 @@ public abstract class InteractionPoint : MonoBehaviour
     protected bool canInteract = true;
     protected bool hasInteracted = false;
     protected bool playerInRange;
-    [SerializeField] protected float fxRange = 7.5f;
     private CharacterController playerRef;
 
+    [Header("Visuals")]
     public Color outlineColour = new Color(78f, 93f, 111f, 1f);
     protected SpriteRenderer renderer;
     protected SpriteRenderer glowRenderer;
@@ -40,7 +40,8 @@ public abstract class InteractionPoint : MonoBehaviour
     protected bool tweening;
     private bool outlineActive;
     private Sequence visualSequence;
-
+    [SerializeField] protected float fxRange = 7.5f;
+    
     protected PlayerInput input;
 
      protected virtual void Awake()

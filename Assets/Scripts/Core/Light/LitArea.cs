@@ -15,15 +15,13 @@ namespace Core.LitArea
     
     public class LitArea : MonoBehaviour
     {
+        public bool isEnabled = true;
         // public static event Action<Collider2D> onLightEnter;
         // public static event Action<Collider2D> onLightExit;
         // public LayerMask ignoreLayers;
         private void OnTriggerEnter2D(Collider2D other)
         {
-            // if (((1 << other.gameObject.layer) & ignoreLayers) == 0)
-            // {
-            //     onLightEnter?.Invoke(other);
-            // }
+            if (!isEnabled) return;
             if (other.GetComponent(typeof(ILightResponder)) is ILightResponder responder)
             {
                 responder.OnLightEntered(1f);
@@ -32,10 +30,7 @@ namespace Core.LitArea
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            // if (((1 << other.gameObject.layer) & ignoreLayers) == 0)
-            // {
-            //     onLightExit?.Invoke(other);
-            // }
+            if (!isEnabled) return;
             if (other.GetComponent(typeof(ILightResponder)) is ILightResponder responder)
             {
                 responder.OnLightExited(1f);
@@ -44,6 +39,7 @@ namespace Core.LitArea
 
         private void OnTriggerStay2D(Collider2D other)
         {
+            if (!isEnabled) return;
             if (other.GetComponent(typeof(ILightResponder)) is ILightResponder responder)
             {
                 responder.OnLightStay(1f);

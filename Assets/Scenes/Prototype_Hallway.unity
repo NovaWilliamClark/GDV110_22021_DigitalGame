@@ -381,6 +381,23 @@ Transform:
   m_Father: {fileID: 62370735}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &35512157 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5239611285602950395, guid: 906fd96cbed65484693696372bcf977b, type: 3}
+  m_PrefabInstance: {fileID: 3149420936977996049}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &35512162
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35512157}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &37507927
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,6 +993,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4743bde2f78304d991cfa714a6f704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  promptBox: {fileID: 0}
+  promptMessage: 
+  automaticInteraction: 0
+  outlineColour: {r: 78, g: 93, b: 111, a: 1}
+  glowMaterial: {fileID: 0}
+  fxRange: 7.5
   sceneToLoad: Prototype_BensBedroom
   spawnPointIndex: 2
 --- !u!1 &139057843
@@ -23229,6 +23252,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4743bde2f78304d991cfa714a6f704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  promptBox: {fileID: 0}
+  promptMessage: 
+  automaticInteraction: 0
+  outlineColour: {r: 78, g: 93, b: 111, a: 1}
+  glowMaterial: {fileID: 0}
+  fxRange: 7.5
   sceneToLoad: Level03_ParentsHallway
   spawnPointIndex: 0
 --- !u!1 &453563431
@@ -45930,9 +45959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ea3158f376aef4d87bf56e820a06b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreLayers:
-    serializedVersion: 2
-    m_Bits: 0
+  isEnabled: 1
 --- !u!58 &705034584
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -48136,6 +48163,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3706261793672060531, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7928201673012255957, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -71808,9 +71839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ea3158f376aef4d87bf56e820a06b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreLayers:
-    serializedVersion: 2
-    m_Bits: 0
+  isEnabled: 1
 --- !u!1 &2080637069
 GameObject:
   m_ObjectHideFlags: 0
@@ -72426,6 +72455,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5239611285602950395, guid: 906fd96cbed65484693696372bcf977b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5239611285902924205, guid: 906fd96cbed65484693696372bcf977b, type: 3}
       propertyPath: m_RootOrder
       value: 23

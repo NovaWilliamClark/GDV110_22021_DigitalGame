@@ -13,6 +13,7 @@ namespace Objects
 {
     public class SceneTransition : InteractionPoint
     {
+        [Header("Scene Transition")]
         [SerializeField] private string sceneToLoad;
         [SerializeField] private int spawnPointIndex;
 
