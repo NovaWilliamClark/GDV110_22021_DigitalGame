@@ -114,6 +114,7 @@ public class SanityVisual : MonoBehaviour
                 SoftParticles.Play();
             }
         });
+        
     }
 
     public void Disable()

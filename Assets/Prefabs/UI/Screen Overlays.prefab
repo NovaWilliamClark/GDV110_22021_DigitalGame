@@ -884,7 +884,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5239611285902924205}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &602374383
 MonoBehaviour:
@@ -2106,6 +2106,37 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1820624592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1820624593}
+  m_Layer: 0
+  m_Name: HUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1820624593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820624592}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5239611285902924205}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1969477863
 GameObject:
   m_ObjectHideFlags: 0
@@ -2485,10 +2516,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1176322912}
-        m_TargetAssemblyTypeName: UIBatteryIndicator, Assembly-CSharp
-        m_MethodName: Show
-        m_Mode: 1
+      - m_Target: {fileID: 4858728011826738865}
+        m_TargetAssemblyTypeName: SanityVisual, Assembly-CSharp
+        m_MethodName: Hide
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2818,6 +2849,7 @@ Transform:
   - {fileID: 2688486166501494946}
   - {fileID: 5239611286187846645}
   - {fileID: 2035759067}
+  - {fileID: 1820624593}
   - {fileID: 602374382}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2882,7 +2914,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7546925589391037048, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7546925589391037052, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_Camera
@@ -2906,11 +2938,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7546925590244369782, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1943.11
+      value: -1936.9465
       objectReference: {fileID: 0}
     - target: {fileID: 7546925590244369782, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1089.23
+      value: -1087.047
       objectReference: {fileID: 0}
     - target: {fileID: 7546925590244369782, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2966,6 +2998,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44460ac9977d64c358d240e7bede1c29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5239611285602950395 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7546925589391037048, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
+  m_PrefabInstance: {fileID: 2308875885514100355}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &35512162
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5239611285602950395}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!4 &5239611286187846645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7546925590244369782, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
