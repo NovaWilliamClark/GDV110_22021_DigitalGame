@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Character;
 using UnityEngine;
 
@@ -13,13 +14,20 @@ public class ContainerInventory : MonoBehaviour
     private List<GameObject> slots = new List<GameObject>();
     private List<InventorySlot> selectedSlots = new List<InventorySlot>(); 
     private CharacterController player;
+    private bool accessed = false;
+
+    private void Awake()
+    {
+        
+    }
+
     private void OnEnable()
     {
-        InventorySlot.OnSlotClick += InventorySlot_OnSlotClick;
-        foreach (var item in inventoryItems.items)
+        foreach (var item in inventoryItems.Items)
         {
             var slot = Instantiate(slotPrefab, slotContainer);
             var slotObj = slot.GetComponent<InventorySlot>();
+            slotObj.SlotClicked.AddListener(InventorySlot_OnSlotClick);
             slotObj.SetItem(item);
             slots.Add(slot);
         }
@@ -27,36 +35,41 @@ public class ContainerInventory : MonoBehaviour
 
     private void InventorySlot_OnSlotClick(InventorySlot obj)
     {
+        Debug.Log(obj);
         if (selectedSlots.Contains(obj))
         {
-            obj.buttonObj.image.color = obj.buttonObj.colors.normalColor;
             selectedSlots.Remove(obj);
         }
         else
         {
-            obj.buttonObj.image.color = obj.buttonObj.colors.selectedColor;
             selectedSlots.Add(obj);
         }
     }
 
     private void OnDisable()
     {
-        InventorySlot.OnSlotClick -= InventorySlot_OnSlotClick;
         foreach (var slot in slots)
         {
-            Destroy(slot);
+            var slotObj = slot.GetComponent<InventorySlot>();
+            slotObj.SlotClicked.RemoveListener(InventorySlot_OnSlotClick);
+            Destroy(gameObject);
         }
     }
 
     public void Init(CharacterController cc)
     {
         player = cc;
+        if (!accessed)
+        {
+            inventoryItems.Init();
+            accessed = true;
+        }
         inventoryItems.SetItems();
     }
 
     public void TakeAll()
     {
-        foreach (var item in inventoryItems.items)
+        foreach (var item in inventoryItems.Items)
         {
             player.GetInventory.AddToInventory(item);
             inventoryItems.SetToTaken(item.itemID);
@@ -67,10 +80,19 @@ public class ContainerInventory : MonoBehaviour
 
     public void TakeSelected()
     {
-        foreach (var slot in selectedSlots)
+        foreach (var slot in selectedSlots.ToList())
         {
             player.GetInventory.AddToInventory(slot.GetItem);
             inventoryItems.SetToTaken(slot.GetItem.itemID);
+            selectedSlots.Remove(slot);
+            slots.Remove(slot.gameObject);
+            Destroy(slot.gameObject);
+        }
+
+        if (slots.Count == 0)
+        {
+            OnContainerEmptied?.Invoke();
+            gameObject.SetActive(false);
         }
     }
 }

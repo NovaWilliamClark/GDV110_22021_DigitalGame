@@ -135,6 +135,20 @@ public abstract class InteractionPoint : MonoBehaviour
     protected virtual void Update()
     {
         if (!renderer) return;
+        
+        if (!canInteract || !playerInRange)
+        {
+            if (!tweening && outlineActive)
+            {
+                tweening = true;
+                visualSequence.OnPlay(() =>
+                {
+                    tweening = false;
+                    outlineActive = false;
+                });
+                visualSequence.PlayBackwards();
+            }
+        }
         if (hasInteracted) return;
         if (playerInRange)
         {
@@ -151,19 +165,6 @@ public abstract class InteractionPoint : MonoBehaviour
                         outlineActive = true;
                     })
                     .SetAutoKill(false);
-            }
-        }
-        else
-        {
-            if (!tweening && outlineActive)
-            {
-                tweening = true;
-                visualSequence.OnPlay(() =>
-                {
-                    tweening = false;
-                    outlineActive = false;
-                });
-                visualSequence.PlayBackwards();
             }
         }
     }

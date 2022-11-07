@@ -1,7 +1,4 @@
-﻿using System;
-using DG.Tweening;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class ContainerTrigger : InteractionPoint
@@ -12,6 +9,7 @@ public class ContainerTrigger : InteractionPoint
     protected override void Interact(CharacterController cc)
     {
         containerInventory.Init(cc);
+        DisablePrompt();
         hasInteracted = false;
         containerInventory.gameObject.SetActive(true);
     }
@@ -25,6 +23,9 @@ public class ContainerTrigger : InteractionPoint
     private void ContainerInventory_OnContainerEmptied()
     {
         data.state = InteractiveData.InteractionState.INACTIVE;
-        gameObject.SetActive(false);
+        canInteract = false;
+        hasInteracted = true;
+        DisablePrompt();
+        //gameObject.SetActive(false);
     }
 }

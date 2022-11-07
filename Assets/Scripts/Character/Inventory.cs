@@ -53,12 +53,16 @@ namespace Character
                 player.ToggleMovement(false);
                 //player.ToggleSanity(false);
             }
-            InventorySlot.OnSlotClick += InventorySlot_OnSlotClick;
+
+            foreach (var slot in slots)
+            {
+                var slotObj = slot.GetComponent<InventorySlot>();
+                slotObj.SlotClicked.AddListener(InventorySlot_OnSlotClick);
+            }
             ShowSlots();
         }
         private void OnDisable()
         {
-            InventorySlot.OnSlotClick -= InventorySlot_OnSlotClick;
             foreach (var slot in selectedslots)
             {
                 if (slot != null)
@@ -70,6 +74,8 @@ namespace Character
             
             foreach (var slot in slots)
             {
+                var slotObj = GetComponent<InventorySlot>();
+                slotObj.SlotClicked.RemoveListener(InventorySlot_OnSlotClick);
                 if (slot != null)
                 {
                     slot.gameObject.SetActive(false);

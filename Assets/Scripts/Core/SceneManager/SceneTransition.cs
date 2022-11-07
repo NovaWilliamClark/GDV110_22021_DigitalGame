@@ -11,28 +11,19 @@ using UnityEngine;
 
 namespace Objects
 {
-    [RequireComponent(typeof(BoxCollider2D))]
-    public class SceneTransition : MonoBehaviour
+    public class SceneTransition : InteractionPoint
     {
         [SerializeField] private string sceneToLoad;
         [SerializeField] private int spawnPointIndex;
 
-        private void Awake()
+        protected override void Interact(CharacterController cc)
         {
-            GetComponent<BoxCollider2D>().isTrigger = true;
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.TryGetComponent<CharacterController>(out var player))
+            cc.SetPersistentData();
+            UIHelpers.Instance.Fader.Fade(1f, 1f, () =>
             {
-                player.SetPersistentData();
-                UIHelpers.Instance.Fader.Fade(1f, 1f, () =>
-                {
-                    TransitionManager.Instance.SetSpawnIndex(spawnPointIndex);
-                    TransitionManager.Instance.LoadScene(sceneToLoad);
-                });
-            }
+                TransitionManager.Instance.SetSpawnIndex(spawnPointIndex);
+                TransitionManager.Instance.LoadScene(sceneToLoad);
+            });
         }
     }
 }
