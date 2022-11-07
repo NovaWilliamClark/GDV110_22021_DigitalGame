@@ -12,11 +12,14 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using Core.LitArea;
+using Objects;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class Nightlight : InteractionPoint
 {
+    [Header("Nightlight")]
     private Animator _animator;
     private Light2D _light;
     public AudioClip ActivateSFX;
@@ -27,6 +30,9 @@ public class Nightlight : InteractionPoint
     private LitArea litArea;
     public bool requiresBattery = true;
     public bool turnedOn = false;
+    [SerializeField] private Item batteryItem;
+    [SerializeField] private string missingBatteryMessage;
+    private bool hasItem = false;
 
     protected override void Awake()
     {
@@ -48,13 +54,47 @@ public class Nightlight : InteractionPoint
         }
     }
 
+    protected override void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!automaticInteraction)
+        {
+            if (!other.GetComponent<CharacterController>()) return;
+            if (!canInteract) return;
+            if (!promptBox) return;
+            
+            playerRef = other.GetComponent<CharacterController>();
+
+            hasItem = playerRef.GetInventory.HasItem(batteryItem);
+            var msg = !hasItem ? missingBatteryMessage : promptMessage;
+            promptBox.GetComponentInChildren<TMP_Text>().text = msg;
+            promptBox.SetActive(true);
+        }
+        else
+        {
+            if (hasInteracted) return;
+            Debug.Log("Auto Interaction!");
+            hasInteracted = true;
+            Interact(other.GetComponent<CharacterController>());
+        }
+    }
+
     protected override void Update()
     {
+        base.Update();
     }
 
     protected override void Interact(CharacterController cc)
     {
+        if (requiresBattery)
+        {
+            hasItem = playerRef.GetInventory.HasItem(batteryItem);
+            if (!hasItem) return;
+            playerRef.GetInventory.UseItem(batteryItem);
+        }
+
         _light.intensity = lightIntensity;
-        litArea.isEnabled = true; 
+        litArea.isEnabled = true;
+        hasInteracted = true;
+        canInteract = false;
     }
 }

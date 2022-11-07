@@ -24,7 +24,6 @@ public class ItemUse : InteractionPoint
     {
         base.Awake();
         messageText = promptBox.GetComponentInChildren<TextMeshProUGUI>(true);
-        
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
@@ -60,7 +59,7 @@ public class ItemUse : InteractionPoint
     {
         if (!cc.GetInventory.HasItem(requiredItem.itemID)) return;
         
-        cc.GetInventory.UseItem(requiredItem.itemID);
+        //cc.GetInventory.UseItem(requiredItem.itemID);
         Debug.Log($"{requiredItem.itemName} used!");
         data.state = InteractiveData.InteractionState.INACTIVE;
         gameObject.SetActive(false);

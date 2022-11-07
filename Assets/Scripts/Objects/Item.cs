@@ -9,6 +9,7 @@
 **********************************************************************************************/
 
 using System;
+using Unity.XR.OpenVR;
 using UnityEngine;
 
 namespace Objects
@@ -24,7 +25,11 @@ namespace Objects
         public bool hasBeenPickedUp;
         public bool disappearsOnCombination;
         public bool isSingleUse;
-        private void OnEnable()
+        [HideInInspector, SerializeField] private Item itemRef; // original item for object to refer back to
+        
+        //https://forum.unity.com/threads/solved-checking-equality-between-scriptableobject-instances.519270/
+        
+        public virtual void OnEnable()
         {
             hasBeenPickedUp = false;
         }
@@ -33,6 +38,26 @@ namespace Objects
         {
             Debug.Log($"Buffing {itemName} with {buff.itemName}");
         }
+
+        // Creates an instance of the scriptable object so we're not manipulating the original
+        public static Item CreateInstance(Item original)
+        {
+            Item instance = Instantiate(original);
+            instance.itemRef = original;
+            return instance;
+        }
+
+        public bool IsInstanceOf(Item item)
+        {
+            if (itemRef == item)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public virtual void Use() {}
     }
     
 }

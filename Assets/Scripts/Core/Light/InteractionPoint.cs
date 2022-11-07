@@ -30,7 +30,7 @@ public abstract class InteractionPoint : MonoBehaviour
     protected bool canInteract = true;
     protected bool hasInteracted = false;
     protected bool playerInRange;
-    private CharacterController playerRef;
+    protected CharacterController playerRef;
 
     [Header("Visuals")]
     public Color outlineColour = new Color(78f, 93f, 111f, 1f);

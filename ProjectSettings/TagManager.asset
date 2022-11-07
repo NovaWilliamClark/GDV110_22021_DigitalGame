@@ -60,3 +60,6 @@ TagManager:
   - name: Close
     uniqueID: 3281208079
     locked: 0
+  - name: World UI
+    uniqueID: 326080487
+    locked: 0

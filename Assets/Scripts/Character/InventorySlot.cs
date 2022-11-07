@@ -37,30 +37,39 @@ namespace Character
 
         private void Awake()
         {
-            buttonObj = GetComponent<Button>();
-            background.GetComponent<RectTransform>().DOScale(0f, 0f);
+            
+            
             bgTween = background.GetComponent<RectTransform>().DOScale(1f, 1f).SetAutoKill(false).Pause();
         }
 
         private void OnEnable()
         {
+            buttonObj = GetComponent<Button>();
+            ResetSlot();
             buttonObj.onClick.AddListener(SlotClick);
         }
 
         private void OnDisable()
-        {
+        {   
+            ResetSlot();
             buttonObj.onClick.RemoveListener(SlotClick);
+        }
+
+        private void ResetSlot()
+        {
+            background.GetComponent<RectTransform>().DOScale(0f, 0f);
+            active = false;
         }
 
         public void SetItem(Item item)
         {
             this.item = item;
             slotText.text = GetItem.itemName;
+            itemImage.sprite = item.itemSprite;
         }
 
         public void SlotClick()
         {
-            Debug.Log("CLicked");
             if (!active)
             {
                 bgTween.Restart();

@@ -33,11 +33,13 @@ public class ItemPickup : InteractionPoint
     [SerializeField] private float activeDuration = 1f;
     private Sequence materialSequence;
     private List<ParticleSystem> particles;
+
+    private bool matTween;
+    private bool matActive;
         
     protected override void Awake()
     {
         base.Awake();
-        renderer = GetComponent<SpriteRenderer>();
         particles = GetComponentsInChildren<ParticleSystem>().ToList();
     }
 
@@ -61,37 +63,61 @@ public class ItemPickup : InteractionPoint
     protected override void Update()
     {
         if (!canInteract) return;
+        base.Update();
+
         if (playerInRange)
         {
-            if (!tweening && !setActive)
+            if (!matActive)
             {
-                tweening = true;
-                materialSequence = DOTween.Sequence();
-                materialSequence
-                    .Insert(0, glowRenderer.DOFade(1f, activeDuration))
-                    .Insert(0, renderer.DOFade(0f, activeDuration))
-                    .SetAutoKill(false)
-                    .OnComplete(() =>
-                    {
-                        tweening = false;
-                        setActive = true;
-                    });
+                renderer.material = activeMaterial;
+                matActive = true;
             }
         }
-        else
+
+        if (!playerInRange || hasInteracted)
         {
-            if (!tweening && setActive)
+            if (matActive)
             {
-                tweening = true;
-                materialSequence.OnPlay(() =>
-                {
-                    tweening = false;
-                    setActive = false;
-                });
-                materialSequence.PlayBackwards();
+                matActive = false;
+                renderer.material = inactiveMaterial;
             }
         }
     }
+
+    // protected override void Update()
+    // {
+    //     if (!canInteract) return;
+    //     if (playerInRange)
+    //     {
+    //         if (!tweening && !setActive)
+    //         {
+    //             tweening = true;
+    //             materialSequence = DOTween.Sequence();
+    //             materialSequence
+    //                 .Insert(0, glowRenderer.DOFade(1f, activeDuration))
+    //                 .Insert(0, renderer.DOFade(0f, activeDuration))
+    //                 .SetAutoKill(false)
+    //                 .OnComplete(() =>
+    //                 {
+    //                     tweening = false;
+    //                     setActive = true;
+    //                 });
+    //         }
+    //     }
+    //     else
+    //     {
+    //         if (!tweening && setActive)
+    //         {
+    //             tweening = true;
+    //             materialSequence.OnPlay(() =>
+    //             {
+    //                 tweening = false;
+    //                 setActive = false;
+    //             });
+    //             materialSequence.PlayBackwards();
+    //         }
+    //     }
+    // }
 
     protected override void FixedUpdate()
     {
@@ -122,6 +148,7 @@ public class ItemPickup : InteractionPoint
         item.hasBeenPickedUp = true;
         canInteract = false;
         DisablePrompt();
+        renderer.DOFade(0f, .2f);
         glowRenderer.DOFade(0f, .2f);
         StartCoroutine(WaitForParticles());
     }

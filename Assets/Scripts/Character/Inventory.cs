@@ -8,11 +8,13 @@
 *
 **********************************************************************************************/
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Objects;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -26,6 +28,8 @@ namespace Character
         [SerializeField] private Button useButton;
         [SerializeField] private RecipeDataBase recipeDataBase;
 
+        [HideInInspector] public UnityEvent<Item> ItemAdded;
+
         private List<InventorySlot> selectedslots = new List<InventorySlot>();
         private int slotCount;
         public List<Item> items { get; private set; } = new List<Item>();
@@ -33,14 +37,13 @@ namespace Character
         private CharacterController player;
         private void InventorySlot_OnSlotClick(InventorySlot obj)
         {
+            Debug.Log(obj);
             if (selectedslots.Contains(obj))
             {
-                obj.buttonObj.image.color = obj.buttonObj.colors.normalColor;
                 selectedslots.Remove(obj);
             }
             else
             {
-                obj.buttonObj.image.color = obj.buttonObj.colors.selectedColor;
                 selectedslots.Add(obj);
             }
         }
@@ -59,25 +62,28 @@ namespace Character
                 var slotObj = slot.GetComponent<InventorySlot>();
                 slotObj.SlotClicked.AddListener(InventorySlot_OnSlotClick);
             }
+            
+            useButton.onClick.AddListener(UseButtonClicked);
             ShowSlots();
         }
+
+        private void UseButtonClicked()
+        {
+            UseItem();
+        }
+
         private void OnDisable()
         {
-            foreach (var slot in selectedslots)
-            {
-                if (slot != null)
-                {
-                    slot.buttonObj.image.color = slot.buttonObj.colors.normalColor;
-                }
-                
-            }
+            useButton.onClick.RemoveListener(UseButtonClicked);
+            selectedslots.Clear();
             
             foreach (var slot in slots)
             {
-                var slotObj = GetComponent<InventorySlot>();
-                slotObj.SlotClicked.RemoveListener(InventorySlot_OnSlotClick);
+
                 if (slot != null)
                 {
+                    slot.SlotClicked.RemoveAllListeners();
+                    var slotObj = GetComponent<InventorySlot>();
                     slot.gameObject.SetActive(false);
                 }
             }
@@ -108,13 +114,15 @@ namespace Character
         {
             var slot = Instantiate(slotPrefab, inventorySlotContainer);
             var slotObj = slot.GetComponent<InventorySlot>();
+            slotObj.SlotClicked.AddListener(InventorySlot_OnSlotClick);
             slotObj.SetItem(item);
             slots.Add(slotObj);
         }
 
         public void AddToInventory(Item item, bool inventoryIsOpen = false)
         {
-            items.Add(item);
+            //items.Add(item);
+            items.Add(Item.CreateInstance(item));
         }
 
         public bool HasItem(int id)
@@ -122,21 +130,68 @@ namespace Character
             return items.Exists(x => x.itemID == id);
         }
 
-        public bool HasItem(Item item)
+        public bool HasItem(Item itemOriginal)
         {
-            return HasItem(item.itemID);
+            return items.Exists(x => x.IsInstanceOf(itemOriginal));
+        }
+
+        public void UseItem(Item itemRef = null)
+        {
+            if (itemRef)
+            {
+                var item = items.Find(i => i.IsInstanceOf(itemRef));
+                if (item)
+                {
+                    item.Use();
+                    if (item.isSingleUse)
+                    {
+                        items.Remove(item);
+                    }
+                    if (slots.Count > 0)
+                    {
+                        var slot = slots.Find(s => s.GetItem == item);
+                        if (slot)
+                        {
+                            slots.Remove(slot);
+                            Destroy(slot.gameObject);
+                            slotCount = slots.Count;
+                        }
+                    }
+                }
+            }
+            if (selectedslots.Count == 1)
+            {
+                var item = selectedslots[0].GetItem;
+                var slot = slots.Find(x => x.GetItem.itemID == item.itemID);
+                if (item.isSingleUse)
+                {
+                    if (slot != null)
+                    {
+                        if (item.isSingleUse)
+                        {
+                            slots.Remove(slot);
+                            Destroy(slot.gameObject);
+                            slotCount = slots.Count;
+                        }
+                    }
+                    items.Remove(item);
+                }
+
+                if (slot != null)
+                {
+                    slot.SlotClick();
+                }
+                item.Use();
+            }
         }
 
         public void UseItem(int id)
         {
-            var item = items.Find(x => x.itemID == id);
-            var slot = slots.Find(x => x.GetItem.itemID == item.itemID);
-            if (slot != null)
+            var item = items.Find(i => i.itemID == id);
+            if (item)
             {
-                Destroy(slot.gameObject);
-                slotCount = slots.Count;
+                UseItem(item);
             }
-            items.Remove(item);
         }
         
         public void CloseInventory()
@@ -183,6 +238,11 @@ namespace Character
                     }
                 }
             }
+        }
+
+        private void Update()
+        {
+            useButton.interactable = selectedslots.Count == 1;
         }
 
         private void CleanupInventory(List<InventorySlot> inventorySlots)

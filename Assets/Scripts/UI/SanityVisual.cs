@@ -97,6 +97,11 @@ public class SanityVisual : MonoBehaviour
         
     }
 
+    public void Hide(bool hide)
+    {
+        ToggleVisibility(hide, 1f);
+    }
+
     public void ToggleVisibility(bool hide = true, float fadeDuration = 0f)
     {
         var endVal = hide ? 0f : 1f;

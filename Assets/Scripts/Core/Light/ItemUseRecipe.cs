@@ -59,7 +59,7 @@ public class ItemUseRecipe : ItemUse
         {
             foreach (var item in recipe.requiredItems)
             {
-                cc.GetInventory.UseItem(item.itemID);
+                //cc.GetInventory.UseItem(item.itemID);
                 Debug.Log($"{item.itemName} used!");
                 data.state = InteractiveData.InteractionState.INACTIVE;
                 gameObject.SetActive(false);
