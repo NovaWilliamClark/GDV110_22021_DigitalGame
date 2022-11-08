@@ -15,8 +15,11 @@ MonoBehaviour:
   itemID: 6
   itemName: Battery
   itemSprite: {fileID: 21300000, guid: d895ef2dd98a4419ea01a6c18bafb683, type: 3}
-  hasBeenPickedUp: 0
+  hasBeenPickedUp: 1
   disappearsOnCombination: 1
   isSingleUse: 1
+  reloadable: 0
+  itemToReload: {fileID: 0}
+  reloadSfx: {fileID: 0}
   itemDataRef: {fileID: 0}
   typeEnum: {fileID: 11400000, guid: affdca8b3c48a4e6bbe03f20fc13e860, type: 2}

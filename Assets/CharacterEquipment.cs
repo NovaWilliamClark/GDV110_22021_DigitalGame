@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using DG.Tweening;
 using Objects;
 using UnityEngine;
@@ -29,7 +30,16 @@ public class CharacterEquipment : MonoBehaviour
 
     private bool canUseFlashlight = false;
     private bool flashlightOn = false;
-    
+
+    [SerializeField] private AudioClip flashlightActivateSfx;
+    [SerializeField] private float sfxVolume;
+
+    [SerializeField] private ItemUseEvent flashlightUseEvent;
+
+    private Coroutine degenCoroutine;
+    private bool degenStarted;
+    private bool turnedOff = false;
+
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
@@ -42,12 +52,34 @@ public class CharacterEquipment : MonoBehaviour
         input = new PlayerInput();
         useFlashlightInput = input.Player.UseFlashlight;
         useFlashlightInput.performed += OnFlashlightInput;
+        data.BatteryValueChanged.AddListener(OnBatteryValueChanged);
         useFlashlightInput.Enable();
 
         if (data.equipmentState.flashlightIsOn)
         {
             ToggleFlashlight(true);
         }
+    }
+
+    private void Update()
+    {
+        if (data.equipmentState.flashlightIsOn)
+        {
+            data.CurrentBattery -= data.equipmentState.flashlightDecreaseRate;
+            if (data.CurrentBattery <= 0f)
+            {
+                if (!turnedOff)
+                {
+                    turnedOff = true;
+                    ToggleFlashlight(false);
+                }
+            }
+        }
+    }
+
+    private void OnBatteryValueChanged(float arg0)
+    {
+        Debug.Log("Battery recovered " + arg0);
     }
 
     private void ToggleFlashlight(bool on)
@@ -58,20 +90,45 @@ public class CharacterEquipment : MonoBehaviour
         {
             trackingScript.solver.weight = val;
         });
+        if (data.CurrentBattery <= 0)
+        {
+            var seq = DOTween.Sequence();
+            seq.Append(tween);
+            seq.AppendInterval(.5f);
+            seq.Append(DOVirtual.DelayedCall(0f, () =>
+            {
+                AudioManager.Instance.PlaySound(flashlightActivateSfx,sfxVolume);
+            }));
+            seq.AppendInterval(.5f);
+            seq.Append(DOVirtual.Float(1f, 0f, .2f, val =>
+            {
+                trackingScript.solver.weight = val;
+            }));
+            seq.OnComplete(() =>
+            {
+                data.equipmentState.flashlightIsOn = false;
+                flashlightCooldownComplete = false;
+                StartCoroutine(FlashlightCooldown());
+            });
+            seq.Play();
+            return;
+        }
         if (on)
         {
             tween.OnComplete(() =>
             {
+                UIHelpers.Instance.BatteryIndicator.Toggle(true);
                 flashlightObject.SetActive(true);
                 data.equipmentState.flashlightIsOn = true;
                 flashlightCooldownComplete = false;
                 StartCoroutine(FlashlightCooldown());
             });
         }
-        else
+        else if (!on)
         {
             tween.OnComplete(() =>
             {
+                UIHelpers.Instance.BatteryIndicator.Toggle(false);
                 flashlightObject.SetActive(false);
                 data.equipmentState.flashlightIsOn = false;
                 flashlightCooldownComplete = false;
@@ -81,6 +138,8 @@ public class CharacterEquipment : MonoBehaviour
 
         tween.Play();
     }
+    
+    
 
     private void OnFlashlightInput(InputAction.CallbackContext obj)
     {
@@ -107,9 +166,14 @@ public class CharacterEquipment : MonoBehaviour
         {
             data.equipmentState.flashlightEquipped = true;
             canUseFlashlight = true;
+            UIHelpers.Instance.BatteryIndicator.Show();
         }
     }
-
+    public void ReloadFlashlight(float amount = 500f)
+    {
+        data.CurrentBattery = data.MaxBattery;
+    }
+    
     public void DisableInput()
     {
         useFlashlightInput.performed -= OnFlashlightInput;
@@ -135,4 +199,5 @@ public class EquipmentState
     [Header("Flashlight")]
     public bool flashlightEquipped = false;
     public bool flashlightIsOn = false;
+    public float flashlightDecreaseRate = 0.1f;
 }

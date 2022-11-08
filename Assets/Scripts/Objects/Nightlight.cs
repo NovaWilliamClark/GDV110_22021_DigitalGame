@@ -35,6 +35,8 @@ public class Nightlight : InteractionPoint
     [SerializeField] private string missingBatteryMessage;
     private bool hasItem = false;
 
+    private int id;
+
     protected override void Awake()
     {
         base.Awake();
@@ -53,6 +55,11 @@ public class Nightlight : InteractionPoint
         {
                 Interact(null);
         }
+    }
+
+    public void Init(int idInScene)
+    {
+        id = idInScene;
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)

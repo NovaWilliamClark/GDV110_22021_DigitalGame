@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections;
+using Audio;
 using Character;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,6 +24,7 @@ using UnityEngine.Serialization;
 using AudioType = UnityEngine.AudioType;
 using UnityEngine.Rendering.UI;
 using UnityEngine.U2D.IK;
+using Random = Unity.Mathematics.Random;
 
 public enum GroundType
 {
@@ -88,10 +90,9 @@ public class CharacterController : MonoBehaviour
 
     private void Start()
     {
-        
-        //inventory = GetComponentInChildren<Inventory>();
-        inventory.gameObject.SetActive(false);
         FetchPersistentData();
+        //inventory = GetComponentInChildren<Inventory>();
+        inventory.gameObject.SetActive(true);
         controllerRigidBody = GetComponent<Rigidbody2D>();
         controllerCollider = GetComponent<Collider2D>();
         softGroundMask = LayerMask.GetMask("Ground Soft");
@@ -269,7 +270,7 @@ public class CharacterController : MonoBehaviour
     
     private void ShowInventory()
     {
-        GetInventory.gameObject.SetActive(true);
+        GetInventory.OpenInventory();
     }
     public void AddToInventory(ItemData itemData)
     {

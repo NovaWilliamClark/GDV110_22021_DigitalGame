@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Character;
 using Objects;
 using UnityEngine;
@@ -63,13 +64,17 @@ public class PlayerData_SO : ScriptableObject
         get => currentBattery;
         set
         {
-            currentBattery = Mathf.Min(value,maxBattery);
+            currentBattery = Mathf.Clamp(value,0f, maxBattery);
             BatteryValueChanged.Invoke(currentBattery);
         }
     }
 
 
     public List<ItemData> inventoryItems;
+
+    [SerializeField] private int spawnpointId = 0;
+    [SerializeField] private bool spawnpointSet = false;
+    [SerializeField] private string spawnpointScene;
 
     private void OnEnable()
     {
@@ -85,6 +90,10 @@ public class PlayerData_SO : ScriptableObject
             flashlightIsOn = initialState.flashlightIsOn
         }; 
         inventoryItems.Clear();
+
+        spawnpointId = 0;
+        spawnpointScene = "";
+        spawnpointSet = false;
     }
 
     public void SetItems(Inventory inventory)
@@ -100,6 +109,13 @@ public class PlayerData_SO : ScriptableObject
         }*/
     }
 
+    public void SetSavePoint(int id, string sceneName)
+    {
+        spawnpointId = id;
+        spawnpointScene = sceneName;
+        spawnpointSet = true;
+    }
+    
     public void ResetData()
     {
         //sanity = 100f;

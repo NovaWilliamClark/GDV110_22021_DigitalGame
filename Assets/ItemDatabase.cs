@@ -93,6 +93,22 @@ public class ItemDatabase : MonoBehaviour
         return effect;
     }
 
+    public ItemDatabaseEntry GetEntry(ItemData itemData, bool isInstance = false)
+    {
+        if (isInstance)
+        {
+            return database.Where(entry => itemData.IsInstanceOf(entry.item)).Select(entry => entry)
+                .FirstOrDefault();
+        }
+
+        return database.FirstOrDefault(entry => entry.item == itemData);
+    }
+    
+    public ItemData GetOriginalItem(ItemData instance)
+    {
+        return database.Where(entry => instance.IsInstanceOf(entry.item)).Select(entry => entry.item).FirstOrDefault();
+    }
+
     public ItemUseEvent GetItemEvent(ItemData itemRef)
     {
         var useEvent =

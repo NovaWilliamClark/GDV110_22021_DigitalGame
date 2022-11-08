@@ -30,6 +30,8 @@ public class LevelController : MonoBehaviour
     public AudioClip LevelBGM;
     //public float BGMVolume;
 
+    private List<Nightlight> nightlights;
+
     private void Awake()
     {
         playerSpawnPoints = FindObjectsOfType<PlayerSpawnPoint>();
@@ -76,6 +78,13 @@ public class LevelController : MonoBehaviour
 
     private void InitLevelData()
     {
+        nightlights = FindObjectsOfType<Nightlight>().ToList();
+        for (var index = 0; index < nightlights.Count; index++)
+        {
+            var nightlight = nightlights[index];
+            nightlight.Init(index);
+        }
+
         foreach (var obj in levelItems)
         {
             if (obj.GetItemData != null)
@@ -97,6 +106,8 @@ public class LevelController : MonoBehaviour
                 }
             }
         }
+        
+        
     }
 
     private void InitPlayer()

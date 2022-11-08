@@ -698,7 +698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resolver: {fileID: 490550977}
   sockeyRef: {fileID: 11400000, guid: e51fb7f46a99c41f0b07c2062c2078f9, type: 2}
-  flashlightItemRef: {fileID: 11400000, guid: 8a1f604e86ff54b41a1109ee6cfe75c4, type: 2}
+  flashlightItemDataRef: {fileID: 11400000, guid: 8a1f604e86ff54b41a1109ee6cfe75c4, type: 2}
   flashlightObject: {fileID: 7410701604460823595}
   trackingScript: {fileID: 2945340190018329994}
 --- !u!1 &2460978510469521914
@@ -1058,10 +1058,6 @@ PrefabInstance:
     - target: {fileID: 2535515143662547528, guid: db5db9c942eab5a4cba393507b16fac9, type: 3}
       propertyPath: m_Name
       value: Inventory
-      objectReference: {fileID: 0}
-    - target: {fileID: 2535515143662547528, guid: db5db9c942eab5a4cba393507b16fac9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2535515143662547529, guid: db5db9c942eab5a4cba393507b16fac9, type: 3}
       propertyPath: slotPrefab

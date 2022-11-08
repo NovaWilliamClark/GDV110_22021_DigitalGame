@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1963636384838680171}
   - component: {fileID: 4846894146716694252}
   - component: {fileID: 7706939859763190636}
+  - component: {fileID: 687471682}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -89,8 +90,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4672fd1de5a01854abb8350f4a6084b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutsceneDialogue:
-    sentences: []
-    speaker: {fileID: 0}
-    textSpeed: 0
   dialogueBoxPrefab: {fileID: 7055575127277419301, guid: bc2a8ba55e67ddc4eaae5d5f27ab90bd, type: 3}
+--- !u!114 &687471682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963636384838680175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1801deb64c1541908a26de8400153e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultType: {fileID: 11400000, guid: 88dd5ef4b37884802a9ad46351f40537, type: 2}
+  SockyType: {fileID: 11400000, guid: cd05bea33cf3c4c399b15768998807ee, type: 2}
+  BatteryType: {fileID: 11400000, guid: affdca8b3c48a4e6bbe03f20fc13e860, type: 2}
+  ChipsType: {fileID: 11400000, guid: 392f6e7f9ae554c3ba1f876b9b90959f, type: 2}
+  KeyType: {fileID: 11400000, guid: 5bdb72bfdb9084efe88a0be823f3607f, type: 2}
+  FuseType: {fileID: 11400000, guid: 32fa6647c224740aba0cd894355d1f3b, type: 2}
+  FlashlightType: {fileID: 11400000, guid: 16e6107d6358a4cb5a23d9e340d91dcc, type: 2}
+  database:
+  - item: {fileID: 11400000, guid: 5688889027d7742a1abdb7cde7e35a96, type: 2}
+    useEvent: {fileID: 11400000, guid: 2237c8fc71c11447ea3432cc51c677da, type: 2}
+  - item: {fileID: 11400000, guid: 8a1f604e86ff54b41a1109ee6cfe75c4, type: 2}
+    useEvent: {fileID: 11400000, guid: 97cbb0ee070464eaa9555770b2b21c18, type: 2}
+  - item: {fileID: 11400000, guid: 0a5bd9dc6ceef45aa943c4446a5dc5b5, type: 2}
+    useEvent: {fileID: 11400000, guid: 01fc90fd8dce04c81a1a452f659e810f, type: 2}

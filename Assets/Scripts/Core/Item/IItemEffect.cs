@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public abstract class ItemEffect
 {
     public readonly ItemUseEvent itemUseEvent;
@@ -11,5 +13,10 @@ public abstract class ItemEffect
     {
         if (itemUseEvent)
             itemUseEvent.UsedEvent?.Invoke();
+    }
+
+    public virtual void Reload(GameObject player)
+    {
+        
     }
 }

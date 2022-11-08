@@ -11,6 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Audio;
 using DG.Tweening;
 using Objects;
 using Unity.VisualScripting;
@@ -18,6 +19,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
+using Sequence = DG.Tweening.Sequence;
 
 namespace Character
 {
@@ -27,6 +30,7 @@ namespace Character
         [SerializeField] private GameObject slotPrefab;
         [SerializeField] private Button combineButton;
         [SerializeField] private Button useButton;
+        [SerializeField] private Button reloadButton;
         [SerializeField] private RecipeDataBase recipeDataBase;
         [SerializeField] private RectTransform container;
 
@@ -35,32 +39,111 @@ namespace Character
         private List<InventorySlot> selectedslots = new List<InventorySlot>();
         private int slotCount;
         public List<ItemData> items { get; private set; } = new List<ItemData>();
+        //public List<InventoryItem> items { get; private set; }
         private List<InventorySlot> slots = new List<InventorySlot>();
         private CharacterController player;
-        private CanvasGroup canvasGroup;
+        [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private CanvasGroup navGroup;
+
+        [SerializeField] private ItemTypeEnum FlashlightType;
 
         [Header("Visuals")] [SerializeField] private Vector3 startPosition;
         [SerializeField] private Vector3 endPosition;
         [SerializeField] private float moveDuration;
         [SerializeField] private Ease easeType;
-        
+        private Sequence sequence;
+        [SerializeField] private inventoryAnimation sockySlot;
+        [SerializeField] private inventoryAnimation flashlightSlot;
+
+        [Header("Audio")] 
+        [SerializeField] private List<AudioClip> itemPickupSfx;
+        [SerializeField] private List<AudioClip> openInventorySfx;
+
+        private InventorySlot lastClickedSlot;
+        private InventorySlot reloadableClicked;
+
+        [Serializable]
+        private struct inventoryAnimation
+        {
+            public RectTransform rect;
+            public Vector3 startPosition;
+            public Vector3 endPosition;
+            public float duration;
+            public Ease easeType;
+
+            public Tween GetTween()
+            {
+                return rect.DOAnchorPos(startPosition, duration).SetEase(easeType);
+            }
+        }
+
+        private void Awake()
+        {
+            canvasGroup = GetComponentInChildren<CanvasGroup>();
+            player = FindObjectOfType<CharacterController>();
+        }
+
+        private void Start()
+        {
+            startPosition = container.anchoredPosition;
+            container.anchoredPosition = endPosition;
+
+            navGroup.interactable = false;
+            navGroup.alpha = 0;
+
+            sockySlot.startPosition = sockySlot.rect.anchoredPosition;
+            sockySlot.rect.anchoredPosition = sockySlot.endPosition;
+            
+            flashlightSlot.startPosition = flashlightSlot.rect.anchoredPosition;
+            flashlightSlot.rect.anchoredPosition = flashlightSlot.endPosition;
+            sequence = DOTween.Sequence();
+            sequence
+                .Append(container.DOAnchorPos(startPosition, moveDuration).SetEase(easeType))
+                .Append(sockySlot.GetTween())
+                .Insert(moveDuration + 0.2f, flashlightSlot.GetTween())
+                .OnComplete(() =>
+                {
+                    canvasGroup.interactable = true;
+                    foreach (var slot in slots)
+                    {
+                        
+                        slot.buttonObj.interactable = true;
+                    }
+
+                    navGroup.DOFade(1f, .2f).OnComplete(() =>
+                    {
+                        navGroup.interactable = true;
+                    });
+                })
+                .SetAutoKill(false);
+            sequence.Pause();
+        }
+
         private void InventorySlot_OnSlotClick(InventorySlot obj)
         {
-            Debug.Log(obj);
+            lastClickedSlot = obj;
             if (selectedslots.Contains(obj))
             {
                 selectedslots.Remove(obj);
             }
             else
             {
+                if (selectedslots.Count > 1)
+                {
+                    selectedslots[0].Deactivate();
+                    selectedslots.RemoveAt(0);
+                }
                 selectedslots.Add(obj);
             }
         }
         
         private void OnEnable()
         {
-            canvasGroup = GetComponentInChildren<CanvasGroup>();
-            player = FindObjectOfType<CharacterController>();
+
+        }
+
+        public void OpenInventory()
+        {
             canvasGroup.interactable = false;
             if (player)
             {
@@ -72,22 +155,89 @@ namespace Character
             {
                 slots = GetComponentsInChildren<InventorySlot>().ToList();
             }
-
+            
             foreach (var slot in slots)
             {
+                if (!HasItem(slot.itemReference))
+                {
+                    slot.gameObject.SetActive(false);
+                    continue;
+                }
+                slot.gameObject.SetActive(true);
+                slot.buttonObj.interactable = false;
                 slot.SlotClicked.AddListener(InventorySlot_OnSlotClick);
+                if (slot.itemReference.reloadable)
+                {
+                    slot.SlotClicked.AddListener(OnReloadableItemClicked);
+                }
             }
-            
             useButton.onClick.AddListener(UseButtonClicked);
             //ShowSlots();
+            
+            AudioManager.Instance.PlaySound(openInventorySfx[Random.Range(0,openInventorySfx.Count-1)]);
+            
             Cursor.visible = true;
-            player.Equipment.DisableInput();
-            startPosition = container.anchoredPosition;
-            container.anchoredPosition = endPosition;
-            container.DOAnchorPos(startPosition, moveDuration).SetEase(easeType).OnComplete(() =>
+            
+            sequence.PlayForward();
+        }
+
+        private void OnReloadableItemClicked(InventorySlot slot)
+        {
+            // enable reload button
+            reloadButton.interactable = !reloadButton.interactable;
+            reloadableClicked = slot;
+            if (reloadButton.interactable)
             {
-                canvasGroup.interactable = true;
-            });
+                reloadButton.onClick.AddListener(OnReloadButtonClicked);
+            }
+            else
+            {
+                reloadButton.onClick.RemoveListener(OnReloadButtonClicked);
+            }
+        }
+
+        private void OnReloadButtonClicked()
+        {
+            //if 
+            if (selectedslots.Count < 2)
+            {
+                Debug.Log("Other item not selected");
+            }
+            InventorySlot ammoSlot = null;
+            foreach (var slot in selectedslots)
+            {
+                if (slot == reloadableClicked) continue;
+                if (slot.itemReference == reloadableClicked.itemReference.itemToReload)
+                {
+                    ammoSlot = slot;
+                    break;
+                }
+            }
+
+            if (ammoSlot)
+            {
+                var itemRef = ammoSlot.itemReference;
+                var item = items.First(x => x == x.IsInstanceOf(itemRef));
+                var count = ItemCount(item);
+                if (count == 0)
+                {
+                    Debug.LogWarningFormat("Trying to use ammo item: {0} to reload {1}, item not in inventory!",
+                        ammoSlot.itemReference, reloadableClicked.itemReference);
+                }
+
+                if (count >= 1)
+                {
+                    items.Remove(item);
+                    var effect = ItemDatabase.Instance.GetItemEffect(reloadableClicked.itemReference);
+                    effect.Reload(FindObjectOfType<CharacterController>().gameObject);
+                    if (count == 1)
+                    {
+                        selectedslots.Remove(ammoSlot);
+                        AudioManager.Instance.PlaySound(ammoSlot.itemReference.reloadSfx);
+                        ammoSlot.gameObject.SetActive(false);
+                    }
+                }
+            }
         }
 
         private void UseButtonClicked()
@@ -151,6 +301,18 @@ namespace Character
             items.Add(ItemData.CreateInstance(itemData));
         }
 
+        public int ItemCount(ItemData itemInstance)
+        {
+            var item = ItemDatabase.Instance.GetOriginalItem(itemInstance);
+            var count = 0;
+            if (item)
+            {
+                count += items.Count(data => data.IsInstanceOf(item));
+            }
+
+            return count;
+        }
+
         public bool HasItem(int id)
         {
             return items.Exists(x => x.itemID == id);
@@ -203,16 +365,14 @@ namespace Character
                     items.Remove(item);
                 }
 
-                if (slot != null)
-                {
-                    slot.SlotClick();
-                }
-
                 var effect = ItemDatabase.Instance.GetItemEffect(item);
                 if (effect != null)
                 {
                     effect.Use();
                 }
+
+                selectedslots.Remove(slot);
+                slot.Deactivate();
             }
         }
 
@@ -227,7 +387,34 @@ namespace Character
         
         public void CloseInventory()
         {
-            gameObject.SetActive(false);
+            canvasGroup.interactable = false;
+            navGroup.interactable = false;
+            navGroup.DOFade(0f, .2f);
+            sequence.OnRewind(
+                () =>
+                {
+                    canvasGroup.interactable = true;
+                    
+                    foreach (var slot in slots)
+                    {
+                        slot.buttonObj.interactable = false;
+                        slot.SlotClicked.RemoveAllListeners();
+                        slot.SlotClicked.RemoveAllListeners();
+                    }
+                    Cursor.visible = false;
+                    player.ToggleMovement(true);
+                }).PlayBackwards();
+            
+            useButton.onClick.RemoveListener(UseButtonClicked);
+            selectedslots.Clear();
+
+            Cursor.visible = false;
+            player.Equipment.EnableInput();
+        }
+
+        private string WaitForHide()
+        {
+            throw new NotImplementedException();
         }
 
         public void Init(List<ItemData> playerDataInventoryItems)

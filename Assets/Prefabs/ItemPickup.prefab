@@ -9797,11 +9797,14 @@ MonoBehaviour:
   outlineColour: {r: 78, g: 93, b: 111, a: 1}
   glowMaterial: {fileID: 2100000, guid: e3fd3a5ce31a64a2b9861a70a4d2a6d5, type: 2}
   fxRange: 7.5
-  item: {fileID: 0}
+  itemData: {fileID: 0}
   fxRadius: 7
   inactiveMaterial: {fileID: 2100000, guid: 52d61fe81cdfd427ba506deff3a64976, type: 2}
   activeMaterial: {fileID: 2100000, guid: 1ef46f223b8804d1ca1aa16371ad5fcc, type: 2}
   activeDuration: 0.5
+  pickupSfx:
+  - {fileID: 8300000, guid: 5311f151ba0b54212962d6a87b811862, type: 3}
+  - {fileID: 8300000, guid: 70d51f18d4c574529bb105a024cc1437, type: 3}
 --- !u!212 &2229319080841061121
 SpriteRenderer:
   m_ObjectHideFlags: 0

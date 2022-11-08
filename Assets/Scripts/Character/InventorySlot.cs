@@ -9,12 +9,14 @@
 **********************************************************************************************/
 
 using System;
+using Audio;
 using DG.Tweening;
 using Objects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Character
@@ -41,17 +43,24 @@ namespace Character
         [SerializeField] private bool showOutline = false;
         [SerializeField] private Color outlineColour;
 
+        [FormerlySerializedAs("clickSfx")] [Header("Sound")] [SerializeField] private AudioClip activateSfx;
+        [SerializeField] private AudioClip deactivateSfx;
+        [SerializeField] private float sfxVolume;
+
+        private bool mouseOver = false;
+
         private bool active = false;
 
         private void Awake()
         {
             if (!Application.isPlaying) return;
+            buttonObj = GetComponent<Button>();
             outlineFlash = DOTween.Sequence().SetAutoKill(false);
             outlineFlash
                 .Append(outlineImage.DOFade(1f, .2f))
                 .Append(outlineImage.DOFade(0f, .2f))
                 .SetLoops(-1);
-            outlineFlash.Pause();
+            outlineFlash.Restart();
             showOutline = false;
             
             //bgTween = background.GetComponent<RectTransform>().DOScale(1f, 1f).SetAutoKill(false).Pause();
@@ -60,7 +69,6 @@ namespace Character
         private void OnEnable()
         {
             if (!Application.isPlaying) return;
-            buttonObj = GetComponent<Button>();
             ResetSlot();
             buttonObj.onClick.AddListener(SlotClick);
         }
@@ -118,10 +126,12 @@ namespace Character
 
         public void SlotClick()
         {
+            if (!buttonObj.interactable) return;
             if (!active)
             {
                 active = true;
                 outlineFlash.Pause();
+                AudioManager.Instance.PlaySound(activateSfx,sfxVolume);
                 outlineImage.DOFade(1f, .2f).OnComplete(() =>
                 {
                     var seq = DOTween.Sequence();
@@ -133,32 +143,53 @@ namespace Character
                         .Append(rect.DORotate(pos, .25f).SetEase(Ease.InBounce));
                     seq.Play();
                 });
-                
             }
             else
             {
-                outlineFlash.Restart();
-                active = false;
+                AudioManager.Instance.PlaySound(deactivateSfx,sfxVolume);
+                Deactivate();
             }
-            //SlotClicked.Invoke(this);
+            SlotClicked.Invoke(this);
         }
 
+        public void Deactivate()
+        {
+            if (mouseOver)
+            {
+                outlineFlash.Restart();
+            }
+            else
+            {
+                outlineImage.DOFade(0f, 0.2f).OnComplete(() =>
+                {
+                    showOutline = false;
+                });
+            }
+
+            active = false;
+        }
+        
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (!buttonObj.interactable) return;
             if (active) return;
             showOutline = true;
             //slotText.gameObject.SetActive(true);
-
+            mouseOver = true;
             outlineFlash.Restart();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!buttonObj.interactable) return;
             outlineFlash.Pause();
+            mouseOver = false;
             if (!active)
             {
-                outlineImage.DOFade(0f, 0.2f);
-                showOutline = false;
+                outlineImage.DOFade(0f, 0.2f).OnComplete(() =>
+                {
+                    showOutline = false;
+                });
             }
             //slotText.gameObject.SetActive(false);
         }

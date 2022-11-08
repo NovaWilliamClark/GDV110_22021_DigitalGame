@@ -13,11 +13,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Schema;
+using Audio;
 using DG.Tweening;
 using Objects;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 using Sequence = DG.Tweening.Sequence;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -37,7 +39,9 @@ public class ItemPickup : InteractionPoint
 
     private bool matTween;
     private bool matActive;
-        
+
+    [Header("Sound")] [SerializeField] private List<AudioClip> pickupSfx;
+
     protected override void Awake()
     {
         base.Awake();
@@ -146,6 +150,7 @@ public class ItemPickup : InteractionPoint
     {
         if (!canInteract) return;
         cc.AddToInventory(itemData);
+        AudioManager.Instance.PlaySound(pickupSfx[Random.Range(0, pickupSfx.Count-1)]);
         itemData.hasBeenPickedUp = true;
         canInteract = false;
         DisablePrompt();

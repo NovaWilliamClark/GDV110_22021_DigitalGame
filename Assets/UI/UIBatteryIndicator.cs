@@ -46,6 +46,7 @@ public class UIBatteryIndicator : MonoBehaviour
         gameObject.SetActive(true);
         fillable.fillAmount = 0f;
         _introSequence = DOTween.Sequence();
+        
         _introSequence
             .Append(background.GetComponent<RectTransform>().DOScale(1f, .5f))
             .Append(icon.GetComponent<RectTransform>().DOScale(1f, .5f))
@@ -67,7 +68,10 @@ public class UIBatteryIndicator : MonoBehaviour
 
     private void Update()
     {
-        if (criticalSeq.IsPlaying()) return;
+        if (criticalSeq!=null) 
+        {
+            if (criticalSeq.IsPlaying()) return;
+        }
         fillable.color = fillable.fillAmount <= criticalValue ? criticalColour : normalColour;
     }
 
@@ -77,10 +81,11 @@ public class UIBatteryIndicator : MonoBehaviour
         var toColour = target.color != criticalColour ? criticalColour : Color.black;
         target.color = criticalColour;
         criticalSeq = DOTween.Sequence();
+        criticalSeq.SetAutoKill(false);
         criticalSeq.Append(target.DOColor(toColour, .2f));
         criticalSeq.Append(target.DOColor(oldColour, .2f));
         criticalSeq.SetLoops(number);
-        criticalSeq.SetAutoKill(false);
+        
         criticalSeq.OnComplete(() =>
         {
             complete?.Invoke();
@@ -117,6 +122,11 @@ public class UIBatteryIndicator : MonoBehaviour
     //         yield return null;
     //     }
     // }
+
+    public void Toggle(bool on)
+    {
+        OnFlashlightToggled(on);
+    }
 
     private void OnFlashlightToggled(bool enabled)
     {

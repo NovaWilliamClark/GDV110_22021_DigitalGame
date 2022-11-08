@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,13 @@ public class ArmMouseTracking : MonoBehaviour
 
     [SerializeField] private float distance;
 
+    private CharacterController cc;
+    
+    void Start()
+    {
+        cc = GetComponentInParent<CharacterController>();
+    }
+    
     public void FixedUpdate()
     {
         // Vector3 targetScreenPosition = Camera.main.WorldToScreenPoint(Input.mousePosition);
@@ -28,11 +36,13 @@ public class ArmMouseTracking : MonoBehaviour
         var mouse = new Vector3(mouseRaw.x, mouseRaw.y, Vector3.Distance(transform.position, Camera.main.transform.position));
         var mousePos = Camera.main.ScreenToWorldPoint(mouse);
 
-        var dir = mousePos - shoulderBone.transform.position;
+        var flip = cc.IsFacingLeft() ? -1 : 1;
+        mousePos.x = shoulderBone.transform.position.x + (distance * flip);
+
+            var dir = mousePos - shoulderBone.transform.position;
         dir.Normalize();
 
         target.transform.position = shoulderBone.transform.position + (distance * dir);
         transform.position = target.transform.position;
-
     }
 }

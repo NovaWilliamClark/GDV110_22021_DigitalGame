@@ -27,7 +27,8 @@ namespace Objects
         public bool isSingleUse;
         public bool reloadable;
         public ItemData itemToReload;
-        [FormerlySerializedAs("itemRef")] [HideInInspector, SerializeField] private ItemData itemDataRef; // original item for object to refer back to
+        public AudioClip reloadSfx;
+        [FormerlySerializedAs("itemRef")] [SerializeField] private ItemData itemDataRef; // original item for object to refer back to
 
         [FormerlySerializedAs("Effect")] public ItemTypeEnum typeEnum;
         
@@ -53,6 +54,10 @@ namespace Objects
 
         public bool IsInstanceOf(ItemData itemData)
         {
+            if (!itemDataRef)
+            {
+                return false;
+            }
             if (itemDataRef == itemData)
             {
                 return true;

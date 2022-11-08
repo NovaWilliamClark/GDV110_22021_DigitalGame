@@ -145,8 +145,11 @@ MonoBehaviour:
   opaqueImage: {fileID: 8910816130310853950}
   outlineImage: {fileID: 6624122320265718152}
   outlineScale: {x: 0.1, y: 0.1}
-  ActiveColour: {r: 0, g: 0, b: 0, a: 0}
-  InactiveColour: {r: 0, g: 0, b: 0, a: 0}
+  showOutline: 0
+  outlineColour: {r: 0, g: 0, b: 0, a: 0}
+  activateSfx: {fileID: 8300000, guid: 33af785e621994e2da9c904c8658af3b, type: 3}
+  deactivateSfx: {fileID: 8300000, guid: 33af785e621994e2da9c904c8658af3b, type: 3}
+  sfxVolume: 0.8
 --- !u!1 &7241449439288955879
 GameObject:
   m_ObjectHideFlags: 0
