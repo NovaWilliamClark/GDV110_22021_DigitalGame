@@ -5,6 +5,7 @@ using DG.Tweening;
 using Objects;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.U2D.Animation;
 
 public class CharacterEquipment : MonoBehaviour
@@ -14,10 +15,11 @@ public class CharacterEquipment : MonoBehaviour
 
     [SerializeField] private SpriteResolver resolver;
 
-    [SerializeField] private Item sockeyRef;
+    [SerializeField] private ItemData sockeyRef;
 
+    [FormerlySerializedAs("flashlightItemRef")]
     [Header("Flashlight")] 
-    [SerializeField] private Item flashlightItemRef;
+    [SerializeField] private ItemData flashlightItemDataRef;
     [SerializeField] private GameObject flashlightObject;
     [SerializeField] private ArmMouseTracking trackingScript;
     private bool flashlightCooldownComplete = true;
@@ -50,13 +52,13 @@ public class CharacterEquipment : MonoBehaviour
 
     private void ToggleFlashlight(bool on)
     {
-        var startVal = on ? 1 : 0f;
-        var endVal = on ? 0f : 1f;
+        var startVal = on ? 0 :1f;
+        var endVal = on ? 1f : 0f;
         var tween = DOVirtual.Float(startVal, endVal, .2f, val =>
         {
             trackingScript.solver.weight = val;
         });
-        if (!data.equipmentState.flashlightIsOn)
+        if (on)
         {
             tween.OnComplete(() =>
             {
@@ -84,7 +86,7 @@ public class CharacterEquipment : MonoBehaviour
     {
         Debug.Log("Input");
         if (!data.equipmentState.flashlightEquipped || !flashlightCooldownComplete) return;
-        ToggleFlashlight(data.equipmentState.flashlightIsOn);
+        ToggleFlashlight(!data.equipmentState.flashlightIsOn);
     }
 
     private void OnDisable()
@@ -93,7 +95,7 @@ public class CharacterEquipment : MonoBehaviour
         useFlashlightInput.performed -= OnFlashlightInput;
     }
 
-    private void OnItemAddedToInventory(Item original)
+    private void OnItemAddedToInventory(ItemData original)
     {
         if (original == sockeyRef)
         {
@@ -101,7 +103,7 @@ public class CharacterEquipment : MonoBehaviour
             resolver.ResolveSpriteToSpriteRenderer();
         }
 
-        if (original == flashlightItemRef)
+        if (original == flashlightItemDataRef)
         {
             data.equipmentState.flashlightEquipped = true;
             canUseFlashlight = true;

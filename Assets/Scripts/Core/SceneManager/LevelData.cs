@@ -6,5 +6,5 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public List<GameObject> levelEnemies;
-    public List<Item> items;
+    public List<ItemData> items;
 }

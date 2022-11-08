@@ -78,9 +78,9 @@ public class LevelController : MonoBehaviour
     {
         foreach (var obj in levelItems)
         {
-            if (obj.GetItem != null)
+            if (obj.GetItemData != null)
             {
-                if (obj.GetItem.hasBeenPickedUp)
+                if (obj.GetItemData.hasBeenPickedUp)
                 {
                     Destroy(obj.gameObject);
                 }

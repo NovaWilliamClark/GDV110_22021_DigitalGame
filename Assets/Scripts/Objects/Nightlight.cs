@@ -16,6 +16,7 @@ using Objects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 public class Nightlight : InteractionPoint
 {
@@ -30,7 +31,7 @@ public class Nightlight : InteractionPoint
     private LitArea litArea;
     public bool requiresBattery = true;
     public bool turnedOn = false;
-    [SerializeField] private Item batteryItem;
+    [FormerlySerializedAs("batteryItem")] [SerializeField] private ItemData batteryItemData;
     [SerializeField] private string missingBatteryMessage;
     private bool hasItem = false;
 
@@ -64,7 +65,7 @@ public class Nightlight : InteractionPoint
             
             playerRef = other.GetComponent<CharacterController>();
 
-            hasItem = playerRef.GetInventory.HasItem(batteryItem);
+            hasItem = playerRef.GetInventory.HasItem(batteryItemData);
             var msg = !hasItem ? missingBatteryMessage : promptMessage;
             promptBox.GetComponentInChildren<TMP_Text>().text = msg;
             promptBox.SetActive(true);
@@ -87,9 +88,9 @@ public class Nightlight : InteractionPoint
     {
         if (requiresBattery)
         {
-            hasItem = playerRef.GetInventory.HasItem(batteryItem);
+            hasItem = playerRef.GetInventory.HasItem(batteryItemData);
             if (!hasItem) return;
-            playerRef.GetInventory.UseItem(batteryItem);
+            playerRef.GetInventory.UseItem(batteryItemData);
         }
 
         _light.intensity = lightIntensity;

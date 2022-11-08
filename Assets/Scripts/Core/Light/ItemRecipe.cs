@@ -14,11 +14,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create ItemRecipe", fileName = "ItemRecipe", order = 0)]
 public class ItemRecipe : ScriptableObject
 {
-    public Item result;
-    public List<Item> requiredItems;
+    public ItemData result;
+    public List<ItemData> requiredItems;
     
 
-    public bool RecipeConditionsMet(List<Item> inventory)
+    public bool RecipeConditionsMet(List<ItemData> inventory)
     {
         int requirementsMet = 0;
         foreach (var item in inventory)
@@ -32,7 +32,7 @@ public class ItemRecipe : ScriptableObject
         return requirementsMet == requiredItems.Count;
     }
 
-    public List<string> GetMissingItems(List<Item> inventory)
+    public List<string> GetMissingItems(List<ItemData> inventory)
     {
         List<string> missingItems = new List<string>();
 

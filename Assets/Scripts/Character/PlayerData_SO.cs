@@ -69,7 +69,7 @@ public class PlayerData_SO : ScriptableObject
     }
 
 
-    public List<Item> inventoryItems;
+    public List<ItemData> inventoryItems;
 
     private void OnEnable()
     {
@@ -78,7 +78,12 @@ public class PlayerData_SO : ScriptableObject
         sanity = initialSanity;
         sanityGainRate = initialGainRate;
         sanityLossRate = initialLossRate;
-        equipmentState = initialState;
+        equipmentState = new EquipmentState
+        {
+            hasSockey = initialState.hasSockey,
+            flashlightEquipped = initialState.flashlightEquipped,
+            flashlightIsOn = initialState.flashlightIsOn
+        }; 
         inventoryItems.Clear();
     }
 

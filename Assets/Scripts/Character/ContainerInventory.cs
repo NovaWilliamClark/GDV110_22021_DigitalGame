@@ -82,8 +82,8 @@ public class ContainerInventory : MonoBehaviour
     {
         foreach (var slot in selectedSlots.ToList())
         {
-            player.GetInventory.AddToInventory(slot.GetItem);
-            inventoryItems.SetToTaken(slot.GetItem.itemID);
+            player.GetInventory.AddToInventory(slot.GetItemData);
+            inventoryItems.SetToTaken(slot.GetItemData.itemID);
             selectedSlots.Remove(slot);
             slots.Remove(slot.gameObject);
             Destroy(slot.gameObject);

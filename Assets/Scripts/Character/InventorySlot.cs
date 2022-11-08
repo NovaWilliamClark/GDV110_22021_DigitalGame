@@ -19,6 +19,7 @@ using UnityEngine.UI;
 
 namespace Character
 {
+    [ExecuteInEditMode]
     [Serializable]
     public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
@@ -27,23 +28,38 @@ namespace Character
         public Button buttonObj { get; private set; }
         public Image itemImage;
         public Image background;
-        public Item GetItem => item;
-        private Item item;
+        public ItemData GetItemData => itemReference;
+        public ItemData itemReference;
         private Tween bgTween;
 
-        public Color ActiveColour;
-        public Color InactiveColour;
+        private Sequence outlineFlash;
+
+
+        [Header("Visuals")] [SerializeField] private Image opaqueImage;
+        [SerializeField] private Image outlineImage;
+        [SerializeField] private Vector2 outlineScale;
+        [SerializeField] private bool showOutline = false;
+        [SerializeField] private Color outlineColour;
+
         private bool active = false;
 
         private void Awake()
         {
+            if (!Application.isPlaying) return;
+            outlineFlash = DOTween.Sequence().SetAutoKill(false);
+            outlineFlash
+                .Append(outlineImage.DOFade(1f, .2f))
+                .Append(outlineImage.DOFade(0f, .2f))
+                .SetLoops(-1);
+            outlineFlash.Pause();
+            showOutline = false;
             
-            
-            bgTween = background.GetComponent<RectTransform>().DOScale(1f, 1f).SetAutoKill(false).Pause();
+            //bgTween = background.GetComponent<RectTransform>().DOScale(1f, 1f).SetAutoKill(false).Pause();
         }
 
         private void OnEnable()
         {
+            if (!Application.isPlaying) return;
             buttonObj = GetComponent<Button>();
             ResetSlot();
             buttonObj.onClick.AddListener(SlotClick);
@@ -51,46 +67,100 @@ namespace Character
 
         private void OnDisable()
         {   
+            if (!Application.isPlaying) return;
             ResetSlot();
             buttonObj.onClick.RemoveListener(SlotClick);
         }
 
         private void ResetSlot()
         {
-            background.GetComponent<RectTransform>().DOScale(0f, 0f);
             active = false;
+            showOutline = false;
+            outlineImage.color = new Color(outlineImage.color.r, outlineImage.color.g, outlineImage.color.b, 0f);
         }
 
-        public void SetItem(Item item)
+        public void SetItem(ItemData itemData)
         {
-            this.item = item;
-            slotText.text = GetItem.itemName;
-            itemImage.sprite = item.itemSprite;
+            this.itemReference = itemData;
+            slotText.text = GetItemData.itemName;
+            itemImage.sprite = itemData.itemSprite;
+        }
+
+        private void Update()
+        {
+            if (!Application.isPlaying)
+            {
+                DoEditorChanges();
+            }
+            else
+            {
+                UpdateOutline();
+            }
+        }
+
+        private void DoEditorChanges()
+        {
+            UpdateOutline();
+        }
+
+        private void UpdateOutline()
+        {
+            outlineImage.enabled = showOutline;
+            var scale = opaqueImage.GetComponent<RectTransform>();
+            scale.sizeDelta = outlineImage.GetComponent<RectTransform>().sizeDelta;
+            opaqueImage.GetComponent<RectTransform>().localScale =
+                new Vector3(1f - outlineScale.x, 1f - outlineScale.y, 0f);
+            if (opaqueImage.sprite != outlineImage.sprite)
+            {
+                opaqueImage.sprite = outlineImage.sprite;
+            }
         }
 
         public void SlotClick()
         {
             if (!active)
             {
-                bgTween.Restart();
                 active = true;
+                outlineFlash.Pause();
+                outlineImage.DOFade(1f, .2f).OnComplete(() =>
+                {
+                    var seq = DOTween.Sequence();
+                    var rect = GetComponent<RectTransform>();
+                    var pos = rect.rotation.eulerAngles;
+                    seq
+                        .Append(rect.DORotate(pos + new Vector3(0f, 0f, 10f), .25f).SetEase(Ease.OutElastic))
+                        .Append(rect.DORotate(pos + new Vector3(0f, 0f, -10f), .25f).SetEase(Ease.OutElastic))
+                        .Append(rect.DORotate(pos, .25f).SetEase(Ease.InBounce));
+                    seq.Play();
+                });
+                
             }
             else
             {
-                bgTween.PlayBackwards();
+                outlineFlash.Restart();
                 active = false;
             }
-            SlotClicked.Invoke(this);
+            //SlotClicked.Invoke(this);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            slotText.gameObject.SetActive(true);
+            if (active) return;
+            showOutline = true;
+            //slotText.gameObject.SetActive(true);
+
+            outlineFlash.Restart();
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            slotText.gameObject.SetActive(false);
+            outlineFlash.Pause();
+            if (!active)
+            {
+                outlineImage.DOFade(0f, 0.2f);
+                showOutline = false;
+            }
+            //slotText.gameObject.SetActive(false);
         }
     }
 }

@@ -271,9 +271,9 @@ public class CharacterController : MonoBehaviour
     {
         GetInventory.gameObject.SetActive(true);
     }
-    public void AddToInventory(Item item)
+    public void AddToInventory(ItemData itemData)
     {
-        GetInventory.AddToInventory(item);
+        GetInventory.AddToInventory(itemData);
     }
 
     public void SetAnimationControl(bool disabled = false)

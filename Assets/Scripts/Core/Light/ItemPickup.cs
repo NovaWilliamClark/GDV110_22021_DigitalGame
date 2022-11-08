@@ -17,13 +17,14 @@ using DG.Tweening;
 using Objects;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Sequence = DG.Tweening.Sequence;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public class ItemPickup : InteractionPoint
 {
-    public Item GetItem => item;
-    [SerializeField] private Item item;
+    public ItemData GetItemData => itemData;
+    [FormerlySerializedAs("item")] [SerializeField] private ItemData itemData;
 
     [SerializeField] private float fxRadius = 10f;
     [SerializeField] private Material inactiveMaterial;
@@ -47,15 +48,15 @@ public class ItemPickup : InteractionPoint
     {
         base.Start();
 
-        if (item != null)
+        if (itemData != null)
         {
-            if (item.itemSprite != null && renderer != null && renderer.sprite == null)
+            if (itemData.itemSprite != null && renderer != null && renderer.sprite == null)
             {
                 if (glowRenderer)
                 {
-                    glowRenderer.sprite = item.itemSprite;
+                    glowRenderer.sprite = itemData.itemSprite;
                 }
-                renderer.sprite = item.itemSprite;
+                renderer.sprite = itemData.itemSprite;
             }
         }
     }
@@ -127,11 +128,11 @@ public class ItemPickup : InteractionPoint
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (!canInteract) return;
-        if (item != null)
+        if (itemData != null)
         {
             if (promptMessage == String.Empty)
             {
-                promptMessage = $"Pickup {item.itemName} - RMB";
+                promptMessage = $"Pickup {itemData.itemName} - RMB";
             }
             base.OnTriggerEnter2D(other);
         }
@@ -144,8 +145,8 @@ public class ItemPickup : InteractionPoint
     protected override void Interact(CharacterController cc)
     {
         if (!canInteract) return;
-        cc.AddToInventory(item);
-        item.hasBeenPickedUp = true;
+        cc.AddToInventory(itemData);
+        itemData.hasBeenPickedUp = true;
         canInteract = false;
         DisablePrompt();
         renderer.DOFade(0f, .2f);

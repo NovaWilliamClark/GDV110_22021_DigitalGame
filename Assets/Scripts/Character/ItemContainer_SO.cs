@@ -7,18 +7,18 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create ItemContainer_SO", fileName = "ItemContainer_SO", order = 0)]
 public class ItemContainer_SO : ScriptableObject
 {
-    public List<Item> initialItems;
-    private List<Item> items = new();
+    public List<ItemData> initialItems;
+    private List<ItemData> items = new();
     private List<int> itemsTaken = new();
 
-    public List<Item> Items => items;
+    public List<ItemData> Items => items;
     public void Init()
     {
         itemsTaken.Clear();
         items.Clear();
         foreach (var initialItem in initialItems)
         {
-            Item so = ScriptableObject.Instantiate(initialItem) as Item;
+            ItemData so = ScriptableObject.Instantiate(initialItem) as ItemData;
             items.Add(so);
         }
     }

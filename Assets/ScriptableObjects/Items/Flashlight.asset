@@ -18,3 +18,7 @@ MonoBehaviour:
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
   isSingleUse: 0
+  reloadable: 1
+  itemToReload: {fileID: 0}
+  itemDataRef: {fileID: 0}
+  typeEnum: {fileID: 11400000, guid: 16e6107d6358a4cb5a23d9e340d91dcc, type: 2}
