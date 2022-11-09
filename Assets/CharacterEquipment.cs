@@ -63,7 +63,7 @@ public class CharacterEquipment : MonoBehaviour
 
     private void Update()
     {
-        if (data.equipmentState.flashlightIsOn)
+        if (data.equipmentState.flashlightIsOn  && data.flashlightAvailable)
         {
             data.CurrentBattery -= data.equipmentState.flashlightDecreaseRate;
             if (data.CurrentBattery <= 0f)
@@ -80,6 +80,11 @@ public class CharacterEquipment : MonoBehaviour
     private void OnBatteryValueChanged(float arg0)
     {
         Debug.Log("Battery recovered " + arg0);
+
+        if (arg0 <= 0)
+        {
+            flashlightObject.SetActive(false);
+        }
     }
 
     private void ToggleFlashlight(bool on)
@@ -90,7 +95,7 @@ public class CharacterEquipment : MonoBehaviour
         {
             trackingScript.solver.weight = val;
         });
-        if (data.CurrentBattery <= 0)
+        if (data.CurrentBattery <= 0 && data.flashlightAvailable)
         {
             var seq = DOTween.Sequence();
             seq.Append(tween);
@@ -113,7 +118,7 @@ public class CharacterEquipment : MonoBehaviour
             seq.Play();
             return;
         }
-        if (on)
+        if (on && data.flashlightAvailable)
         {
             tween.OnComplete(() =>
             {
@@ -124,7 +129,7 @@ public class CharacterEquipment : MonoBehaviour
                 StartCoroutine(FlashlightCooldown());
             });
         }
-        else if (!on)
+        else if (!on && data.flashlightAvailable)
         {
             tween.OnComplete(() =>
             {

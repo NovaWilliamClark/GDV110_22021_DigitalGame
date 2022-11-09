@@ -19,6 +19,7 @@ using Core.LitArea;
 using DG.Tweening;
 using DG.Tweening.Core.Easing;
 using Objects;
+using Unity.VisualScripting;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Serialization;
 using AudioType = UnityEngine.AudioType;
@@ -341,5 +342,6 @@ public class CharacterController : MonoBehaviour
     public void ToggleMovement(bool value)
     {
         CanMove = value == true ? true : false;
+        playerData.flashlightAvailable = value == true ? true : false;
     }
 }
