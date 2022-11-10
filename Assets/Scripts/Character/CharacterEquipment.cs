@@ -40,6 +40,8 @@ public class CharacterEquipment : MonoBehaviour
     private bool degenStarted;
     private bool turnedOff = false;
 
+    private bool initialized = false;
+
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
@@ -55,6 +57,7 @@ public class CharacterEquipment : MonoBehaviour
         data.BatteryValueChanged.AddListener(OnBatteryValueChanged);
         useFlashlightInput.Enable();
 
+        initialized = true;
         if (data.equipmentState.flashlightIsOn)
         {
             ToggleFlashlight(true);
@@ -63,6 +66,7 @@ public class CharacterEquipment : MonoBehaviour
 
     private void Update()
     {
+        if (!initialized) return;
         if (data.equipmentState.flashlightIsOn)
         {
             data.CurrentBattery -= data.equipmentState.flashlightDecreaseRate;

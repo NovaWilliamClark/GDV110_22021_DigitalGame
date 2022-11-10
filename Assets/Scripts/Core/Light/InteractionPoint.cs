@@ -39,7 +39,7 @@ public abstract class InteractionPoint : MonoBehaviour
     public Color outlineColour = new Color(78f, 93f, 111f, 1f);
 
     [SerializeField] protected bool showVisuals = true;
-    protected SpriteRenderer renderer;
+    [SerializeField] protected SpriteRenderer renderer;
     protected SpriteRenderer glowRenderer;
     public Material glowMaterial;
     protected bool tweening;
@@ -56,8 +56,8 @@ public abstract class InteractionPoint : MonoBehaviour
      protected virtual void Awake()
      {
          triggerArea = GetComponent<BoxCollider2D>();
-         
-         renderer = GetComponent<SpriteRenderer>();
+         if (!renderer)
+            renderer = GetComponent<SpriteRenderer>();
          if (renderer && showVisuals)
          {
              var rend = new GameObject("Sprite Outline");
@@ -113,7 +113,7 @@ public abstract class InteractionPoint : MonoBehaviour
      }
 
      protected virtual void OnTriggerEnter2D(Collider2D other)
-    {
+     {
         if (!automaticInteraction)
         {
             if (!other.GetComponent<CharacterController>()) return;

@@ -55,14 +55,9 @@ public class LevelController : MonoBehaviour
 
     private void Start()
     {
-        if (onLoadCutscene)
+        if (onLoadCutscene && !levelData.levelCutscenePlayed)
         {
             UIHelpers.Instance.Fader.Fade(0f, 0.1f);
-            PlayerSpawned.AddListener(onLoadCutscene.OnPlayerSpawned);
-        }
-        else
-        {
-           
         }
         LevelInit();
     }
@@ -117,12 +112,36 @@ public class LevelController : MonoBehaviour
             interact.Interacted.AddListener(OnInteractionPointInteracted);
         }
 
+        var genericObjects = FindObjectsOfType<GenericObject>();
+        foreach (var ge in genericObjects)
+        {
+            var po = ge.GetComponent<PersistentObject>();
+            if (levelData.Initialized)
+            {
+                if (levelData.PersistentObjectActive(po.Id))
+                {
+                    ge.SetPersistentState();
+                }
+            }
+            else
+            {
+                levelData.AddPersistentObject(po);
+            }
+            ge.ObjectStateChanged.AddListener(OnGenericObjectStateChanged);
+        }
+        
         if (!levelData.Initialized)
         {
             levelData.Setup();
         }
     }
 
+    private void OnGenericObjectStateChanged(GenericObject ge)
+    {
+        var po = ge.GetComponent<PersistentObject>();
+        levelData.SetPersistentObject(po.Id);
+    }
+ 
     private void OnInteractionPointInteracted(InteractionPoint interactionPoint)
     {
         var po = interactionPoint.GetComponent<PersistentObject>();
@@ -166,7 +185,7 @@ public class LevelController : MonoBehaviour
             var spawnNl = nightlights[spawnPointData.Id];
             pos = spawnNl.transform.position;
         }
-        else if (existingPlayer)
+        else if (existingPlayer && !levelData.Initialized)
         {
             pos = existingPlayer.transform.position;
         }
@@ -208,7 +227,7 @@ public class LevelController : MonoBehaviour
         
         PlayerSpawned?.Invoke(instancedPlayer);
 
-        if (onLoadCutscene)
+        if (onLoadCutscene && !levelData.levelCutscenePlayed)
         {
             AudioManager.Instance.StopMusic();
             onLoadCutscene.Completed.AddListener(OnCutsceneCompleted);

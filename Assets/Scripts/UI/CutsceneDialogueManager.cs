@@ -49,10 +49,6 @@ public class CutsceneDialogueManager : MonoBehaviour
     {
         // Set reference to dialogue box
         //dialogueBox = this.GetComponent<CanvasGroup>();
-        if (!dialogueBox)
-        {
-            CreateDialogueBox();
-        }
     }
 
     void CreateDialogueBox()
@@ -62,6 +58,7 @@ public class CutsceneDialogueManager : MonoBehaviour
         dialogueBox = box.GetComponentInChildren<CanvasGroup>();
         dialogueBox.alpha = 0;
     }
+
 
     public void ShowDialogue(CutsceneDialogueEntry dialogue, UnityAction callback)
     {

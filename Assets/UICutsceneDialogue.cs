@@ -13,7 +13,7 @@ public class UICutsceneDialogue : MonoBehaviour
     public Vector2 iconLeftPos;
     public Vector2 iconRightPos;
 
-    private void Start()
+    private void Awake()
     {
         iconRect = icon.GetComponent<RectTransform>();
     }
