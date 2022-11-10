@@ -9,6 +9,7 @@ namespace Character
     public class CharacterSanity : MonoBehaviour, ILightResponder
     {
         [SerializeField] private PlayerData_SO playerData;
+        public PlayerData_SO GetData => playerData;
         public UnityEvent<float, float> SanityValueChanged;
         public UnityEvent SanityReachedZero;
         [SerializeField] bool sanityEnabled = false;
