@@ -9,16 +9,19 @@
 
 using UnityEngine;
 
-public class PlayerSpawnPoint : MonoBehaviour
+namespace Core.SceneManager
 {
-    public enum FacingDirection
+    public class PlayerSpawnPoint : MonoBehaviour
     {
-        Left, 
-        Right
+        public enum FacingDirection
+        {
+            Left, 
+            Right
+        }
+        public Vector2 GetPosition => gameObject.transform.position;
+        public FacingDirection GetFacingDirection => facingDirection;
+        public int GetSpawnIndex => spawnIndex;
+        [SerializeField] private int spawnIndex;
+        [SerializeField] private FacingDirection facingDirection;
     }
-    public Vector2 GetPosition => gameObject.transform.position;
-    public FacingDirection GetFacingDirection => facingDirection;
-    public int GetSpawnIndex => spawnIndex;
-    [SerializeField] private int spawnIndex;
-    [SerializeField] private FacingDirection facingDirection;
 }
