@@ -24,6 +24,7 @@ public class LightSwitch : InteractionPoint
         {
             active = !active;
             interacted = true;
+            canInteract = false;
             onInteract.Invoke(active);
             AudioManager.Instance.PlaySound(switchSfx,sfxVolume);
             StartCoroutine(WaitForCooldown());
@@ -35,6 +36,15 @@ public class LightSwitch : InteractionPoint
     {
         yield return new WaitForSeconds(interactCooldown);
         interacted = false;
-
+        canInteract = true;
+        hasInteracted = false;
     }
+
+    public override void SetInteractedState()
+    {
+        interacted = false;
+        canInteract = true;
+        onInteract.Invoke(true);
+    }
+    
 }

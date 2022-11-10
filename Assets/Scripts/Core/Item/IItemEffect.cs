@@ -9,7 +9,7 @@ public abstract class ItemEffect
         itemUseEvent = useEvent;
     }
 
-    public virtual void Use()
+    public virtual void Use(GameObject owner)
     {
         if (itemUseEvent)
             itemUseEvent.UsedEvent?.Invoke();

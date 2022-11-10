@@ -200,4 +200,16 @@ public class EquipmentState
     public bool flashlightEquipped = false;
     public bool flashlightIsOn = false;
     public float flashlightDecreaseRate = 0.1f;
+
+    public EquipmentState Copy()
+    {
+        var copy = new EquipmentState
+        {
+            hasSockey = hasSockey,
+            flashlightEquipped = flashlightEquipped,
+            flashlightIsOn = flashlightIsOn,
+            flashlightDecreaseRate = flashlightDecreaseRate
+        };
+        return copy;
+    }
 }

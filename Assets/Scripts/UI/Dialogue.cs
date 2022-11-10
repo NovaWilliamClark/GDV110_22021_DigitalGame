@@ -8,18 +8,21 @@
 **********************************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 [Serializable]
 public class Dialogue
 {
-    [TextArea(3, 10)]
-    public string[] sentences;
+    public List<DialogueEntry> entries;
+    public int currentPosition = 0;
+}
 
-    public Vector3[] positions;
+[Serializable]
+public class DialogueEntry
+{
+    [TextArea(3, 10)] public string sentence;
+    public Vector3 position;
 
     public float holdDuration;
     public float fadeDuration;

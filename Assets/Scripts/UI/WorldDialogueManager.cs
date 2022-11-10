@@ -10,107 +10,79 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.Pool;
+using UI;
+using Unity.VisualScripting;
 
 namespace UI
 {
     public class WorldDialogueManager : MonoBehaviour
     {
-        private float holdDuration;
+        public static WorldDialogueManager Instance { get; private set; }
+
         private float fadeDuration;
+        private float holdDuration;
+        
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+        private WorldDialogue dialoguePrefab1;
+        private WorldDialogue dialoguePrefab2;
 
-        [SerializeField] public GameObject DialogueBox;
-
-        private DialogueBoxManager dialoguePrefab1;
-        private DialogueBoxManager dialoguePrefab2;
-
-        private Queue<string> sentences = new Queue<string>();
-        private Queue<Vector3> positions = new Queue<Vector3>();
+        private Queue<Dialogue> queuedDialogue = new();
+        private List<Dialogue> activeDialogue = new();
 
         private bool prefab1Active = false;
 
+        public GameObject dialogueBoxPrefab;
+
+        private ObjectPool<WorldDialogue> pool;
+        public ObjectPool<WorldDialogue> Pool => pool;
+
+        private bool displaying = false;
+
         void Start()
         {
-            dialoguePrefab1 = Instantiate(DialogueBox).GetComponent<DialogueBoxManager>();
-            dialoguePrefab2 = Instantiate(DialogueBox).GetComponent<DialogueBoxManager>();
+            pool = new ObjectPool<WorldDialogue>(OnCreateDialogue, OnDialogueBoxFromPool);
         }
 
-        private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+        private void OnDialogueBoxFromPool(WorldDialogue obj)
         {
-            dialoguePrefab1 = Instantiate(DialogueBox).GetComponent<DialogueBoxManager>();
-            dialoguePrefab2 = Instantiate(DialogueBox).GetComponent<DialogueBoxManager>();
+            // enable etc
+            obj.gameObject.SetActive(true);
+            obj.Completed.AddListener(OnWorldDialogueCompleted);
         }
 
-        public void StartDialogue(Dialogue dialogue)
+        private WorldDialogue OnCreateDialogue()
         {
-            holdDuration = dialogue.holdDuration;
-            fadeDuration = dialogue.fadeDuration;
-
-            sentences.Clear();
-
-            foreach (string sentence in dialogue.sentences)
-            {
-                sentences.Enqueue(sentence);
-            }
-
-            foreach (Vector3 position in dialogue.positions)
-            {
-                positions.Enqueue(position);
-            }
-
-            DisplayNextSentence();
-            prefab1Active = true;
+            var obj = Instantiate(dialogueBoxPrefab);
+            var dialogue = obj.GetComponent<WorldDialogue>();
+            obj.name = "Pooled Dialogue Box";
+            return dialogue;
         }
 
-        private void DisplayNextSentence()
+        public WorldDialogue CreateDialogueBox(Dialogue dialogue, int startIndex = 0)
         {
-            if (sentences.Count == 0)
-            {
-                EndDialogue();
-                return;
-            }
-
-            string sentence = sentences.Dequeue();
-
-            Vector3 newPosition = positions.Dequeue();
-
-            if (!prefab1Active)
-            {
-                dialoguePrefab1.PrintText(sentence, newPosition, holdDuration, fadeDuration);
-                prefab1Active = true;
-            }
-            else
-            {
-                dialoguePrefab2.PrintText(sentence, newPosition, holdDuration, fadeDuration);
-                prefab1Active = false;
-            }
-
-            StartCoroutine(NextSentence(holdDuration, fadeDuration));
+            // TODO: Trigger will pass in which dialogue it's up to
+            var obj = pool.Get();
+            obj.Init(dialogue, startIndex);
+            return obj;
         }
-        
-        private IEnumerator NextSentence(float currentHoldDuration, float currentFadeDuration)
-        {
-            yield return new WaitForSeconds(currentHoldDuration + (currentFadeDuration * 2));
 
-            DisplayNextSentence();
-        }
-        
-        public void EndDialogue()
+        private void OnWorldDialogueCompleted(WorldDialogue wd)
         {
-            sentences.Clear();
-            
-            if (!prefab1Active)
-            {
-                prefab1Active = true;
-            }
-            else
-            {
-                prefab1Active = false;
-            }
+            wd.Completed.RemoveListener(OnWorldDialogueCompleted);
+            wd.gameObject.SetActive(false);
         }
     }
 }

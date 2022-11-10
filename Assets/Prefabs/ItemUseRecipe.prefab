@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2885406107894398083}
   - component: {fileID: 2885406107894398082}
   - component: {fileID: 2885406107894398140}
+  - component: {fileID: 5871055718936248361}
   m_Layer: 0
   m_Name: ItemUseRecipe
   m_TagString: Untagged
@@ -128,10 +129,29 @@ MonoBehaviour:
   promptBox: {fileID: 3835614872363642583}
   promptMessage: 
   automaticInteraction: 0
+  outlineColour: {r: 78, g: 93, b: 111, a: 1}
+  glowMaterial: {fileID: 0}
+  fxRange: 7.5
+  Interacted:
+    m_PersistentCalls:
+      m_Calls: []
   requiredItem: {fileID: 0}
   useGenericMessage: 1
   data: {fileID: 11400000, guid: 7593e4375df8069419f04df89118790b, type: 2}
   recipe: {fileID: 11400000, guid: 28c3669ae4837a14793999098987e38c, type: 2}
+--- !u!114 &5871055718936248361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2885406107894398080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e86d805a0d947d5bbf1728e83ea7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: a2b0c28f-7205-4e9e-a2b9-c0e3d802049d
 --- !u!1001 &2885406107837366379
 PrefabInstance:
   m_ObjectHideFlags: 0

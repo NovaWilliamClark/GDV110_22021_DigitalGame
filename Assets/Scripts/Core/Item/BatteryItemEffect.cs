@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BatteryItemEffect : ItemEffect
 {
-    public override void Use()
+    public override void Use(GameObject owner)
     {
         Debug.Log("Used battery");
         itemUseEvent.UsedEvent?.Invoke();

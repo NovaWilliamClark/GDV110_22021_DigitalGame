@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 7798906891845059979}
   - component: {fileID: 7541320817509076118}
   - component: {fileID: 4883076714129422473}
+  - component: {fileID: 6432679808040767771}
   m_Layer: 5
-  m_Name: Test_MessagePrompt
+  m_Name: Default Interact Promptbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +84,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 10
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &4883076714129422473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,6 +102,27 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6432679808040767771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103694458185002684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42786496a5c184592b697ba1cf917905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 678525178036388760}
+  promptText: {fileID: 422024384568020290}
+  fadeDuration: 0.2
+  fadeDelay: 0
+  easeType: 4
+  moveDuration: 0.4
+  moveDelay: 0.3
+  endPosition: {x: 0, y: -1}
+  startPosition: {x: 0, y: 0}
 --- !u!1 &7118448213389383795
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,6 +269,7 @@ GameObject:
   - component: {fileID: 2808663508275335923}
   - component: {fileID: 4663587609739567172}
   - component: {fileID: 1842663968791468503}
+  - component: {fileID: 678525178036388760}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -270,10 +293,10 @@ RectTransform:
   m_Father: {fileID: 1306717890323903876}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.2998}
-  m_SizeDelta: {x: 0, y: -1.1191}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 10, y: 5.14065}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4663587609739567172
 CanvasRenderer:
@@ -313,3 +336,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &678525178036388760
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8104413154749326839}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

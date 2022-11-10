@@ -46,19 +46,25 @@ public class CutsceneDialogueManager : MonoBehaviour
         //dialogueBox = this.GetComponent<CanvasGroup>();
         if (!dialogueBox)
         {
-            var box = Instantiate(dialogueBoxPrefab);
-            dialogueBox = box.GetComponentInChildren<CanvasGroup>();
-            dialogueBox.alpha = 0;
+            CreateDialogueBox();
         }
+    }
+
+    void CreateDialogueBox()
+    {
+        var box = Instantiate(dialogueBoxPrefab);
+        dialogueBox = box.GetComponentInChildren<CanvasGroup>();
+        dialogueBox.alpha = 0;
     }
 
     public void ShowDialogue(CutsceneDialogue dialogue, UnityAction callback)
     {
         if (!dialogueBox)
         {
-            var box = Instantiate(dialogueBoxPrefab);
-            dialogueBox = box.GetComponentInChildren<CanvasGroup>();
+            CreateDialogueBox();
         }
+
+        dialogueBox.gameObject.SetActive(true);
         cutsceneDialogue = dialogue;
         onCompleteCallback = callback;
         DialogueResume();

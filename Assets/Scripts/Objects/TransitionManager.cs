@@ -40,11 +40,6 @@ public class TransitionManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        throw new NotImplementedException();
-    }
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // TODO: Move this into a GameManager for when the level is ready as things might still be loading
@@ -60,5 +55,10 @@ public class TransitionManager : MonoBehaviour
     public void SetSpawnIndex(int index)
     {
         indexToSpawnAt = index;
+    }
+
+    public void Respawn()
+    {
+        
     }
 }

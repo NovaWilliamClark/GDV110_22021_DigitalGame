@@ -18,6 +18,7 @@ using DG.Tweening;
 using Objects;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using Sequence = DG.Tweening.Sequence;
@@ -42,6 +43,8 @@ public class ItemPickup : InteractionPoint
 
     [Header("Sound")] [SerializeField] private List<AudioClip> pickupSfx;
 
+    [HideInInspector] public UnityEvent<ItemPickup> ItemPickedUp;
+
     protected override void Awake()
     {
         base.Awake();
@@ -62,6 +65,15 @@ public class ItemPickup : InteractionPoint
                 }
                 renderer.sprite = itemData.itemSprite;
             }
+        }
+
+        foreach (var particle in particles)
+        {
+            particle.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var random = new System.Random();
+            int num = random.Next(Int32.MinValue, Int32.MaxValue);
+            particle.randomSeed = (uint) (num + (uint) Int32.MaxValue);
+            particle.Play();
         }
     }
 
@@ -138,6 +150,10 @@ public class ItemPickup : InteractionPoint
             {
                 promptMessage = $"Pickup {itemData.itemName} - RMB";
             }
+            foreach (var particle in particles)
+            {
+                particle.Stop(false);
+            }
             base.OnTriggerEnter2D(other);
         }
         else
@@ -151,7 +167,7 @@ public class ItemPickup : InteractionPoint
         if (!canInteract) return;
         cc.AddToInventory(itemData);
         AudioManager.Instance.PlaySound(pickupSfx[Random.Range(0, pickupSfx.Count-1)]);
-        itemData.hasBeenPickedUp = true;
+        //itemData.hasBeenPickedUp = true;
         canInteract = false;
         DisablePrompt();
         renderer.DOFade(0f, .2f);
@@ -166,6 +182,30 @@ public class ItemPickup : InteractionPoint
             particle.Stop(false);
         }
         yield return new WaitForSeconds(2f);
+        Interacted?.Invoke(this);
+        //ItemPickedUp?.Invoke();
+        if (promptBox.isAnimating)
+        {
+            
+        }
+        gameObject.SetActive(false);
+    }
+
+    protected override void OnTriggerExit2D(Collider2D other)
+    {
+        base.OnTriggerExit2D(other);
+        if (canInteract)
+        {
+            foreach (var particle in particles)
+            {
+                particle.Play();
+            }
+        }
+    }
+    
+    public override void SetInteractedState()
+    {
+        base.SetInteractedState();
         gameObject.SetActive(false);
     }
 }

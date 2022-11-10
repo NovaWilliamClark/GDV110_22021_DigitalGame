@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3022912342552266211}
   - component: {fileID: 3022912342552266209}
   - component: {fileID: 3022912342552266208}
+  - component: {fileID: 6880406589036558994}
   m_Layer: 0
   m_Name: WallDoor_Interactable
   m_TagString: Untagged
@@ -99,8 +100,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddbb50d04e36a40de83b1278d0e07a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptBox: {fileID: 3801698018099407738}
+  promptBox: {fileID: 8121946118131356893}
   promptMessage: Enter Room - RMB
+  automaticInteraction: 0
+  canReInteract: 0
+  outlineColour: {r: 0.6129336, g: 0.73098004, b: 0.8671875, a: 1}
+  showVisuals: 1
+  glowMaterial: {fileID: 0}
+  fxRange: 7.5
+  Interacted:
+    m_PersistentCalls:
+      m_Calls: []
   sceneToLoad: Level04_ParentsBedroom
   spawnPointIndex: 0
   sfxToPlay: {fileID: 8300000, guid: 268d015ea7f01485bbf234f21f1a968d, type: 3}
@@ -131,6 +141,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 19.07, y: 31.855923}
   m_EdgeRadius: 0
+--- !u!114 &6880406589036558994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3022912342552266220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e86d805a0d947d5bbf1728e83ea7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 7e109d83-cb2d-4e71-8b66-cf53a59d4772
 --- !u!1001 &3022912341932770758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -252,13 +275,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
---- !u!1 &3801698018099407738 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2103694458185002684, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
-  m_PrefabInstance: {fileID: 3022912341932770758}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4310488264976592962 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1306717890323903876, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
   m_PrefabInstance: {fileID: 3022912341932770758}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8121946118131356893 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6432679808040767771, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+  m_PrefabInstance: {fileID: 3022912341932770758}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42786496a5c184592b697ba1cf917905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

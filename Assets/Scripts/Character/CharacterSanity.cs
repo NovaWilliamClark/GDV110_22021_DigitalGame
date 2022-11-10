@@ -53,7 +53,13 @@ namespace Character
             if (playerData.Sanity <= 0)
             {
                 SanityReachedZero?.Invoke();
+                // we have died - need to play back player death cinematic
             }
+        }
+
+        public void Instakill()
+        {
+            DecreaseSanity(5000f, false);
         }
 
         public void AdjustDecreaseRate(float rate, bool reset = false)

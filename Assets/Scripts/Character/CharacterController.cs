@@ -48,6 +48,8 @@ public class CharacterController : MonoBehaviour
     [Header("Data")] 
     [SerializeField] private PlayerData_SO playerData;
 
+    public PlayerData_SO PlayerData => playerData;
+
     //[SerializeField] private Inventory inventory;
     public Inventory GetInventory => inventory;
     public CharacterSanity GetCharacterSanity => characterSanity;
@@ -105,10 +107,11 @@ public class CharacterController : MonoBehaviour
         input.Enable();
 
         characterSanity = this.GetComponent<CharacterSanity>();
+        characterSanity.SanityReachedZero.AddListener(PerformDeath); 
     
         CanMove = true;
     }
-    
+
     private void Update()
     {
         var keyboard = Keyboard.current;
@@ -230,6 +233,12 @@ public class CharacterController : MonoBehaviour
         return isFlipped;
     }
 
+    private void PerformDeath()
+    {
+        // play the cinematic and die
+        onDeath.Invoke();
+    }
+    
     private IEnumerator RestartLevel()
     {
         onDeath.Invoke();
@@ -268,7 +277,7 @@ public class CharacterController : MonoBehaviour
         //playerData.inventoryItems.Clear();
         playerData.SetItems(inventory);
     }
-    
+
     private void ShowInventory()
     {
         GetInventory.OpenInventory();
