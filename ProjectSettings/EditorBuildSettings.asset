@@ -19,7 +19,7 @@ EditorBuildSettings:
     guid: e4631c10822e0447d8da45ecc4251dd5
   - enabled: 1
     path: Assets/Scenes/Level03_ParentsHallway.unity
-    guid: c0963fff4a0304de0b71783b93ad2c8a
+    guid: d9e399697c7124c83aa1cf0cfd7fd733
   - enabled: 1
     path: Assets/Scenes/Level04_ParentsBedroom.unity
     guid: 70f69ac57a3dc455e8b2bcb96da499be
