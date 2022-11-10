@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: LevelData_Test_01
   m_EditorClassIdentifier: 
   levelEnemies: []
-  items: []
+  interactions: []
+  initialized: 0

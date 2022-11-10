@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1963636384838680173}
   - component: {fileID: 1963636384838680172}
   - component: {fileID: 1963636384838680171}
-  - component: {fileID: 4846894146716694252}
   - component: {fileID: 7706939859763190636}
   - component: {fileID: 687471682}
+  - component: {fileID: 3375792402497577091}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -66,18 +66,6 @@ MonoBehaviour:
   ev:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4846894146716694252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1963636384838680175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4017bbd4a33a25d4690db3caf77984d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7706939859763190636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,3 +105,16 @@ MonoBehaviour:
     useEvent: {fileID: 11400000, guid: 97cbb0ee070464eaa9555770b2b21c18, type: 2}
   - item: {fileID: 11400000, guid: 0a5bd9dc6ceef45aa943c4446a5dc5b5, type: 2}
     useEvent: {fileID: 11400000, guid: 01fc90fd8dce04c81a1a452f659e810f, type: 2}
+--- !u!114 &3375792402497577091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963636384838680175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52a4bc0f5c9cfd141a2ded9e261837ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueBoxPrefab: {fileID: 4585806261793162075, guid: 9268f6277e15bb840937e2bb9e6b52ba, type: 3}

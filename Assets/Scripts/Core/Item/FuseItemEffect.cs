@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FuseItemEffect : ItemEffect
 {
-    public override void Use()
+    public override void Use(GameObject owner)
     {
         Debug.Log("Used fuse");
         itemUseEvent.UsedEvent?.Invoke();

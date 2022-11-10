@@ -270,21 +270,6 @@ namespace Character
             player.Equipment.EnableInput();
         }
 
-        // private void ShowSlots()
-        // {
-        //     foreach (var slot in slots)
-        //     {
-        //         if (slot != null)
-        //         {
-        //             slot.gameObject.SetActive(true);
-        //         }
-        //     }
-        //     for (int i = slotCount; i < items.Count; i++)
-        //     {
-        //         CreateSlot(items[i]);
-        //     }
-        // }
-
         private void CreateSlot(ItemData itemData)
         {
             var slot = Instantiate(slotPrefab, inventorySlotContainer);
@@ -368,7 +353,7 @@ namespace Character
                 var effect = ItemDatabase.Instance.GetItemEffect(item);
                 if (effect != null)
                 {
-                    effect.Use();
+                    effect.Use(gameObject);
                 }
 
                 selectedslots.Remove(slot);

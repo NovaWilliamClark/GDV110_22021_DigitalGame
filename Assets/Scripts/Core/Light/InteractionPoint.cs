@@ -14,15 +14,16 @@ using Objects;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
 using Sequence = DG.Tweening.Sequence;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Collider2D)), RequireComponent(typeof(PersistentObject))]
 public abstract class InteractionPoint : MonoBehaviour
 {
     [Header("Prompt")]
-    [SerializeField] protected GameObject promptBox;
+    [SerializeField] protected UIPromptBox promptBox;
     [SerializeField] protected string promptMessage;
 
     [SerializeField] protected bool automaticInteraction = false;
@@ -30,10 +31,14 @@ public abstract class InteractionPoint : MonoBehaviour
     protected bool canInteract = true;
     protected bool hasInteracted = false;
     protected bool playerInRange;
+    [SerializeField] protected bool canReInteract = false;
     protected CharacterController playerRef;
 
     [Header("Visuals")]
+    [ColorUsage(true,true)]
     public Color outlineColour = new Color(78f, 93f, 111f, 1f);
+
+    [SerializeField] protected bool showVisuals = true;
     protected SpriteRenderer renderer;
     protected SpriteRenderer glowRenderer;
     public Material glowMaterial;
@@ -41,15 +46,19 @@ public abstract class InteractionPoint : MonoBehaviour
     private bool outlineActive;
     private Sequence visualSequence;
     [SerializeField] protected float fxRange = 7.5f;
-    
+
+    protected PersistentObject persistentObject;
+
     protected PlayerInput input;
+
+    [HideInInspector] public UnityEvent<InteractionPoint> Interacted;
 
      protected virtual void Awake()
      {
          triggerArea = GetComponent<BoxCollider2D>();
          
          renderer = GetComponent<SpriteRenderer>();
-         if (renderer)
+         if (renderer && showVisuals)
          {
              var rend = new GameObject("Sprite Outline");
              rend.transform.localScale = transform.localScale;
@@ -72,6 +81,8 @@ public abstract class InteractionPoint : MonoBehaviour
          {
              triggerArea.isTrigger = true;
          }
+
+         persistentObject = GetComponent<PersistentObject>();
      }
 
      protected virtual void Start()
@@ -88,7 +99,7 @@ public abstract class InteractionPoint : MonoBehaviour
      
      private void OnInteractInput(InputAction.CallbackContext obj)
      {
-         if (playerRef && !hasInteracted)
+         if ((playerRef && !hasInteracted) || playerRef && canReInteract)
          {
              hasInteracted = true;
              Interact(playerRef);
@@ -110,9 +121,8 @@ public abstract class InteractionPoint : MonoBehaviour
             if (!promptBox) return;
             
             playerRef = other.GetComponent<CharacterController>();
-            
-            promptBox.GetComponentInChildren<TMP_Text>().text = promptMessage;
-            promptBox.SetActive(true);
+            promptBox.gameObject.SetActive(true);
+            promptBox.Show(promptMessage);
         }
         else
         {
@@ -136,6 +146,8 @@ public abstract class InteractionPoint : MonoBehaviour
     protected virtual void Update()
     {
         if (!renderer) return;
+
+        if (!showVisuals) return;
         
         if (!canInteract || !playerInRange)
         {
@@ -150,8 +162,7 @@ public abstract class InteractionPoint : MonoBehaviour
                 visualSequence.PlayBackwards();
             }
         }
-        if (hasInteracted) return;
-        if (playerInRange)
+        if (canInteract && playerInRange)
         {
             if (!tweening && !outlineActive)
             {
@@ -190,6 +201,12 @@ public abstract class InteractionPoint : MonoBehaviour
         }
     }
 
+    public virtual void SetInteractedState()
+    {
+        // basically change me to be "active" as if the player has already used me
+        
+    }
+
     // protected void DisableInteraction()
     // {
     //     DisablePrompt();
@@ -199,9 +216,9 @@ public abstract class InteractionPoint : MonoBehaviour
 
     protected void DisablePrompt()
     {
-        if (promptBox)
+        if (promptBox && !automaticInteraction)
         {
-            promptBox.SetActive(false);
+            promptBox.Hide();
         }
     }
 

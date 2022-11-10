@@ -9,6 +9,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Character;
 using Objects;
@@ -74,9 +76,8 @@ public class PlayerData_SO : ScriptableObject
 
     public List<ItemData> inventoryItems;
 
-    [SerializeField] private int spawnpointId = 0;
-    [SerializeField] private bool spawnpointSet = false;
-    [SerializeField] private string spawnpointScene;
+    public SpawnPointData spawnPoint;
+
 
     private void OnEnable()
     {
@@ -85,17 +86,11 @@ public class PlayerData_SO : ScriptableObject
         sanity = initialSanity;
         sanityGainRate = initialGainRate;
         sanityLossRate = initialLossRate;
-        equipmentState = new EquipmentState
-        {
-            hasSockey = initialState.hasSockey,
-            flashlightEquipped = initialState.flashlightEquipped,
-            flashlightIsOn = initialState.flashlightIsOn
-        }; 
+        equipmentState = initialState.Copy();
         inventoryItems.Clear();
+        spawnPoint = new SpawnPointData();
 
-        spawnpointId = 0;
-        spawnpointScene = "";
-        spawnpointSet = false;
+        spawnPoint.ResetData(this);
     }
 
     public void SetItems(Inventory inventory)
@@ -111,18 +106,63 @@ public class PlayerData_SO : ScriptableObject
         }*/
     }
 
-    public void SetSavePoint(int id, string sceneName)
-    {
-        spawnpointId = id;
-        spawnpointScene = sceneName;
-        spawnpointSet = true;
-    }
-    
     public void ResetData()
     {
         //sanity = 100f;
         //sanityGainRate = 0.025f;
         //sanityLossRate = 0.03f;
         //inventoryItems.Clear();
+    }
+
+    public PlayerData_SO Copy()
+    {
+        var instance = Instantiate(this);
+        instance.equipmentState = equipmentState.Copy();
+        
+        return instance;
+    }
+
+    // https://stackoverflow.com/questions/930433/apply-properties-values-from-one-object-to-another-of-the-same-type-automaticall
+    public void SetFromCopy(PlayerData_SO copy)
+    {
+        var ogName = name;
+        foreach (PropertyInfo property in typeof(PlayerData_SO).GetProperties().Where(p => p.CanWrite))
+        {
+            property.SetValue(this, property.GetValue(copy, null), null);
+        }
+
+        name = ogName;
+    }
+}
+
+[Serializable]
+public class SpawnPointData
+{
+    [SerializeField] private string id = "";
+    public string Id => id;
+    [SerializeField] private bool spawnPointSet = false;
+    public bool isSet => spawnPointSet;
+    [SerializeField] private string sceneName;
+    public string SceneName => sceneName;
+
+    [SerializeField] private PlayerData_SO originalData;
+    [SerializeField] private PlayerData_SO dataInstance;
+
+    public PlayerData_SO DataAsAtSpawn => dataInstance;
+
+    public void ResetData(PlayerData_SO original)
+    {
+        id = "";
+        spawnPointSet = false;
+        sceneName = "";
+        originalData = original;
+    }
+
+    public void Set(string _id, string _sceneName)
+    {
+        spawnPointSet = true;
+        id = _id;
+        sceneName = _sceneName;
+        dataInstance = originalData.Copy();
     }
 }

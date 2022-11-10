@@ -45,5 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 286041822936246033, guid: 8d437f5c5ad29412387761640ab65bd2, type: 3}
+  levelData: {fileID: 0}
+  safeZone: 0
+  onLoadCutscene: {fileID: 0}
   LevelBGM: {fileID: 8300000, guid: dd1159310bba30448afae6bfac464d06, type: 3}
-  BGMVolume: 1
+  playerDataRef: {fileID: 11400000, guid: 6a6e040239aaaef4093abdbe5a62e1d1, type: 2}

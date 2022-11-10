@@ -19,7 +19,7 @@ public class ItemUseRecipe : ItemUse
     {
         if (recipe != null)
         {
-            promptBox.SetActive(true);
+            promptBox.gameObject.SetActive(true);
             //base.OnTriggerEnter2D(other);
             if (other.TryGetComponent<CharacterController>(out var player))
             {

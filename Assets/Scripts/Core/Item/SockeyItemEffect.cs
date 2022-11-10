@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SockeyItemEffect : ItemEffect
 {
-    public override void Use()
+    public override void Use(GameObject owner)
     {
         Debug.Log("Used socky");
         itemUseEvent.UsedEvent?.Invoke();

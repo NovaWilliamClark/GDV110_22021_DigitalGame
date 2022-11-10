@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class FlashlightItemEffect : ItemEffect
 {
-    public override void Use()
+    public override void Use(GameObject owner)
     {
         Debug.Log("Used flashlight");
         itemUseEvent.UsedEvent?.Invoke();

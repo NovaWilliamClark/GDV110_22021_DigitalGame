@@ -8,6 +8,7 @@
 **********************************************************************************************/
 
 using System;
+using Character;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -45,5 +46,11 @@ public class UIHelpers : MonoBehaviour
         {
             SanityMeter.Disable();
         }
+    }
+
+    public void KillPlayer()
+    {
+        var sanity = FindObjectOfType<CharacterSanity>();
+        sanity.Instakill();
     }
 }

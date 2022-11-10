@@ -1,20 +1,16 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
 public class DialogueBoxManager : MonoBehaviour
 {
-    private TextMeshProUGUI dialogueText;
-
-    private CanvasGroup currentCanvas;
+    [SerializeField] private TMP_Text dialogueText;
+    [SerializeField] private CanvasGroup currentCanvas;
 
     private void Awake()
     {
-        //currentCanvas = gameObject.GetComponentInChildren<CanvasGroup>();
-        //currentCanvas.alpha = 0;
+        currentCanvas.alpha = 0;
     }
 
     public void PrintText(string newText, Vector3 newPosition, float holdDuration, float fadeDuration)

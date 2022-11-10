@@ -15,6 +15,7 @@ using Core.LitArea;
 using Objects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
 
@@ -34,13 +35,17 @@ public class Nightlight : InteractionPoint
     [FormerlySerializedAs("batteryItem")] [SerializeField] private ItemData batteryItemData;
     [SerializeField] private string missingBatteryMessage;
     private bool hasItem = false;
+    private bool inRadius;
+
+    //public UnityEvent<int> Interacted;
 
     private int id;
+    private LevelController controller;
 
     protected override void Awake()
     {
         base.Awake();
-        litArea = GetComponent<LitArea>();
+        litArea = GetComponentInChildren<LitArea>();
         _light = GetComponentInChildren<Light2D>();
 
     }
@@ -57,9 +62,16 @@ public class Nightlight : InteractionPoint
         }
     }
 
-    public void Init(int idInScene)
+    public void Init(int idInScene, LevelController lvlcontroller)
     {
         id = idInScene;
+        controller = lvlcontroller;
+    }
+
+    protected override void OnTriggerStay2D(Collider2D other)
+    {
+        base.OnTriggerStay2D(other);
+        inRadius = true;
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
@@ -74,8 +86,8 @@ public class Nightlight : InteractionPoint
 
             hasItem = playerRef.GetInventory.HasItem(batteryItemData);
             var msg = !hasItem ? missingBatteryMessage : promptMessage;
-            promptBox.GetComponentInChildren<TMP_Text>().text = msg;
-            promptBox.SetActive(true);
+            promptBox.gameObject.SetActive(true);
+            promptBox.Show(msg);
         }
         else
         {
@@ -104,5 +116,7 @@ public class Nightlight : InteractionPoint
         litArea.isEnabled = true;
         hasInteracted = true;
         canInteract = false;
+        DisablePrompt();
+        Interacted?.Invoke(this);
     }
 }

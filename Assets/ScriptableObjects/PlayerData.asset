@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSanity: 100
   sanityGainRate: 0.1
-  sanityLossRate: 0.05
+  sanityLossRate: 0.03
   initialSanity: 100
   initialGainRate: 0.1
-  initialLossRate: 0.05
+  initialLossRate: 0.03
   initialBattery: 0
   maxBattery: 100
   BatteryValueChanged:
@@ -30,8 +30,16 @@ MonoBehaviour:
     hasSockey: 0
     flashlightEquipped: 0
     flashlightIsOn: 0
+    flashlightDecreaseRate: 0.1
   equipmentState:
     hasSockey: 0
     flashlightEquipped: 0
     flashlightIsOn: 0
+    flashlightDecreaseRate: 0.1
   inventoryItems: []
+  spawnPoint:
+    id: 
+    spawnPointSet: 0
+    sceneName: 
+    originalData: {fileID: 11400000}
+    dataInstance: {fileID: 0}

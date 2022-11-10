@@ -2412,7 +2412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2145387502
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2516,10 +2516,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4858728011826738865}
-        m_TargetAssemblyTypeName: SanityVisual, Assembly-CSharp
-        m_MethodName: Hide
-        m_Mode: 6
+      - m_Target: {fileID: 7924573208047807268}
+        m_TargetAssemblyTypeName: UIHelpers, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

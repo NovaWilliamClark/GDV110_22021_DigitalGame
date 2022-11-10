@@ -126,7 +126,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617836369}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -134,7 +134,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -952,7 +952,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.75
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4941,7 +4941,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000506707}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -4949,7 +4949,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -5767,7 +5767,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.75
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -9727,6 +9727,7 @@ GameObject:
   - component: {fileID: 2229319080841061135}
   - component: {fileID: 2229319080841061134}
   - component: {fileID: 2229319080841061121}
+  - component: {fileID: 7439259373624352844}
   m_Layer: 0
   m_Name: ItemPickup
   m_TagString: Untagged
@@ -9769,7 +9770,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.50092673, y: 0.6037903}
     oldSize: {x: 10.24, y: 10.24}
     newSize: {x: 10.24, y: 10.24}
     adaptiveTilingThreshold: 0.5
@@ -9791,12 +9792,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d74df22931949798efed4e4f00e703f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptBox: {fileID: 270764712822836426}
+  promptBox: {fileID: 5167134900545794925}
   promptMessage: Pickup Battery - RMB
   automaticInteraction: 0
   outlineColour: {r: 78, g: 93, b: 111, a: 1}
   glowMaterial: {fileID: 2100000, guid: e3fd3a5ce31a64a2b9861a70a4d2a6d5, type: 2}
   fxRange: 7.5
+  Interacted:
+    m_PersistentCalls:
+      m_Calls: []
   itemData: {fileID: 0}
   fxRadius: 7
   inactiveMaterial: {fileID: 2100000, guid: 52d61fe81cdfd427ba506deff3a64976, type: 2}
@@ -9805,6 +9809,9 @@ MonoBehaviour:
   pickupSfx:
   - {fileID: 8300000, guid: 5311f151ba0b54212962d6a87b811862, type: 3}
   - {fileID: 8300000, guid: 70d51f18d4c574529bb105a024cc1437, type: 3}
+  ItemPickedUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!212 &2229319080841061121
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9857,6 +9864,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7439259373624352844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2229319080841061133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e86d805a0d947d5bbf1728e83ea7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 
 --- !u!1001 &103237268
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9911,6 +9931,14 @@ PrefabInstance:
     - target: {fileID: 4605131178709022658, guid: 55cd71eef1ee5423ab2249840f1d2e23, type: 3}
       propertyPath: m_Name
       value: Sub Stars
+      objectReference: {fileID: 0}
+    - target: {fileID: 5178588009681014149, guid: 55cd71eef1ee5423ab2249840f1d2e23, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5178588009681014149, guid: 55cd71eef1ee5423ab2249840f1d2e23, type: 3}
+      propertyPath: autoRandomSeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5178588009681014149, guid: 55cd71eef1ee5423ab2249840f1d2e23, type: 3}
       propertyPath: SubModule.enabled
@@ -10253,7 +10281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1306717890323903876, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 6.96
+      value: 5.69
       objectReference: {fileID: 0}
     - target: {fileID: 1306717890323903876, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10271,18 +10299,28 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test_MessagePrompt
       objectReference: {fileID: 0}
+    - target: {fileID: 7541320817509076118, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
---- !u!1 &270764712822836426 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2103694458185002684, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
-  m_PrefabInstance: {fileID: 2229319081328583286}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &923876859722094578 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1306717890323903876, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
   m_PrefabInstance: {fileID: 2229319081328583286}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5167134900545794925 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6432679808040767771, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+  m_PrefabInstance: {fileID: 2229319081328583286}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42786496a5c184592b697ba1cf917905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3942403457538102358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10339,8 +10377,16 @@ PrefabInstance:
       value: Sub Moons
       objectReference: {fileID: 0}
     - target: {fileID: 5178588009681014149, guid: 55cd71eef1ee5423ab2249840f1d2e23, type: 3}
+      propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5178588009681014149, guid: 55cd71eef1ee5423ab2249840f1d2e23, type: 3}
       propertyPath: UVModule.fps
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5178588009681014149, guid: 55cd71eef1ee5423ab2249840f1d2e23, type: 3}
+      propertyPath: autoRandomSeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5178588009681014149, guid: 55cd71eef1ee5423ab2249840f1d2e23, type: 3}
       propertyPath: ShapeModule.type

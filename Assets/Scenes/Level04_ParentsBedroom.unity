@@ -1436,7 +1436,6 @@ GameObject:
   - component: {fileID: 437588661}
   - component: {fileID: 437588663}
   - component: {fileID: 437588662}
-  - component: {fileID: 437588664}
   m_Layer: 8
   m_Name: Square (4)
   m_TagString: Untagged
@@ -1537,20 +1536,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &437588664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437588660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af4743bde2f78304d991cfa714a6f704, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: Level03_ParentsHallway
-  spawnPointIndex: 1
 --- !u!1 &453563431
 GameObject:
   m_ObjectHideFlags: 0
@@ -3643,6 +3628,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 320571731290594302, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
+      propertyPath: uniqueId
+      value: fa1aea34-8b4b-40ab-8f25-057bb62780f5
+      objectReference: {fileID: 0}
     - target: {fileID: 7928201673012255957, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -3927,13 +3916,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 320571731290594302, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
+      propertyPath: uniqueId
+      value: 1ac4fa7a-51e3-4dc9-adc1-543f4398d17d
+      objectReference: {fileID: 0}
     - target: {fileID: 7928201673012255957, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7928201673012255957, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 157.5
+      value: 147.52
       objectReference: {fileID: 0}
     - target: {fileID: 7928201673012255957, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4945,7 +4938,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3022912342552266209, guid: 21d5db5934fbd4bd2ae30cb2ae3d6a80, type: 3}
       propertyPath: sceneToLoad
-      value: Level04_ParentsHallway
+      value: Level03_ParentsHallway
       objectReference: {fileID: 0}
     - target: {fileID: 3022912342552266209, guid: 21d5db5934fbd4bd2ae30cb2ae3d6a80, type: 3}
       propertyPath: spawnPointIndex

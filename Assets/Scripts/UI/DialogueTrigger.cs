@@ -5,34 +5,64 @@ using UI;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DialogueTrigger : MonoBehaviour
+public class DialogueTrigger : InteractionPoint
 {
+    [Header("Dialogue")]
     public Dialogue dialogue;
 
-    [SerializeField] private GameObject dialogueManager;
+    private bool hasStarted = false;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private WorldDialogue box;
+
+    protected override void OnTriggerExit2D(Collider2D collision)
     {
+        base.OnTriggerExit2D(collision);
         if (collision.GameObject().CompareTag("Player"))
         {
-            dialogueManager.GetComponent<WorldDialogueManager>().StartDialogue(dialogue);
+            box.End();
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected override void Interact(CharacterController cc)
     {
-        if (collision.GameObject().CompareTag("Player"))
+        if (!hasStarted)
         {
-            dialogueManager.GetComponent<WorldDialogueManager>().EndDialogue();
-            Destroy(gameObject);
+            hasStarted = true;
+            foreach (var d in dialogue.entries)
+            {
+                d.position = transform.position + d.position;
+            }
+            box = WorldDialogueManager.Instance.CreateDialogueBox(dialogue);
+            box.StartDialogue();
+            box.Completed.AddListener(OnDialogueComplete);
+        }
+        else
+        {
+            if (!box.IsCompleted)
+            {
+                box.Resume();
+            }
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDialogueComplete(WorldDialogue arg0)
     {
-        foreach (var pos in dialogue.positions)
+        Interacted?.Invoke(this);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (dialogue.entries.Count == 0) return;
+        foreach (var pos in dialogue.entries)
         {
-            Gizmos.DrawWireCube(pos, Vector3.one);
+            
+            Gizmos.DrawWireCube(transform.position + pos.position, Vector3.one);
         }
+    }
+
+    public override void SetInteractedState()
+    {
+        gameObject.SetActive(false);
     }
 }
+    
