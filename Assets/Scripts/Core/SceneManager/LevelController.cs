@@ -14,6 +14,7 @@ using System.Runtime.CompilerServices;
 using Audio;
 using Character;
 using Cinemachine;
+using Core.SceneManager;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
