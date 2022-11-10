@@ -32,7 +32,7 @@ public class LevelCutscene : MonoBehaviour
     {
         director = GetComponent<PlayableDirector>();
         lvlController = FindObjectOfType<LevelController>();
-        //lvlController.PlayerSpawned.AddListener(OnPlayerSpawned);
+        lvlController.PlayerSpawned.AddListener(OnPlayerSpawned);
     }
 
     public void OnPlayerSpawned(CharacterController cc)
@@ -65,9 +65,12 @@ public class LevelCutscene : MonoBehaviour
         Debug.Log("Director has stopped");
         player.enabled = true;
         player.ToggleMovement(true);
-        player.GetComponent<CharacterSanity>().Enable();
-        player.SetAnimationControl();
+        if (!lvlController.safeZone)
+            player.GetComponent<CharacterSanity>().Enable();
+        
         player.GetComponent<CharacterSanity>().AdjustDecreaseRate(0f, true);
+        
+        player.SetAnimationControl();
         Completed.Invoke();
         
     }

@@ -5438,7 +5438,7 @@ MonoBehaviour:
   menuMusic: {fileID: 8300000, guid: ea3fa41cbb1234c3b9c76bf4aa45c0c4, type: 3}
   startDelay: 1
   StartMenu: {fileID: 1805595143}
-  StartGameScene: Prototype_BensBedroom
+  StartGameScene: Level01_BensBedroom
 --- !u!225 &1122370411
 CanvasGroup:
   m_ObjectHideFlags: 0

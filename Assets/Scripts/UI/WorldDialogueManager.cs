@@ -36,8 +36,6 @@ namespace UI
                 Destroy(gameObject);
             }
         }
-        private WorldDialogue dialoguePrefab1;
-        private WorldDialogue dialoguePrefab2;
 
         private Queue<Dialogue> queuedDialogue = new();
         private List<Dialogue> activeDialogue = new();
@@ -59,8 +57,9 @@ namespace UI
         private void OnDialogueBoxFromPool(WorldDialogue obj)
         {
             // enable etc
-            obj.gameObject.SetActive(true);
+            //obj.gameObject.SetActive(true);
             obj.Completed.AddListener(OnWorldDialogueCompleted);
+            
         }
 
         private WorldDialogue OnCreateDialogue()
@@ -76,6 +75,7 @@ namespace UI
             // TODO: Trigger will pass in which dialogue it's up to
             var obj = pool.Get();
             obj.Init(dialogue, startIndex);
+            obj.gameObject.SetActive(false);
             return obj;
         }
 

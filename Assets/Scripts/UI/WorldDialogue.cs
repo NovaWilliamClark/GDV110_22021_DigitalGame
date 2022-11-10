@@ -51,7 +51,7 @@ public class WorldDialogue : MonoBehaviour
 
     public void DisplayNextSentence()
     {
-        if (currentIndex == dialogueBoxes.Count-1)
+        if (currentIndex > dialogueBoxes.Count)
         {
             Complete();
             return;
@@ -82,6 +82,7 @@ public class WorldDialogue : MonoBehaviour
         foreach (var dialogueBox in dialogueBoxes)
         {
             var db = dialogueBox.GetComponent<UIWorldDialogue>();
+            db.Init();
             availableBoxes.Enqueue(db);    
         }
 
