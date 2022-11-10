@@ -5,12 +5,11 @@ using UnityEngine.Playables;
 
 public class TriggeredCutscene : InteractionPoint
 {
-    [SerializeField] private PlayableDirector cutscene;
+    [SerializeField] private LevelCutscene cutscene;
      
     protected override void Interact(CharacterController cc)
     {
         cutscene.Play();
-        cutscene.stopped += OnCutsceneDone;
     }
 
     public override void SetInteractedState()

@@ -11,6 +11,8 @@ namespace Objects
 		protected override void Interact(CharacterController cc)
 		{
 		}
+		
+		
 	}
 }
 

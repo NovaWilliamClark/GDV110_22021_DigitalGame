@@ -83,6 +83,7 @@ namespace Audio
 
         public void PlaySound(AudioClip clip, float volume = 1f, bool loop = false)
         {
+            if (!Application.isPlaying) return;
             var src = pool.Get();
             src.clip = clip;
             src.volume = volume;

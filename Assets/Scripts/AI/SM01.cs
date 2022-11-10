@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using Character;
+using Core;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
 
 namespace AI
 {
-    public class SM01 : MonoBehaviour
+    public class SM01 : MonoBehaviour, ILightResponder
     {
         [SerializeField] private float moveVelocity = 10;
         [SerializeField] private float stopDistance = 5;
@@ -17,6 +18,7 @@ namespace AI
         [SerializeField] public Animator animator;
         [SerializeField] private Transform puppet;
         [SerializeField] private LayerMask lightMask;
+        private Vector3 startPosition;
 
         private Collider2D bodyCollider;
         
@@ -33,6 +35,11 @@ namespace AI
         private void Awake()
         {
             bodyCollider = GetComponent<Collider2D>();
+        }
+
+        private void Start()
+        {
+            startPosition = transform.position;
         }
 
         // Update is called once per frame
@@ -114,15 +121,6 @@ namespace AI
             }
         }
 
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            if ((lightMask & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
-            {
-                Debug.Log("Enemy is in the light");
-                Destroy(gameObject);
-            }
-            
-        }
 
         private void OnCollisionEnter2D(Collision2D col)
         {
@@ -144,6 +142,31 @@ namespace AI
             yield return new WaitForSeconds(Random.Range(1, maxWaypointStopTime));
             shouldMove = true;
             isAtWaypointStop = false;
+        }
+
+        public void OnLightEntered(float intensity)
+        {
+            Debug.Log("Enemy is in the light");
+            Destroy(gameObject);
+        }
+
+        public void OnLightExited(float intensity)
+        {
+        }
+
+        public void OnLightStay(float intensity)
+        {
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            if (patrolPoints.Length == 0) return;
+            foreach (Vector3 pos in patrolPoints)
+            {
+                var gizPos = pos;
+                gizPos.y = transform.position.y;
+                    Gizmos.DrawWireCube(gizPos, Vector3.one);
+            }
         }
     }
 }
