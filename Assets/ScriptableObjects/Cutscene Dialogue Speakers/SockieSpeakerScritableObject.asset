@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451aac56bfb31aa409d32564fe9f6e9d, type: 3}
   m_Name: SockieSpeakerScritableObject
   m_EditorClassIdentifier: 
-  speakerName: Sockie
-  speakerSprite: {fileID: 0}
-  SpeakerAudioClips: []
+  speakerName: Sockey
+  speakerSprite: {fileID: 21300000, guid: fffed2b140ca34f37806d88b95d31074, type: 3}
+  SpeakerAudioClip: {fileID: 0}

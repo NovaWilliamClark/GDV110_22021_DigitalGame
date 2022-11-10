@@ -13,6 +13,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Audio;
 using Character;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -27,7 +28,6 @@ public class LevelController : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private LevelData levelData;
     private CharacterController instancedPlayer;
-
     public bool safeZone;
 
     public LevelCutscene onLoadCutscene;
@@ -39,6 +39,8 @@ public class LevelController : MonoBehaviour
     private Dictionary<int, ItemPickup> levelItems = new();
 
     [SerializeField] private PlayerData_SO playerDataRef;
+
+    public UnityEvent<CharacterController> PlayerSpawned;
 
     private void Awake()
     {
@@ -56,19 +58,19 @@ public class LevelController : MonoBehaviour
         if (onLoadCutscene)
         {
             UIHelpers.Instance.Fader.Fade(0f, 0.1f);
-            onLoadCutscene.Completed.AddListener(OnCutsceneCompleted);
-            onLoadCutscene.Play();
+            PlayerSpawned.AddListener(onLoadCutscene.OnPlayerSpawned);
         }
         else
         {
-            LevelInit();
+           
         }
+        LevelInit();
     }
 
     private void OnCutsceneCompleted()
     {
         levelData.levelCutscenePlayed = true;
-        LevelInit();
+        AudioManager.Instance.PlayMusic(LevelBGM);
     }
 
     private void LevelInit()
@@ -80,6 +82,9 @@ public class LevelController : MonoBehaviour
 
     private void FinaliseInit()
     {
+        if (UIHelpers.Instance.Fader.IsOpaque())
+            UIHelpers.Instance.Fader.Fade(0f, 2f);
+        
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
     }
@@ -133,7 +138,7 @@ public class LevelController : MonoBehaviour
     {
         var sanityMeter = UIHelpers.Instance.SanityMeter;
         // sanityMeter.decreaseSlider = false;
-
+        
         AudioManager.Instance.PlayMusic(LevelBGM);
 
         int spawnIndex = TransitionManager.Instance.GetSpawnIndex;
@@ -200,9 +205,15 @@ public class LevelController : MonoBehaviour
         {
             sanity.Disable();
         }
+        
+        PlayerSpawned?.Invoke(instancedPlayer);
 
-        if (UIHelpers.Instance.Fader.IsOpaque())
-            UIHelpers.Instance.Fader.Fade(0f, 2f);
+        if (onLoadCutscene)
+        {
+            AudioManager.Instance.StopMusic();
+            onLoadCutscene.Completed.AddListener(OnCutsceneCompleted);
+            onLoadCutscene.Play();
+        }
         //playerObj.FetchPersistentData();
     }
 
@@ -223,7 +234,7 @@ public class LevelController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if (!playerDataRef.spawnPoint.isSet)
         {
-            TransitionManager.Instance.LoadScene("Prototype_BensBedroom");
+            TransitionManager.Instance.LoadScene("Level01_BensBedroom");
             playerDataRef.Sanity = playerDataRef.initialSanity; 
         }
         else

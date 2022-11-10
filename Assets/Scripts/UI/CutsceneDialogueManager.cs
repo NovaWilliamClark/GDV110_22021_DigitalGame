@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Audio;
+using Cinemachine;
 using DG.Tweening;
 using TMPro;
 using Unity.VisualScripting;
@@ -16,7 +17,7 @@ public class CutsceneDialogueManager : MonoBehaviour
     public static CutsceneDialogueManager Instance { get; private set; }
     
     // Public variables
-    private CutsceneDialogue cutsceneDialogue;
+    private CutsceneDialogueEntry cutsceneDialogue;
     public Pointer DialoguePointer;
 
     // Private variables
@@ -26,6 +27,10 @@ public class CutsceneDialogueManager : MonoBehaviour
     private UnityAction onCompleteCallback;
     public GameObject dialogueBoxPrefab;
     private CanvasGroup dialogueBox;
+    private UICutsceneDialogue uiCutsceneDialogue;
+    private bool shown = false;
+
+    public CinemachineVirtualCamera vcam;
 
     private void Awake()
     {
@@ -53,11 +58,12 @@ public class CutsceneDialogueManager : MonoBehaviour
     void CreateDialogueBox()
     {
         var box = Instantiate(dialogueBoxPrefab);
+        uiCutsceneDialogue = box.GetComponent<UICutsceneDialogue>();
         dialogueBox = box.GetComponentInChildren<CanvasGroup>();
         dialogueBox.alpha = 0;
     }
 
-    public void ShowDialogue(CutsceneDialogue dialogue, UnityAction callback)
+    public void ShowDialogue(CutsceneDialogueEntry dialogue, UnityAction callback)
     {
         if (!dialogueBox)
         {
@@ -82,16 +88,15 @@ public class CutsceneDialogueManager : MonoBehaviour
             yield return new WaitForSeconds(cutsceneDialogue.textSpeed);
         }
 
+        yield return new WaitForSeconds(cutsceneDialogue.holdDuration);
+        
         // Set the dialogue box to be invisible, will trigger again when the dialogue resumes
-        dialogueBox.DOFade(0f, 1f).OnComplete(() =>
+        dialogueBox.DOFade(0f, .5f).OnComplete(() =>
         {
-            onCompleteCallback.Invoke();
+            shown = false;
+            StopAllCoroutines();
+            onCompleteCallback?.Invoke();
         });
-        if (sentenceCounter >= cutsceneDialogue.sentences.Length)
-        {
-            sentenceCounter = 0;
-            cutsceneDialogue = null;
-        }
     }
     
     // Not entirely sure how the EventHandler will link to the DialogueResume function, will need clarification
@@ -101,13 +106,15 @@ public class CutsceneDialogueManager : MonoBehaviour
         dialogueBox.GetComponentInChildren<TextMeshProUGUI>().text = "";
 
         // If there are still sentences
-        if (cutsceneDialogue.sentences.Length > sentenceCounter)
+        if (!shown)
         {
             // Load the next sentence and show the dialogue
-            currentSentence = cutsceneDialogue.sentences[sentenceCounter];
-            dialogueBox.DOFade(1f, 1f).OnComplete(() =>
+            currentSentence = cutsceneDialogue.sentence;
+            uiCutsceneDialogue.Init(cutsceneDialogue.speaker, cutsceneDialogue.iconPosition);
+            
+            dialogueBox.DOFade(1f, .25f).OnComplete(() =>
             {
-                sentenceCounter += 1;
+                //sentenceCounter += 1;
                 StartCoroutine(ShowText());
             });
         }

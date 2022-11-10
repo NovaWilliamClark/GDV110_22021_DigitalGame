@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451aac56bfb31aa409d32564fe9f6e9d, type: 3}
   m_Name: Ben Dialogue Speaker
   m_EditorClassIdentifier: 
-  speakerName: 
-  speakerSprite: {fileID: 0}
+  speakerName: Ben
+  speakerSprite: {fileID: 21300000, guid: 72365a49f90d848d1ab97490b97c17e2, type: 3}
   SpeakerAudioClip: {fileID: 0}

@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueBoxPrefab: {fileID: 7055575127277419301, guid: bc2a8ba55e67ddc4eaae5d5f27ab90bd, type: 3}
+  vcam: {fileID: 0}
 --- !u!114 &687471682
 MonoBehaviour:
   m_ObjectHideFlags: 0

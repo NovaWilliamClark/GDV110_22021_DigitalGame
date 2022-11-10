@@ -53,6 +53,7 @@ namespace Character
             if (playerData.Sanity <= 0)
             {
                 SanityReachedZero?.Invoke();
+                SanityReachedZero?.RemoveAllListeners();
                 // we have died - need to play back player death cinematic
             }
         }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9015569112612688188}
   - component: {fileID: 9015569112612688189}
   - component: {fileID: 9015569112612688190}
+  - component: {fileID: 1697545390638914166}
   m_Layer: 0
   m_Name: Dialogue Trigger
   m_TagString: Untagged
@@ -71,10 +72,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e147121d4c140408205a82620888f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  promptBox: {fileID: 0}
+  promptMessage: 
+  automaticInteraction: 0
+  canReInteract: 0
+  outlineColour: {r: 78, g: 93, b: 111, a: 1}
+  showVisuals: 1
+  glowMaterial: {fileID: 0}
+  fxRange: 7.5
+  Interacted:
+    m_PersistentCalls:
+      m_Calls: []
   dialogue:
-    sentences:
-    - Are those... eyes in the darkness ahead?
-    positions: []
-    holdDuration: 0
-    fadeDuration: 0
-  dialogueManager: {fileID: 0}
+    entries: []
+    currentPosition: 0
+--- !u!114 &1697545390638914166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9015569112612688191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e86d805a0d947d5bbf1728e83ea7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: fd750b6a-e553-421c-a8d5-a3356a214d82

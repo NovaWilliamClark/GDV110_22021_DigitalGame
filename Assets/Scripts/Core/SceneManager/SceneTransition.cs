@@ -7,6 +7,7 @@
 *
 **********************************************************************************************/
 
+using UnityEditor.SearchService;
 using UnityEngine;
 
 namespace Objects
@@ -17,6 +18,10 @@ namespace Objects
         [SerializeField] private string sceneToLoad;
         [SerializeField] private int spawnPointIndex;
 
+        [SerializeField] private ItemData requiredItem;
+        [SerializeField] private bool requiresItem;
+        private bool hasItem;
+        
         protected override void Interact(CharacterController cc)
         {
             if (!cc) return;

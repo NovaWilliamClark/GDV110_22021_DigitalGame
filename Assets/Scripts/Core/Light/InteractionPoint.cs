@@ -226,7 +226,8 @@ public abstract class InteractionPoint : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        DrawGizmoDisc(transform, fxRange);
+        if (showVisuals)
+            DrawGizmoDisc(transform, fxRange);
     }
 
     protected void DrawGizmoDisc(Transform t, float radius)

@@ -295,6 +295,7 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.layer == LayerMask.GetMask("Enemies")) return;
         movableObjScript = other.gameObject.GetComponent<MovableObject>();
         if (!movableObjScript) return;
         
@@ -306,6 +307,7 @@ public class CharacterController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if (other.gameObject.layer == LayerMask.GetMask("Enemies")) return;
         // TODO: The controlling of rigidbody values on another object should be moved to the object itself
         // TODO: BUG - Box should be declared kinematic when on top - box should store it's state
         if (!objToMove) return;

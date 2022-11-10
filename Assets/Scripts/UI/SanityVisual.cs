@@ -6,6 +6,7 @@ using Character;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 [ExecuteInEditMode]
 public class SanityVisual : MonoBehaviour
@@ -105,7 +106,7 @@ public class SanityVisual : MonoBehaviour
         ToggleVisibility(hide, 1f);
     }
 
-    public void ToggleVisibility(bool hide = true, float fadeDuration = 0f)
+    public void ToggleVisibility(bool hide = true, float fadeDuration = 0f, UnityAction onComplete = null)
     {
         var endVal = hide ? 0f : 1f;
         var canvasGroup = GetComponentInChildren<CanvasGroup>();
@@ -121,6 +122,9 @@ public class SanityVisual : MonoBehaviour
                 ScratchyParticles.Play();
                 SoftParticles.Play();
             }
+        }).OnComplete(() =>
+        {
+            onComplete?.Invoke();
         });
         visible = !hide;
 
