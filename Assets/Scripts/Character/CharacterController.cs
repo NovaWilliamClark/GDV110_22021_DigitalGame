@@ -50,6 +50,7 @@ public class CharacterController : MonoBehaviour
 
     //[SerializeField] private Inventory inventory;
     public Inventory GetInventory => inventory;
+    public CharacterSanity GetCharacterSanity => characterSanity;
     public CharacterEquipment Equipment => equipment;
     public float getSanity { get; private set; } = 100f;
     public event EventHandler<float> SanityChanged; 
