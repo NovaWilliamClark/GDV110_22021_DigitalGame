@@ -13,11 +13,16 @@ namespace UI
         [SerializeField] private TMP_Text textBox;
 
         private Sequence sequence;
+
+        public void Init()
+        {
+            canvasGroup.alpha = 0f;
+            textBox.text = "";
+        }
         
         public void PrintText(string newText, Vector3 newPosition, 
             float holdDuration, float fadeDuration, UnityAction onComplete = null)
         {
-            canvasGroup.alpha = 0;
             sequence = DOTween.Sequence();
             gameObject.transform.position = newPosition;
             textBox.text = newText;

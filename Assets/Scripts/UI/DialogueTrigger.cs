@@ -20,6 +20,7 @@ public class DialogueTrigger : InteractionPoint
         if (collision.GameObject().CompareTag("Player"))
         {
             box.End();
+            hasStarted = false;
         }
     }
 
@@ -33,6 +34,7 @@ public class DialogueTrigger : InteractionPoint
                 d.position = transform.position + d.position;
             }
             box = WorldDialogueManager.Instance.CreateDialogueBox(dialogue);
+            box.gameObject.SetActive(true);
             box.StartDialogue();
             box.Completed.AddListener(OnDialogueComplete);
         }
