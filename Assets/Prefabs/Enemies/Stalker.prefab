@@ -145,12 +145,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chargeVelocity: 20
   stopDistance: 8
-  screamTime: 6
   targetDistanceThreshold: 85
-  screamDamage: 10
   timeBetweenLightStacks: 0.5
   slowdownPerStack: 0.005
+  screamTime: 6
+  screamDamage: 10
   screamSound: {fileID: 8300000, guid: 960f3ee6ce1fed240b5a334140965a3c, type: 3}
+  attackCooldownTime: 2
+  animator: {fileID: 323118007585426323}
+  puppet: {fileID: 0}
 --- !u!50 &1459484967571609709
 Rigidbody2D:
   serializedVersion: 4
@@ -324,8 +327,114 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2536891653330611679, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2536891653330611679, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2536891653330611679, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.70000076
+      objectReference: {fileID: 0}
+    - target: {fileID: -2536891653330611679, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 22.34
+      objectReference: {fileID: 0}
+    - target: {fileID: -226518700538364038, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.40000057
+      objectReference: {fileID: 0}
+    - target: {fileID: -226518700538364038, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 23.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219594568398075958, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219594568398075958, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 23.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 3573228653110509163, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 3573228653110509163, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 23.23
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+--- !u!1 &2417888997819891821 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8653719598885068355, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
+  m_PrefabInstance: {fileID: 2767988518708830672}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &4142060184541038007
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417888997819891821}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3, y: 10}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10, y: 20}
+  m_EdgeRadius: 0
+--- !u!95 &323118007585426323
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417888997819891821}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d525ebd8370054e429b2ca9b89eb41a5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4383284618577943841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417888997819891821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa4e56dc9bb703d458687625366bb2fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 60
+  collisionAttackBoxSize: {x: 10, y: 20}
+  collisonBox: {fileID: 0}
 --- !u!4 &3550535180729587726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: 352f2173966bf4772938cc02d4c55b2e, type: 3}
