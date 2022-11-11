@@ -94,7 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 700205899}
   - component: {fileID: 7456955538459684190}
-  - component: {fileID: 5140673094795124232}
+  - component: {fileID: 1944511925505241892}
+  - component: {fileID: 2695404829803615077}
   m_Layer: 0
   m_Name: Puppet_Container
   m_TagString: Untagged
@@ -138,7 +139,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &5140673094795124232
+--- !u!61 &1944511925505241892
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,7 +152,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -21.920137, y: 9.457681}
+  m_Offset: {x: -7.5, y: 10}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -162,8 +163,23 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 44.840275, y: 11.958624}
+  m_Size: {x: 15, y: 20}
   m_EdgeRadius: 0
+--- !u!114 &2695404829803615077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700205898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8c40ce77b85e1848a85baa3b8779698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 55
+  collisionAttackBoxSize: {x: 15, y: 20}
+  collisonBox: {fileID: 1944511925505241892}
 --- !u!1 &728746358
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,6 +620,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7586690308416756225}
   - component: {fileID: 4010880477001354310}
+  - component: {fileID: 2159147625763224125}
+  - component: {fileID: 2677564097359546699}
   m_Layer: 0
   m_Name: SM-01
   m_TagString: Untagged
@@ -639,18 +657,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a872f40f9e9126f4ea9a9c7b766e63d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveVelocity: 6.5
+  moveVelocity: 7.5
   stopDistance: 5
   maxWaypointStopTime: 12
-  attackCooldown: 3
   patrolPoints:
   - {x: 25, y: 0}
   - {x: 105, y: 0}
+  chaseCastSize: {x: 45, y: 10}
+  attackDistance: 15
+  attackCooldown: 3
   animator: {fileID: 7456955538459684190}
   puppet: {fileID: 700205899}
   lightMask:
     serializedVersion: 2
     m_Bits: 0
+--- !u!50 &2159147625763224125
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85692595060691496}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &2677564097359546699
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85692595060691496}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.084877, y: -3.820666}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 20.244827, y: 14.584589}
+  m_EdgeRadius: 0
 --- !u!1 &109416906964161787
 GameObject:
   m_ObjectHideFlags: 0
