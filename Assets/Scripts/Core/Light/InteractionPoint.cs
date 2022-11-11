@@ -9,6 +9,7 @@
 **********************************************************************************************/
 
 using System;
+using Audio;
 using DG.Tweening;
 using Objects;
 using TMPro;
@@ -46,6 +47,9 @@ public abstract class InteractionPoint : MonoBehaviour
     private bool outlineActive;
     private Sequence visualSequence;
     [SerializeField] protected float fxRange = 7.5f;
+
+    [Header("Audio")] [SerializeField] private AudioClip useSfx;
+    [SerializeField] private float volume;
 
     protected PersistentObject persistentObject;
 
@@ -222,7 +226,10 @@ public abstract class InteractionPoint : MonoBehaviour
         }
     }
 
-    protected abstract void Interact(CharacterController cc);
+    protected virtual void Interact(CharacterController cc)
+    {
+        AudioManager.Instance.PlaySound(useSfx, volume);
+    }
 
     private void OnDrawGizmos()
     {

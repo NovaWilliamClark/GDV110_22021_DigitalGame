@@ -20,53 +20,58 @@ public class ContainerInventory : MonoBehaviour
     {
         
     }
-
-    private void OnEnable()
-    {
-        foreach (var item in inventoryItems.Items)
-        {
-            var slot = Instantiate(slotPrefab, slotContainer);
-            var slotObj = slot.GetComponent<InventorySlot>();
-            slotObj.SlotClicked.AddListener(InventorySlot_OnSlotClick);
-            slotObj.SetItem(item);
-            slots.Add(slot);
-        }
-    }
-
-    private void InventorySlot_OnSlotClick(InventorySlot obj)
-    {
-        Debug.Log(obj);
-        if (selectedSlots.Contains(obj))
-        {
-            selectedSlots.Remove(obj);
-        }
-        else
-        {
-            selectedSlots.Add(obj);
-        }
-    }
-
-    private void OnDisable()
-    {
-        foreach (var slot in slots)
-        {
-            var slotObj = slot.GetComponent<InventorySlot>();
-            slotObj.SlotClicked.RemoveListener(InventorySlot_OnSlotClick);
-            Destroy(gameObject);
-        }
-    }
+    //
+    // private void OnEnable()
+    // {
+    //     foreach (var item in inventoryItems.Items)
+    //     {
+    //         var slot = Instantiate(slotPrefab, slotContainer);
+    //         var slotObj = slot.GetComponent<InventorySlot>();
+    //         slotObj.SlotClicked.AddListener(InventorySlot_OnSlotClick);
+    //         slotObj.SetItem(item);
+    //         slots.Add(slot);
+    //     }
+    // }
+    //
+    // private void InventorySlot_OnSlotClick(InventorySlot obj)
+    // {
+    //     Debug.Log(obj);
+    //     if (selectedSlots.Contains(obj))
+    //     {
+    //         selectedSlots.Remove(obj);
+    //     }
+    //     else
+    //     {
+    //         selectedSlots.Add(obj);
+    //     }
+    // }
+    //
+    // private void OnDisable()
+    // {
+    //     foreach (var slot in slots)
+    //     {
+    //         var slotObj = slot.GetComponent<InventorySlot>();
+    //         slotObj.SlotClicked.RemoveListener(InventorySlot_OnSlotClick);
+    //         Destroy(gameObject);
+    //     }
+    // }
 
     public void Init(CharacterController cc)
     {
         player = cc;
-        if (!accessed)
-        {
-            inventoryItems.Init();
-            accessed = true;
-        }
-        inventoryItems.SetItems();
+        inventoryItems.Init();
+        SpawnItems();
     }
 
+    public void SpawnItems()
+    {
+        foreach (var item in inventoryItems.Items)
+        {
+            Instantiate(item.itemPrefab, transform.position, Quaternion.identity);
+        }
+        OnContainerEmptied?.Invoke();
+    }
+    
     public void TakeAll()
     {
         foreach (var item in inventoryItems.Items)
