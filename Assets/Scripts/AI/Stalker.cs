@@ -16,33 +16,45 @@ namespace AI
 	 */
 	public class Stalker : MonoBehaviour, ILightResponder
 	{
+		[Header("Movement")]
 		[SerializeField] private float chargeVelocity = 20;
 		[SerializeField] private float stopDistance = 15f;
-		[SerializeField] private float screamTime = 3f;
 		[SerializeField] private float targetDistanceThreshold = 5f;
-		[SerializeField] private float screamDamage;
-		[SerializeField] private float timeBetweenLightStacks = 0.05f;
-		[SerializeField] private float slowdownPerStack = 2f;
-		[SerializeField] private AudioClip screamSound;
-
-		private bool isChasing;
-		private bool isAttacking;
-		private bool isScreaming;
-		private bool hasScreamed;
-		private bool isDisabled;
-		private bool isDead;
-		private int screamCounter;
-
-		private bool isLightLockActive = false;
-		private int lightDebuffCounter;
-
 		private GameObject targetPlayer;
 		private Vector2 targetPosition;
+		private Vector2 direction = new (-1, 1);
 		private float distanceToTarget;
+		private bool isChasing;
+		private bool isDisabled;
+		private bool isDead;
+		
+		[Header("LightInteraction")]
+		[SerializeField] private float timeBetweenLightStacks = 0.05f;
+		[SerializeField] private float slowdownPerStack = 2f;
+		private bool isLightLockActive;
+		private int lightDebuffCounter;
 
+		[Header("Scream Attack")]
+		[SerializeField] private float screamTime = 3f;
+		[SerializeField] private float screamDamage;
+		[SerializeField] private AudioClip screamSound;
+		private bool isScreaming;
+		private bool hasScreamed;
+		private int screamCounter;
+
+
+		[Header("Melee Attack")]
+		[SerializeField] private float attackCooldownTime = 2;
+		private StalkerAttackCollider attackCollider;
+		private bool isAttacking;
+		private bool isInAttackCooldown;
+
+		[Header("Components")]
+		[SerializeField] public Animator animator;
+		[SerializeField] private Transform puppet;
 		private SanityVisual sanityMeter;
-
 		private CinemachineVirtualCamera virtualCamera;
+		private readonly Vector3 flippedScale = new(-1, 1, 1);
 
 		// TODO: When Screaming the camera should flick over to the stalker for a moment
 
@@ -52,10 +64,7 @@ namespace AI
 		{
 			virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
 			sanityMeter = GameObject.Find("SanityMeter_Alt").GetComponent<SanityVisual>();
-		}
-
-		void Start()
-		{
+			attackCollider = GetComponentInChildren<StalkerAttackCollider>();
 		}
 
 		// Update is called once per frame
@@ -83,9 +92,8 @@ namespace AI
 						AudioManager.Instance.PlaySound(screamSound);
 						screamCounter++;
 						StartCoroutine(CameraShift());
+						StartCoroutine(ScreamTime());
 					}
-
-					StartCoroutine(ScreamTime());
 				}
 			}
 		}
@@ -95,6 +103,7 @@ namespace AI
 			if (isChasing)
 			{
 				Move();
+				UpdateDirection();
 			}
 		}
 
@@ -107,14 +116,56 @@ namespace AI
 				if (distanceToTarget <= stopDistance)
 				{
 					isChasing = false;
-					Debug.Log("STALKER ATTACKING");
+
+					if (!isInAttackCooldown)
+					{
+						Attack();
+					}
 				}
 			}
 			else if(isDead)
 			{
+				// Sink Into The Ground
 				transform.position = Vector2.MoveTowards(transform.position,
 					new Vector2(transform.position.x, transform.position.y - 10), chargeVelocity * Time.deltaTime);
 			}
+		}
+		
+		private void UpdateDirection()
+		{
+			direction = (targetPosition - (Vector2)transform.position).normalized;
+			if (direction.x >= 0)
+			{
+				if (puppet)
+				{
+					puppet.localScale = flippedScale;
+					return;
+				}
+			}
+            
+			if (direction.x <= 0)
+			{
+				if (puppet)
+				{
+					puppet.localScale = Vector2.one;
+				}
+			} 
+		}
+
+		private void Attack()
+		{
+			isAttacking = true;
+			animator.SetTrigger("Melee");
+			isInAttackCooldown = true;
+		}
+		
+		public IEnumerator AttackCooldownReset()
+		{
+			yield return new WaitForSeconds(attackCooldownTime);
+			attackCollider.DeactivateCollisionBox();
+			isInAttackCooldown = false;
+			isAttacking = false;
+			isChasing = true;
 		}
 
 
