@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 0
   itemName: Flashlight
-  itemSprite: {fileID: -45762582, guid: 2b07e3a0536c14ba8b489ffe221d8aeb, type: 3}
-  hasBeenPickedUp: 1
+  itemSprite: {fileID: 21300000, guid: 779631581ac6542ad8677289b967d6e7, type: 3}
+  hasBeenPickedUp: 0
   disappearsOnCombination: 0
   isSingleUse: 0
   reloadable: 1
   itemToReload: {fileID: 11400000, guid: 0a5bd9dc6ceef45aa943c4446a5dc5b5, type: 2}
   reloadSfx: {fileID: 0}
+  itemPrefab: {fileID: 7614265894874254376, guid: 10b82c69cee8c47159b5a957b2466e69, type: 3}
   itemDataRef: {fileID: 0}
   typeEnum: {fileID: 11400000, guid: 16e6107d6358a4cb5a23d9e340d91dcc, type: 2}

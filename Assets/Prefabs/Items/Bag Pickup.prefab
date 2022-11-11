@@ -217,7 +217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061133, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_Name
-      value: Battery Pickup
+      value: Bag Pickup
       objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061134, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: fxRange
@@ -269,7 +269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7439259373624352844, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: uniqueId
-      value: d47f0438-6091-47cc-b80d-8d121f26d68c
+      value: c6bae25a-f315-4dc7-8a65-d5f15d49f6f7
       objectReference: {fileID: 0}
     - target: {fileID: 8171835765223250387, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: InitialModule.startSize.scalar

@@ -57,6 +57,8 @@ namespace Audio
                 previousBGMSource.loop = true;
                 previousBGMSource.outputAudioMixerGroup = mixerGroup;
                 DontDestroyOnLoad(BGMSource.gameObject);
+                
+                pool = new ObjectPool<AudioSource>(CreatePoolAudioSource, OnAudioSourceFromPool, OnAudioSourceReleased, OnAudioSourceDestroyed, true, poolSize, 100);
             }
             else
             {
@@ -66,7 +68,7 @@ namespace Audio
 
         void Start()
         {
-            pool = new ObjectPool<AudioSource>(CreatePoolAudioSource, OnAudioSourceFromPool, OnAudioSourceReleased, OnAudioSourceDestroyed, true, poolSize, 100);
+           
         }
 
         /// <summary>
@@ -83,7 +85,7 @@ namespace Audio
 
         public void PlaySound(AudioClip clip, float volume = 1f, bool loop = false)
         {
-            if (!Application.isPlaying) return;
+            //if (!Application.isPlaying) return;
             var src = pool.Get();
             src.clip = clip;
             src.volume = volume;

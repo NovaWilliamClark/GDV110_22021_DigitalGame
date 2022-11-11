@@ -28,6 +28,7 @@ namespace Objects
         public bool reloadable;
         public ItemData itemToReload;
         public AudioClip reloadSfx;
+        public GameObject itemPrefab;
         [FormerlySerializedAs("itemRef")] [SerializeField] private ItemData itemDataRef; // original item for object to refer back to
 
         [FormerlySerializedAs("Effect")] public ItemTypeEnum typeEnum;
