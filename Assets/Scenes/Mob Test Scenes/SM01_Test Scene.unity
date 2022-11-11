@@ -1320,6 +1320,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5454834009845697985, guid: e08b6b74fee35419ebfaa4587ce7b878, type: 3}
   m_PrefabInstance: {fileID: 5454834010088949344}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &327174057 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 323118007585426323, guid: f9cfefdf2d4eaf64f8784afca2c13845, type: 3}
+  m_PrefabInstance: {fileID: 2070405461}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &349237381
 GameObject:
   m_ObjectHideFlags: 0
@@ -10376,6 +10381,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stalker
       objectReference: {fileID: 0}
+    - target: {fileID: 8807285386726411277, guid: f9cfefdf2d4eaf64f8784afca2c13845, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 327174057}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9cfefdf2d4eaf64f8784afca2c13845, type: 3}
 --- !u!1 &2080637069
