@@ -9,7 +9,7 @@ public class ItemContainer_SO : ScriptableObject
 {
     public List<ItemData> initialItems;
     private List<ItemData> items = new();
-    private List<int> itemsTaken = new();
+    private List<ItemData> itemsTaken = new();
 
     public List<ItemData> Items => items;
     public void Init()
@@ -27,15 +27,15 @@ public class ItemContainer_SO : ScriptableObject
     {
         foreach (var item in items.ToList())
         {
-            if (itemsTaken.Contains(item.itemID))
+            if (itemsTaken.Contains(item))
             {
                 items.Remove(item);
             }
         }
     }
 
-    public void SetToTaken(int id)
+    public void SetToTaken(ItemData data)
     {
-        itemsTaken.Add(items.Find(x => x.itemID == id).itemID);
+        itemsTaken.Add(items.Find(x => x == data));
     }
 }

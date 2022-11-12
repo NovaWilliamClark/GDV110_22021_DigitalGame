@@ -2,65 +2,57 @@
 using System.Collections.Generic;
 using System.Linq;
 using Character;
+using Objects;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ContainerInventory : MonoBehaviour
 {
     public event Action OnContainerEmptied;
     
-    [SerializeField] private GameObject slotPrefab;
     [SerializeField] private ItemContainer_SO inventoryItems;
-    [SerializeField] private Transform slotContainer;
+    [SerializeField] private UIContainer containerPrefab;
+    [SerializeField] private UIContainer container;
     private List<GameObject> slots = new List<GameObject>();
     private List<InventorySlot> selectedSlots = new List<InventorySlot>(); 
     private CharacterController player;
+    private LevelController levelController;
     private bool accessed = false;
+    private PersistentObject persistentObject;
+
+    [HideInInspector] public UnityEvent<ContainerInventory, ItemContainerState> ContainerStateChanged;
 
     private void Awake()
     {
+        persistentObject = GetComponent<PersistentObject>();
         
+        levelController = FindObjectOfType<LevelController>();
+        levelController.LevelInitialized.AddListener(OnLevelInitialized);
     }
-    //
-    // private void OnEnable()
-    // {
-    //     foreach (var item in inventoryItems.Items)
-    //     {
-    //         var slot = Instantiate(slotPrefab, slotContainer);
-    //         var slotObj = slot.GetComponent<InventorySlot>();
-    //         slotObj.SlotClicked.AddListener(InventorySlot_OnSlotClick);
-    //         slotObj.SetItem(item);
-    //         slots.Add(slot);
-    //     }
-    // }
-    //
-    // private void InventorySlot_OnSlotClick(InventorySlot obj)
-    // {
-    //     Debug.Log(obj);
-    //     if (selectedSlots.Contains(obj))
-    //     {
-    //         selectedSlots.Remove(obj);
-    //     }
-    //     else
-    //     {
-    //         selectedSlots.Add(obj);
-    //     }
-    // }
-    //
-    // private void OnDisable()
-    // {
-    //     foreach (var slot in slots)
-    //     {
-    //         var slotObj = slot.GetComponent<InventorySlot>();
-    //         slotObj.SlotClicked.RemoveListener(InventorySlot_OnSlotClick);
-    //         Destroy(gameObject);
-    //     }
-    // }
+
+    private void OnLevelInitialized()
+    {
+        container = Instantiate(containerPrefab);
+        container.Setup(inventoryItems, TakeItem);
+    }
+
+    private void TakeItem(ItemData item)
+    {
+        player.GetInventory.AddToInventory(item);
+        inventoryItems.Items.Remove(item);
+    }
 
     public void Init(CharacterController cc)
     {
         player = cc;
         inventoryItems.Init();
-        SpawnItems();
+        container.Closed.AddListener(OnContainerUIClosed);
+        container.Open();
+    }
+
+    private void OnContainerUIClosed()
+    {
+        ContainerStateChanged?.Invoke(this, new ItemContainerState(persistentObject.Id) {items = inventoryItems.Items});
     }
 
     public void SpawnItems()
@@ -71,33 +63,12 @@ public class ContainerInventory : MonoBehaviour
         }
         OnContainerEmptied?.Invoke();
     }
-    
-    public void TakeAll()
-    {
-        foreach (var item in inventoryItems.Items)
-        {
-            player.GetInventory.AddToInventory(item);
-            inventoryItems.SetToTaken(item.itemID);
-        }
-        OnContainerEmptied?.Invoke();
-        gameObject.SetActive(false);
-    }
 
-    public void TakeSelected()
+    public void SetContainerState(ItemContainerState state)
     {
-        foreach (var slot in selectedSlots.ToList())
+        foreach (var item in state.items)
         {
-            player.GetInventory.AddToInventory(slot.GetItemData);
-            inventoryItems.SetToTaken(slot.GetItemData.itemID);
-            selectedSlots.Remove(slot);
-            slots.Remove(slot.gameObject);
-            Destroy(slot.gameObject);
-        }
-
-        if (slots.Count == 0)
-        {
-            OnContainerEmptied?.Invoke();
-            gameObject.SetActive(false);
+            inventoryItems.SetToTaken(item);
         }
     }
 }

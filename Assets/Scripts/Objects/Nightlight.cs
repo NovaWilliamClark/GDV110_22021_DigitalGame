@@ -70,12 +70,14 @@ public class Nightlight : InteractionPoint
 
     protected override void OnTriggerStay2D(Collider2D other)
     {
+        if (!other.CompareTag("Player")) return;
         base.OnTriggerStay2D(other);
         inRadius = true;
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
     {
+        if (!other.CompareTag("Player")) return;
         if (!automaticInteraction)
         {
             if (!other.GetComponent<CharacterController>()) return;
@@ -117,6 +119,6 @@ public class Nightlight : InteractionPoint
         hasInteracted = true;
         canInteract = false;
         DisablePrompt();
-        Interacted?.Invoke(this);
+        Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
     }
 }

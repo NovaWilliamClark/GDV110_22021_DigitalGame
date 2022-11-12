@@ -60,6 +60,7 @@ public class PlayerData_SO : ScriptableObject
 
     [Header("Equipment")] public EquipmentState initialState;
     [FormerlySerializedAs("currentState")] public EquipmentState equipmentState;
+    private PlayerData_SO originalSo;
     
     public float CurrentBattery
     {

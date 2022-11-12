@@ -48,14 +48,14 @@ public abstract class InteractionPoint : MonoBehaviour
     private Sequence visualSequence;
     [SerializeField] protected float fxRange = 7.5f;
 
-    [Header("Audio")] [SerializeField] private AudioClip useSfx;
-    [SerializeField] private float volume;
+    [Header("Audio")] [SerializeField] protected AudioClip useSfx;
+    [SerializeField] protected float volume;
 
     protected PersistentObject persistentObject;
 
     protected PlayerInput input;
 
-    [HideInInspector] public UnityEvent<InteractionPoint> Interacted;
+    [HideInInspector] public UnityEvent<InteractionPoint,InteractionState> Interacted;
 
      protected virtual void Awake()
      {
@@ -117,8 +117,10 @@ public abstract class InteractionPoint : MonoBehaviour
      }
 
      protected virtual void OnTriggerEnter2D(Collider2D other)
-     {
-        if (!automaticInteraction)
+     { 
+         if (!other.CompareTag("Player")) return;
+        
+         if (!automaticInteraction)
         {
             if (!other.GetComponent<CharacterController>()) return;
             if (!canInteract) return;
@@ -197,6 +199,7 @@ public abstract class InteractionPoint : MonoBehaviour
 
     protected virtual void OnTriggerExit2D(Collider2D other)
     {
+        if (!other.CompareTag("Player")) return;
         if (!automaticInteraction)
         {
             if(!other.GetComponent<CharacterController>()) return;
@@ -205,18 +208,11 @@ public abstract class InteractionPoint : MonoBehaviour
         }
     }
 
-    public virtual void SetInteractedState()
+    public virtual void SetInteractedState(object state)
     {
         // basically change me to be "active" as if the player has already used me
         
     }
-
-    // protected void DisableInteraction()
-    // {
-    //     DisablePrompt();
-    //     canInteract = false;
-    //     triggerArea.enabled = false;
-    // }
 
     protected void DisablePrompt()
     {

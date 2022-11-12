@@ -36,6 +36,12 @@ public class UIPromptBox : MonoBehaviour
 
     }
 
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     private void OnEnable()
     {
         rect.anchoredPosition = endPosition;
@@ -64,6 +70,8 @@ public class UIPromptBox : MonoBehaviour
         {
             wait = animationSequence.Duration() - animationSequence.position;
         }
+        
+        Debug.LogFormat("Wait time: {0}", wait);
 
         StartCoroutine(WaitThen(wait, () =>
         {
@@ -71,7 +79,6 @@ public class UIPromptBox : MonoBehaviour
             animationSequence
                 .OnRewind(() =>
                 {
-                    gameObject.SetActive(false);
                     isAnimating = false;
                 })
                 .PlayBackwards();

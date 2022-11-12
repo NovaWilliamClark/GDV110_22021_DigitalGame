@@ -1,4 +1,5 @@
-﻿using Objects;
+﻿using Audio;
+using Objects;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -22,9 +23,11 @@ public class ContainerTrigger : InteractionPoint
                 hasInteracted = false;
                 return;
             }
+            AudioManager.Instance.PlaySound(item.useSfx, item.useSfxVolume);
             playerRef.GetInventory.UseItem(item);
         }
         
+        AudioManager.Instance.PlaySound(useSfx, volume);
         containerInventory.Init(cc);
         DisablePrompt();
         hasInteracted = true;

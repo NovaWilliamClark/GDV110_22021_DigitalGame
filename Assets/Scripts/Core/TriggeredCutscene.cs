@@ -12,8 +12,9 @@ public class TriggeredCutscene : InteractionPoint
         cutscene.Play();
     }
 
-    public override void SetInteractedState()
+    public override void SetInteractedState(object state)
     {
+        base.SetInteractedState(state);
         hasInteracted = true;
     }
 

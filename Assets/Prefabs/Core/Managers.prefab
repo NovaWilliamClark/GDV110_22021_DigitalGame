@@ -118,4 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a4bc0f5c9cfd141a2ded9e261837ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueBoxPrefab: {fileID: 4585806261793162075, guid: 9268f6277e15bb840937e2bb9e6b52ba, type: 3}
+  dialogueBoxPrefab: {fileID: 4187136736749756857, guid: 9268f6277e15bb840937e2bb9e6b52ba, type: 3}
