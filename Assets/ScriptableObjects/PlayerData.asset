@@ -33,15 +33,13 @@ MonoBehaviour:
     flashlightDecreaseRate: 0.1
   equipmentState:
     hasSockey: 0
-    flashlightEquipped: 1
+    flashlightEquipped: 0
     flashlightIsOn: 0
     flashlightDecreaseRate: 0.1
-  inventoryItems:
-  - {fileID: 0}
-  - {fileID: 0}
+  inventoryItems: []
   spawnPoint:
-    id: 1ac4fa7a-51e3-4dc9-adc1-543f4398d17d
-    spawnPointSet: 1
-    sceneName: Level04_ParentsBedroom
+    id: 
+    spawnPointSet: 0
+    sceneName: 
     originalData: {fileID: 11400000}
     dataInstance: {fileID: 0}

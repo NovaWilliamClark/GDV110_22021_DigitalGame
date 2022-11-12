@@ -182,7 +182,7 @@ public class ItemPickup : InteractionPoint
             particle.Stop(false);
         }
         yield return new WaitForSeconds(2f);
-        Interacted?.Invoke(this);
+        Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
         //ItemPickedUp?.Invoke();
         if (promptBox.isAnimating)
         {
@@ -203,9 +203,10 @@ public class ItemPickup : InteractionPoint
         }
     }
     
-    public override void SetInteractedState()
+    public override void SetInteractedState(object state)
     {
-        base.SetInteractedState();
+        base.SetInteractedState(state);
+        var interactionState = state as InteractionState;
         gameObject.SetActive(false);
     }
 }

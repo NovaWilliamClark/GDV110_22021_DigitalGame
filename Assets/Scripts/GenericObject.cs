@@ -6,10 +6,10 @@ using UnityEngine.Events;
 [RequireComponent(typeof(PersistentObject))]
 public class GenericObject : MonoBehaviour
 {
-    public UnityEvent<GenericObject> ObjectStateChanged;
+    public UnityEvent<GenericObject, GenericState> ObjectStateChanged;
     
-    public virtual void SetPersistentState()
+    public virtual void SetPersistentState(GenericState state)
     {
-        gameObject.SetActive(false);
+        gameObject.SetActive(state.active);
     }
 }

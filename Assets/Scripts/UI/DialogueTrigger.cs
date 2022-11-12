@@ -21,6 +21,7 @@ public class DialogueTrigger : InteractionPoint
         {
             box.End();
             hasStarted = false;
+            Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
         }
     }
 
@@ -49,7 +50,7 @@ public class DialogueTrigger : InteractionPoint
 
     private void OnDialogueComplete(WorldDialogue arg0)
     {
-        Interacted?.Invoke(this);
+        Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
     }
 
     private void OnDrawGizmosSelected()
@@ -62,8 +63,9 @@ public class DialogueTrigger : InteractionPoint
         }
     }
 
-    public override void SetInteractedState()
+    public override void SetInteractedState(object state)
     {
+        base.SetInteractedState(state);
         gameObject.SetActive(false);
     }
 }

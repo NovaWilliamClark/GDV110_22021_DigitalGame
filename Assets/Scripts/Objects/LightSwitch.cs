@@ -27,6 +27,7 @@ public class LightSwitch : InteractionPoint
             canInteract = false;
             onInteract.Invoke(active);
             AudioManager.Instance.PlaySound(switchSfx,sfxVolume);
+            Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
             StartCoroutine(WaitForCooldown());
         }
         
@@ -39,12 +40,13 @@ public class LightSwitch : InteractionPoint
         canInteract = true;
         hasInteracted = false;
     }
-
-    public override void SetInteractedState()
+    
+    public override void SetInteractedState(object state)
     {
-        interacted = false;
-        canInteract = true;
-        onInteract.Invoke(true);
+        if (state is not InteractionState st) return;    
+        interacted = !st.interacted;
+        canInteract = st.interacted;
+        onInteract.Invoke(st.interacted);
     }
     
 }

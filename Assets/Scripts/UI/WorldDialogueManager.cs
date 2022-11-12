@@ -29,6 +29,7 @@ namespace UI
             if (Instance == null)
             {
                 Instance = this;
+                pool = new ObjectPool<WorldDialogue>(OnCreateDialogue, OnDialogueBoxFromPool);
                 DontDestroyOnLoad(gameObject);
             }
             else
@@ -42,17 +43,12 @@ namespace UI
 
         private bool prefab1Active = false;
 
-        public GameObject dialogueBoxPrefab;
+        public WorldDialogue dialogueBoxPrefab;
 
         private ObjectPool<WorldDialogue> pool;
         public ObjectPool<WorldDialogue> Pool => pool;
 
         private bool displaying = false;
-
-        void Start()
-        {
-            pool = new ObjectPool<WorldDialogue>(OnCreateDialogue, OnDialogueBoxFromPool);
-        }
 
         private void OnDialogueBoxFromPool(WorldDialogue obj)
         {
@@ -64,10 +60,9 @@ namespace UI
 
         private WorldDialogue OnCreateDialogue()
         {
-            var obj = Instantiate(dialogueBoxPrefab);
-            var dialogue = obj.GetComponent<WorldDialogue>();
-            obj.name = "Pooled Dialogue Box";
-            return dialogue;
+            var wd = Instantiate(dialogueBoxPrefab);
+            wd.name = "Pooled Dialogue Box";
+            return wd;
         }
 
         public WorldDialogue CreateDialogueBox(Dialogue dialogue, int startIndex = 0)

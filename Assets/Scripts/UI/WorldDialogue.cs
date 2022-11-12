@@ -51,7 +51,7 @@ public class WorldDialogue : MonoBehaviour
 
     public void DisplayNextSentence()
     {
-        if (currentIndex > dialogueBoxes.Count)
+        if (currentIndex >= dialogueBoxes.Count)
         {
             Complete();
             return;

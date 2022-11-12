@@ -14,11 +14,14 @@ public class EventCallerInteractable : InteractionPoint
         base.Interact(cc);
         active = !active;
         Interaction?.Invoke(active);
+        Interacted?.Invoke(this, new InteractionState(persistentObject.Id) {interacted = true});
     }
 
-    public override void SetInteractedState()
+    public override void SetInteractedState(object state)
     {
-        active = !active;
-        Interaction.Invoke(active);
+        base.SetInteractedState(state);
+        if (state is not InteractionState st) return;
+        active = st.interacted;
+        Interaction.Invoke(st.interacted);
     }
 }

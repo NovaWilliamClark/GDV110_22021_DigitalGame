@@ -22,6 +22,7 @@ namespace Objects
         public int itemID;
         public string itemName;
         public Sprite itemSprite;
+        public Vector2 slotSize;
         public bool hasBeenPickedUp;
         public bool disappearsOnCombination;
         public bool isSingleUse;
@@ -29,10 +30,13 @@ namespace Objects
         public ItemData itemToReload;
         public AudioClip reloadSfx;
         public GameObject itemPrefab;
-        [FormerlySerializedAs("itemRef")] [SerializeField] private ItemData itemDataRef; // original item for object to refer back to
+        [FormerlySerializedAs("itemRef")] [HideInInspector][SerializeField] private ItemData itemDataRef; // original item for object to refer back to
 
         [FormerlySerializedAs("Effect")] public ItemTypeEnum typeEnum;
-        
+
+        [Header("Audio")] public AudioClip useSfx;
+        public float useSfxVolume;
+
         //https://forum.unity.com/threads/solved-checking-equality-between-scriptableobject-instances.519270/
         
         public virtual void OnEnable()

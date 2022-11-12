@@ -1,6 +1,7 @@
 using System.Collections;
 using Core;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 
@@ -8,6 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace AI
 {
+    [RequireComponent(typeof(PersistentObject))]
     public class SM01 : MonoBehaviour, ILightResponder
     {
         [Header("Movement")]
@@ -37,11 +39,14 @@ namespace AI
         [SerializeField] private Transform puppet;
         [SerializeField] private LayerMask lightMask;
         private readonly Vector3 flippedScale = new(-1, 1, 1);
+        [HideInInspector] public UnityEvent<PersistentObject,EnemyLevelState> EnemyStateChanged;
+        private PersistentObject persistentObject;
 
         // Start is called before the first frame update
         private void Awake()
         {
             attackCollider = GetComponentInChildren<SM01AttackCollider>();
+            persistentObject = GetComponent<PersistentObject>();
             var lc = FindObjectOfType<LevelController>();
             lc.PlayerSpawned.AddListener(onPlayerLoaded);
         }
@@ -208,6 +213,7 @@ namespace AI
         {
             // TODO: DEATH SFX
             Destroy(gameObject);
+            EnemyStateChanged?.Invoke(persistentObject,new EnemyLevelState(persistentObject.Id){active = false});
         }
 
         public void OnLightExited(float intensity)
@@ -228,6 +234,11 @@ namespace AI
             
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(transform.position + new Vector3(chaseCastSize.x * 0.5f * direction.x, chaseCastSize.y * -0.5f, 0), chaseCastSize);
+        }
+
+        public void SetEnemyState(EnemyLevelState data)
+        {
+            gameObject.SetActive(data.active);
         }
     }
 }

@@ -29,7 +29,7 @@ public class RequirementTrigger : GenericObject
         if (item == requiredItem)
         {
             player.GetInventory.ItemAdded.RemoveListener(OnItemAdded);
-            ObjectStateChanged?.Invoke(this);
+            ObjectStateChanged?.Invoke(this, new GenericState(GetComponent<PersistentObject>().Id){active = false});
             RequirementSatisfied?.Invoke();
         }
     }
