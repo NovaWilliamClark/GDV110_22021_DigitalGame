@@ -9795,9 +9795,14 @@ MonoBehaviour:
   promptBox: {fileID: 5167134900545794925}
   promptMessage: Pickup Battery - RMB
   automaticInteraction: 0
+  canReInteract: 0
   outlineColour: {r: 78, g: 93, b: 111, a: 1}
+  showVisuals: 1
+  renderer: {fileID: 0}
   glowMaterial: {fileID: 2100000, guid: e3fd3a5ce31a64a2b9861a70a4d2a6d5, type: 2}
   fxRange: 7.5
+  useSfx: {fileID: 0}
+  volume: 0
   Interacted:
     m_PersistentCalls:
       m_Calls: []

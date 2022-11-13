@@ -46,6 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isEnabled: 1
+  collider: {fileID: 0}
+  affectedMasks:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!58 &3129246700863246886
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -170,8 +174,11 @@ MonoBehaviour:
   canReInteract: 0
   outlineColour: {r: 1, g: 0.78712755, b: 0.3066038, a: 1}
   showVisuals: 1
+  renderer: {fileID: 0}
   glowMaterial: {fileID: 2100000, guid: e3fd3a5ce31a64a2b9861a70a4d2a6d5, type: 2}
   fxRange: 7.85
+  useSfx: {fileID: 0}
+  volume: 0
   Interacted:
     m_PersistentCalls:
       m_Calls: []

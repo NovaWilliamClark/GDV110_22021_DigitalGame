@@ -38,7 +38,7 @@ public class CharacterEquipment : MonoBehaviour
 
     private Coroutine degenCoroutine;
     private bool degenStarted;
-    private bool turnedOff = false;
+    private bool setOffState = false;
 
     private bool initialized = false;
 
@@ -69,26 +69,23 @@ public class CharacterEquipment : MonoBehaviour
         if (!initialized) return;
         if (data.equipmentState.flashlightIsOn)
         {
-            data.CurrentBattery -= data.equipmentState.flashlightDecreaseRate;
+            data.CurrentBattery -= data.equipmentState.flashlightDecreaseRate * Time.deltaTime;
             if (data.CurrentBattery <= 0f)
             {
-                if (!turnedOff)
+                if (!setOffState)
                 {
-                    turnedOff = true;
+                    setOffState = true;
                     ToggleFlashlight(false);
                 }
             }
         }
+
+        
     }
 
     private void OnBatteryValueChanged(float arg0)
     {
-        Debug.Log("Battery recovered " + arg0);
-
-        if (arg0 <= 0)
-        {
-            flashlightObject.SetActive(false);
-        }
+        
     }
 
     private void ToggleFlashlight(bool on)
@@ -99,14 +96,14 @@ public class CharacterEquipment : MonoBehaviour
         {
             trackingScript.solver.weight = val;
         });
-        if (data.CurrentBattery <= 0 && data.flashlightAvailable)
+        if (data.CurrentBattery <= 0 && !setOffState)
         {
             var seq = DOTween.Sequence();
             seq.Append(tween);
             seq.AppendInterval(.5f);
             seq.Append(DOVirtual.DelayedCall(0f, () =>
             {
-                AudioManager.Instance.PlaySound(flashlightActivateSfx,sfxVolume);
+                //AudioManager.Instance.PlaySound(flashlightActivateSfx,sfxVolume);
             }));
             seq.AppendInterval(.5f);
             seq.Append(DOVirtual.Float(1f, 0f, .2f, val =>
@@ -122,13 +119,14 @@ public class CharacterEquipment : MonoBehaviour
             seq.Play();
             return;
         }
-        if (on && data.flashlightAvailable)
+        AudioManager.Instance.PlaySound(flashlightActivateSfx,sfxVolume);
+        if (on)
         {
             tween.OnComplete(() =>
             {
                 UIHelpers.Instance.BatteryIndicator.Toggle(true);
-                flashlightObject.SetActive(true);
                 data.equipmentState.flashlightIsOn = true;
+                flashlightObject.SetActive(true);
                 flashlightCooldownComplete = false;
                 StartCoroutine(FlashlightCooldown());
             });
@@ -141,6 +139,7 @@ public class CharacterEquipment : MonoBehaviour
                 flashlightObject.SetActive(false);
                 data.equipmentState.flashlightIsOn = false;
                 flashlightCooldownComplete = false;
+                setOffState = false;
                 StartCoroutine(FlashlightCooldown());
             });
         }

@@ -17,6 +17,7 @@ using Character;
 using Cinemachine;
 using Core;
 using Core.SceneManager;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -60,9 +61,14 @@ public class LevelController : MonoBehaviour
 
     private void Start()
     {
-        if (onLoadCutscene && !levelDataSo.levelCutscenePlayed)
+        if (onLoadCutscene )
         {
-            UIHelpers.Instance.Fader.Fade(0f, 0.1f);
+            if (!levelDataSo.levelCutscenePlayed)
+                UIHelpers.Instance.Fader.Fade(0f, 0.1f);
+            else
+            {
+                onLoadCutscene.gameObject.SetActive(false);
+            }
         }
         LevelInit();
     }
@@ -209,7 +215,8 @@ public class LevelController : MonoBehaviour
         var po = interactionPoint.GetComponent<PersistentObject>();
         if (interactionPoint is Nightlight)
         {
-            Debug.LogFormat("Player spawn set from {0}: {1}", po.name, po.Id);
+            Vector2 ipTrans = interactionPoint.transform.position;
+                Debug.LogFormat("Player spawn set in Scene: {0} at (x:{2} y:{3}): {1} - {4}", SceneManager.GetActiveScene().name, po.name, ipTrans.x, ipTrans.y, po.Id);
             playerDataRef.spawnPoint.Set(po.Id, SceneManager.GetActiveScene().name);
         }
         levelDataSo.levelInteractions.SetObjectState(po,state);
@@ -241,11 +248,15 @@ public class LevelController : MonoBehaviour
         var existingPlayer = FindObjectOfType<CharacterController>();
 
         var spawnPointData = playerDataRef.spawnPoint;
-        if (spawnPointData.isSet && spawnPointData.SceneName == SceneManager.GetActiveScene().name)
+        if (playerDataRef.wasDead)
         {
-            Debug.Log("Spawn point is set, spawning there");
-            var spawnNl = nightlights[spawnPointData.Id];
-            pos = spawnNl.transform.position;
+            if (spawnPointData.isSet && spawnPointData.SceneName == SceneManager.GetActiveScene().name)
+            {
+                Debug.Log("Spawn point is set, spawning there");
+                var spawnNl = nightlights[spawnPointData.Id];
+                pos = spawnNl.transform.position;
+                playerDataRef.wasDead = false;
+            }
         }
         else if (existingPlayer && !levelDataSo.Initialized)
         {
@@ -254,7 +265,6 @@ public class LevelController : MonoBehaviour
 
         if (!existingPlayer)
         {
-            Debug.Log("No player in scene");
             player = Instantiate(playerPrefab);
 
             player.transform.position = pos;
@@ -263,7 +273,6 @@ public class LevelController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Player in scene");
             player = existingPlayer.gameObject;
             player.transform.position = pos;
         }
@@ -306,6 +315,7 @@ public class LevelController : MonoBehaviour
     {
         UIHelpers.Instance.SanityMeter.UnsetPlayer();
         UIHelpers.Instance.SanityMeter.Disable();
+        playerDataRef.wasDead = true;
         instancedPlayer = null;
         StartCoroutine(WaitALittleBit());
     }

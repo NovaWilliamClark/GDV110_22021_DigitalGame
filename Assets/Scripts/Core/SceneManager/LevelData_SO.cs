@@ -55,6 +55,10 @@ public class LevelData
     public virtual PersistentObjectState GetObjectState(PersistentObject po)
     {
         var poState = persistentObjects.FirstOrDefault(e => e.Id == po.Id);
+        if (poState == null)
+        {
+            Debug.LogErrorFormat("Object {0} not found in persistent object list", po.Id);
+        }
         return poState;
     }
 

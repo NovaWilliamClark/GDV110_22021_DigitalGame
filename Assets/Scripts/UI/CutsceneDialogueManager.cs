@@ -57,6 +57,7 @@ public class CutsceneDialogueManager : MonoBehaviour
         uiCutsceneDialogue = box.GetComponent<UICutsceneDialogue>();
         dialogueBox = box.GetComponentInChildren<CanvasGroup>();
         dialogueBox.alpha = 0;
+        dialogueBox.gameObject.SetActive(false);
     }
 
 

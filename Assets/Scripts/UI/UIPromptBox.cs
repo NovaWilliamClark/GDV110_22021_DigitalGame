@@ -65,30 +65,20 @@ public class UIPromptBox : MonoBehaviour
 
     public void Hide()
     {
-        var wait = 0f;
+        var wait = -0.1f;
         if (animationSequence.active)
         {
-            wait = animationSequence.Duration() - animationSequence.position;
+            wait += animationSequence.Duration() - animationSequence.position;
         }
         
-        Debug.LogFormat("Wait time: {0}", wait);
-
-        StartCoroutine(WaitThen(wait, () =>
-        {
-            isAnimating = true;
-            animationSequence
-                .OnRewind(() =>
-                {
-                    isAnimating = false;
-                })
-                .PlayBackwards();
-        }));
-
-    }
-
-    public IEnumerator WaitThen(float delay, UnityAction callback)
-    {
-        yield return new WaitForSeconds(delay);
-        callback?.Invoke();
+        //Debug.LogFormat("Wait time: {0}", wait);
+        isAnimating = true;
+        animationSequence
+            .OnRewind(() =>
+            {
+                isAnimating = false;
+                gameObject.SetActive(false);
+            });
+        animationSequence.PlayBackwards();
     }
 }

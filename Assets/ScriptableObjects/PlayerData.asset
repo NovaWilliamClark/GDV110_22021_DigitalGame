@@ -18,6 +18,7 @@ MonoBehaviour:
   initialSanity: 100
   initialGainRate: 0.1
   initialLossRate: 0.03
+  wasDead: 0
   initialBattery: 0
   maxBattery: 100
   BatteryValueChanged:
@@ -30,12 +31,12 @@ MonoBehaviour:
     hasSockey: 0
     flashlightEquipped: 0
     flashlightIsOn: 0
-    flashlightDecreaseRate: 0.1
+    flashlightDecreaseRate: 2
   equipmentState:
     hasSockey: 0
     flashlightEquipped: 0
     flashlightIsOn: 0
-    flashlightDecreaseRate: 0.1
+    flashlightDecreaseRate: 2
   inventoryItems: []
   spawnPoint:
     id: 

@@ -1079,9 +1079,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16a77a53a824ca9bc0c9acdca5452b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPrefab: {fileID: 487991711240644247, guid: 5f92ab6e6238caa458a6df97d1eaa75f, type: 3}
   inventoryItems: {fileID: 11400000, guid: 4b122287c97fcfc4e93034e1413a6416, type: 2}
-  slotContainer: {fileID: 1793805619196943065}
+  containerPrefab: {fileID: 0}
+  container: {fileID: 0}
+  ContainerStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1793805619055578173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,6 +1328,8 @@ GameObject:
   - component: {fileID: 6790592491859279663}
   - component: {fileID: 2617631047817775057}
   - component: {fileID: 36720201068428908}
+  - component: {fileID: 6273214883808442406}
+  - component: {fileID: 6205742276364309631}
   m_Layer: 0
   m_Name: Container
   m_TagString: Untagged
@@ -1390,8 +1395,86 @@ MonoBehaviour:
   promptBox: {fileID: 7430193467287263885}
   promptMessage: Open - RMB
   automaticInteraction: 0
+  canReInteract: 0
+  outlineColour: {r: 78, g: 93, b: 111, a: 1}
+  showVisuals: 1
+  renderer: {fileID: 0}
+  glowMaterial: {fileID: 0}
+  fxRange: 7.5
+  useSfx: {fileID: 0}
+  volume: 0
+  Interacted:
+    m_PersistentCalls:
+      m_Calls: []
   containerInventory: {fileID: 3865594109819980022}
-  data: {fileID: 11400000, guid: 7593e4375df8069419f04df89118790b, type: 2}
+  requiresItem: 0
+  item: {fileID: 0}
+  missingItemMessage: 
+--- !u!212 &6273214883808442406
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474505102303788495}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &6205742276364309631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3474505102303788495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e86d805a0d947d5bbf1728e83ea7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 
 --- !u!1 &4739244439847318451
 GameObject:
   m_ObjectHideFlags: 0

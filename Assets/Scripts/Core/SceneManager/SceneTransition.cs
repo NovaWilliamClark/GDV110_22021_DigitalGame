@@ -25,9 +25,10 @@ namespace Objects
         {
             if (!cc) return;
             cc.SetPersistentData();
+            TransitionManager.Instance.SetSpawnIndex(spawnPointIndex);
             UIHelpers.Instance.Fader.Fade(1f, 1f, () =>
             {
-                TransitionManager.Instance.SetSpawnIndex(spawnPointIndex);
+               
                 TransitionManager.Instance.LoadScene(sceneToLoad);
             });
         }

@@ -117,6 +117,22 @@ public class LevelCutscene : MonoBehaviour
         });
     }
 
+    public void ChangePlayerSortingLayer(int value)
+    {
+        if (!player) player = FindObjectOfType<CharacterController>();
+        var sl = player.GetComponentInChildren<SortingModeChanger>();
+        sl.SetSortingValue(value);
+        Debug.Log(value);
+    }
+
+    public void ResetPlayerSortingLayer()
+    {
+        if (!player) player = FindObjectOfType<CharacterController>();
+        var sl = player.GetComponentInChildren<SortingModeChanger>();
+        sl.Reset();
+        Debug.Log("Reset sorting layer");
+    }
+
     private void OnSentenceComplete()
     {
         director.Resume();

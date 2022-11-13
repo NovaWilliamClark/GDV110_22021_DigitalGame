@@ -144,6 +144,7 @@ namespace Character
 
         public void OpenInventory()
         {
+            player.Equipment.DisableInput();
             canvasGroup.interactable = false;
             if (player)
             {
