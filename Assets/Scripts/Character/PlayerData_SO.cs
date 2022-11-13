@@ -45,6 +45,8 @@ public class PlayerData_SO : ScriptableObject
     public float initialGainRate = 0.03f;
     public float initialLossRate = 0.1f;
 
+    public bool wasDead = false;
+
     [Header("--Flashlight--")]
     public float initialBattery = 0f;
 
@@ -80,7 +82,6 @@ public class PlayerData_SO : ScriptableObject
 
     private void OnEnable()
     {
-        Debug.Log("PlayerDataSO Fired");
         CurrentBattery = initialBattery;
         sanity = initialSanity;
         sanityGainRate = initialGainRate;
@@ -88,6 +89,7 @@ public class PlayerData_SO : ScriptableObject
         equipmentState = initialState.Copy();
         inventoryItems.Clear();
         spawnPoint = new SpawnPointData();
+        wasDead = false;
 
         spawnPoint.ResetData(this);
     }
@@ -115,6 +117,7 @@ public class PlayerData_SO : ScriptableObject
 
     public PlayerData_SO Copy()
     {
+        // Create copy of SO (exclusively for spawn points atm)
         var instance = Instantiate(this);
         instance.equipmentState = equipmentState.Copy();
         
@@ -124,6 +127,7 @@ public class PlayerData_SO : ScriptableObject
     // https://stackoverflow.com/questions/930433/apply-properties-values-from-one-object-to-another-of-the-same-type-automaticall
     public void SetFromCopy(PlayerData_SO copy)
     {
+        Debug.Log("Overwriting OG PlayerData with Spawn Point copy");
         var ogName = name;
         foreach (PropertyInfo property in typeof(PlayerData_SO).GetProperties().Where(p => p.CanWrite))
         {

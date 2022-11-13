@@ -65,9 +65,9 @@ public abstract class InteractionPoint : MonoBehaviour
          if (renderer && showVisuals)
          {
              var rend = new GameObject("Sprite Outline");
-             rend.transform.localScale = transform.localScale;
-             rend.transform.position = transform.position;
-             rend.transform.parent = transform;
+             rend.transform.localScale = renderer.transform.localScale;
+             rend.transform.position = renderer.transform.position;
+             rend.transform.parent = renderer.transform;
              glowRenderer = rend.AddComponent<SpriteRenderer>();
              glowRenderer.sprite = renderer.sprite;
              glowRenderer.color = renderer.color;
@@ -133,7 +133,7 @@ public abstract class InteractionPoint : MonoBehaviour
         else
         {
             if (hasInteracted) return;
-            Debug.Log("Auto Interaction!");
+            Debug.LogFormat("{0}: Auto Interaction!", name);
             hasInteracted = true;
             Interact(other.GetComponent<CharacterController>());
         }
@@ -183,6 +183,7 @@ public abstract class InteractionPoint : MonoBehaviour
                         outlineActive = true;
                     })
                     .SetAutoKill(false);
+                visualSequence.Play();
             }
         }
     }

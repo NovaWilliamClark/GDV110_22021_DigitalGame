@@ -84,6 +84,8 @@ MonoBehaviour:
   renderer: {fileID: 5224937445879235250}
   glowMaterial: {fileID: 2100000, guid: e3fd3a5ce31a64a2b9861a70a4d2a6d5, type: 2}
   fxRange: 7.5
+  useSfx: {fileID: 0}
+  volume: 0
   Interacted:
     m_PersistentCalls:
       m_Calls: []
@@ -122,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e86d805a0d947d5bbf1728e83ea7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 4ff426b7-717d-48fc-b162-512114bac807
+  uniqueId: 
 --- !u!1 &6836046394613568188
 GameObject:
   m_ObjectHideFlags: 0

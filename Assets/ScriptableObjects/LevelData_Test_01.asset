@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 377dd389329244cd948d160409842cfb, type: 3}
   m_Name: LevelData_Test_01
   m_EditorClassIdentifier: 
-  levelEnemies: []
-  interactions: []
-  initialized: 0
+  levelInteractions:
+    persistentObjects: []
+  levelGenericObjects:
+    persistentObjects: []
+  levelContainers:
+    persistentObjects: []
+  levelEnemies:
+    persistentObjects: []
+  initialized: 1
+  levelCutscenePlayed: 1

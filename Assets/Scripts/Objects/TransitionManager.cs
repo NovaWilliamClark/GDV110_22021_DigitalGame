@@ -9,6 +9,7 @@
 
 using System;
 using Audio;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -49,6 +50,7 @@ public class TransitionManager : MonoBehaviour
     public void LoadScene(string sceneToLoad)
     {
         AudioManager.Instance.Cleanup();
+        DOTween.KillAll();
         SceneManager.LoadScene(sceneToLoad);
     }
     

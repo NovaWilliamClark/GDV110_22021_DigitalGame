@@ -13,17 +13,12 @@ MonoBehaviour:
   m_Name: LevelData_Test_04
   m_EditorClassIdentifier: 
   levelInteractions:
-    persistentObjects:
-    - id: d1da82a0-75eb-4827-a3d0-1a75d9e39e4d
-    - id: 7e109d83-cb2d-4e71-8b66-cf53a59d4772
-    - id: 6afa5dd4-605e-4205-bffe-0b61745f51d5
-    - id: 1ac4fa7a-51e3-4dc9-adc1-543f4398d17d
-    - id: 563b501b-8a4a-4187-b9f1-6413a36a0e5c
-    - id: 91b5364f-3bbc-4787-80fc-7cc6048ed9e8
+    persistentObjects: []
   levelGenericObjects:
     persistentObjects: []
   levelContainers:
-    persistentObjects:
-    - id: 91b5364f-3bbc-4787-80fc-7cc6048ed9e8
-  initialized: 1
+    persistentObjects: []
+  levelEnemies:
+    persistentObjects: []
+  initialized: 0
   levelCutscenePlayed: 0
