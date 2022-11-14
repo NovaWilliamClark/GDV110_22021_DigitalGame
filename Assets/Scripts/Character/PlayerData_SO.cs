@@ -55,6 +55,8 @@ public class PlayerData_SO : ScriptableObject
 
     private float currentBattery = 0f;
 
+    public bool flashlightAvailable = false;
+
     [HideInInspector]
     public UnityEvent<float> BatteryValueChanged;
     [HideInInspector]
