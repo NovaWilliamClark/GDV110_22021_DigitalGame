@@ -131,7 +131,7 @@ public class CharacterEquipment : MonoBehaviour
                 StartCoroutine(FlashlightCooldown());
             });
         }
-        else if (!on && data.flashlightAvailable)
+        else if (!on)
         {
             tween.OnComplete(() =>
             {
