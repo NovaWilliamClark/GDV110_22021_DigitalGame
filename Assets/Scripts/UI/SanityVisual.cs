@@ -40,6 +40,19 @@ public class SanityVisual : MonoBehaviour
     private bool visible;
     public bool Visible => visible;
 
+    [SerializeField] private OverrideSettings overrideSettings;
+
+    [Serializable]
+    public class OverrideSettings
+    {
+        public bool overrideEnabled = false;
+        public float valueOverride = 0f;
+        public float minValue = 0.0f;
+        public bool enableMusic = false;
+        public Transform targetOverride;
+        public bool forceEnable = false;
+    }
+    
     private void Awake()
     {
         player = FindObjectOfType<CharacterSanity>();
@@ -62,6 +75,12 @@ public class SanityVisual : MonoBehaviour
     {
 
         if (!Application.isPlaying && !RunInEditor) return;
+
+        if (overrideSettings.overrideEnabled)
+        {
+            Value = overrideSettings.valueOverride;
+            MinValue = overrideSettings.minValue;
+        }
         var newScale = new Vector3(
             LogLerp(MaskScale.x * MinValue, MaskScale.x, Value),
             LogLerp(MaskScale.y * MinValue, MaskScale.y, Value),
@@ -77,6 +96,14 @@ public class SanityVisual : MonoBehaviour
         tempCurve.constantMax = ParticleMaxSize * (1 - Value);
         psSize.startSize = tempCurve;
 
+        if (overrideSettings.overrideEnabled && overrideSettings.targetOverride)
+        {
+            transform.position = overrideSettings.targetOverride.position;
+            ShowSanity = overrideSettings.forceEnable;
+            canvasObj.gameObject.SetActive(overrideSettings.forceEnable);
+            return;
+        }
+        
         if (!player) return;
         ShowSanity = player.Enabled;
         canvasObj.gameObject.SetActive(ShowSanity);

@@ -343,7 +343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2103694458185002684, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2808663508275335923, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1322,6 +1322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptBox: {fileID: 55674523}
   promptMessage: Open with Key - RMB
+  previewPrompt: 1
   automaticInteraction: 0
   canReInteract: 0
   outlineColour: {r: 3.407756, g: 0.82071614, b: 0, a: 1}
@@ -3558,6 +3559,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic Light
       objectReference: {fileID: 0}
+    - target: {fileID: 8785420540298720770, guid: 401596bbf8b214d15b75711ebbfb3421, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 401596bbf8b214d15b75711ebbfb3421, type: 3}
 --- !u!1 &1454334997
@@ -3881,6 +3886,10 @@ PrefabInstance:
     - target: {fileID: 320571731290594302, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
       propertyPath: uniqueId
       value: 1ac4fa7a-51e3-4dc9-adc1-543f4398d17d
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103694458288798098, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7928201673012255957, guid: 4c96505c8b5494059b6bc954574b67e5, type: 3}
       propertyPath: m_RootOrder
@@ -5197,7 +5206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8402200178250359791, guid: 346632ca9d03145d3b0e5b0b6db9f405, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8901692876948404439, guid: 346632ca9d03145d3b0e5b0b6db9f405, type: 3}
       propertyPath: m_SizeDelta.x
@@ -5291,6 +5300,10 @@ PrefabInstance:
     - target: {fileID: 3022912342552266220, guid: 21d5db5934fbd4bd2ae30cb2ae3d6a80, type: 3}
       propertyPath: m_Name
       value: WallDoor_Interactable
+      objectReference: {fileID: 0}
+    - target: {fileID: 3801698018099407738, guid: 21d5db5934fbd4bd2ae30cb2ae3d6a80, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6880406589036558994, guid: 21d5db5934fbd4bd2ae30cb2ae3d6a80, type: 3}
       propertyPath: uniqueId
@@ -5707,6 +5720,10 @@ PrefabInstance:
     - target: {fileID: 7268184837092822414, guid: 401596bbf8b214d15b75711ebbfb3421, type: 3}
       propertyPath: m_Name
       value: Lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785420540298720770, guid: 401596bbf8b214d15b75711ebbfb3421, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 401596bbf8b214d15b75711ebbfb3421, type: 3}

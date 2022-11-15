@@ -233,7 +233,8 @@ public class CharacterController : MonoBehaviour
     private void PerformDeath()
     {
         // play the cinematic and die
-        onDeath.Invoke();
+        animator.SetTrigger("Death");
+        //onDeath.Invoke();
     }
     
     private IEnumerator RestartLevel()

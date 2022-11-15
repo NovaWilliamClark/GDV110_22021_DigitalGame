@@ -67,7 +67,10 @@ public class LevelController : MonoBehaviour
         if (onLoadCutscene )
         {
             if (!levelDataSo.levelCutscenePlayed)
+            {
                 UIHelpers.Instance.Fader.Fade(0f, 0.1f);
+                onLoadCutscene.gameObject.SetActive(true);
+            }
             else
             {
                 onLoadCutscene.gameObject.SetActive(false);
@@ -357,11 +360,14 @@ public class LevelController : MonoBehaviour
 
     private void OnPlayerDeath()
     {
-        UIHelpers.Instance.SanityMeter.UnsetPlayer();
-        UIHelpers.Instance.SanityMeter.Disable();
-        playerDataRef.wasDead = true;
-        instancedPlayer = null;
-        StartCoroutine(WaitALittleBit());
+        UIHelpers.Instance.Fader.Fade(1f, 1f, () =>
+        {
+            UIHelpers.Instance.SanityMeter.UnsetPlayer();
+            UIHelpers.Instance.SanityMeter.Disable();
+            playerDataRef.wasDead = true;
+            instancedPlayer = null;
+            StartCoroutine(WaitALittleBit());
+        });
     }
 
     public IEnumerator WaitALittleBit()

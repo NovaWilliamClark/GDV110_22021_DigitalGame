@@ -9,6 +9,7 @@ public class TriggeredCutscene : InteractionPoint
      
     protected override void Interact(CharacterController cc)
     {
+        cutscene.gameObject.SetActive(true);
         cutscene.Play();
         cutscene.Completed.AddListener(OnCutsceneDone);
     }

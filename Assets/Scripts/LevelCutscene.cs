@@ -33,6 +33,8 @@ public class LevelCutscene : MonoBehaviour
         director = GetComponent<PlayableDirector>();
         lvlController = FindObjectOfType<LevelController>();
         lvlController.PlayerSpawned.AddListener(OnPlayerSpawned);
+        director.Stop();
+        gameObject.SetActive(false);
     }
 
     public void OnPlayerSpawned(CharacterController cc)
@@ -54,12 +56,7 @@ public class LevelCutscene : MonoBehaviour
         }
         lvlController.PlayerSpawned.RemoveListener(OnPlayerSpawned);
     }
-
-    private void Start()   
-    {
-        director.stopped += OnDirectorStopped;
-    }
-
+    
     private void OnDirectorStopped(PlayableDirector obj)
     {
         //Debug.Log("Director has stopped");
@@ -91,6 +88,7 @@ public class LevelCutscene : MonoBehaviour
 
     public void Play()
     {
+        director.stopped += OnDirectorStopped;
         if (player)
         {
             var sanity = player.GetComponent<CharacterSanity>();
