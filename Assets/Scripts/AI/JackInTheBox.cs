@@ -15,16 +15,6 @@ public class JackInTheBox : MovableObject
     private bool isInProgress = false;
     private bool isFinished = false;
 
-    private void Start()
-    {
-        CharacterController.OnObjectMove += CharacterController_OnObjectMove;
-    }
-
-    private void OnDestroy()
-    {
-        CharacterController.OnObjectMove -= CharacterController_OnObjectMove;
-    }
-
     private void CharacterController_OnObjectMove(bool obj)
     {
         if (!isFinished)

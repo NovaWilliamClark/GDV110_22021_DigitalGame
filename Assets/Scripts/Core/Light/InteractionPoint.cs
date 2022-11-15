@@ -228,7 +228,7 @@ public abstract class InteractionPoint : MonoBehaviour
         AudioManager.Instance.PlaySound(useSfx, volume);
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         if (showVisuals)
             DrawGizmoDisc(transform, fxRange);

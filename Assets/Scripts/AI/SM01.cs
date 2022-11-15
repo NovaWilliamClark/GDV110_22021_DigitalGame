@@ -48,10 +48,10 @@ namespace AI
             attackCollider = GetComponentInChildren<SM01AttackCollider>();
             persistentObject = GetComponent<PersistentObject>();
             var lc = FindObjectOfType<LevelController>();
-            lc.PlayerSpawned.AddListener(onPlayerLoaded);
+            lc.PlayerSpawned.AddListener(OnPlayerLoaded);
         }
 
-        private void onPlayerLoaded(CharacterController controller)
+        private void OnPlayerLoaded(CharacterController controller)
         {
             targetPlayer = GameObject.FindWithTag("Player");
         }
