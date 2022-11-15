@@ -81,4 +81,9 @@ public class UIPromptBox : MonoBehaviour
             });
         animationSequence.PlayBackwards();
     }
+
+    public void ShowPreview(string textToShow)
+    {
+        promptText.text = textToShow;
+    }
 }

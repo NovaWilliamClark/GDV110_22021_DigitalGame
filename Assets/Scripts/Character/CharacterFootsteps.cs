@@ -12,6 +12,7 @@ public class CharacterFootsteps : MonoBehaviour
 
     public void OnFootstep()
     {
+        if (!Application.isPlaying) return;
         var clip = FootstepClips[Random.Range(0, FootstepClips.Capacity)];
         AudioManager.Instance.PlaySound(clip,0.2f);
     }

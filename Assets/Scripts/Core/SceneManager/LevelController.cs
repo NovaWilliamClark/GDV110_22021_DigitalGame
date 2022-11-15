@@ -10,14 +10,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using AI;
 using Audio;
 using Character;
-using Cinemachine;
-using Core;
 using Core.SceneManager;
-using UnityEditor.VersionControl;
+using DG.Tweening;
+using Objects;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -35,6 +33,8 @@ public class LevelController : MonoBehaviour
     private CharacterController instancedPlayer;
     public bool safeZone;
 
+    public LevelData_SO LevelDataSo => levelDataSo;
+    
     public LevelCutscene onLoadCutscene;
 
     public AudioClip LevelBGM;
@@ -47,6 +47,9 @@ public class LevelController : MonoBehaviour
 
     public UnityEvent<CharacterController> PlayerSpawned;
     public UnityEvent LevelInitialized;
+
+    private SceneTransition sceneTransitionTarget;
+    
 
     private void Awake()
     {
@@ -119,28 +122,52 @@ public class LevelController : MonoBehaviour
             {
                 if (interaction)
                 {
-                    if (levelDataSo.levelInteractions.GetObjectState(po).State is InteractionState data)
+                    var state = levelDataSo.levelInteractions.GetObjectState(po).State;
+                    if (state is InteractionState data)
                     {
+                        if (interaction is BreakerObject)
+                        {
+                            data = state as BreakerState;
+                        }
+                        // we only want to set persistent data if the existing data matches our desired type
                         interaction.SetInteractedState(data);
+                    }
+                    else
+                    {
+                        DebugPersistence(interaction);
                     }
                 }
                 if (genericObject)
                 {
-                    if (levelDataSo.levelGenericObjects.GetObjectState(po).State is GenericState data)
+                    if (levelDataSo.levelGenericObjects.GetObjectState(po)?.State is GenericState data)
                     {
                         genericObject.SetPersistentState(data);
+                    }
+                    else
+                    {
+                        DebugPersistence(genericObject);
                     }
                 }
                 if (container)
                 {
-                    if (levelDataSo.levelContainers.GetObjectState(po).State is ItemContainerState data)
+                    if (levelDataSo.levelContainers.GetObjectState(po)?.State is ItemContainerState data)
+                    {
                         container.SetContainerState(data);
+                    }
+                    else
+                    {
+                        DebugPersistence(container);
+                    }
                 }
                 if (mob)
                 {
-                    if (levelDataSo.levelEnemies.GetObjectState(po).State is EnemyLevelState data)
+                    if (levelDataSo.levelEnemies.GetObjectState(po)?.State is EnemyLevelState data)
                     {
                         mob.SetEnemyState(data);
+                    }
+                    else
+                    {
+                        DebugPersistence(mob);
                     }
                 }
             }
@@ -180,7 +207,6 @@ public class LevelController : MonoBehaviour
                 mob.EnemyStateChanged.AddListener(OnEnemyStateChanged);
             }
             #endregion
-
         }
 
         // Initialize level data to default state
@@ -191,6 +217,11 @@ public class LevelController : MonoBehaviour
         
         // Inform objects that want to do all the things before player is spawned
         LevelInitialized?.Invoke();
+    }
+
+    private void DebugPersistence(Component component)
+    {
+        Debug.LogWarningFormat("Trying to set persistent state for {0} but LevelData {1} returning Null ref.\b Has state been set? Will be null when default PersistentObjectState", component.gameObject.name, levelDataSo.name);
     }
 
     private void OnEnemyStateChanged(PersistentObject po, EnemyLevelState state)
@@ -229,18 +260,31 @@ public class LevelController : MonoBehaviour
         
         AudioManager.Instance.PlayMusic(LevelBGM);
 
-        int spawnIndex = TransitionManager.Instance.GetSpawnIndex;
         Vector2 pos = new Vector2();
-
         PlayerSpawnPoint.FacingDirection direction = PlayerSpawnPoint.FacingDirection.Right;
-
-        foreach (PlayerSpawnPoint spawn in playerSpawnPoints)
+        
+        // set up spawn
+        var tmi = TransitionManager.Instance;
+        if (tmi.isChangingScenes)
         {
-            if (spawn.GetSpawnIndex == spawnIndex)
+            tmi.isChangingScenes = false;
+            foreach (var sceneTransition in FindObjectsOfType<SceneTransition>())
             {
-                pos = spawn.GetPosition;
-                direction = spawn.GetFacingDirection;
-                break;
+                if (sceneTransition.TargetScene == tmi.previousScene)
+                {
+                    sceneTransitionTarget = sceneTransition;
+                    break;
+                }
+            }
+
+            if (sceneTransitionTarget)
+            {
+                pos = sceneTransitionTarget.SpawnPosition;
+                direction = sceneTransitionTarget.SpawnFacingDirection;
+            }
+            else
+            {
+                Debug.LogWarningFormat("Changing scene set but cannot find spawn location");
             }
         }
 

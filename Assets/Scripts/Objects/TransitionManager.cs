@@ -23,6 +23,12 @@ public class TransitionManager : MonoBehaviour
     private LevelController _controller;
     public UnityEvent ev;
     
+    [Header("Scene Stuff")] 
+    public bool isChangingScenes = false;
+    public string previousScene;
+    public string transitionInteractable;
+
+    
     private void Awake()
     {
         if (Instance == null)
@@ -34,6 +40,11 @@ public class TransitionManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void GetTargetSpawn()
+    {
+        
     }
 
     void Start()

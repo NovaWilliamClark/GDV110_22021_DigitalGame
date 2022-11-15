@@ -7,6 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Create LevelData", fileName = "LevelData", order = 0)]
 public class LevelData_SO : ScriptableObject
 {
+    public string sceneName;
     public LevelData levelInteractions = new();
     public LevelData levelGenericObjects = new();
     public LevelData levelContainers = new();
@@ -127,4 +128,17 @@ public class EnemyLevelState : PersistentObjectState
     public bool active = true;
 
     public EnemyLevelState(string id) : base(id) { }
+}
+
+[Serializable]
+public class BreakerState : InteractionState
+{
+    public bool opened = false;
+    public bool usedFuseSquare = false;
+    public bool usedFuseCircle = false;
+    public bool usedFuseTriangle = false;
+
+    public BreakerState(string id) : base(id)
+    {
+    }
 }

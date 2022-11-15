@@ -62,15 +62,20 @@ public class LevelCutscene : MonoBehaviour
 
     private void OnDirectorStopped(PlayableDirector obj)
     {
-        Debug.Log("Director has stopped");
-        player.enabled = true;
-        player.ToggleMovement(true);
-        if (!lvlController.safeZone)
-            player.GetComponent<CharacterSanity>().Enable();
-        
-        player.GetComponent<CharacterSanity>().AdjustDecreaseRate(0f, true);
-        
-        player.SetAnimationControl();
+        //Debug.Log("Director has stopped");
+        if (player)
+        {
+            player.enabled = true;
+            player.ToggleMovement(true);
+            var sanity = player.GetComponent<CharacterSanity>();
+            if (!lvlController.safeZone)
+            {
+                sanity.Enable();
+                sanity.AdjustDecreaseRate(0f, true);
+            }
+            
+            player.SetAnimationControl();
+        }
         Completed.Invoke();
         
     }
@@ -86,12 +91,17 @@ public class LevelCutscene : MonoBehaviour
 
     public void Play()
     {
-        player.GetComponent<CharacterSanity>().AdjustDecreaseRate(0f);
-        
-        player.enabled = false;
-        //vcam.Follow = player.transform;
-        player.ToggleMovement(false);
-        player.SetAnimationControl(true);
+        if (player)
+        {
+            var sanity = player.GetComponent<CharacterSanity>();
+            sanity.AdjustDecreaseRate(0f);
+            sanity.Disable();
+            player.enabled = false;
+            //vcam.Follow = player.transform;
+            player.ToggleMovement(false);
+            player.SetAnimationControl(true);
+        }
+
         director.Play();
     }
     

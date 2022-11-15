@@ -20,12 +20,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
 using Sequence = DG.Tweening.Sequence;
 
-[RequireComponent(typeof(Collider2D)), RequireComponent(typeof(PersistentObject))]
+[RequireComponent(typeof(Collider2D), typeof(PersistentObject))]
 public abstract class InteractionPoint : MonoBehaviour
 {
     [Header("Prompt")]
     [SerializeField] protected UIPromptBox promptBox;
     [SerializeField] protected string promptMessage;
+    [SerializeField] protected bool previewPrompt = true;
 
     [SerializeField] protected bool automaticInteraction = false;
     private BoxCollider2D triggerArea;
@@ -54,20 +55,22 @@ public abstract class InteractionPoint : MonoBehaviour
     protected PersistentObject persistentObject;
 
     protected PlayerInput input;
+    protected LevelController levelController;
 
     [HideInInspector] public UnityEvent<InteractionPoint,InteractionState> Interacted;
 
      protected virtual void Awake()
      {
          triggerArea = GetComponent<BoxCollider2D>();
+         levelController = FindObjectOfType<LevelController>();
          if (!renderer)
             renderer = GetComponent<SpriteRenderer>();
          if (renderer && showVisuals)
          {
              var rend = new GameObject("Sprite Outline");
-             rend.transform.localScale = renderer.transform.localScale;
              rend.transform.position = renderer.transform.position;
              rend.transform.parent = renderer.transform;
+             rend.transform.localScale = Vector3.one;
              glowRenderer = rend.AddComponent<SpriteRenderer>();
              glowRenderer.sprite = renderer.sprite;
              glowRenderer.color = renderer.color;
@@ -76,7 +79,6 @@ public abstract class InteractionPoint : MonoBehaviour
              glowRenderer.material = glowMaterial;
              glowRenderer.color = outlineColour;
              glowRenderer.DOFade(0f, 0f);
-             
              glowRenderer.material.SetColor("_Outline_Colour", outlineColour);
              glowRenderer.material.SetFloat("_varTime", 0f);
              
@@ -226,12 +228,27 @@ public abstract class InteractionPoint : MonoBehaviour
     protected virtual void Interact(CharacterController cc)
     {
         AudioManager.Instance.PlaySound(useSfx, volume);
+        Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         if (showVisuals)
             DrawGizmoDisc(transform, fxRange);
+        
+        if (!Application.isPlaying)
+        {
+            if (!promptBox) return;
+            if (previewPrompt)
+            {
+                promptBox.gameObject.SetActive(true);
+                promptBox.ShowPreview(promptMessage);
+            }
+            else
+            {
+                promptBox.gameObject.SetActive(false);
+            }
+        }
     }
 
     protected void DrawGizmoDisc(Transform t, float radius)

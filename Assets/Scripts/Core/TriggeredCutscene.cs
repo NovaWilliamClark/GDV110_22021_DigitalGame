@@ -10,16 +10,20 @@ public class TriggeredCutscene : InteractionPoint
     protected override void Interact(CharacterController cc)
     {
         cutscene.Play();
+        cutscene.Completed.AddListener(OnCutsceneDone);
     }
 
     public override void SetInteractedState(object state)
     {
         base.SetInteractedState(state);
-        hasInteracted = true;
+        InteractionState istate = state as InteractionState;
+        cutscene.gameObject.SetActive(!istate.interacted);
+        gameObject.SetActive(!istate.interacted);
     }
 
-    private void OnCutsceneDone(PlayableDirector obj)
+    private void OnCutsceneDone()
     {
         // do some clean up
+        Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
     }
 }

@@ -7,30 +7,53 @@
 *
 **********************************************************************************************/
 
+using System;
+using Core.SceneManager;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Objects
 {
     public class SceneTransition : InteractionPoint
     {
         [Header("Scene Transition")]
-        [SerializeField] private string sceneToLoad;
-        [SerializeField] private int spawnPointIndex;
+        [SerializeField] protected LevelData_SO sceneToLoad;
+        public string TargetScene => sceneToLoad.sceneName;
+        [SerializeField] protected  ItemData requiredItem;
+        [SerializeField] protected  bool requiresItem;
+        [SerializeField] protected Vector2 spawnPosition = new Vector2(0,-12f);
+        [SerializeField] protected PlayerSpawnPoint.FacingDirection spawnFacingDirection = PlayerSpawnPoint.FacingDirection.Right;
+        protected  bool hasItem;
 
-        [SerializeField] private ItemData requiredItem;
-        [SerializeField] private bool requiresItem;
-        private bool hasItem;
-        
+        public Vector2 SpawnPosition
+        {
+            get
+            {
+                return transform.position + (Vector3) spawnPosition;
+            }
+        } 
+        public PlayerSpawnPoint.FacingDirection SpawnFacingDirection=> spawnFacingDirection;
+
         protected override void Interact(CharacterController cc)
         {
             if (!cc) return;
             cc.SetPersistentData();
-            TransitionManager.Instance.SetSpawnIndex(spawnPointIndex);
+            var tmi = TransitionManager.Instance;
+            tmi.previousScene = SceneManager.GetActiveScene().name;
+            //tmi.transitionInteractable = persistentObject.Id;
+            tmi.isChangingScenes = true;
+            Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
             UIHelpers.Instance.Fader.Fade(1f, 1f, () =>
             {
                
-                TransitionManager.Instance.LoadScene(sceneToLoad);
+                TransitionManager.Instance.LoadScene(sceneToLoad.sceneName);
             });
+        }
+
+        protected new virtual void OnDrawGizmos()
+        {
+            Gizmos.DrawWireCube(SpawnPosition,Vector3.one);
+            base.OnDrawGizmos();
         }
     }
 }

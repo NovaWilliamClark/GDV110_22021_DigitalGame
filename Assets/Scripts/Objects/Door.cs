@@ -1,23 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using Audio;
+using Objects;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-public class Door : InteractionPoint
+public class Door : SceneTransition
 {
     private Animator animator;
-    
-    [Header("Scene Transition")]
-    [SerializeField] private string sceneToLoad;
-    [SerializeField] private int spawnPointIndex;
-    
     private bool interacted;
 
     [Header("Animation")]
     public float delayAfterAnimation = 1f;
     private static readonly int Open = Animator.StringToHash("Open");
 
+    [SerializeField] bool useAnimation = true;
     
     protected override void Awake()
     {
@@ -31,7 +29,7 @@ public class Door : InteractionPoint
         {
             interacted = true;
             cc.SetPersistentData();
-            if (animator)
+            if (animator && useAnimation)
                 animator.SetTrigger(Open);
 
             AudioManager.Instance.PlaySound(useSfx, volume);
@@ -41,10 +39,14 @@ public class Door : InteractionPoint
             
             StartCoroutine(WaitForThen(() =>
             {
-                TransitionManager.Instance.SetSpawnIndex(spawnPointIndex);
+                var tmi = TransitionManager.Instance;
+                tmi.previousScene = SceneManager.GetActiveScene().name;
+                //tmi.transitionInteractable = persistentObject.Id;
+                tmi.isChangingScenes = true;
+                Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
                 UIHelpers.Instance.Fader.Fade(1f, sfxLength + 0.1f, () =>
                 {
-                    TransitionManager.Instance.LoadScene(sceneToLoad);
+                    TransitionManager.Instance.LoadScene(sceneToLoad.sceneName);
                 });
             }));
         }

@@ -70,9 +70,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 939928237
+  m_SortingLayer: -3
+  m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: 59d2a46cb7b404b8392df67e70b29799, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -160,9 +160,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1411101593
-  m_SortingLayer: -1
-  m_SortingOrder: 0
+  m_SortingLayerID: 939928237
+  m_SortingLayer: -3
+  m_SortingOrder: 88
   m_Sprite: {fileID: 21300000, guid: f0b849bf96d5a472f8c4c35b86b050e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -195,15 +195,14 @@ MonoBehaviour:
   renderer: {fileID: 6697000973959058152}
   glowMaterial: {fileID: 2100000, guid: e3fd3a5ce31a64a2b9861a70a4d2a6d5, type: 2}
   fxRange: 7.5
-  useSfx: {fileID: 0}
-  volume: 0
+  useSfx: {fileID: 8300000, guid: 268d015ea7f01485bbf234f21f1a968d, type: 3}
+  volume: 0.05
   Interacted:
     m_PersistentCalls:
       m_Calls: []
-  sceneToLoad: Level04_ParentsBedroom
+  sceneToLoad: Level06_Basement
   spawnPointIndex: 0
-  sfxToPlay: {fileID: 8300000, guid: 268d015ea7f01485bbf234f21f1a968d, type: 3}
-  sfxVolume: 0.05
+  delayAfterAnimation: 1
 --- !u!61 &3022912342552266208
 BoxCollider2D:
   m_ObjectHideFlags: 0

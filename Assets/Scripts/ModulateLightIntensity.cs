@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class ModulateLightIntensity : MonoBehaviour
 {
-    private Light2D light;
+    private Light2D myLight;
     [SerializeField] private float startDelay = 1f;
     [SerializeField] private float wait = .2f;
     [SerializeField] private float offset = 0.1f;
@@ -16,8 +16,8 @@ public class ModulateLightIntensity : MonoBehaviour
     
     private void Awake()
     {
-        light = GetComponent<Light2D>();
-        startIntensity = light.intensity;
+        myLight = GetComponent<Light2D>();
+        startIntensity = myLight.intensity;
     }
 
     private void Start()
@@ -33,9 +33,9 @@ public class ModulateLightIntensity : MonoBehaviour
     {
         float start = Mathf.Max(startIntensity - offset, 0f);
 
-        DOVirtual.Float(light.intensity, Random.Range(start, startIntensity + offset), wait, updateVal =>
+        DOVirtual.Float(myLight.intensity, Random.Range(start, startIntensity + offset), wait, updateVal =>
         {
-            light.intensity = updateVal;
+            myLight.intensity = updateVal;
         });
     }
 }
