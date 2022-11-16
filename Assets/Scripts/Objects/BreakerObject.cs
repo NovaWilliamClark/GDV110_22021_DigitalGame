@@ -34,7 +34,7 @@ public class BreakerObject : InteractionPoint
 	{
 		cc.PlayerData.breakerFixed = IsBreakerSatisfied();
 	}
-
+	
 	protected override void Interact(CharacterController cc)
 	{
 		var fuseTruthCollection = new bool[3];
@@ -153,6 +153,8 @@ public class BreakerObject : InteractionPoint
 				fuse.SetActive(state.usedFuseCircle);
 			}
 		}
+
+		canInteract = !IsBreakerSatisfied();
 	}
 
 	bool IsBreakerSatisfied()
