@@ -7,6 +7,7 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 [ExecuteInEditMode]
 public class SanityVisual : MonoBehaviour
@@ -73,7 +74,6 @@ public class SanityVisual : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (!Application.isPlaying && !RunInEditor) return;
 
         if (overrideSettings.overrideEnabled)
@@ -163,6 +163,8 @@ public class SanityVisual : MonoBehaviour
         canvasObj.gameObject.SetActive(false);
 
     }
+    
+    
 
     private void OnSanityChanged(float value, float max)
     {

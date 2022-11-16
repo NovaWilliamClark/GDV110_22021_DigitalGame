@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,17 @@ public class MouseFollow : MonoBehaviour
     private CharacterController characterController;
     [SerializeField] private Transform pivot;
     [SerializeField] private PlayerData_SO playerData;
+    public GameObject flashlightVisual;
+    private SpriteRenderer flashlightVisualRenderer;
+
+    [SerializeField] private Vector2 leftPosOffset;
+    [SerializeField] private Vector2 rightPosOffset;
+
+    [SerializeField] private GameObject handPosition;
+    private void Awake()
+    {
+        flashlightVisualRenderer = flashlightVisual.GetComponentInChildren<SpriteRenderer>();
+    }
 
     private void Start()
     {
@@ -67,6 +79,23 @@ public class MouseFollow : MonoBehaviour
             }
 
             transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
+
+            if (flashlightVisual)
+            {
+                if (characterController.IsFacingLeft())
+                {
+                    flashlightVisualRenderer.flipX = true;
+                    flashlightVisualRenderer.flipY = true;
+                }
+                else
+                {
+                    flashlightVisualRenderer.flipX = false;
+                    flashlightVisualRenderer.flipY = false;
+                }
+
+                flashlightVisual.transform.position = handPosition.transform.position;
+                flashlightVisual.transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
+            }
         }
     }
 }

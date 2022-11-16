@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Audio;
 using DG.Tweening;
 using Objects;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -24,6 +25,8 @@ public class CharacterEquipment : MonoBehaviour
     [SerializeField] private GameObject flashlightObject;
     [SerializeField] private ArmMouseTracking trackingScript;
     private bool flashlightCooldownComplete = true;
+
+    public GameObject FlashlightVisual;
 
     private PlayerInput input;
     private InputAction useFlashlightInput;
@@ -56,8 +59,18 @@ public class CharacterEquipment : MonoBehaviour
         useFlashlightInput.performed += OnFlashlightInput;
         data.BatteryValueChanged.AddListener(OnBatteryValueChanged);
         useFlashlightInput.Enable();
+        if (data.equipmentState.hasSockey)
+        {
+            resolver.SetCategoryAndLabel("Hands","Sockey");
+            resolver.ResolveSpriteToSpriteRenderer();
+        }
 
         initialized = true;
+
+        if (data.equipmentState.flashlightEquipped)
+        {
+            FlashlightVisual.SetActive(true);
+        }
         if (data.equipmentState.flashlightIsOn)
         {
             ToggleFlashlight(true);
@@ -168,12 +181,14 @@ public class CharacterEquipment : MonoBehaviour
         {
             resolver.SetCategoryAndLabel("Hands","Sockey");
             resolver.ResolveSpriteToSpriteRenderer();
+            data.equipmentState.hasSockey = true;
         }
 
         if (original == flashlightItemDataRef)
         {
             data.equipmentState.flashlightEquipped = true;
             canUseFlashlight = true;
+            FlashlightVisual.SetActive(true);
             UIHelpers.Instance.BatteryIndicator.Show();
         }
     }

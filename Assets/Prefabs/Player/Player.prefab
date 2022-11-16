@@ -703,6 +703,7 @@ MonoBehaviour:
   flashlightItemDataRef: {fileID: 11400000, guid: 8a1f604e86ff54b41a1109ee6cfe75c4, type: 2}
   flashlightObject: {fileID: 7410701604460823595}
   trackingScript: {fileID: 2945340190018329994}
+  FlashlightVisual: {fileID: 6542389883007776839}
   flashlightActivateSfx: {fileID: 8300000, guid: 2b3c9b7d145644f1d82a5c9513d163cc, type: 3}
   sfxVolume: 0.7
   flashlightUseEvent: {fileID: 0}
@@ -730,14 +731,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 623078617257253925}
-  m_LocalRotation: {x: -0, y: -0, z: -0.75534546, w: -0.65532684}
-  m_LocalPosition: {x: 0.724, y: 0.341, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.18696983, w: 0.98236567}
+  m_LocalPosition: {x: 0.824, y: -0.007, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8611446391345997903}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 98.111}
+  m_Father: {fileID: 8611919517086638025}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 21.552}
 --- !u!212 &1614746614153293345
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -778,7 +779,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1539437121
   m_SortingLayer: 1
-  m_SortingOrder: 455
+  m_SortingOrder: 1500
   m_Sprite: {fileID: -2872683274950231908, guid: cd8282e17ab8a4d1385aef4a00b39037, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -899,15 +900,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3656217044377786656}
-  m_LocalRotation: {x: -0, y: 0.006587599, z: -0, w: 0.99997836}
-  m_LocalPosition: {x: 0.3, y: -0.12, z: 0.84}
+  m_LocalRotation: {x: 0.0002767043, y: 0.0065827477, z: 0.041996773, w: 0.99909604}
+  m_LocalPosition: {x: 1.1547, y: 3.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3440205773489048860}
   m_Father: {fileID: 286041822936246032}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0.755, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0.755, z: 4.814}
 --- !u!114 &1430319146624887246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,6 +924,9 @@ MonoBehaviour:
   player: {fileID: 286041822936246033}
   pivot: {fileID: 802858724418787787}
   playerData: {fileID: 11400000, guid: 6a6e040239aaaef4093abdbe5a62e1d1, type: 2}
+  flashlightVisual: {fileID: 6542389883007776839}
+  leftPosOffset: {x: -0.58, y: -0.4}
+  rightPosOffset: {x: 0, y: 0}
 --- !u!114 &2945340190018329994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,6 +976,38 @@ Transform:
   m_Father: {fileID: 286041822936246032}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1 &6542389883007776839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8611919517086638025}
+  m_Layer: 0
+  m_Name: FlashlightVisual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8611919517086638025
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6542389883007776839}
+  m_LocalRotation: {x: 0, y: 0, z: -0.66728026, w: 0.7448068}
+  m_LocalPosition: {x: 0.02, y: 0.47, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4165563834198457243}
+  m_Father: {fileID: 8611446391345997903}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -83.715}
 --- !u!1 &7410701604460823595
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,14 +1034,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7410701604460823595}
-  m_LocalRotation: {x: 0.010238209, y: -0.0078027304, z: -0.67528856, w: 0.7374413}
-  m_LocalPosition: {x: 0.83176035, y: 0.65999997, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.97, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2442337540540467342}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.261, y: -1.452, z: -84.965}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!114 &3287860270994679228
 MonoBehaviour:
   m_ObjectHideFlags: 0

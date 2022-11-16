@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class UIContainerSlot : MonoBehaviour
 {
     private ItemData itemData;
+    public ItemData Item => itemData;
     private RectTransform rect;
     
 
@@ -27,7 +28,9 @@ public class UIContainerSlot : MonoBehaviour
         itemData = slotItemData;
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, itemData.slotSize.x);
         rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, itemData.slotSize.y);
-        
+
+        icon.sprite = itemData.itemSprite;
+
         button.onClick.AddListener(OnButtonClicked);
     }
 

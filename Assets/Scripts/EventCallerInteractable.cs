@@ -24,4 +24,9 @@ public class EventCallerInteractable : InteractionPoint
         active = st.interacted;
         Interaction.Invoke(st.interacted);
     }
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+    }
 }
