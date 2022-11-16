@@ -225,6 +225,15 @@ public abstract class InteractionPoint : MonoBehaviour
         }
     }
 
+    protected void ResetPrompt(string textToShow)
+    {
+        if (promptBox)
+        {
+            var msg = String.IsNullOrEmpty(textToShow) || textToShow == "" ? promptMessage : textToShow;
+            promptBox.Show(msg);
+        }
+    }
+
     protected virtual void Interact(CharacterController cc)
     {
         AudioManager.Instance.PlaySound(useSfx, volume);

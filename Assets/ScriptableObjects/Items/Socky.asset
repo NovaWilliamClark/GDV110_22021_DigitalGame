@@ -15,8 +15,15 @@ MonoBehaviour:
   itemID: 0
   itemName: 
   itemSprite: {fileID: 0}
+  slotSize: {x: 400, y: 400}
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
   isSingleUse: 0
+  reloadable: 0
+  itemToReload: {fileID: 0}
+  reloadSfx: {fileID: 0}
+  itemPrefab: {fileID: 0}
   itemDataRef: {fileID: 0}
   typeEnum: {fileID: 11400000, guid: cd05bea33cf3c4c399b15768998807ee, type: 2}
+  useSfx: {fileID: 0}
+  useSfxVolume: 0

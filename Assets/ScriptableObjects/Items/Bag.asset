@@ -15,11 +15,15 @@ MonoBehaviour:
   itemID: 20
   itemName: Bag
   itemSprite: {fileID: 21300000, guid: 87baa9a7a47bf42e5bdd10efc35eb9bf, type: 3}
+  slotSize: {x: 400, y: 400}
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
   isSingleUse: 0
   reloadable: 0
   itemToReload: {fileID: 0}
   reloadSfx: {fileID: 0}
+  itemPrefab: {fileID: 0}
   itemDataRef: {fileID: 0}
   typeEnum: {fileID: 11400000, guid: 88dd5ef4b37884802a9ad46351f40537, type: 2}
+  useSfx: {fileID: 0}
+  useSfxVolume: 0

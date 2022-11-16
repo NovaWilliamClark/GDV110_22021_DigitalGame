@@ -19,7 +19,9 @@ public class UIContainer : MonoBehaviour
     private CanvasGroup canvasGroup;
 
     public UnityEvent Closed;
-    
+
+    public UnityEvent<ItemData> ItemClicked;
+
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -30,6 +32,8 @@ public class UIContainer : MonoBehaviour
         var activeRect = activeArea.rect;
         foreach (var item in containerData.initialItems)
         {
+            if (containerData.ItemsTaken.Contains(item))
+                continue;
             var slot = Instantiate(slotPrefab, activeArea.transform);
             var rect = slot.rect;
             var uiSlot = slot.GetComponent<UIContainerSlot>();
@@ -39,32 +43,38 @@ public class UIContainer : MonoBehaviour
             itemsContained.Add(uiSlot);
             slot.anchoredPosition = GetRandomPosition(activeRect, rect);
             var containerSlot = slot.GetComponent<UIContainerSlot>();
-            for (var index = 0; index < itemsContained.Count; index++)
-            {
-                var other = itemsContained[index];
-                if (other != containerSlot)
-                {
-                    var otherRect = other.GetComponent<RectTransform>();
-                
-                    if (otherRect.rect.Overlaps(rect))
-                    {
-                        slot.anchoredPosition = GetRandomPosition(activeRect, rect); 
-                        index -= 1;
-                    }
-                    
-                }
-            }
+            // for (var index = 0; index < itemsContained.Count; index++)
+            // {
+            //     var other = itemsContained[index];
+            //     if (other != containerSlot)
+            //     {
+            //         var otherRect = other.GetComponent<RectTransform>();
+            //     
+            //         if (otherRect.rect.Overlaps(rect))
+            //         {
+            //             slot.anchoredPosition = GetRandomPosition(activeRect, rect); 
+            //             index -= 1;
+            //         }
+            //         
+            //     }
+            // }
         }
     }
 
     private void OnSlotClicked(UIContainerSlot slot)
     {
         Debug.Log("Slot clicked");
-        grabber.SetSlotTarget(((RectTransform) slot.transform).rect.center);
+        grabber.SetSlotTarget(((RectTransform) slot.transform).anchoredPosition, () =>
+        {
+            ItemClicked?.Invoke(slot.Item);
+            slot.gameObject.SetActive(false);
+        });
     }
 
     public void Open()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         canvasGroup.DOFade(1f, 0.5f).OnComplete(() =>
         {
             canvasGroup.interactable = true;
@@ -81,9 +91,11 @@ public class UIContainer : MonoBehaviour
 
     public void Close()
     {
+        Cursor.visible = false;
         canvasGroup.interactable = false;
         canvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
         {
+            Closed?.Invoke();
         });
     }
 }

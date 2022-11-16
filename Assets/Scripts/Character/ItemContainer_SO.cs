@@ -11,15 +11,23 @@ public class ItemContainer_SO : ScriptableObject
     private List<ItemData> items = new();
     private List<ItemData> itemsTaken = new();
 
+    public List<ItemData> ItemsTaken => itemsTaken;
+    
     public List<ItemData> Items => items;
+
+    private void OnEnable()
+    {
+        itemsTaken.Clear();
+        items.Clear();
+    }
+
     public void Init()
     {
         itemsTaken.Clear();
         items.Clear();
         foreach (var initialItem in initialItems)
         {
-            ItemData so = ScriptableObject.Instantiate(initialItem) as ItemData;
-            items.Add(so);
+            items.Add(initialItem);
         }
     }
 
@@ -34,8 +42,12 @@ public class ItemContainer_SO : ScriptableObject
         }
     }
 
+    public bool AllItemsTaken => itemsTaken.Count == items.Count;
+
     public void SetToTaken(ItemData data)
     {
+        //if (data)
+       // ItemDatabase.Instance.GetOriginalItem(data)
         itemsTaken.Add(items.Find(x => x == data));
     }
 }
