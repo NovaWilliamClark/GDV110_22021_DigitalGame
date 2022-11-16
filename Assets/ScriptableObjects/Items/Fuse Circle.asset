@@ -15,10 +15,15 @@ MonoBehaviour:
   itemID: 0
   itemName: Fuse
   itemSprite: {fileID: 0}
+  slotSize: {x: 0, y: 0}
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
-  isSingleUse: 0
+  isSingleUse: 1
   reloadable: 0
   itemToReload: {fileID: 0}
+  reloadSfx: {fileID: 0}
+  itemPrefab: {fileID: 0}
   itemDataRef: {fileID: 0}
   typeEnum: {fileID: 11400000, guid: 32fa6647c224740aba0cd894355d1f3b, type: 2}
+  useSfx: {fileID: 0}
+  useSfxVolume: 0

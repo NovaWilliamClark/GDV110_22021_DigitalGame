@@ -95,6 +95,7 @@ public class PlayerData_SO : ScriptableObject
         inventoryItems.Clear();
         spawnPoint = new SpawnPointData();
         wasDead = false;
+        breakerFixed = false;
 
         spawnPoint.ResetData(this);
     }

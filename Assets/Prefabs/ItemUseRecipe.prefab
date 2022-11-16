@@ -128,10 +128,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptBox: {fileID: 3835614872363642583}
   promptMessage: 
+  previewPrompt: 1
   automaticInteraction: 0
+  canReInteract: 0
   outlineColour: {r: 78, g: 93, b: 111, a: 1}
+  showVisuals: 1
+  renderer: {fileID: 0}
   glowMaterial: {fileID: 0}
   fxRange: 7.5
+  useSfx: {fileID: 0}
+  volume: 0
   Interacted:
     m_PersistentCalls:
       m_Calls: []
@@ -151,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e86d805a0d947d5bbf1728e83ea7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: a2b0c28f-7205-4e9e-a2b9-c0e3d802049d
+  uniqueId: 
 --- !u!1001 &2885406107837366379
 PrefabInstance:
   m_ObjectHideFlags: 0

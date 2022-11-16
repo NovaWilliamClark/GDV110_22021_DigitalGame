@@ -38,10 +38,11 @@ MonoBehaviour:
     flashlightEquipped: 0
     flashlightIsOn: 0
     flashlightDecreaseRate: 2
+  breakerFixed: 1
   inventoryItems: []
   spawnPoint:
-    id: a155d3f9-a6a5-46fb-9193-5fd2a08a60ba
-    spawnPointSet: 1
-    sceneName: Level02_Hallway
+    id: 
+    spawnPointSet: 0
+    sceneName: 
     originalData: {fileID: 11400000}
     dataInstance: {fileID: 0}
