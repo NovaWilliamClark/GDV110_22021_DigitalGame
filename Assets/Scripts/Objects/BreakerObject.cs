@@ -126,7 +126,7 @@ public class BreakerObject : InteractionPoint
 			hasInteracted = true;
 			DisablePrompt();
 		}
-
+		cc.PlayerData.breakerFixed = IsBreakerSatisfied();
 		Interacted?.Invoke(this, state);
 	}
 
