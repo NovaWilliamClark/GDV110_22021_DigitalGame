@@ -69,7 +69,6 @@ namespace Objects
 			if (canMoveObject && Input.GetKey(KeyCode.Mouse1))
 			{
 				OnObjectMove?.Invoke(true);
-				//GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 				gameObject.transform.SetParent(playerController.transform);
 				// Slow PLayer Movement
 				playerController.acceleration = moveVelocity;
@@ -84,9 +83,6 @@ namespace Objects
 				top.y = boxCollider.bounds.max.y;
 				top.y -= boxCollider.bounds.center.y;
 				playerController.gameObject.transform.position = top;
-				//isOnBox = true;
-				//canMoveObject = false;
-				//GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 				gameObject.transform.SetParent(null);
 				playerController.isMovingObject = false;
 				playerController.acceleration = 40.0f;
@@ -97,11 +93,7 @@ namespace Objects
 				OnObjectMove?.Invoke(false);
 				
 				gameObject.transform.SetParent(null);
-				//GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
 				playerController.isMovingObject = false;
-				//isOnBox = false;
-				//canMoveObject = false;
-				
 				playerController.acceleration = 40.0f;
 			}
 		}

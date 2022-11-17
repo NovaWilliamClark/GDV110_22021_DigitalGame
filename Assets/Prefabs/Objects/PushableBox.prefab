@@ -77,8 +77,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptBox: {fileID: 6795652506516354865}
   promptMessage: Drag - RMB
+  previewPrompt: 1
   automaticInteraction: 0
+  canInteract: 1
   canReInteract: 1
+  requiresItem: 0
+  missingItemPromptMsg: 
+  requiredItem: {fileID: 0}
   outlineColour: {r: 0.44948462, g: 0.19977094, b: 0.1679892, a: 1}
   showVisuals: 1
   renderer: {fileID: 5224937445879235250}
@@ -91,7 +96,8 @@ MonoBehaviour:
       m_Calls: []
   isMoving: 0
   moveVelocity: 30
-  playerDetectionRange: {x: 20, y: 6}
+  canMoveObject: 0
+  interactionDistance: 0
 --- !u!50 &8707743299149286607
 Rigidbody2D:
   serializedVersion: 4
@@ -100,7 +106,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5493987407864777630}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -112,7 +118,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &2270009625703182931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e86d805a0d947d5bbf1728e83ea7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 
+  uniqueId: 6df68d95-74a7-4000-beb2-d3f2f55d6117
 --- !u!1 &6836046394613568188
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +204,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1539437121
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 25
   m_Sprite: {fileID: 21300000, guid: 6c15e7fec4171421b8e88a0d808cad8c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -228,7 +234,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.27, y: 9.09}
+    oldSize: {x: 12.91, y: 10.53}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -244,6 +250,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7100958710170172147}
     m_Modifications:
+    - target: {fileID: 422024384568020290, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_text
+      value: Drag - RMB
+      objectReference: {fileID: 0}
+    - target: {fileID: 422024384568020290, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_fontSize
+      value: 2.8
+      objectReference: {fileID: 0}
     - target: {fileID: 1306717890323903876, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -334,7 +348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2103694458185002684, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7541320817509076118, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_PresetInfoIsWorld
