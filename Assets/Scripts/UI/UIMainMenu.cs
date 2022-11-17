@@ -12,12 +12,14 @@ using System.Collections;
 using Audio;
 using Objects;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 using UnityEngine.UI;
 
 public class UIMainMenu : MonoBehaviour
 {
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private float startDelay = 1f;
+    [SerializeField] private GameObject controlScheme;
     public UIMenu StartMenu;
     private UIMenu currentMenu;
     private UIMenu previousMenu;
@@ -83,10 +85,24 @@ public class UIMainMenu : MonoBehaviour
             AudioManager.Instance.StopMusic(1f);
             UIHelpers.Instance.Fader.Fade(1f, 2f, () =>
             {
-                TransitionManager.Instance.LoadScene(StartGameScene);
+                StartCoroutine(ShowControlScheme());
+                //TransitionManager.Instance.LoadScene(StartGameScene);
             });
         });
     }
+
+    private IEnumerator ShowControlScheme()
+    {
+        Debug.Log("setting active");
+        controlScheme.SetActive(true);
+        yield return new WaitForSeconds(4f);
+        UIHelpers.Instance.Fader.Fade(1f,2f, () =>
+        {
+            TransitionManager.Instance.LoadScene(StartGameScene);
+        });
+        
+    }
+
 
     public void QuitGame()
     {
