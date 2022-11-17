@@ -59,6 +59,11 @@ public class UIBatteryIndicator : MonoBehaviour
         _introSequence.Play();
     }
 
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
+
     void FinishSetup()
     {
         var curVal = playerData.CurrentBattery / playerData.MaxBattery;

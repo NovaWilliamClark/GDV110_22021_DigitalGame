@@ -135,7 +135,7 @@ public class CharacterController : MonoBehaviour
         movementInput = new Vector2(moveHorizontal, 0);
 
         //Interaction
-        if (Input.GetButtonDown("Inventory"))
+        if (Input.GetButtonDown("Inventory") && playerData.equipmentState.hasBag)
         {
             ShowInventory();
         }
@@ -274,6 +274,7 @@ public class CharacterController : MonoBehaviour
         //playerData.sanityLossRate = sanityLossRate;
         //playerData.inventoryItems.Clear();
         playerData.SetItems(inventory);
+        equipment.ToggleFlashlight(false);
     }
 
     private void ShowInventory()
@@ -303,9 +304,10 @@ public class CharacterController : MonoBehaviour
         // TODO: BUG - Box should be declared kinematic when on top - box should store it's state
     }
 
-    public void ToggleMovement(bool value)
+    public void ToggleActive(bool value)
     {
         CanMove = value == true ? true : false;
         playerData.flashlightAvailable = value == true ? true : false;
+        characterSanity.inventoryClosed = value == true ? true : false;
     }
 }

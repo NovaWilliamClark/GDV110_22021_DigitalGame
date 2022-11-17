@@ -40,7 +40,7 @@ namespace Character
         private int slotCount;
         public List<ItemData> items { get; private set; } = new List<ItemData>();
         //public List<InventoryItem> items { get; private set; }
-        private List<InventorySlot> slots = new List<InventorySlot>();
+        public List<InventorySlot> slots = new List<InventorySlot>();
         private CharacterController player;
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private CanvasGroup navGroup;
@@ -148,8 +148,7 @@ namespace Character
             canvasGroup.interactable = false;
             if (player)
             {
-                player.ToggleMovement(false);
-                //player.ToggleSanity(false);
+                player.ToggleActive(false);
             }
 
             if (slots.Count <= 0)
@@ -263,8 +262,7 @@ namespace Character
             slotCount = items.Count;
             if (player)
             {
-                player.ToggleMovement(true);
-                //player.ToggleSanity(true);
+                player.ToggleActive(true);
             }
             
             Cursor.visible = false;
@@ -314,7 +312,7 @@ namespace Character
             if (itemDataRef)
             {
                 var item = items.Find(i => i.IsInstanceOf(itemDataRef));
-                if (item)
+                if (item && item.usableInInventory)
                 {
                     item.Use();
                     if (item.isSingleUse)
@@ -337,11 +335,11 @@ namespace Character
             {
                 var item = selectedslots[0].GetItemData;
                 var slot = slots.Find(x => x.GetItemData.itemID == item.itemID);
-                if (item.isSingleUse)
+                if (item.isSingleUse && item.usableInInventory)
                 {
                     if (slot != null)
                     {
-                        if (item.isSingleUse)
+                        if (item.isSingleUse && item.usableInInventory)
                         {
                             slots.Remove(slot);
                             Destroy(slot.gameObject);
@@ -357,8 +355,11 @@ namespace Character
                     effect.Use(gameObject);
                 }
 
-                selectedslots.Remove(slot);
-                slot.Deactivate();
+                if (item.usableInInventory)
+                {
+                    selectedslots.Remove(slot);
+                    slot.Deactivate();
+                }
             }
         }
 
@@ -388,7 +389,7 @@ namespace Character
                         slot.SlotClicked.RemoveAllListeners();
                     }
                     Cursor.visible = false;
-                    player.ToggleMovement(true);
+                    player.ToggleActive(true);
                 }).PlayBackwards();
             
             useButton.onClick.RemoveListener(UseButtonClicked);

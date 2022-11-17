@@ -629,6 +629,7 @@ MonoBehaviour:
       m_Calls: []
   sanityEnabled: 0
   flashlightIsOn: 0
+  inventoryClosed: 1
 --- !u!70 &286041822936246037
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -700,6 +701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resolver: {fileID: 490550977}
   sockeyRef: {fileID: 11400000, guid: 5688889027d7742a1abdb7cde7e35a96, type: 2}
+  bagRef: {fileID: 11400000, guid: d6f41acf17d1949ec9bbdfa4f36d5f34, type: 2}
   flashlightItemDataRef: {fileID: 11400000, guid: 8a1f604e86ff54b41a1109ee6cfe75c4, type: 2}
   flashlightObject: {fileID: 7410701604460823595}
   trackingScript: {fileID: 2945340190018329994}
@@ -992,7 +994,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8611919517086638025
 Transform:
   m_ObjectHideFlags: 0

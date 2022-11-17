@@ -938,6 +938,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1963636384838680171, guid: 4651a08fa357e4357b5278d7bfbc25e4, type: 3}
+      propertyPath: ev.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963636384838680171, guid: 4651a08fa357e4357b5278d7bfbc25e4, type: 3}
+      propertyPath: ev.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1963636384838680171, guid: 4651a08fa357e4357b5278d7bfbc25e4, type: 3}
+      propertyPath: ev.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1963636384838680173, guid: 4651a08fa357e4357b5278d7bfbc25e4, type: 3}
       propertyPath: m_RootOrder
       value: 4

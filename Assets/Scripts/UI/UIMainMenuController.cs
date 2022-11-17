@@ -14,6 +14,7 @@ public class UIMainMenuController : MonoBehaviour
     private void Awake()
     {
         timeline = GetComponent<PlayableDirector>();
+        Cursor.visible = true;
     }
 
     public void PauseTimeline()

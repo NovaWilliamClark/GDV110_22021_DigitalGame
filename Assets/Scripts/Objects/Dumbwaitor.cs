@@ -21,7 +21,7 @@ public class Dumbwaitor : SceneTransition
         }
         DisablePrompt();
         hasInteracted = true;
-        cc.ToggleMovement(false);
+        cc.ToggleActive(false);
         if (animator)
         {
             animator.SetTrigger("Open");

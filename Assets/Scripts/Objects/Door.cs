@@ -33,7 +33,7 @@ public class Door : SceneTransition
                 animator.SetTrigger(Open);
 
             AudioManager.Instance.PlaySound(useSfx, volume);
-            cc.ToggleMovement(false);
+            cc.ToggleActive(false);
 
             var sfxLength = useSfx ? useSfx.length : 0.5f;
             

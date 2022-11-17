@@ -125,7 +125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 270764712822836426, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 923876859722094578, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_SizeDelta.x
@@ -142,6 +142,10 @@ PrefabInstance:
     - target: {fileID: 923876859722094578, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 24.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1957787198311755572, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
+      propertyPath: m_text
+      value: Pickup Bag - RMB
       objectReference: {fileID: 0}
     - target: {fileID: 1957787198311755572, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_fontSize
@@ -165,11 +169,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061120, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.181115
+      value: 0.2677242
       objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061120, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.181115
+      value: 0.27391833
       objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061120, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_LocalScale.z
@@ -177,11 +181,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061120, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 51.966
+      value: 52.1232
       objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061120, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.849
+      value: -5.5632
       objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061120, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -215,6 +219,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2229319080841061121, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d34d88c6c6918490f904b12caa5046de, type: 3}
     - target: {fileID: 2229319080841061133, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_Name
       value: Bag Pickup
@@ -226,7 +234,11 @@ PrefabInstance:
     - target: {fileID: 2229319080841061134, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: itemData
       value: 
-      objectReference: {fileID: 11400000, guid: 0a5bd9dc6ceef45aa943c4446a5dc5b5, type: 2}
+      objectReference: {fileID: 11400000, guid: d6f41acf17d1949ec9bbdfa4f36d5f34, type: 2}
+    - target: {fileID: 2229319080841061134, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
+      propertyPath: promptMessage
+      value: Pickup Bag - RMB
+      objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061134, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: outlineColour.b
       value: 0.86488354
@@ -238,6 +250,22 @@ PrefabInstance:
     - target: {fileID: 2229319080841061134, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: outlineColour.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229319080841061135, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229319080841061135, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229319080841061135, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 3.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229319080841061135, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 6.16
       objectReference: {fileID: 0}
     - target: {fileID: 4038111969172893829, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_SizeDelta.x
