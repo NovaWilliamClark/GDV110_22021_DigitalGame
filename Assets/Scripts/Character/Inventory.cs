@@ -314,7 +314,6 @@ namespace Character
                 var item = items.Find(i => i.IsInstanceOf(itemDataRef));
                 if (item && item.usableInInventory)
                 {
-                    item.Use();
                     if (item.isSingleUse)
                     {
                         items.Remove(item);

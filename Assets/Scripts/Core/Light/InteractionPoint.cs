@@ -18,6 +18,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
+using UnityEngine.Serialization;
 using Sequence = DG.Tweening.Sequence;
 
 [RequireComponent(typeof(Collider2D), typeof(PersistentObject))]
@@ -30,12 +31,21 @@ public abstract class InteractionPoint : MonoBehaviour
 
     [SerializeField] protected bool automaticInteraction = false;
     private BoxCollider2D triggerArea;
-    protected bool canInteract = true;
+    [SerializeField] protected bool canInteract = true;
     protected bool hasInteracted = false;
     protected bool playerInRange;
     [SerializeField] protected bool canReInteract = false;
     protected CharacterController playerRef;
 
+    [Header("Trigger Requirements")] [SerializeField]
+    protected bool requiresItem;
+
+    [SerializeField] protected string missingItemPromptMsg;
+
+    protected bool hasItem;
+
+    [FormerlySerializedAs("requiredImte")] [SerializeField] protected ItemData requiredItem;
+    
     [Header("Visuals")]
     [ColorUsage(true,true)]
     public Color outlineColour = new Color(78f, 93f, 111f, 1f);
@@ -127,10 +137,23 @@ public abstract class InteractionPoint : MonoBehaviour
             if (!other.GetComponent<CharacterController>()) return;
             if (!canInteract) return;
             if (!promptBox) return;
-            
+
             playerRef = other.GetComponent<CharacterController>();
+            
+            string msg;
+            if (requiresItem)
+            {
+                hasItem = playerRef.GetInventory.HasItem(requiredItem);
+
+                msg = !hasItem ? missingItemPromptMsg : promptMessage;
+            }
+            else
+            {
+                msg = promptMessage;
+            }
+            
             promptBox.gameObject.SetActive(true);
-            promptBox.Show(promptMessage);
+            promptBox.Show(msg);
         }
         else
         {
@@ -236,8 +259,28 @@ public abstract class InteractionPoint : MonoBehaviour
 
     protected virtual void Interact(CharacterController cc)
     {
+        if (!ValidateItemRequired(cc))
+        {
+            return;
+        }
         AudioManager.Instance.PlaySound(useSfx, volume);
         Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
+    }
+
+    public bool ValidateItemRequired(CharacterController cc)
+    {
+        if (!requiresItem) return true;
+        
+        hasItem = cc.GetInventory.HasItem(requiredItem);
+        if (!hasItem)
+        {
+            hasInteracted = false;
+            return false;
+        }
+        AudioManager.Instance.PlaySound(requiredItem.useSfx, requiredItem.useSfxVolume);
+        cc.GetInventory.UseItem(requiredItem);
+        return true;
+
     }
 
     protected virtual void OnDrawGizmos()

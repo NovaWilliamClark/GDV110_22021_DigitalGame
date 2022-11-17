@@ -42,7 +42,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] public Animator animator = null;
     [SerializeField] private Transform puppet = null;
     //[SerializeField] private CharacterAudio audioPlayer = null;
-    [SerializeField] private Inventory inventory;
+    [SerializeField] public Inventory inventory;
     [SerializeField] private CharacterEquipment equipment;
 
     [Header("Data")] 

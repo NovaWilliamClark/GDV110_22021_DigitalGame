@@ -19,11 +19,8 @@ namespace Objects
         [Header("Scene Transition")]
         [SerializeField] protected LevelData_SO sceneToLoad;
         public string TargetScene => sceneToLoad.sceneName;
-        [SerializeField] protected  ItemData requiredItem;
-        [SerializeField] protected  bool requiresItem;
         [SerializeField] protected Vector2 spawnPosition = new Vector2(0,-12f);
         [SerializeField] protected PlayerSpawnPoint.FacingDirection spawnFacingDirection = PlayerSpawnPoint.FacingDirection.Right;
-        protected  bool hasItem;
 
         public Vector2 SpawnPosition
         {

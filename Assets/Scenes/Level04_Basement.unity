@@ -2906,30 +2906,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 5773459237369273180, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
-      propertyPath: field of view
-      value: 73.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5773459237369273180, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
-      propertyPath: orthographic size
-      value: 5.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5773459237369273180, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
-      propertyPath: m_NormalizedViewPortRect.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5773459237369273180, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
-      propertyPath: m_NormalizedViewPortRect.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5773459237369273180, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
-      propertyPath: m_NormalizedViewPortRect.width
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5773459237369273180, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
-      propertyPath: m_NormalizedViewPortRect.height
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5773459237369273183, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -4395,6 +4371,9 @@ MonoBehaviour:
   previewPrompt: 1
   automaticInteraction: 0
   canReInteract: 0
+  requiresItem: 0
+  missingItemPromptMsg: 
+  requiredItem: {fileID: 0}
   outlineColour: {r: 5.301961, g: 1.6627451, b: 0.4392157, a: 1}
   showVisuals: 1
   renderer: {fileID: 131686680}
@@ -4406,8 +4385,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   sceneToLoad: {fileID: 11400000, guid: db7e24084367a4b42a45e4d828a697f1, type: 2}
-  requiredItem: {fileID: 0}
-  requiresItem: 0
   spawnPosition: {x: 0, y: -12}
   spawnFacingDirection: 1
   playerData: {fileID: 11400000, guid: 6a6e040239aaaef4093abdbe5a62e1d1, type: 2}
@@ -4572,6 +4549,9 @@ MonoBehaviour:
   previewPrompt: 1
   automaticInteraction: 0
   canReInteract: 0
+  requiresItem: 0
+  missingItemPromptMsg: 
+  requiredItem: {fileID: 0}
   outlineColour: {r: 1.9069043, g: 0.98977417, b: 0.2814954, a: 1}
   showVisuals: 1
   renderer: {fileID: 1474232900}
@@ -4583,8 +4563,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   sceneToLoad: {fileID: 11400000, guid: 809f18a22af2442569d5dace83b263ad, type: 2}
-  requiredItem: {fileID: 0}
-  requiresItem: 0
   spawnPosition: {x: 17.67, y: -12}
   spawnFacingDirection: 1
   delayAfterAnimation: 0.5
@@ -9302,6 +9280,9 @@ MonoBehaviour:
   previewPrompt: 1
   automaticInteraction: 0
   canReInteract: 0
+  requiresItem: 0
+  missingItemPromptMsg: 
+  requiredItem: {fileID: 0}
   outlineColour: {r: 2.839797, g: 0.9867351, b: 0.62957764, a: 1}
   showVisuals: 1
   renderer: {fileID: 199926884}

@@ -305,23 +305,18 @@ public class LevelController : MonoBehaviour
                 playerDataRef.wasDead = false;
             }
         }
-        else if (existingPlayer && !levelDataSo.Initialized)
+        if (!playerDataRef.wasDead && existingPlayer)
         {
+            player = existingPlayer.gameObject;
             pos = existingPlayer.transform.position;
-        }
-
-        if (!existingPlayer)
+            player.transform.position = pos;
+        } else
         {
             player = Instantiate(playerPrefab);
 
             player.transform.position = pos;
 
             //player.transform.position = pos;
-        }
-        else
-        {
-            player = existingPlayer.gameObject;
-            player.transform.position = pos;
         }
 
         instancedPlayer = player.GetComponent<CharacterController>();

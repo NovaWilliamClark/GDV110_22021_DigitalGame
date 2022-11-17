@@ -16,7 +16,6 @@ using UnityEngine.Serialization;
 public class ItemUse : InteractionPoint
 {
     public InteractiveData GetData => data;
-    [FormerlySerializedAs("requiredItemData")] [SerializeField] private ItemData requiredItem;
     [SerializeField] protected bool useGenericMessage = true;
     [SerializeField] protected InteractiveData data;
     protected TextMeshProUGUI messageText;

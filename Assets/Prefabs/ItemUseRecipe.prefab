@@ -130,7 +130,11 @@ MonoBehaviour:
   promptMessage: 
   previewPrompt: 1
   automaticInteraction: 0
+  canInteract: 1
   canReInteract: 0
+  requiresItem: 0
+  missingItemPromptMsg: 
+  requiredItem: {fileID: 0}
   outlineColour: {r: 78, g: 93, b: 111, a: 1}
   showVisuals: 1
   renderer: {fileID: 0}
@@ -141,7 +145,6 @@ MonoBehaviour:
   Interacted:
     m_PersistentCalls:
       m_Calls: []
-  requiredItem: {fileID: 0}
   useGenericMessage: 1
   data: {fileID: 11400000, guid: 7593e4375df8069419f04df89118790b, type: 2}
   recipe: {fileID: 11400000, guid: 28c3669ae4837a14793999098987e38c, type: 2}
