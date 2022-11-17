@@ -2356,6 +2356,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Container: {fileID: 501982620}
+  characterEquipment: {fileID: 1098114397, guid: 8d437f5c5ad29412387761640ab65bd2, type: 3}
+  inventory: {fileID: 2535515143662547529, guid: db5db9c942eab5a4cba393507b16fac9, type: 3}
+  data: {fileID: 11400000, guid: 6a6e040239aaaef4093abdbe5a62e1d1, type: 2}
 --- !u!1 &2088789166
 GameObject:
   m_ObjectHideFlags: 0
