@@ -308,6 +308,5 @@ public class CharacterController : MonoBehaviour
         CanMove = value == true ? true : false;
         playerData.flashlightAvailable = value == true ? true : false;
         characterSanity.inventoryClosed = value == true ? true : false;
-        Cursor.visible = value == true ? true : false;
     }
 }
