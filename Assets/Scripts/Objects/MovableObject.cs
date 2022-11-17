@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 namespace Objects
 {
@@ -8,7 +11,7 @@ namespace Objects
 	{
 		public bool isMoving = false;
 		[SerializeField] public float moveVelocity;
-
+		
 		[Header("Push & Pull")] [SerializeField]
 		private bool canMoveObject;
 		private float movementAcceleration;
@@ -16,6 +19,9 @@ namespace Objects
 		private CharacterController playerController;
 		private Collider2D boxCollider;
 		public static event Action<bool> OnObjectMove;
+		private CharacterController cc;
+		[SerializeField] private float interactionDistance;
+		private bool isOnBox = false;
 
 
 		protected override void Awake()
@@ -24,6 +30,7 @@ namespace Objects
 			boxCollider = GetComponentInChildren<Collider2D>();
 			var lc = FindObjectOfType<LevelController>();
 			lc.PlayerSpawned.AddListener(OnPlayerLoaded);
+			cc = FindObjectOfType<CharacterController>();
 		}
 
 		private void OnPlayerLoaded(CharacterController controller)
@@ -33,26 +40,28 @@ namespace Objects
 		
 		protected override void FixedUpdate()
 		{
-			MoveObject();
 			base.FixedUpdate();
+			MoveObject();
 		}
 
 		protected override void OnTriggerEnter2D(Collider2D other)
 		{
-			base.OnTriggerEnter2D(other);
-			if (!other.gameObject.CompareTag("Player"))
+			if (other.GetComponent<CharacterController>())
 			{
-				return;
+				canMoveObject = true;
+				
 			}
-			
-			// TODO: SET KINEMATIC IF PLAYER IS ON TOP
-			canMoveObject = true;
-			GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+			base.OnTriggerEnter2D(other);
 		}
 
 		protected override void OnTriggerExit2D(Collider2D other)
 		{
-			canMoveObject = false;
+			if (other.GetComponent<CharacterController>())
+			{
+				canMoveObject = false;
+			}
+			
+			//*/
 		}
 
 		private void MoveObject()
@@ -63,23 +72,29 @@ namespace Objects
 				// Slow PLayer Movement
 				playerController.acceleration = moveVelocity;
 				playerController.isMovingObject = true;
-
+				GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+				gameObject.transform.SetParent(playerController.transform);
 				//Move Object   
-				gameObject.transform.Translate(playerController.movementVelocity.x / 50, 0, 0);
+				//gameObject.transform.Translate(playerController.movementVelocity.x / 50, 0, 0);
 			}
-			else if (canMoveObject && Input.GetKeyUp(KeyCode.Space))
+			else if (canMoveObject && Input.GetKeyDown(KeyCode.Space))
 			{
 				// teleport to above the box
 				var top = boxCollider.bounds.center;
 				top.y = boxCollider.bounds.max.y;
 				top.y -= boxCollider.bounds.center.y;
 				playerController.gameObject.transform.position = top;
+				GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+				gameObject.transform.SetParent(null);
+				playerController.acceleration = 40.0f;
 			}
 			else
 			{
 				OnObjectMove?.Invoke(false);
 				playerController.isMovingObject = false;
-				//acceleration = 30.0f;
+				gameObject.transform.SetParent(null);
+				GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+				playerController.acceleration = 40.0f;
 			}
 		}
 	}
