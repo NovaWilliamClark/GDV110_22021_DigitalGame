@@ -13,6 +13,7 @@ namespace Character
         public UnityEvent SanityReachedZero;
         [SerializeField] bool sanityEnabled = false;
 
+        public bool inCutscene = false;
         private float decreaseRate = 0f;
         private float tempDecreaseRate = 0f;
         private bool useTempRate = false;
@@ -36,11 +37,11 @@ namespace Character
         private void Update()
         {
             if (!sanityEnabled) return;
-            if (isInLight && inventoryClosed)
+            if (isInLight && inventoryClosed && !inCutscene)
             {
                 HealSanity(playerData.sanityGainRate);
             }
-            else if (!playerData.equipmentState.flashlightIsOn && inventoryClosed)
+            else if (!playerData.equipmentState.flashlightIsOn && inventoryClosed && !inCutscene)
             {
                 var rate = useTempRate ? tempDecreaseRate : playerData.sanityLossRate;
                 DecreaseSanity(rate, true);

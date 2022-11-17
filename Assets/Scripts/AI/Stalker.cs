@@ -21,6 +21,7 @@ namespace AI
 		[SerializeField] private float stopDistance = 15f;
 		[SerializeField] private float targetDistanceThreshold = 5f;
 		private GameObject targetPlayer;
+		private CharacterSanity playerSanity;
 		private Vector2 targetPosition;
 		private Vector2 direction = new (-1, 1);
 		private float distanceToTarget;
@@ -74,6 +75,7 @@ namespace AI
 			{
 				// TODO: Callback Function after everything in loaded
 				targetPlayer = GameObject.FindWithTag("Player");
+				playerSanity = targetPlayer.GetComponent<CharacterSanity>();
 				if (targetPlayer)
 				{
 					var tPosition = targetPlayer.transform.position;
@@ -173,8 +175,10 @@ namespace AI
 		{
 			sanityMeter.ToggleVisibility(true, 0.5f);
 			virtualCamera.enabled = true;
+			targetPlayer.GetComponent<CharacterController>().ToggleActive(false);
 			yield return new WaitForSeconds(60f / 100f * screamTime + 1.6f);
 			virtualCamera.enabled = false;
+			targetPlayer.GetComponent<CharacterController>().ToggleActive(true);
 			sanityMeter.ToggleVisibility(false, 0.5f);
 		}
 

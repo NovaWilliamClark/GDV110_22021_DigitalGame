@@ -3504,11 +3504,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4010880477001354310, guid: e829180730c715b4ea26a3826110d3a1, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4010880477001354310, guid: e829180730c715b4ea26a3826110d3a1, type: 3}
       propertyPath: chaseCastSize.x
-      value: 60
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4010880477001354310, guid: e829180730c715b4ea26a3826110d3a1, type: 3}
       propertyPath: patrolPoints.Array.data[0].x
