@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Level02_ParentsBedroom.unity
     guid: 70f69ac57a3dc455e8b2bcb96da499be
   - enabled: 1
+    path: Assets/Scenes/Level02_GuestRoom.unity
+    guid: a279df84d77034cd88b994145549d238
+  - enabled: 1
     path: Assets/Scenes/Level03_Landing.unity
     guid: 43568976f2a4542b5a3ba98d2a03a2e7
   - enabled: 1
