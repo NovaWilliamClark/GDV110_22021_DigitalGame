@@ -26,6 +26,7 @@ namespace Objects
         public bool hasBeenPickedUp;
         public bool disappearsOnCombination;
         public bool isSingleUse;
+        public bool usableInInventory;
         public bool reloadable;
         public ItemData itemToReload;
         public AudioClip reloadSfx;

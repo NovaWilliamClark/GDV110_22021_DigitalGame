@@ -19,6 +19,7 @@ MonoBehaviour:
   hasBeenPickedUp: 0
   disappearsOnCombination: 1
   isSingleUse: 1
+  usableInInventory: 1
   reloadable: 0
   itemToReload: {fileID: 0}
   reloadSfx: {fileID: 0}

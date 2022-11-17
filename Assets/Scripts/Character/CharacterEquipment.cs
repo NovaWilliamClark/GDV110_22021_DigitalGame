@@ -244,4 +244,17 @@ public class EquipmentState
         };
         return copy;
     }
+    
+    public static EquipmentState Reset()
+    {
+        var copy = new EquipmentState
+        {
+            hasSockey = false,
+            hasBag = false,
+            flashlightEquipped = false,
+            flashlightIsOn = false,
+            flashlightDecreaseRate = 0.1f
+        };
+        return copy;
+    }
 }

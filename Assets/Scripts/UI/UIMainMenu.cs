@@ -37,7 +37,6 @@ public class UIMainMenu : MonoBehaviour
             }
         }
         StartCoroutine(StartWithDelay());
-
     }
     
     
