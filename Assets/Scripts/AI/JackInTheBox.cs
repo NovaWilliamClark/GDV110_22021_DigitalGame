@@ -1,46 +1,61 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Audio;
-using Character;
 using Objects;
 using UnityEngine;
-using UnityEngine.Rendering.UI;
 
 
-public class JackInTheBox : MovableObject
+public class JackInTheBox : InteractionPoint
 {
-    [SerializeField] private float dragTime = 3f;
     [SerializeField] private GameObject jack;
-    
-    private bool isInProgress = false;
-    private bool isFinished = false;
+    [SerializeField] private AudioClip boo;
+    [SerializeField] private AudioClip song;
+    [SerializeField] private Vector2 destination;
+    [SerializeField] private float popSpeed = 1f;
+    [SerializeField] private float sanityDamage = 20f;
 
-    private void CharacterController_OnObjectMove(bool obj)
+    private CharacterController cc;
+
+    protected override void Start()
     {
-        if (!isFinished)
+        base.Start();
+        cc = FindObjectOfType<CharacterController>();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (jack.activeInHierarchy)
         {
-            if (obj && !isInProgress)
-            {
-                isInProgress = true;
-                StartCoroutine(BoxDragRoutine());
-            }
-            else
-            {
-                if (!obj && isInProgress)
-                {
-                    isInProgress = true;
-                    StopCoroutine(BoxDragRoutine());
-                }
-            }
+            jack.transform.position = Vector2.Lerp(jack.transform.position, destination, Time.deltaTime * popSpeed);
         }
     }
 
-    private IEnumerator BoxDragRoutine()
+    protected override void Interact(CharacterController cc)
     {
-        yield return new WaitForSeconds(dragTime);
+        DisablePrompt();
+        StartCoroutine(JacksBoxyRoutine());
+    }
+
+    private IEnumerator JacksBoxyRoutine()
+    {
+        AudioManager.Instance.PlaySound(song, 1f);
+        while (true)
+        {
+            yield return new WaitForSeconds(song.length - 5);
+            break;
+        }
         jack.SetActive(true);
-        //FindObjectOfType<CharacterController>().TakeSanityDamage(sanityDamage,false);
-        Debug.Log("SURPRISE MOTHERFUCKER!!!");
-        isFinished = true;
+        SayBoo();
+    }
+
+    private void SayBoo()
+    {
+        AudioManager.Instance.PlaySound(boo,1f);
+        if (cc != null)
+        {
+            cc.GetCharacterSanity.DecreaseSanity(sanityDamage, false);
+            Debug.Log("Sanity damaged");
+        }
+        
     }
 }
