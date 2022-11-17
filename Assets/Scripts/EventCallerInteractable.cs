@@ -14,6 +14,8 @@ public class EventCallerInteractable : InteractionPoint
         base.Interact(cc);
         active = !active;
         Interaction?.Invoke(active);
+        hasInteracted = true;
+        canInteract = false;
         Interacted?.Invoke(this, new InteractionState(persistentObject.Id) {interacted = true});
     }
 

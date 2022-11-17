@@ -9794,8 +9794,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptBox: {fileID: 5167134900545794925}
   promptMessage: Pickup Battery - RMB
+  previewPrompt: 1
   automaticInteraction: 0
+  canInteract: 1
   canReInteract: 0
+  requiresItem: 0
+  missingItemPromptMsg: 
+  requiredItem: {fileID: 0}
   outlineColour: {r: 78, g: 93, b: 111, a: 1}
   showVisuals: 1
   renderer: {fileID: 0}
@@ -10216,6 +10221,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2229319080841061120}
     m_Modifications:
+    - target: {fileID: 422024384568020290, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_text
+      value: Pickup Battery - RMB
+      objectReference: {fileID: 0}
     - target: {fileID: 1306717890323903876, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

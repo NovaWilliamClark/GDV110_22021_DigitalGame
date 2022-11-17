@@ -170,8 +170,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptBox: {fileID: 6432679808144557621}
   promptMessage: Use Battery - RMB
+  previewPrompt: 1
   automaticInteraction: 0
+  canInteract: 1
   canReInteract: 0
+  requiresItem: 0
+  missingItemPromptMsg: 
+  requiredItem: {fileID: 0}
   outlineColour: {r: 1, g: 0.78712755, b: 0.3066038, a: 1}
   showVisuals: 1
   renderer: {fileID: 0}
@@ -279,7 +284,7 @@ MonoBehaviour:
   m_Intensity: 0.79
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: ad2a0638b703889a674ce4ab00000000bf0d3ea4
+  m_ApplyToSortingLayers: ad2a0638b703889a674ce4ab00000000bf0d3ea48f0dbf348b399c6befa32d33
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
