@@ -63,7 +63,7 @@ public class LevelCutscene : MonoBehaviour
         if (player)
         {
             player.enabled = true;
-            player.ToggleMovement(true);
+            player.ToggleActive(true);
             var sanity = player.GetComponent<CharacterSanity>();
             if (!lvlController.safeZone)
             {
@@ -96,7 +96,7 @@ public class LevelCutscene : MonoBehaviour
             sanity.Disable();
             player.enabled = false;
             //vcam.Follow = player.transform;
-            player.ToggleMovement(false);
+            player.ToggleActive(false);
             player.SetAnimationControl(true);
         }
 

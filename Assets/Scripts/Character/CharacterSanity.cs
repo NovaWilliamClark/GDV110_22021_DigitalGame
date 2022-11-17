@@ -17,6 +17,7 @@ namespace Character
         private float tempDecreaseRate = 0f;
         private bool useTempRate = false;
         public bool flashlightIsOn = false;
+        public bool inventoryClosed = true;
         
         public bool Enabled => sanityEnabled;
 
@@ -35,11 +36,11 @@ namespace Character
         private void Update()
         {
             if (!sanityEnabled) return;
-            if (isInLight)
+            if (isInLight && inventoryClosed)
             {
                 HealSanity(playerData.sanityGainRate);
             }
-            else if (!playerData.equipmentState.flashlightIsOn)
+            else if (!playerData.equipmentState.flashlightIsOn && inventoryClosed)
             {
                 var rate = useTempRate ? tempDecreaseRate : playerData.sanityLossRate;
                 DecreaseSanity(rate, true);

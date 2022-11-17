@@ -27,6 +27,7 @@ public class UIEscapeMenu : MonoBehaviour
     public void ShowHide(bool show = true)
     {
         Container.SetActive(show);
+        Cursor.visible = show == true ? true : false;
         Time.timeScale = show ? 0f : 1f;
         // fade audio down
     }

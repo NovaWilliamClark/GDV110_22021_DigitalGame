@@ -303,9 +303,11 @@ public class CharacterController : MonoBehaviour
         // TODO: BUG - Box should be declared kinematic when on top - box should store it's state
     }
 
-    public void ToggleMovement(bool value)
+    public void ToggleActive(bool value)
     {
         CanMove = value == true ? true : false;
         playerData.flashlightAvailable = value == true ? true : false;
+        characterSanity.inventoryClosed = value == true ? true : false;
+        Cursor.visible = value == true ? true : false;
     }
 }

@@ -148,8 +148,7 @@ namespace Character
             canvasGroup.interactable = false;
             if (player)
             {
-                player.ToggleMovement(false);
-                //player.ToggleSanity(false);
+                player.ToggleActive(false);
             }
 
             if (slots.Count <= 0)
@@ -263,8 +262,7 @@ namespace Character
             slotCount = items.Count;
             if (player)
             {
-                player.ToggleMovement(true);
-                //player.ToggleSanity(true);
+                player.ToggleActive(true);
             }
             
             Cursor.visible = false;
@@ -388,7 +386,7 @@ namespace Character
                         slot.SlotClicked.RemoveAllListeners();
                     }
                     Cursor.visible = false;
-                    player.ToggleMovement(true);
+                    player.ToggleActive(true);
                 }).PlayBackwards();
             
             useButton.onClick.RemoveListener(UseButtonClicked);
