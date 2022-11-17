@@ -7,24 +7,20 @@ public class ContainerTrigger : InteractionPoint
 {
     [SerializeField] private ContainerInventory containerInventory;
 
-    [SerializeField] private bool requiresItem;
-    [SerializeField] private ItemData item;
-    private bool hasItem;
-
     [SerializeField] private string missingItemMessage;
     
     protected override void Interact(CharacterController cc)
     {
         if (requiresItem)
         {
-            hasItem = playerRef.GetInventory.HasItem(item);
+            hasItem = playerRef.GetInventory.HasItem(requiredItem);
             if (!hasItem)
             {
                 hasInteracted = false;
                 return;
             }
-            AudioManager.Instance.PlaySound(item.useSfx, item.useSfxVolume);
-            playerRef.GetInventory.UseItem(item);
+            AudioManager.Instance.PlaySound(requiredItem.useSfx, requiredItem.useSfxVolume);
+            playerRef.GetInventory.UseItem(requiredItem);
         }
         
         AudioManager.Instance.PlaySound(useSfx, volume);
@@ -59,10 +55,17 @@ public class ContainerTrigger : InteractionPoint
             if (!promptBox) return;
             
             playerRef = other.GetComponent<CharacterController>();
+            string msg;
+            if (requiresItem)
+            {
+                hasItem = playerRef.GetInventory.HasItem(requiredItem);
 
-            hasItem = playerRef.GetInventory.HasItem(item);
-
-            var msg = !hasItem ? missingItemMessage : promptMessage;
+                msg = !hasItem ? missingItemMessage : promptMessage;
+            }
+            else
+            {
+                msg = promptMessage;
+            }
             promptBox.gameObject.SetActive(true);
             promptBox.Show(msg);
         }

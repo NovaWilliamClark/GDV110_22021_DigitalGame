@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f863f78e326045139e754b551060fe67, type: 3}
-  m_Name: Level04_BlanketBox
+  m_Name: Level04_BlanketBox 1
   m_EditorClassIdentifier: 
   initialItems:
   - {fileID: 11400000, guid: 8a1f604e86ff54b41a1109ee6cfe75c4, type: 2}

@@ -34,7 +34,6 @@ public class Nightlight : InteractionPoint
     public bool turnedOn = false;
     [FormerlySerializedAs("batteryItem")] [SerializeField] private ItemData batteryItemData;
     [SerializeField] private string missingBatteryMessage;
-    private bool hasItem = false;
     private bool inRadius;
 
     //public UnityEvent<int> Interacted;

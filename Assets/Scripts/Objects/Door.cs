@@ -27,6 +27,11 @@ public class Door : SceneTransition
     {
         if (!interacted)
         {
+            if (!ValidateItemRequired(cc))
+            {
+                return;
+            }
+            
             interacted = true;
             cc.SetPersistentData();
             if (animator && useAnimation)

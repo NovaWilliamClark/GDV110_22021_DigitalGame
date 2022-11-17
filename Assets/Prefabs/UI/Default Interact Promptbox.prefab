@@ -190,7 +190,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Drag - RMB
+  m_text: Activate - RMB
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
   m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}

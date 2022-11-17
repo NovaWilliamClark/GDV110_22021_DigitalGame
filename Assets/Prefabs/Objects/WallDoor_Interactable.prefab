@@ -113,8 +113,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3022912342552266220}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 134.7, y: -4.2, z: 12.55}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 134.7, y: -1.75, z: 12.55}
+  m_LocalScale: {x: 1.2223, y: 1.2223, z: 1.2223}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4310488264976592962}
@@ -188,21 +188,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   promptBox: {fileID: 8121946118131356893}
   promptMessage: Parents Room - RMB
+  previewPrompt: 1
   automaticInteraction: 0
   canReInteract: 0
   outlineColour: {r: 0.6129336, g: 0.73098004, b: 0.8671875, a: 1}
   showVisuals: 1
   renderer: {fileID: 6697000973959058152}
   glowMaterial: {fileID: 2100000, guid: e3fd3a5ce31a64a2b9861a70a4d2a6d5, type: 2}
-  fxRange: 7.5
+  fxRange: 12.76
   useSfx: {fileID: 8300000, guid: 268d015ea7f01485bbf234f21f1a968d, type: 3}
   volume: 0.05
   Interacted:
     m_PersistentCalls:
       m_Calls: []
-  sceneToLoad: Level06_Basement
-  spawnPointIndex: 0
+  sceneToLoad: {fileID: 0}
+  requiredItem: {fileID: 0}
+  requiresItem: 0
+  spawnPosition: {x: 0, y: -12}
+  spawnFacingDirection: 1
   delayAfterAnimation: 1
+  useAnimation: 1
 --- !u!61 &3022912342552266208
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -227,7 +232,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 19.07, y: 31.855923}
+  m_Size: {x: 11.1, y: 25.1}
   m_EdgeRadius: 0
 --- !u!114 &6880406589036558994
 MonoBehaviour:
@@ -270,8 +275,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 3022912342552266210}
     m_Modifications:
     - target: {fileID: 422024384568020290, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_text
+      value: Parents Room - RMB
+      objectReference: {fileID: 0}
+    - target: {fileID: 422024384568020290, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_fontSize
-      value: 1.85
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1306717890323903876, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_Pivot.x
@@ -375,7 +384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2103694458185002684, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6363519421055378764, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_AnchoredPosition.x
