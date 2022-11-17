@@ -18,6 +18,8 @@ public class CharacterEquipment : MonoBehaviour
     [SerializeField] private SpriteResolver resolver;
 
     [SerializeField] private ItemData sockeyRef;
+    
+    [SerializeField] private ItemData bagRef;
 
     [FormerlySerializedAs("flashlightItemRef")]
     [Header("Flashlight")] 
@@ -101,7 +103,7 @@ public class CharacterEquipment : MonoBehaviour
         
     }
 
-    private void ToggleFlashlight(bool on)
+    public void ToggleFlashlight(bool on)
     {
         var startVal = on ? 0 :1f;
         var endVal = on ? 1f : 0f;
@@ -191,6 +193,11 @@ public class CharacterEquipment : MonoBehaviour
             FlashlightVisual.SetActive(true);
             UIHelpers.Instance.BatteryIndicator.Show();
         }
+        
+        if (original == bagRef)
+        {
+            data.equipmentState.hasBag = true;
+        }
     }
     public void ReloadFlashlight(float amount = 500f)
     {
@@ -219,6 +226,7 @@ public class CharacterEquipment : MonoBehaviour
 public class EquipmentState
 {
     public bool hasSockey = false;
+    public bool hasBag = false;
     [Header("Flashlight")]
     public bool flashlightEquipped = false;
     public bool flashlightIsOn = false;
@@ -229,6 +237,7 @@ public class EquipmentState
         var copy = new EquipmentState
         {
             hasSockey = hasSockey,
+            hasBag = hasBag,
             flashlightEquipped = flashlightEquipped,
             flashlightIsOn = flashlightIsOn,
             flashlightDecreaseRate = flashlightDecreaseRate

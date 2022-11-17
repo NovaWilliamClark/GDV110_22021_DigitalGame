@@ -135,7 +135,7 @@ public class CharacterController : MonoBehaviour
         movementInput = new Vector2(moveHorizontal, 0);
 
         //Interaction
-        if (Input.GetButtonDown("Inventory"))
+        if (Input.GetButtonDown("Inventory") && playerData.equipmentState.hasBag)
         {
             ShowInventory();
         }
@@ -274,6 +274,7 @@ public class CharacterController : MonoBehaviour
         //playerData.sanityLossRate = sanityLossRate;
         //playerData.inventoryItems.Clear();
         playerData.SetItems(inventory);
+        equipment.ToggleFlashlight(false);
     }
 
     private void ShowInventory()
