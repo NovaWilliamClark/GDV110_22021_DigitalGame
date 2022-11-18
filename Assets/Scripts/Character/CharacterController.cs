@@ -29,286 +29,260 @@ using Random = Unity.Mathematics.Random;
 
 public enum GroundType
 {
-    None,
-    Soft,
-    Hard
+	None,
+	Soft,
+	Hard
 }
 
 public class CharacterController : MonoBehaviour
 {
-    private readonly Vector3 flippedScale = new Vector3(-1, 1, 1);
+	private readonly Vector3 flippedScale = new Vector3(-1, 1, 1);
 
-    [Header("Character")]
-    [SerializeField] public Animator animator = null;
-    [SerializeField] private Transform puppet = null;
-    //[SerializeField] private CharacterAudio audioPlayer = null;
-    [SerializeField] public Inventory inventory;
-    [SerializeField] private CharacterEquipment equipment;
+	[Header("Character")] [SerializeField] public Animator animator = null;
 
-    [Header("Data")] 
-    [SerializeField] private PlayerData_SO playerData;
+	[SerializeField] private Transform puppet = null;
 
-    public PlayerData_SO PlayerData => playerData;
+	//[SerializeField] private CharacterAudio audioPlayer = null;
+	[SerializeField] public Inventory inventory;
+	[SerializeField] private CharacterEquipment equipment;
 
-    //[SerializeField] private Inventory inventory;
-    public Inventory GetInventory => inventory;
-    public CharacterSanity GetCharacterSanity => characterSanity;
-    public CharacterEquipment Equipment => equipment;
-    public float getSanity { get; private set; } = 100f;
-    public event EventHandler<float> SanityChanged; 
+	[Header("Data")] [SerializeField] private PlayerData_SO playerData;
 
-    [Header("Movement")]
-    [SerializeField] public float acceleration = 30.0f;
-    [SerializeField] private float maxSpeed = 5.0f;
-    [SerializeField] private float minFlipSpeed = 0.1f;
-    private float moveHorizontal;
-    public Vector2 movementVelocity;
-    
-    private Rigidbody2D controllerRigidBody;
-    private Collider2D controllerCollider;
-    private LayerMask softGroundMask;
-    private LayerMask hardGroundMask;
-    private GroundType groundType;
+	public PlayerData_SO PlayerData => playerData;
 
-    private Vector2 movementInput;
-    private Vector2 prevVelocity;
-    private bool isFlipped;
-    
-    [Header("Flashlight")]
-    private CharacterSanity characterSanity;
-    private PlayerInput input;
+	//[SerializeField] private Inventory inventory;
+	public Inventory GetInventory => inventory;
+	public CharacterSanity GetCharacterSanity => characterSanity;
+	public CharacterEquipment Equipment => equipment;
+	public float getSanity { get; private set; } = 100f;
+	public event EventHandler<float> SanityChanged;
 
-    [Header("Animation")]
-    private int animatorMoveSpeed;
-    [FormerlySerializedAs("OnDeath")] public UnityEvent onDeath;
+	[Header("Movement")] [SerializeField] public float acceleration = 30.0f;
+	[SerializeField] private float maxSpeed = 5.0f;
+	[SerializeField] private float minFlipSpeed = 0.1f;
+	private float moveHorizontal;
+	public Vector2 movementVelocity;
 
-    [Header("Push & Pull")]
-    public bool isMovingObject;
-    private float movementAcceleration;
+	private Rigidbody2D controllerRigidBody;
+	private Collider2D controllerCollider;
+	private LayerMask softGroundMask;
+	private LayerMask hardGroundMask;
+	private GroundType groundType;
 
-    private bool CanMove { get; set; }
+	private Vector2 movementInput;
+	private Vector2 prevVelocity;
+	private bool isFlipped;
 
-    private void Start()
-    {
-        FetchPersistentData();
-        //inventory = GetComponentInChildren<Inventory>();
-        inventory.gameObject.SetActive(true);
-        controllerRigidBody = GetComponent<Rigidbody2D>();
-        controllerCollider = GetComponent<Collider2D>();
-        softGroundMask = LayerMask.GetMask("Ground Soft");
-        hardGroundMask = LayerMask.GetMask("Ground Hard");
+	[Header("Flashlight")] private CharacterSanity characterSanity;
+	private PlayerInput input;
 
-        animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
+	[Header("Animation")] private int animatorMoveSpeed;
+	[FormerlySerializedAs("OnDeath")] public UnityEvent onDeath;
 
-        input = new PlayerInput();
-        input.Enable();
+	[Header("Push & Pull")] public bool isMovingObject;
+	private float movementAcceleration;
 
-        characterSanity = this.GetComponent<CharacterSanity>();
-        characterSanity.SanityReachedZero.AddListener(PerformDeath); 
-    
-        CanMove = true;
-    }
+	private bool CanMove { get; set; }
 
-    private void Update()
-    {
-        var keyboard = Keyboard.current;
+	private void Start()
+	{
+		FetchPersistentData();
+		//inventory = GetComponentInChildren<Inventory>();
+		inventory.gameObject.SetActive(true);
+		controllerRigidBody = GetComponent<Rigidbody2D>();
+		controllerCollider = GetComponent<Collider2D>();
+		softGroundMask = LayerMask.GetMask("Ground Soft");
+		hardGroundMask = LayerMask.GetMask("Ground Hard");
 
-        if (!CanMove || keyboard == null)
-        {
-            return;
-        }
+		animatorMoveSpeed = Animator.StringToHash("MoveSpeed");
 
-        // Horizontal Movement
-        moveHorizontal = 0.0f;
+		input = new PlayerInput();
+		input.Enable();
 
-        if (keyboard.leftArrowKey.isPressed || keyboard.aKey.isPressed)
-        {
-            isFlipped = true;
-            moveHorizontal = -1.0f;
-        }
-        else if (keyboard.rightArrowKey.isPressed || keyboard.dKey.isPressed)
-        {
-            isFlipped = false;
-            moveHorizontal = 1.0f;
-        }
+		characterSanity = this.GetComponent<CharacterSanity>();
+		characterSanity.SanityReachedZero.AddListener(PerformDeath);
 
-        movementInput = new Vector2(moveHorizontal, 0);
+		CanMove = true;
+	}
 
-        //Interaction
-        if (Input.GetButtonDown("Inventory") && playerData.equipmentState.hasBag)
-        {
-            ShowInventory();
-        }
-        
+	private void Update()
+	{
+		animator.SetBool("IsPushingBox", isMovingObject);
+		var keyboard = Keyboard.current;
 
+		if (!CanMove || keyboard == null)
+		{
+			return;
+		}
 
-        UpdateDirection();
-    }
+		// Horizontal Movement
+		moveHorizontal = 0.0f;
 
-    private void FixedUpdate()
-    {
-        //MoveObject();
-        UpdateGrounding();
-        UpdateVelocity();
-    }
-    
-    private void UpdateGrounding()
-    {
-        // Use Character Collider to check if touching ground layers
-        if (controllerCollider.IsTouchingLayers(softGroundMask))
-        {
-            groundType = GroundType.Soft;
-        }
-        else if (controllerCollider.IsTouchingLayers(hardGroundMask))
-        {
-            groundType = GroundType.Hard;
-        }
-        else groundType = GroundType.None;
-        
-    }
+		if (keyboard.leftArrowKey.isPressed || keyboard.aKey.isPressed)
+		{
+			isFlipped = true;
+			moveHorizontal = -1.0f;
+		}
+		else if (keyboard.rightArrowKey.isPressed || keyboard.dKey.isPressed)
+		{
+			isFlipped = false;
+			moveHorizontal = 1.0f;
+		}
 
-    private void UpdateVelocity()
-    {
-        movementVelocity = controllerRigidBody.velocity;
-        
-        // Apply acceleration directly because we will clamp prior to assigning back to the body
-        movementVelocity += (movementInput * (acceleration * Time.fixedDeltaTime));
-        
-        // We've consumed the movement, reset it.
-        movementInput = Vector2.zero;
+		movementInput = new Vector2(moveHorizontal, 0);
 
-        // Clamp horizontal speed
-        movementVelocity.x = Mathf.Clamp(movementVelocity.x, -maxSpeed, maxSpeed);
-        
-        controllerRigidBody.velocity = movementVelocity;
-        
-        // Update Animator
-        if (animator)
-        {
-            var horizontalSpeedNormalized = Mathf.Abs(movementVelocity.x) / maxSpeed;
-            animator.SetFloat(animatorMoveSpeed, horizontalSpeedNormalized);
-        }
+		//Interaction
+		if (Input.GetButtonDown("Inventory") && playerData.equipmentState.hasBag)
+		{
+			ShowInventory();
+		}
 
-        // Play Audio
-        // audioPlayer.PlaySteps(groundType, horizontalSpeedNormalized);
-    }
+		UpdateDirection();
+	}
 
-    private void UpdateDirection()
-    {
-        if (!isMovingObject)
-        {
-            if (controllerRigidBody.velocity.x > minFlipSpeed && !isFlipped)
-            {
-                if (puppet)
-                {
-                    puppet.localScale = Vector2.one;
-                }
-            }
-            else if (controllerRigidBody.velocity.x < -minFlipSpeed && isFlipped)
-            {
-           
-                if (puppet)
-                {
-                    puppet.localScale = flippedScale;
-                }
-            }   
-        }
-    }
+	private void FixedUpdate()
+	{
+		UpdateGrounding();
+		UpdateVelocity();
+	}
 
-    public bool IsGrounded()
-    {
-        if (groundType == GroundType.Hard || groundType == GroundType.Soft)
-        {
-            return true;
-        }
-        
-        return false;
-    }
+	private void UpdateGrounding()
+	{
+		animator.SetFloat("Velocity_Y", Mathf.Abs(controllerRigidBody.velocity.y));
+	}
 
-    public bool IsFacingLeft()
-    {
-        return isFlipped;
-    }
+	private void UpdateVelocity()
+	{
+		movementVelocity = controllerRigidBody.velocity;
 
-    private void PerformDeath()
-    {
-        // play the cinematic and die
-        animator.SetTrigger("Death");
-        //onDeath.Invoke();
-    }
-    
-    private IEnumerator RestartLevel()
-    {
-        onDeath.Invoke();
-        
-        yield return new WaitForSeconds(5f);
-        TransitionManager.Instance.LoadScene("Prototype_BensBedroom");
-    }
+		// Apply acceleration directly because we will clamp prior to assigning back to the body
+		movementVelocity += (movementInput * (acceleration * Time.fixedDeltaTime));
 
-    public void SetIsFlipped(bool value)
-    {
-        if (value == true)
-        {
-            puppet.localScale = flippedScale;
-            isFlipped = true;
-        }
-        else
-        {
-            puppet.localScale = Vector2.one;
-            isFlipped = false;
-        }
-    }
+		// We've consumed the movement, reset it.
+		movementInput = Vector2.zero;
 
-    private void FetchPersistentData()
-    {
-        //getSanity = playerData.sanity;
-        //sanityGainRate = playerData.sanityGainRate;
-        //sanityLossRate = playerData.sanityLossRate;
-        inventory.Init(playerData.inventoryItems);
-        equipment.Init(playerData);
-    }
-    public void SetPersistentData()
-    {
-        //playerData.sanity = getSanity;
-        //playerData.sanityGainRate = sanityGainRate;
-        //playerData.sanityLossRate = sanityLossRate;
-        //playerData.inventoryItems.Clear();
-        playerData.SetItems(inventory);
-        equipment.ToggleFlashlight(false);
-    }
+		// Clamp horizontal speed
+		movementVelocity.x = Mathf.Clamp(movementVelocity.x, -maxSpeed, maxSpeed);
 
-    private void ShowInventory()
-    {
-        GetInventory.OpenInventory();
-    }
-    public void AddToInventory(ItemData itemData)
-    {
-        GetInventory.AddToInventory(itemData);
-    }
+		controllerRigidBody.velocity = movementVelocity;
 
-    public void SetAnimationControl(bool disabled = false)
-    {
-        // quick hack so Timeline director has full control of animations
-        animator.SetBool("Enabled", !disabled);
-    }
+		// Update Animator
+		if (animator)
+		{
+			var horizontalSpeedNormalized = Mathf.Abs(movementVelocity.x) / maxSpeed;
+			animator.SetFloat(animatorMoveSpeed, horizontalSpeedNormalized);
+		}
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.GetMask("Enemies")) return;
-    }
+		// Play Audio
+		// audioPlayer.PlaySteps(groundType, horizontalSpeedNormalized);
+	}
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.GetMask("Enemies")) return;
-        // TODO: The controlling of rigidbody values on another object should be moved to the object itself
-        // TODO: BUG - Box should be declared kinematic when on top - box should store it's state
-    }
+	private void UpdateDirection()
+	{
+		if (!isMovingObject)
+		{
+			if (controllerRigidBody.velocity.x > minFlipSpeed && !isFlipped)
+			{
+				if (puppet)
+				{
+					puppet.localScale = Vector2.one;
+				}
+			}
+			else if (controllerRigidBody.velocity.x < -minFlipSpeed && isFlipped)
+			{
+				if (puppet)
+				{
+					puppet.localScale = flippedScale;
+				}
+			}
+		}
+	}
 
-    public void ToggleActive(bool value)
-    {
-        CanMove = value == true ? true : false;
-        playerData.flashlightAvailable = value == true ? true : false;
-        if (characterSanity)
-            characterSanity.inventoryClosed = value == true ? true : false;
-    }
+	public bool IsFacingLeft()
+	{
+		return isFlipped;
+	}
+
+	private void PerformDeath()
+	{
+		// play the cinematic and die
+		animator.SetTrigger("Death");
+		//onDeath.Invoke();
+	}
+
+	private IEnumerator RestartLevel()
+	{
+		onDeath.Invoke();
+
+		yield return new WaitForSeconds(5f);
+		TransitionManager.Instance.LoadScene("Prototype_BensBedroom");
+	}
+
+	public void SetIsFlipped(bool value)
+	{
+		if (value == true)
+		{
+			puppet.localScale = flippedScale;
+			isFlipped = true;
+		}
+		else
+		{
+			puppet.localScale = Vector2.one;
+			isFlipped = false;
+		}
+	}
+
+	private void FetchPersistentData()
+	{
+		//getSanity = playerData.sanity;
+		//sanityGainRate = playerData.sanityGainRate;
+		//sanityLossRate = playerData.sanityLossRate;
+		inventory.Init(playerData.inventoryItems);
+		equipment.Init(playerData);
+	}
+
+	public void SetPersistentData()
+	{
+		//playerData.sanity = getSanity;
+		//playerData.sanityGainRate = sanityGainRate;
+		//playerData.sanityLossRate = sanityLossRate;
+		//playerData.inventoryItems.Clear();
+		playerData.SetItems(inventory);
+		equipment.ToggleFlashlight(false);
+	}
+
+	private void ShowInventory()
+	{
+		GetInventory.OpenInventory();
+	}
+
+	public void AddToInventory(ItemData itemData)
+	{
+		GetInventory.AddToInventory(itemData);
+	}
+
+	public void SetAnimationControl(bool disabled = false)
+	{
+		// quick hack so Timeline director has full control of animations
+		animator.SetBool("Enabled", !disabled);
+	}
+
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.gameObject.layer == LayerMask.GetMask("Enemies")) return;
+	}
+
+	private void OnTriggerExit2D(Collider2D other)
+	{
+		if (other.gameObject.layer == LayerMask.GetMask("Enemies")) return;
+		// TODO: The controlling of rigidbody values on another object should be moved to the object itself
+		// TODO: BUG - Box should be declared kinematic when on top - box should store it's state
+	}
+
+	public void ToggleActive(bool value)
+	{
+		CanMove = value == true ? true : false;
+		playerData.flashlightAvailable = value == true ? true : false;
+		characterSanity.inventoryClosed = value == true ? true : false;
+	}
 }
