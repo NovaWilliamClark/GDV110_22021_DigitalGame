@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 700205899}
   - component: {fileID: 7456955538459684190}
   - component: {fileID: 1944511925505241892}
-  - component: {fileID: 2695404829803615077}
+  - component: {fileID: 6563589897380318855}
   m_Layer: 0
   m_Name: Puppet_Container
   m_TagString: Untagged
@@ -165,7 +165,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 15, y: 20}
   m_EdgeRadius: 0
---- !u!114 &2695404829803615077
+--- !u!114 &6563589897380318855
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,12 +174,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 700205898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c40ce77b85e1848a85baa3b8779698, type: 3}
+  m_Script: {fileID: 11500000, guid: e974ed64062e66247ad8766d1aaee403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 55
   collisionAttackBoxSize: {x: 15, y: 20}
-  collisonBox: {fileID: 1944511925505241892}
+  collisonBox: {fileID: 0}
 --- !u!1 &728746358
 GameObject:
   m_ObjectHideFlags: 0

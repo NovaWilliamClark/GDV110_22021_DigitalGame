@@ -32,7 +32,7 @@ namespace AI
         [SerializeField] public float attackDistance;
         [SerializeField] private float attackCooldown = 3;
         private GameObject targetPlayer;
-        private SM01AttackCollider attackCollider;
+        private SM01BossAttackCollider attackCollider;
         private bool isAttacking;
         private bool isInAttackCooldown;
         
@@ -47,7 +47,7 @@ namespace AI
         // Start is called before the first frame update
         private void Awake()
         {
-            attackCollider = GetComponentInChildren<SM01AttackCollider>();
+            attackCollider = GetComponentInChildren<SM01BossAttackCollider>();
             persistentObject = GetComponent<PersistentObject>();
             var lc = FindObjectOfType<LevelController>();
             targetPlayer = GameObject.FindWithTag("Player");
