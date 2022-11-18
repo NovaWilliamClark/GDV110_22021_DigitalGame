@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -31,8 +32,14 @@ public class WaveSpawner : MonoBehaviour
 
    public SpawnState state = SpawnState.counting;
    
-   void OnEnable()
+   void Awake()
    {
+      this.GameObject().SetActive(false);
+   }
+
+   public void TriggerSpawner()
+   {
+      this.GameObject().SetActive(true);
       waveCountdown = timeBetweenWaves;
    }
 
@@ -118,7 +125,8 @@ public class WaveSpawner : MonoBehaviour
 
       if (nextWave == 0)
       {
-         Instantiate(enemy, transform.position, transform.rotation);
+         Vector3 spawnPosition = new(transform.position.x, -19, transform.position.z);
+         Instantiate(enemy, spawnPosition, transform.rotation);
       }
       else if (nextWave == 1)
       {
@@ -127,6 +135,7 @@ public class WaveSpawner : MonoBehaviour
       }
       else if (nextWave == 2)
       {
+         Vector3 spawnPosition = new(transform.position.x, -19, transform.position.z);
          Instantiate(enemy, transform.position, transform.rotation);  
       }
    }

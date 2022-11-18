@@ -81,7 +81,6 @@ public class Boogeyman : MonoBehaviour
         if (Mathf.Abs(playerPosition.x - currentPosition.x) > 20)
         {
             // Set bool for animator isMoving
-            Debug.Log("The Boogeyman is moving");
             currentPosition = Vector3.MoveTowards(currentPosition, playerPosition, maxMoveDistance * Time.deltaTime);
             transform.position = currentPosition;
         }

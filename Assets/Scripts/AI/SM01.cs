@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Linq;
 using Core;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -72,7 +74,7 @@ namespace AI
             UpdateDirection();
             BoxCastPlayerDetection();
         }
-        
+
         private void Move()
         {
             var currentPosition = transform.position;
