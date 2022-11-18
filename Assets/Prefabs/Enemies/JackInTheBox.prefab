@@ -237,7 +237,7 @@ MonoBehaviour:
   song: {fileID: 8300000, guid: 9714a635a69165549be9ac1a3518a73d, type: 3}
   destination: {x: 0, y: 4}
   popSpeed: 1
-  sanityDamage: 10
+  sanityDamage: 20
   animator: {fileID: 8281961128671013664}
 --- !u!114 &4714347319815985577
 MonoBehaviour:
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e86d805a0d947d5bbf1728e83ea7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 
+  uniqueId: 36d34c38-dc88-46e9-b989-2e81cd6379b8
 --- !u!1 &6691967118559534215
 GameObject:
   m_ObjectHideFlags: 0

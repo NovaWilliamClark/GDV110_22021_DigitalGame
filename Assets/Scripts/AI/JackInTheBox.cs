@@ -22,17 +22,7 @@ namespace AI
             base.Start();
             ccontroller = FindObjectOfType<CharacterController>();
         }
-    
-        protected override void Update()
-        {
-            base.Update();
-            
-            /*if (jack.activeInHierarchy)
-            {
-                jack.transform.position = Vector2.Lerp(jack.transform.position, new Vector2(transform.position.x, destination.y), Time.deltaTime * popSpeed);
-            }*/
-        }
-    
+
         protected override void Interact(CharacterController controller)
         {
             DisablePrompt();
@@ -56,25 +46,23 @@ namespace AI
             if (animator != null)
             {
                 animator.SetTrigger("Trigger");
-                //StartCoroutine(AnimatorRoutine());
-                //animator.SetBool("Jumping", false);
             }
-            animator.SetBool("Stop", true);
+            //animator.SetBool("Stop", true);
             AudioManager.Instance.PlaySound(boo,1f);
             if (ccontroller != null)
             {
                 ccontroller.GetCharacterSanity.DecreaseSanity(sanityDamage, false);
                 Debug.Log("Sanity damaged");
             }
-            
+
+            StartCoroutine(ByeByeBoxRoutine());
         }
-}
 
+        private IEnumerator ByeByeBoxRoutine()
+        {
+            yield return new WaitForSeconds(7f);
+            jack.SetActive(false);
+        }
+    }
 
-    /*private IEnumerator AnimatorRoutine()
-    {
-        //yield return new WaitForSeconds(3f);
-        
-    }*/
-    
 }
