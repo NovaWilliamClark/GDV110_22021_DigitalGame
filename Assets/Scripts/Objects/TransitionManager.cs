@@ -31,6 +31,8 @@ public class TransitionManager : MonoBehaviour
 
     public List<LevelData_SO> AllLevels;
 
+    [SerializeField] private PlayerData_SO originalPlayerData;
+
 
     private void Awake()
     {
@@ -68,6 +70,8 @@ public class TransitionManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
+            originalPlayerData.ResetData();
+            originalPlayerData = originalPlayerData.Copy();
             foreach (var level in AllLevels)
             {
                 level.MainMenu();
