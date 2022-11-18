@@ -13,31 +13,32 @@ namespace AI
         [SerializeField] private Vector2 destination;
         [SerializeField] private float popSpeed = 1f;
         [SerializeField] private float sanityDamage = 20f;
-
-        private CharacterController characterController;
-
+        [SerializeField] private Animator animator;
+    
+        private CharacterController ccontroller;
+    
         protected override void Start()
         {
             base.Start();
-            characterController = FindObjectOfType<CharacterController>();
+            ccontroller = FindObjectOfType<CharacterController>();
         }
-
+    
         protected override void Update()
         {
             base.Update();
-        
-            if (jack.activeInHierarchy)
+            
+            /*if (jack.activeInHierarchy)
             {
                 jack.transform.position = Vector2.Lerp(jack.transform.position, new Vector2(transform.position.x, destination.y), Time.deltaTime * popSpeed);
-            }
+            }*/
         }
-
+    
         protected override void Interact(CharacterController controller)
         {
             DisablePrompt();
             StartCoroutine(JacksBoxyRoutine());
         }
-
+    
         private IEnumerator JacksBoxyRoutine()
         {
             AudioManager.Instance.PlaySound(song, 1f);
@@ -49,16 +50,31 @@ namespace AI
             jack.SetActive(true);
             SayBoo();
         }
-
+    
         private void SayBoo()
         {
-            AudioManager.Instance.PlaySound(boo,1f);
-            if (characterController != null)
+            if (animator != null)
             {
-                characterController.GetCharacterSanity.DecreaseSanity(sanityDamage, false);
+                animator.SetTrigger("Trigger");
+                //StartCoroutine(AnimatorRoutine());
+                //animator.SetBool("Jumping", false);
+            }
+            animator.SetBool("Stop", true);
+            AudioManager.Instance.PlaySound(boo,1f);
+            if (ccontroller != null)
+            {
+                ccontroller.GetCharacterSanity.DecreaseSanity(sanityDamage, false);
                 Debug.Log("Sanity damaged");
             }
-        
+            
         }
-    }
+}
+
+
+    /*private IEnumerator AnimatorRoutine()
+    {
+        //yield return new WaitForSeconds(3f);
+        
+    }*/
+    
 }
