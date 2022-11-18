@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 namespace AI
 {
     [RequireComponent(typeof(PersistentObject))]
-    public class SM01 : MonoBehaviour, ILightResponder
+    public class SM01Boss : MonoBehaviour, ILightResponder
     {
         [Header("Movement")]
         [SerializeField] private float moveVelocity = 10;
@@ -50,11 +50,6 @@ namespace AI
             attackCollider = GetComponentInChildren<SM01AttackCollider>();
             persistentObject = GetComponent<PersistentObject>();
             var lc = FindObjectOfType<LevelController>();
-            lc.PlayerSpawned.AddListener(OnPlayerLoaded);
-        }
-
-        private void OnPlayerLoaded(CharacterController controller)
-        {
             targetPlayer = GameObject.FindWithTag("Player");
         }
 

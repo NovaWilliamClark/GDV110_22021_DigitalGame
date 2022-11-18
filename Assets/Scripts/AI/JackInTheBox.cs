@@ -4,7 +4,7 @@ using Objects;
 using UnityEngine;
 
 
-public class JackInTheBox : InteractionPoint
+public class JackInTheBox : MovableObject
 {
     [SerializeField] private GameObject jack;
     [SerializeField] private AudioClip boo;
@@ -24,9 +24,10 @@ public class JackInTheBox : InteractionPoint
     protected override void Update()
     {
         base.Update();
+        
         if (jack.activeInHierarchy)
         {
-            jack.transform.position = Vector2.Lerp(jack.transform.position, destination, Time.deltaTime * popSpeed);
+            jack.transform.position = Vector2.Lerp(jack.transform.position, new Vector2(transform.position.x, destination.y), Time.deltaTime * popSpeed);
         }
     }
 

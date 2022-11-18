@@ -20,7 +20,7 @@ public class Boogeyman : MonoBehaviour
     private bool attackIsCharging;
     private bool isInGhostForm;
     private LevelController levelController;
-    private float maxMoveDistance = 40;
+    private float maxMoveDistance = 30;
     private SpriteRenderer[] spriteRenderer;
 
     private void Awake()
@@ -43,7 +43,7 @@ public class Boogeyman : MonoBehaviour
         this.GameObject().SetActive(true);
         
         // Set this to be the triggers position (maybe minus a certain amount)
-        deathWallPosition = 800;
+        deathWallPosition = 900;
         
         attackTimer = 0;
         GhostFormFadeIn();
@@ -78,10 +78,9 @@ public class Boogeyman : MonoBehaviour
     {
         Vector3 currentPosition = transform.position;
         
-        if (Mathf.Abs(playerPosition.x - currentPosition.x) > 50)
+        if (Mathf.Abs(playerPosition.x - currentPosition.x) > 20)
         {
             // Set bool for animator isMoving
-            Debug.Log("The Boogeyman is moving");
             currentPosition = Vector3.MoveTowards(currentPosition, playerPosition, maxMoveDistance * Time.deltaTime);
             transform.position = currentPosition;
         }
@@ -89,7 +88,7 @@ public class Boogeyman : MonoBehaviour
 
     IEnumerator ChargeAttack()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         
         // Play charge up animation
         Attack();
