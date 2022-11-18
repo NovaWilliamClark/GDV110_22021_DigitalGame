@@ -81,7 +81,8 @@ public abstract class InteractionPoint : MonoBehaviour
              rend.transform.position = renderer.transform.position;
              rend.transform.parent = renderer.transform;
              rend.transform.localScale = Vector3.one;
-             glowRenderer = rend.AddComponent<SpriteRenderer>();
+             rend.transform.rotation = renderer.transform.rotation;
+                 glowRenderer = rend.AddComponent<SpriteRenderer>();
              glowRenderer.sprite = renderer.sprite;
              glowRenderer.color = renderer.color;
              glowRenderer.sortingLayerName = renderer.sortingLayerName;

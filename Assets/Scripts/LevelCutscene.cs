@@ -126,6 +126,14 @@ public class LevelCutscene : MonoBehaviour
         });
     }
 
+    public void LoadLevel(LevelData_SO level)
+    {
+        UIHelpers.Instance.Fader.Fade(1f, .5f, () =>
+        {
+            TransitionManager.Instance.LoadScene(level.sceneName);
+        });
+    }
+    
     public void ChangePlayerSortingLayer(int value)
     {
         if (!player) player = FindObjectOfType<CharacterController>();
