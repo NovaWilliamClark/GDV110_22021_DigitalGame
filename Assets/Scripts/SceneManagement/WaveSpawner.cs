@@ -80,6 +80,7 @@ public class WaveSpawner : MonoBehaviour
       if (nextWave + 1 > waves.Length - 1)
       {
          Debug.Log("ALL WAVES COMPLETE!");
+         Destroy(gameObject);
       }
       else
       {
@@ -130,7 +131,7 @@ public class WaveSpawner : MonoBehaviour
       }
       else if (nextWave == 1)
       {
-         Vector3 spawnPosition = new(575, 30, transform.position.z);
+         Vector3 spawnPosition = new(575, -10, transform.position.z);
          Instantiate(enemy, spawnPosition, transform.rotation);
       }
       else if (nextWave == 2)

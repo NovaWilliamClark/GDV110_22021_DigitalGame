@@ -275,6 +275,10 @@ PrefabInstance:
       value: 0.91133004
       objectReference: {fileID: 0}
     - target: {fileID: 2701394476901619795, guid: 0f91bcf81fd8ba641aa8b0591700a9e6, type: 3}
+      propertyPath: puppet
+      value: 
+      objectReference: {fileID: 25091344}
+    - target: {fileID: 2701394476901619795, guid: 0f91bcf81fd8ba641aa8b0591700a9e6, type: 3}
       propertyPath: patrolPoints.Array.data[0].y
       value: -20
       objectReference: {fileID: 0}
@@ -332,6 +336,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7100958710170172147, guid: b708879685779eb4e98ac46e5f040f38, type: 3}
   m_PrefabInstance: {fileID: 914902414}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &25091344 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 427452354852263898, guid: 0f91bcf81fd8ba641aa8b0591700a9e6, type: 3}
+  m_PrefabInstance: {fileID: 7579281}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &28791336 stripped
 MonoBehaviour:
@@ -35361,7 +35370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2008896521
 Transform:
   m_ObjectHideFlags: 0
