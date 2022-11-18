@@ -15,7 +15,7 @@ public class Boogeyman : MonoBehaviour
     
     private CharacterController player;
     private Vector3 playerPosition;
-    private float deathWallPosition = 1500;
+    private float deathWallPosition = 1200;
     private float attackTimer = 0;
     private bool attackIsCharging;
     private bool isInGhostForm;
@@ -38,16 +38,22 @@ public class Boogeyman : MonoBehaviour
     private void OnPlayerSpawn(CharacterController cc)
     {
         player = cc;
-        this.GameObject().SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void OnBossFightTrigger()
     {
-        this.GameObject().SetActive(true);
+        gameObject.SetActive(true);
         
         // Set this to be the triggers position (maybe minus a certain amount)
-        deathWallPosition -= 600;
+        deathWallPosition -= 300;
         currentPhase++;
+
+        if (currentPhase == 2)
+        {
+            this.transform.position = patrolPoints[3];
+            maxMoveDistance = 15;
+        }
         
         attackTimer = 0;
         GhostFormFadeIn();
@@ -110,9 +116,9 @@ public class Boogeyman : MonoBehaviour
 
     IEnumerator ChargeAttack()
     {
+        animator.Play("Attack");
         yield return new WaitForSeconds(2);
         
-        // Play charge up animation
         Attack();
     }
 
@@ -126,7 +132,6 @@ public class Boogeyman : MonoBehaviour
     {
         Debug.Log("The Boogeyman has attacked");
         attackIsCharging = false;
-        // Set animation trigger for melee attack
         isInGhostForm = true;
         attackTimer = 0;
         GhostFormFadeIn();
