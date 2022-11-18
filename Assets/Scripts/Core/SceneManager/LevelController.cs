@@ -215,7 +215,7 @@ public class LevelController : MonoBehaviour
         // Initialize level data to default state
         if (!levelDataSo.Initialized)
         {
-            levelDataSo.Setup();
+            levelDataSo.CompleteInitialization();
         }
         
         // Inform objects that want to do all the things before player is spawned

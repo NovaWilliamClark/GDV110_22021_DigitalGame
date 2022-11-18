@@ -21,6 +21,10 @@ public class DialogueTrigger : InteractionPoint
         {
             box.End();
             hasStarted = false;
+            if (canReInteract)
+            {
+                hasInteracted = false;
+            }
             Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
         }
     }
@@ -67,6 +71,11 @@ public class DialogueTrigger : InteractionPoint
     {
         base.SetInteractedState(state);
         gameObject.SetActive(false);
+    }
+
+    public void DisableFromTrigger()
+    {
+        Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
     }
 }
     
