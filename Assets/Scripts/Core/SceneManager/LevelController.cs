@@ -207,7 +207,7 @@ public class LevelController : MonoBehaviour
 
             if (mob)
             {
-                mob.EnemyStateChanged.AddListener(OnEnemyStateChanged);
+                mob.enemyStateChanged.AddListener(OnEnemyStateChanged);
             }
             #endregion
         }

@@ -3,8 +3,7 @@ using Audio;
 using Objects;
 using UnityEngine;
 
-
-public class JackInTheBox : MovableObject
+namespace AI
 {
     [SerializeField] private GameObject jack;
     [SerializeField] private AudioClip boo;
@@ -22,9 +21,17 @@ public class JackInTheBox : MovableObject
         ccontroller = FindObjectOfType<CharacterController>();
     }
 
-    protected override void Update()
-    {
-        base.Update();
+        private CharacterController characterController;
+
+        protected override void Start()
+        {
+            base.Start();
+            characterController = FindObjectOfType<CharacterController>();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
         
         /*if (jack.activeInHierarchy)
         {
@@ -43,12 +50,9 @@ public class JackInTheBox : MovableObject
         AudioManager.Instance.PlaySound(song, 1f);
         while (true)
         {
-            yield return new WaitForSeconds(song.length - 5);
-            break;
+            DisablePrompt();
+            StartCoroutine(JacksBoxyRoutine());
         }
-        jack.SetActive(true);
-        SayBoo();
-    }
 
     private void SayBoo()
     {
@@ -65,7 +69,17 @@ public class JackInTheBox : MovableObject
             ccontroller.GetCharacterSanity.DecreaseSanity(sanityDamage, false);
             Debug.Log("Sanity damaged");
         }
+
+        private void SayBoo()
+        {
+            AudioManager.Instance.PlaySound(boo,1f);
+            if (characterController != null)
+            {
+                characterController.GetCharacterSanity.DecreaseSanity(sanityDamage, false);
+                Debug.Log("Sanity damaged");
+            }
         
+        }
     }
 
     /*private IEnumerator AnimatorRoutine()
