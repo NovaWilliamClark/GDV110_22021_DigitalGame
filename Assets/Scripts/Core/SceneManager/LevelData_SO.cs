@@ -25,10 +25,19 @@ public class LevelData_SO : ScriptableObject
         levelContainers = new LevelData();
         levelEnemies = new LevelData();
     }
-
-    public void Setup()
+    public void CompleteInitialization()
     {
         initialized = true;
+    }
+
+    public void MainMenu()
+    {
+        initialized = false;
+        levelCutscenePlayed = false;
+        levelInteractions = new LevelData();
+        levelGenericObjects = new LevelData();
+        levelContainers = new LevelData();
+        levelEnemies = new LevelData();
     }
 }
 

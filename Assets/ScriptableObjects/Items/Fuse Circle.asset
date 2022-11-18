@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 0
   itemName: Fuse
-  itemSprite: {fileID: 0}
-  slotSize: {x: 0, y: 0}
+  itemSprite: {fileID: 3304629502349806956, guid: ea17160df61b042eea8f2525a5d9b96f, type: 3}
+  slotSize: {x: 300, y: 300}
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
   isSingleUse: 1
+  usableInInventory: 0
   reloadable: 0
   itemToReload: {fileID: 0}
   reloadSfx: {fileID: 0}

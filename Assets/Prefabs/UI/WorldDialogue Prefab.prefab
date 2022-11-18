@@ -143,6 +143,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3116923109953580983, guid: 405e1046dbdc0483fb6d23f54240991c, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c1f07c63368524edb96d548cfa9b1599, type: 2}
+    - target: {fileID: 3116923109953580983, guid: 405e1046dbdc0483fb6d23f54240991c, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3268150673178957825, guid: c1f07c63368524edb96d548cfa9b1599, type: 2}
     - target: {fileID: 6244368747326012017, guid: 405e1046dbdc0483fb6d23f54240991c, type: 3}
       propertyPath: m_Name
       value: DialogueBox2
@@ -250,6 +258,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3116923109953580983, guid: 405e1046dbdc0483fb6d23f54240991c, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c1f07c63368524edb96d548cfa9b1599, type: 2}
+    - target: {fileID: 3116923109953580983, guid: 405e1046dbdc0483fb6d23f54240991c, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 3268150673178957825, guid: c1f07c63368524edb96d548cfa9b1599, type: 2}
     - target: {fileID: 6244368747326012017, guid: 405e1046dbdc0483fb6d23f54240991c, type: 3}
       propertyPath: m_Name
       value: DialogueBox

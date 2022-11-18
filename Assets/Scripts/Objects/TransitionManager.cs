@@ -8,6 +8,7 @@
 **********************************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using Audio;
 using DG.Tweening;
 using TMPro;
@@ -28,7 +29,9 @@ public class TransitionManager : MonoBehaviour
     public string previousScene;
     public string transitionInteractable;
 
-    
+    public List<LevelData_SO> AllLevels;
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -62,6 +65,14 @@ public class TransitionManager : MonoBehaviour
     {
         AudioManager.Instance.Cleanup();
         DOTween.KillAll();
+
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            foreach (var level in AllLevels)
+            {
+                level.MainMenu();
+            }
+        } 
         SceneManager.LoadScene(sceneToLoad);
     }
     

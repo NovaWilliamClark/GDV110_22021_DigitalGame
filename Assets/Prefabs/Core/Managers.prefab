@@ -66,6 +66,20 @@ MonoBehaviour:
   ev:
     m_PersistentCalls:
       m_Calls: []
+  isChangingScenes: 0
+  previousScene: 
+  transitionInteractable: 
+  AllLevels:
+  - {fileID: 11400000, guid: c48817120af1a0a4587009e582f1e1d7, type: 2}
+  - {fileID: 11400000, guid: f9c3e6d021e96db49b3fbe1bd35687dc, type: 2}
+  - {fileID: 11400000, guid: 630bd05b727bc4bdcb0c2f62075b29cf, type: 2}
+  - {fileID: 11400000, guid: 60de7b8d32e6da2469457f5101480cf8, type: 2}
+  - {fileID: 11400000, guid: ab120b0862a4d49f08872bdcaca49225, type: 2}
+  - {fileID: 11400000, guid: ceab7b0e76ae34d1481240686efcfc56, type: 2}
+  - {fileID: 11400000, guid: 809f18a22af2442569d5dace83b263ad, type: 2}
+  - {fileID: 11400000, guid: 61e270094cef640919ca35fa782d3c14, type: 2}
+  - {fileID: 11400000, guid: db7e24084367a4b42a45e4d828a697f1, type: 2}
+  - {fileID: 11400000, guid: 1d93f5f43b9794e01abc30ab91bc0543, type: 2}
 --- !u!114 &7706939859763190636
 MonoBehaviour:
   m_ObjectHideFlags: 0
