@@ -279,7 +279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8653719598885068355, guid: e29ccbbb1f1c6e343baac1b4879f96e0, type: 3}
       propertyPath: m_Name
-      value: Boogeyman_Floating_Variant
+      value: Boogeyman_Floating
       objectReference: {fileID: 0}
     - target: {fileID: -8541886201201711348, guid: e29ccbbb1f1c6e343baac1b4879f96e0, type: 3}
       propertyPath: m_Bounds.m_Center.x

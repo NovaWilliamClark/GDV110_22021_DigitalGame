@@ -269,7 +269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7439259373624352844, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: uniqueId
-      value: 967adcb0-5404-4122-b9ec-89e696fe3cc6
+      value: 186fe61b-e27c-440e-b0aa-ddc6ee8585d3
       objectReference: {fileID: 0}
     - target: {fileID: 8171835765223250387, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: InitialModule.startSize.scalar
