@@ -46,7 +46,7 @@ public class UIEscapeMenu : MonoBehaviour
             characterEquipment.FlashlightVisual.SetActive(false);
             UIHelpers.Instance.BatteryIndicator.Hide();
         }
-                
+        
         // This code resets your equipment state when you go to the main menu,
         // need to clarify if we want to start anew or continue game from menu
         // data.equipmentState = EquipmentState.Reset();
