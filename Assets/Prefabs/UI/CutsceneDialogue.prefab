@@ -143,11 +143,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam viverra
-    justo nisl. Donec sodales felis mollis tortor luctus, at finibus leo congue.
-    Suspendisse potenti.
+    justo nisl.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-  m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c1f07c63368524edb96d548cfa9b1599, type: 2}
+  m_sharedMaterial: {fileID: 3268150673178957825, guid: c1f07c63368524edb96d548cfa9b1599, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -171,12 +170,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31.75
+  m_fontSize: 44.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 22.2
+  m_fontSizeMax: 50.62
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512

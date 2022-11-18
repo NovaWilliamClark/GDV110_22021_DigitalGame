@@ -77,7 +77,7 @@ public class CutsceneDialogueManager : MonoBehaviour
     IEnumerator ShowText()
     {
         // Iterate through each letter
-        for (int i = 0; i < currentSentence.Length; i++)
+        for (int i = 0; i < currentSentence.Length+1; i++)
         {
             // Create a substring for each letter and add it to the text, playing a sound and then wait
             currentText = currentSentence.Substring(0, i);
@@ -89,10 +89,9 @@ public class CutsceneDialogueManager : MonoBehaviour
         yield return new WaitForSeconds(cutsceneDialogue.holdDuration);
         
         // Set the dialogue box to be invisible, will trigger again when the dialogue resumes
-        dialogueBox.DOFade(0f, .5f).OnComplete(() =>
+        dialogueBox.DOFade(0f, .25f).OnComplete(() =>
         {
             shown = false;
-            StopAllCoroutines();
             onCompleteCallback?.Invoke();
         });
     }
@@ -108,6 +107,7 @@ public class CutsceneDialogueManager : MonoBehaviour
         {
             // Load the next sentence and show the dialogue
             currentSentence = cutsceneDialogue.sentence;
+            Debug.Log(currentSentence);
             uiCutsceneDialogue.Init(cutsceneDialogue.speaker, cutsceneDialogue.iconPosition);
             
             dialogueBox.DOFade(1f, .25f).OnComplete(() =>

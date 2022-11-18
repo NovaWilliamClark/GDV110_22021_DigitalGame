@@ -25,6 +25,8 @@ public class ContainerTrigger : InteractionPoint
         
         AudioManager.Instance.PlaySound(useSfx, volume);
         containerInventory.Init(cc);
+        playerRef = cc;
+        cc.ToggleActive(false);
         containerInventory.ContainerClosed.AddListener(OnContainerClosed);
         DisablePrompt();
         hasInteracted = true;
@@ -33,6 +35,7 @@ public class ContainerTrigger : InteractionPoint
 
     private void OnContainerClosed(bool emptied)
     {
+        playerRef.ToggleActive(true);
         if (!emptied)
         {
             hasInteracted = false;

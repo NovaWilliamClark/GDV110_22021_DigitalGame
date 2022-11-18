@@ -110,7 +110,7 @@ namespace Character
                         slot.buttonObj.interactable = true;
                     }
 
-                    navGroup.DOFade(1f, .2f).OnComplete(() =>
+                    navGroup.DOFade(1f, .1f).OnComplete(() =>
                     {
                         navGroup.interactable = true;
                     });

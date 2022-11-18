@@ -110,6 +110,7 @@ public class LevelCutscene : MonoBehaviour
         //PauseTimeline();
         if (dialogue.entries.Count > 0)
         {
+            if (dialogueIndex >= dialogue.entries.Count) return;
             CutsceneDialogueManager.Instance.ShowDialogue(dialogue.entries[dialogueIndex], OnSentenceComplete);
             dialogueIndex++;
         }
