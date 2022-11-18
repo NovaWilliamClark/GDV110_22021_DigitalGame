@@ -125,17 +125,17 @@ public class WaveSpawner : MonoBehaviour
 
       if (nextWave == 0)
       {
-         Vector3 spawnPosition = new(transform.position.x, -19, transform.position.z);
+         Vector3 spawnPosition = new(575, -10, transform.position.z);
          Instantiate(enemy, spawnPosition, transform.rotation);
       }
       else if (nextWave == 1)
       {
-         Vector3 spawnPosition = new(transform.position.x, 30, transform.position.z);
+         Vector3 spawnPosition = new(575, 30, transform.position.z);
          Instantiate(enemy, spawnPosition, transform.rotation);
       }
       else if (nextWave == 2)
       {
-         Vector3 spawnPosition = new(transform.position.x, -19, transform.position.z);
+         Vector3 spawnPosition = new(575, -10, transform.position.z);
          Instantiate(enemy, transform.position, transform.rotation);  
       }
    }
