@@ -41,5 +41,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level04_Dumbwaiter.unity
     guid: 1d0985a1429a645b29175a309519fd23
+  - enabled: 1
+    path: Assets/Scenes/Level05_Attic.unity
+    guid: e8c80cccbf9264c52aea6cd6cdc99831
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c24a1b0f7f11e497bac3bc3de5177911, type: 2}

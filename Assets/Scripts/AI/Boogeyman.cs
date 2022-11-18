@@ -15,13 +15,16 @@ public class Boogeyman : MonoBehaviour
     
     private CharacterController player;
     private Vector3 playerPosition;
-    private float deathWallPosition;
+    private float deathWallPosition = 1500;
     private float attackTimer = 0;
     private bool attackIsCharging;
     private bool isInGhostForm;
     private LevelController levelController;
-    private float maxMoveDistance = 40;
+    private float maxMoveDistance = 30;
     private SpriteRenderer[] spriteRenderer;
+    private int currentPhase = 0;
+    public Vector3[] patrolPoints;
+    private int currentPatrolPoint;
 
     private void Awake()
     {
@@ -43,7 +46,8 @@ public class Boogeyman : MonoBehaviour
         this.GameObject().SetActive(true);
         
         // Set this to be the triggers position (maybe minus a certain amount)
-        deathWallPosition = 800;
+        deathWallPosition -= 600;
+        currentPhase++;
         
         attackTimer = 0;
         GhostFormFadeIn();
@@ -58,7 +62,7 @@ public class Boogeyman : MonoBehaviour
             // Play animation for instakill move
             player.GetComponent<CharacterSanity>().Instakill();
         }
-        else if (attackTimer >= attackCooldown && attackIsCharging == false)
+        else if (attackTimer >= attackCooldown && attackIsCharging == false && currentPhase == 1)
         {
             attackIsCharging = true;
             isInGhostForm = false;
@@ -70,6 +74,12 @@ public class Boogeyman : MonoBehaviour
         {
             Movement();
         }
+        else if (!isInGhostForm && !attackIsCharging && currentPhase == 2)
+        {
+            attackIsCharging = true;
+            Debug.Log("Charging attack");
+            StartCoroutine(ChargeAttack());
+        }
 
         attackTimer += 1 * Time.deltaTime;
     }
@@ -78,18 +88,29 @@ public class Boogeyman : MonoBehaviour
     {
         Vector3 currentPosition = transform.position;
         
-        if (Mathf.Abs(playerPosition.x - currentPosition.x) > 50)
+        if (Mathf.Abs(playerPosition.x - currentPosition.x) > 20 && currentPhase == 1)
         {
             // Set bool for animator isMoving
-            Debug.Log("The Boogeyman is moving");
             currentPosition = Vector3.MoveTowards(currentPosition, playerPosition, maxMoveDistance * Time.deltaTime);
             transform.position = currentPosition;
+        }
+        else if (currentPhase == 2)
+        {
+            // Set bool for animator isMoving
+            currentPosition = Vector3.MoveTowards(currentPosition, patrolPoints[currentPatrolPoint], maxMoveDistance * Time.deltaTime);
+            transform.position = currentPosition;
+
+            if (transform.position == patrolPoints[currentPatrolPoint])
+            {
+                isInGhostForm = false;
+                GhostFormFadeOut();
+            }
         }
     }
 
     IEnumerator ChargeAttack()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         
         // Play charge up animation
         Attack();
@@ -109,6 +130,15 @@ public class Boogeyman : MonoBehaviour
         isInGhostForm = true;
         attackTimer = 0;
         GhostFormFadeIn();
+
+        if (currentPhase == 2 && currentPatrolPoint < 3)
+        {
+            currentPatrolPoint++;
+        }
+        else if (currentPhase == 2 && currentPatrolPoint == 3)
+        {
+            currentPatrolPoint = 0;
+        }
     }
 
     private void GhostFormFadeIn()
