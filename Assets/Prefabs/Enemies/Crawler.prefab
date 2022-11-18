@@ -155,5 +155,5 @@ MonoBehaviour:
   playerCheckRadius: 10
   attackRange: 10
   patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {x: 10, y: 20}
+  - {x: 75, y: 20}

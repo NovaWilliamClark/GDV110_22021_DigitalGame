@@ -1,6 +1,7 @@
 ﻿using System;
 using Core;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -22,7 +23,7 @@ public class Crawler : MonoBehaviour, ILightResponder
     [SerializeField] private int floorLayerID;
     [SerializeField] private float playerCheckRadius = 10f;
     [SerializeField] private float attackRange = 10f;
-    [SerializeField] private Transform[] patrolPoints;
+    [SerializeField] private Vector2[] patrolPoints;
 
     private Vector2 goal;
     private Vector2 start;
@@ -42,19 +43,25 @@ public class Crawler : MonoBehaviour, ILightResponder
         renderer = GetComponent<SpriteRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.bodyType = RigidbodyType2D.Kinematic;
+        var lc = FindObjectOfType<LevelController>();
+        lc.PlayerSpawned.AddListener(OnPlayerLoaded);
     }
 
     private void Start()
     {
-        player = FindObjectOfType<CharacterController>();
         if (patrolPoints.Length > 0)
         {
-            transform.position = patrolPoints[0].position;
+            transform.position = patrolPoints[0];
             if (patrolPoints.Length > 1)
             {
-                goal = patrolPoints[1].position;
+                goal = patrolPoints[1];
             }
         }
+    }
+
+    private void OnPlayerLoaded(CharacterController cc)
+    {
+        player = cc;
     }
 
     private void Update()
@@ -71,12 +78,10 @@ public class Crawler : MonoBehaviour, ILightResponder
             if (CloseEnough(transform.position, goal))
             {
                 patrolPointReached = true;
-            }
-            
-            if (patrolPointReached)
-            {
                 SetNewPatrolGoal();
             }
+            
+            
         }
         else if (currentState == State.Dropping)
         {
@@ -120,7 +125,7 @@ public class Crawler : MonoBehaviour, ILightResponder
         }
         else if (currentState == State.Returning)
         {
-            goal = patrolPoints[0].position;
+            goal = patrolPoints[0];
 
             if (CloseEnough(transform.position, goal)) 
             {
@@ -168,17 +173,17 @@ public class Crawler : MonoBehaviour, ILightResponder
     {
         for (int i = 0; i < patrolPoints.Length; i++)
         {
-            if (patrolPoints[i].position.Equals(goal))
+            if (CloseEnough(patrolPoints[i], goal))//patrolPoints[i].position.Equals(goal))
             {
                 if (patrolPoints.Length > i+1)
                 {
-                    goal = patrolPoints[i + 1].position;
+                    goal = patrolPoints[i + 1];
                     patrolPointReached = false;
                     return;
                 }
                 else
                 {
-                    goal = patrolPoints[0].position;
+                    goal = patrolPoints[0];
                     patrolPointReached = false;
                     return;
                 }
@@ -190,7 +195,7 @@ public class Crawler : MonoBehaviour, ILightResponder
 
     private bool CloseEnough(Vector2 v1, Vector2 v2)
     {
-        return MathF.Abs(v1.y - v2.y) < 0.2f && Mathf.Abs(v1.x - v2.x ) < 0.2f;
+        return MathF.Abs(v1.y - v2.y) < 1f && Mathf.Abs(v1.x - v2.x ) < 1f;
     }
     
     private bool PlayerInRange(float distance)
@@ -202,7 +207,6 @@ public class Crawler : MonoBehaviour, ILightResponder
     {
         if (player != null)
         {
-            Debug.Log("attacking");
             player.GetCharacterSanity.DecreaseSanity(sanityDamage, false);
         }
     }
@@ -226,4 +230,15 @@ public class Crawler : MonoBehaviour, ILightResponder
     {
         //nothing
     }
+    
+    private void OnDrawGizmos()
+    {
+        if (patrolPoints.Length == 0) return;
+        foreach (var pos in patrolPoints)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(pos, Vector3.one);
+        }
+    }
+    
 }

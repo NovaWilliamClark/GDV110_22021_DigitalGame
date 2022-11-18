@@ -2301,7 +2301,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 500
   m_TargetDisplay: 0
 --- !u!114 &2035759070
 MonoBehaviour:
@@ -2897,7 +2897,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7162813582875605042, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: ShowSanity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7162813582875605042, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: MaskedImage
@@ -2917,11 +2917,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7546925589391037048, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7546925589391037050, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7546925589391037052, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_Camera
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7546925589391037052, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
+      propertyPath: m_SortingOrder
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 7546925589563132938, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: ShapeModule.radius.value
@@ -2941,15 +2949,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7546925590244369782, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1936.9465
+      value: -1773.3
       objectReference: {fileID: 0}
     - target: {fileID: 7546925590244369782, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1087.047
+      value: -1087.67
       objectReference: {fileID: 0}
     - target: {fileID: 7546925590244369782, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.39
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7546925590244369782, guid: d7ffe487f6893420f9cdce3493ed2738, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3015,8 +3023,8 @@ CanvasGroup:
   m_GameObject: {fileID: 5239611285602950395}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!4 &5239611286187846645 stripped
 Transform:
