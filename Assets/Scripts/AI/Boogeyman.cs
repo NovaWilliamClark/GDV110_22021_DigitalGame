@@ -1,25 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using Character;
-using Core;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Vector3 = UnityEngine.Vector3;
 
-public class Boogeyman : MonoBehaviour, ILightResponder
+public class Boogeyman : MonoBehaviour
 {
     public float attackCooldown;
     public Animator animator;
     public Collider2D collider;
-    [SerializeField] private Transform puppet = null;
     
     private CharacterController player;
     private Vector3 playerPosition;
-    private float deathWallPosition = 1200;
+    private float deathWallPosition = 1500;
     private float attackTimer = 0;
     private bool attackIsCharging;
     private bool isInGhostForm;
@@ -29,8 +25,6 @@ public class Boogeyman : MonoBehaviour, ILightResponder
     private int currentPhase = 0;
     public Vector3[] patrolPoints;
     private int currentPatrolPoint;
-    private int health = 100;
-    private int lightHits = 0;
 
     private void Awake()
     {
@@ -44,23 +38,16 @@ public class Boogeyman : MonoBehaviour, ILightResponder
     private void OnPlayerSpawn(CharacterController cc)
     {
         player = cc;
-        gameObject.SetActive(false);
+        this.GameObject().SetActive(false);
     }
 
     public void OnBossFightTrigger()
     {
-        gameObject.SetActive(true);
+        this.GameObject().SetActive(true);
         
-        // Reset boss animation to idle
-        
-        deathWallPosition -= 300;
+        // Set this to be the triggers position (maybe minus a certain amount)
+        deathWallPosition -= 600;
         currentPhase++;
-
-        if (currentPhase == 2)
-        {
-            this.transform.position = patrolPoints[3];
-            maxMoveDistance = 20;
-        }
         
         attackTimer = 0;
         GhostFormFadeIn();
@@ -69,11 +56,6 @@ public class Boogeyman : MonoBehaviour, ILightResponder
     private void Update()
     {
         playerPosition = player.transform.position;
-
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
         
         if (playerPosition.x >= deathWallPosition)
         {
@@ -105,7 +87,6 @@ public class Boogeyman : MonoBehaviour, ILightResponder
     private void Movement()
     {
         Vector3 currentPosition = transform.position;
-        lightHits = 0;
         
         if (Mathf.Abs(playerPosition.x - currentPosition.x) > 20 && currentPhase == 1)
         {
@@ -121,15 +102,6 @@ public class Boogeyman : MonoBehaviour, ILightResponder
 
             if (transform.position == patrolPoints[currentPatrolPoint])
             {
-                if (playerPosition.x > currentPosition.x)
-                {
-                    puppet.localScale = Vector3.one;
-                }
-                else
-                {
-                    puppet.localScale = new Vector3(-1, 1, 1);
-                }
-                
                 isInGhostForm = false;
                 GhostFormFadeOut();
             }
@@ -138,9 +110,9 @@ public class Boogeyman : MonoBehaviour, ILightResponder
 
     IEnumerator ChargeAttack()
     {
-        animator.Play("Attack");
         yield return new WaitForSeconds(2);
         
+        // Play charge up animation
         Attack();
     }
 
@@ -154,6 +126,7 @@ public class Boogeyman : MonoBehaviour, ILightResponder
     {
         Debug.Log("The Boogeyman has attacked");
         attackIsCharging = false;
+        // Set animation trigger for melee attack
         isInGhostForm = true;
         attackTimer = 0;
         GhostFormFadeIn();
@@ -186,37 +159,5 @@ public class Boogeyman : MonoBehaviour, ILightResponder
         }
         
         Physics2D.IgnoreCollision(collider, player.GetComponent<Collider2D>(), false);
-    }
-    
-    public void OnLightEntered(float intensity)
-    {
-    }
-
-    public void OnLightExited(float intensity)
-    {
-    }
-
-    public void OnLightStay(float intensity)
-    {
-        if (!isInGhostForm && currentPhase == 2)
-        {
-            lightHits++;
-            
-            if (lightHits >= 3)
-            {
-                health -= 10;
-                isInGhostForm = true;
-                GhostFormFadeIn();
-            
-                if (currentPhase == 2 && currentPatrolPoint < 3)
-                {
-                    currentPatrolPoint++;
-                }
-                else if (currentPhase == 2 && currentPatrolPoint == 3)
-                {
-                    currentPatrolPoint = 0;
-                }
-            }
-        }
     }
 }

@@ -22,7 +22,6 @@ namespace Objects
 		//private CharacterController cc;
 		[SerializeField] private float interactionDistance;
 		private bool isOnBox = false;
-		private CharacterController cc;
 
 		protected override void Awake()
 		{
