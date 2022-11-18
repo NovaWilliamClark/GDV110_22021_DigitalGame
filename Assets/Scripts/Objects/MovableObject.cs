@@ -19,6 +19,7 @@ namespace Objects
 		private CharacterController playerController;
 		private Collider2D boxCollider;
 		public static event Action<bool> OnObjectMove;
+		//private CharacterController cc;
 		[SerializeField] private float interactionDistance;
 		private bool isOnBox = false;
 		private CharacterController cc;
@@ -29,7 +30,7 @@ namespace Objects
 			boxCollider = GetComponentInChildren<Collider2D>();
 			var lc = FindObjectOfType<LevelController>();
 			lc.PlayerSpawned.AddListener(OnPlayerLoaded);
-			cc = FindObjectOfType<CharacterController>();
+			//cc = FindObjectOfType<CharacterController>();
 		}
 
 		private void OnPlayerLoaded(CharacterController controller)
