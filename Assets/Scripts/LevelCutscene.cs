@@ -133,6 +133,11 @@ public class LevelCutscene : MonoBehaviour
             TransitionManager.Instance.LoadScene(level.sceneName);
         });
     }
+
+    public void MainMenu()
+    {
+        TransitionManager.Instance.LoadScene("MainMenu");
+    }
     
     public void ChangePlayerSortingLayer(int value)
     {
