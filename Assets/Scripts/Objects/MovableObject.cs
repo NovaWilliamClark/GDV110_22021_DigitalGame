@@ -19,9 +19,9 @@ namespace Objects
 		private CharacterController playerController;
 		private Collider2D boxCollider;
 		public static event Action<bool> OnObjectMove;
-		private CharacterController cc;
 		[SerializeField] private float interactionDistance;
 		private bool isOnBox = false;
+		private CharacterController cc;
 
 		protected override void Awake()
 		{

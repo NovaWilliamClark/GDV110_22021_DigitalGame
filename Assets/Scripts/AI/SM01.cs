@@ -4,6 +4,7 @@ using Core;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 
@@ -41,7 +42,7 @@ namespace AI
         [SerializeField] private Transform puppet;
         [SerializeField] private LayerMask lightMask;
         private readonly Vector3 flippedScale = new(-1, 1, 1);
-        [HideInInspector] public UnityEvent<PersistentObject,EnemyLevelState> EnemyStateChanged;
+        [FormerlySerializedAs("EnemyStateChanged")] [HideInInspector] public UnityEvent<PersistentObject,EnemyLevelState> enemyStateChanged;
         private PersistentObject persistentObject;
 
         // Start is called before the first frame update
@@ -215,7 +216,7 @@ namespace AI
         {
             // TODO: DEATH SFX
             Destroy(gameObject);
-            EnemyStateChanged?.Invoke(persistentObject,new EnemyLevelState(persistentObject.Id){active = false});
+            enemyStateChanged?.Invoke(persistentObject,new EnemyLevelState(persistentObject.Id){active = false});
         }
 
         public void OnLightExited(float intensity)
