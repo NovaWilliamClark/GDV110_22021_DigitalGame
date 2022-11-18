@@ -31,6 +31,7 @@ public class Boogeyman : MonoBehaviour, ILightResponder
     private int currentPatrolPoint;
     private int health = 100;
     private int lightHits = 0;
+    private bool hasAttackedInState;
 
     private void Awake()
     {
@@ -49,6 +50,7 @@ public class Boogeyman : MonoBehaviour, ILightResponder
 
     public void OnBossFightTrigger()
     {
+        hasAttackedInState = false;
         gameObject.SetActive(true);
         
         // Reset boss animation to idle
@@ -57,8 +59,8 @@ public class Boogeyman : MonoBehaviour, ILightResponder
         currentPhase++;
 
         if (currentPhase == 2)
-        {
-            this.transform.position = patrolPoints[3];
+        { 
+            transform.position = patrolPoints[3];
             maxMoveDistance = 20;
         }
         
@@ -80,7 +82,7 @@ public class Boogeyman : MonoBehaviour, ILightResponder
             // Play animation for instakill move
             player.GetComponent<CharacterSanity>().Instakill();
         }
-        else if (attackTimer >= attackCooldown && attackIsCharging == false && currentPhase == 1)
+        else if (attackTimer >= attackCooldown && attackIsCharging == false && currentPhase == 1 && !hasAttackedInState)
         {
             attackIsCharging = true;
             isInGhostForm = false;
@@ -92,7 +94,7 @@ public class Boogeyman : MonoBehaviour, ILightResponder
         {
             Movement();
         }
-        else if (!isInGhostForm && !attackIsCharging && currentPhase == 2)
+        else if (!isInGhostForm && !attackIsCharging && currentPhase == 2 && !hasAttackedInState)
         {
             attackIsCharging = true;
             Debug.Log("Charging attack");
@@ -121,7 +123,7 @@ public class Boogeyman : MonoBehaviour, ILightResponder
 
             if (transform.position == patrolPoints[currentPatrolPoint])
             {
-                if (playerPosition.x > currentPosition.x)
+                if (playerPosition.x < currentPosition.x)
                 {
                     puppet.localScale = Vector3.one;
                 }
@@ -138,7 +140,8 @@ public class Boogeyman : MonoBehaviour, ILightResponder
 
     IEnumerator ChargeAttack()
     {
-        animator.Play("Attack");
+        hasAttackedInState = true;
+        animator.SetTrigger("Attack");
         yield return new WaitForSeconds(2);
         
         Attack();
