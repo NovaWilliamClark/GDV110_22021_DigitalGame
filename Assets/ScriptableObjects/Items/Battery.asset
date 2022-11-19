@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 6
   itemName: Battery
-  itemSprite: {fileID: 21300000, guid: d895ef2dd98a4419ea01a6c18bafb683, type: 3}
-  slotSize: {x: 400, y: 400}
+  itemSprite: {fileID: 21300000, guid: c29d4d3677e3a487fa8a98d1922e8bb2, type: 3}
+  slotSize: {x: 256, y: 256}
   hasBeenPickedUp: 0
   disappearsOnCombination: 1
   isSingleUse: 1
@@ -23,7 +23,7 @@ MonoBehaviour:
   reloadable: 0
   itemToReload: {fileID: 0}
   reloadSfx: {fileID: 0}
-  itemPrefab: {fileID: 0}
+  itemPrefab: {fileID: 7614265894874254376, guid: 0fce1d61676bf4fccb0df0041b349257, type: 3}
   itemDataRef: {fileID: 0}
   typeEnum: {fileID: 11400000, guid: affdca8b3c48a4e6bbe03f20fc13e860, type: 2}
   useSfx: {fileID: 0}
