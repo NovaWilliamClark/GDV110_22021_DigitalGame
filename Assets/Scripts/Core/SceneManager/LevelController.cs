@@ -290,6 +290,10 @@ public class LevelController : MonoBehaviour
 
         Vector2 pos = new Vector2();
         PlayerSpawnPoint.FacingDirection direction = PlayerSpawnPoint.FacingDirection.Right;
+
+        var existingPlayer = FindObjectOfType<CharacterController>();
+        if (existingPlayer)
+            Destroy(existingPlayer.gameObject);
         
         // set up spawn
         var tmi = TransitionManager.Instance;

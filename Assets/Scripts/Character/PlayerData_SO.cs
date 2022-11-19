@@ -91,7 +91,6 @@ public class PlayerData_SO : ScriptableObject
         inventoryItems.Clear();
         wasDead = false;
         breakerFixed = false;
-        hideFlags = HideFlags.DontUnloadUnusedAsset;
     }
 
     public PlayerData_SO CreateInstance()

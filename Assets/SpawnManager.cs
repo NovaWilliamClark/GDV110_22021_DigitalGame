@@ -67,6 +67,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (PlayerDied)
         {
+            currentPlayerData = currentSpawnData.PlayerDataAtSpawn;
             return currentSpawnData.PlayerDataAtSpawn;
         }
 
