@@ -17,6 +17,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class Nightlight : InteractionPoint
@@ -82,15 +83,12 @@ public class Nightlight : InteractionPoint
 
     protected override void OnTriggerEnter2D(Collider2D other)
     {
+        var spawnMan = SpawnManager.Instance;
         if (!other.CompareTag("Player")) return;
-        if (SpawnManager.Instance.CurrentSpawnPoint != null)
-        {
-            if (SpawnManager.Instance.CurrentSpawnPoint.Id == persistentObject.Id) return;
-        }
         if (!other.GetComponent<CharacterController>()) return;
         if (!canInteract) return;
         if (!promptBox) return;
-        
+
         playerRef = other.GetComponent<CharacterController>();
         string msg = "";
         if (!automaticInteraction)
@@ -100,11 +98,48 @@ public class Nightlight : InteractionPoint
         }
         else
         {
-            msg = "Set Respawn Point - RMB";
-        }
+            var sceneName = SceneManager.GetActiveScene().name;
+            msg = "Spawn Point Set";
+            
+            var newerSpawnPoint = false;
+            var nullSpawnPoint = spawnMan.CurrentSpawnPoint == null;
+            if (!nullSpawnPoint)
+            {
+                var spLvlData = spawnMan.CurrentSpawnPoint.LevelDataAtSpawn;
+                newerSpawnPoint = spLvlData.createdAt < spawnMan.GetCurrentLevelData(sceneName).createdAt || 
+                                  spLvlData.sceneName == sceneName && spLvlData.createdAt < Time.time;
+            }
 
+            if (newerSpawnPoint || nullSpawnPoint)
+            {
+                ShowPrompt(msg);
+                StartCoroutine(WaitThenInteract());
+                return;
+            }
+        }
+        
         promptBox.gameObject.SetActive(true);
         promptBox.Show(msg);
+    }
+
+    private void ShowPrompt(string msg)
+    {
+        promptBox.gameObject.SetActive(true);
+        promptBox.Show(msg);
+    }
+
+    private IEnumerator WaitThenInteract()
+    {
+        yield return new WaitForSeconds(1f);
+        Interact(playerRef);
+    }
+
+    protected override void OnTriggerExit2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
+        if(!other.GetComponent<CharacterController>()) return;
+        playerRef = null;
+        DisablePrompt();
     }
 
     protected override void Update()
@@ -147,6 +182,7 @@ public class Nightlight : InteractionPoint
         canInteract = false;
         
         DisablePrompt();
+        Debug.Log("Nightlight Interacted");
         Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
     }
 
