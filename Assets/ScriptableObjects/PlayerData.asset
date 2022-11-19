@@ -30,15 +30,17 @@ MonoBehaviour:
       m_Calls: []
   initialState:
     hasSockey: 0
+    hasBag: 0
     flashlightEquipped: 0
     flashlightIsOn: 0
     flashlightDecreaseRate: 2
   equipmentState:
     hasSockey: 0
+    hasBag: 0
     flashlightEquipped: 0
     flashlightIsOn: 0
     flashlightDecreaseRate: 2
-  breakerFixed: 1
+  breakerFixed: 0
   inventoryItems: []
   spawnPoint:
     id: 

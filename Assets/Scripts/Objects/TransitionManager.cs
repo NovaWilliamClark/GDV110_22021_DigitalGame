@@ -31,6 +31,8 @@ public class TransitionManager : MonoBehaviour
 
     public List<LevelData_SO> AllLevels;
 
+    [SerializeField] private PlayerData_SO originalPlayerData;
+
 
     private void Awake()
     {

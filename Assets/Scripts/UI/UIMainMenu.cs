@@ -96,11 +96,7 @@ public class UIMainMenu : MonoBehaviour
         Debug.Log("setting active");
         controlScheme.SetActive(true);
         yield return new WaitForSeconds(4f);
-        UIHelpers.Instance.Fader.Fade(1f,2f, () =>
-        {
-            TransitionManager.Instance.LoadScene(StartGameScene);
-        });
-        
+        TransitionManager.Instance.LoadScene(StartGameScene);
     }
 
 

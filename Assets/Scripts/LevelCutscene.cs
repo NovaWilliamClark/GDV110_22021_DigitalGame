@@ -126,6 +126,26 @@ public class LevelCutscene : MonoBehaviour
         });
     }
 
+    public void LoadLevel(LevelData_SO level)
+    {
+        UIHelpers.Instance.Fader.Fade(1f, .5f, () =>
+        {
+            TransitionManager.Instance.LoadScene(level.sceneName);
+        });
+    }
+
+    public void MainMenu()
+    {
+        if (player.PlayerData.equipmentState.flashlightEquipped)
+        {
+            player.Equipment.FlashlightVisual.SetActive(false);
+            UIHelpers.Instance.BatteryIndicator.Hide();
+        }
+
+        UIHelpers.Instance.SanityMeter.UnsetPlayer();
+        TransitionManager.Instance.LoadScene("MainMenu");
+    }
+    
     public void ChangePlayerSortingLayer(int value)
     {
         if (!player) player = FindObjectOfType<CharacterController>();

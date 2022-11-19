@@ -61,6 +61,7 @@ namespace Character
 
         private InventorySlot lastClickedSlot;
         private InventorySlot reloadableClicked;
+        private bool isOpen;
 
         [Serializable]
         private struct inventoryAnimation
@@ -144,6 +145,7 @@ namespace Character
 
         public void OpenInventory()
         {
+            isOpen = true;
             player.Equipment.DisableInput();
             canvasGroup.interactable = false;
             if (player)
@@ -329,6 +331,24 @@ namespace Character
                         }
                     }
                 }
+
+                if (!isOpen)
+                {
+                    if (item.isSingleUse)
+                    {
+                        items.Remove(item);
+                    }
+                    if (slots.Count > 0)
+                    {
+                        var slot = slots.Find(s => s.GetItemData == item);
+                        if (slot)
+                        {
+                            slots.Remove(slot);
+                            Destroy(slot.gameObject);
+                            slotCount = slots.Count;
+                        }
+                    }
+                }
             }
             if (selectedslots.Count == 1)
             {
@@ -373,6 +393,7 @@ namespace Character
         
         public void CloseInventory()
         {
+            isOpen = false;
             canvasGroup.interactable = false;
             navGroup.interactable = false;
             navGroup.DOFade(0f, .2f);

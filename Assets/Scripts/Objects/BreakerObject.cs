@@ -124,6 +124,7 @@ public class BreakerObject : InteractionPoint
 		else
 		{
 			hasInteracted = true;
+			canInteract = false;
 			DisablePrompt();
 		}
 		cc.PlayerData.breakerFixed = IsBreakerSatisfied();
