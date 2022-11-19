@@ -8,23 +8,30 @@ using UnityEngine;
 public class LevelData_SO : ScriptableObject
 {
     public string sceneName;
-    public LevelData levelInteractions = new();
-    public LevelData levelGenericObjects = new();
-    public LevelData levelContainers = new();
-    public LevelData levelEnemies = new();
+    public LevelData persistentObjectData;
     [SerializeField] private bool initialized = false;
     public bool Initialized => initialized;
     public bool levelCutscenePlayed = false;
 
     private void OnEnable()
     {
+
+    }
+
+    public void Init()
+    {
         initialized = false;
         levelCutscenePlayed = false;
-        levelInteractions = new LevelData();
-        levelGenericObjects = new LevelData();
-        levelContainers = new LevelData();
-        levelEnemies = new LevelData();
+        persistentObjectData = new LevelData();
     }
+
+    public LevelData_SO CreateCopy(LevelData_SO original)
+    {
+        var copy = Instantiate(original);
+        copy.persistentObjectData = persistentObjectData.Clone();
+        return copy;
+    }
+    
     public void CompleteInitialization()
     {
         initialized = true;
@@ -34,10 +41,7 @@ public class LevelData_SO : ScriptableObject
     {
         initialized = false;
         levelCutscenePlayed = false;
-        levelInteractions = new LevelData();
-        levelGenericObjects = new LevelData();
-        levelContainers = new LevelData();
-        levelEnemies = new LevelData();
+        persistentObjectData = new LevelData();
     }
 }
 
@@ -82,10 +86,45 @@ public class LevelData
 
         return true;
     }
+
+    public LevelData Clone()
+    {
+        var copy = new LevelData();
+        foreach (var state in persistentObjects)
+        {
+            var entry = new PersistentObjectState(state.Id);
+            if (state.State != null)
+            {
+                PersistentObjectState newState;
+                switch (state.State)
+                {
+                    case InteractionState interactionState:
+                        newState = (PersistentObjectState) interactionState.Clone();
+                        break;
+                    case GenericState genericState:
+                        newState = (PersistentObjectState) genericState.Clone();
+                        break;
+                    case ItemContainerState containerState:
+                        newState = (PersistentObjectState) containerState.Clone();
+                        break;
+                    case EnemyLevelState enemyState:
+                        newState = (PersistentObjectState) enemyState.Clone();
+                        break;
+                    default:
+                        newState = (PersistentObjectState) state.Clone();
+                        break;
+                }
+                entry.SetState(newState);
+            }
+            copy.persistentObjects.Add(entry);
+        }
+
+        return copy;
+    }
 }
 
 [Serializable]
-public class PersistentObjectState
+public class PersistentObjectState : ICloneable
 {
     protected string id;
 
@@ -94,8 +133,13 @@ public class PersistentObjectState
         this.id = id;
     }
 
+    public PersistentObjectState(PersistentObjectState copy)
+    {
+        id = copy.id;
+    }
+
     public string Id => id;
-    private PersistentObjectState state;
+    protected PersistentObjectState state;
 
     public PersistentObjectState State => state;
     
@@ -103,6 +147,11 @@ public class PersistentObjectState
     {
         state = null;
         state = newState;
+    }
+
+    public virtual object Clone()
+    {
+        return new PersistentObjectState(this);
     }
 }
 
@@ -112,6 +161,17 @@ public class InteractionState : PersistentObjectState
     public bool interacted = false;
 
     public InteractionState(string id) : base(id) {}
+
+    public InteractionState(InteractionState copy) : base(copy)
+    {
+        interacted = copy.interacted;
+        id = copy.id;
+    }
+    public override object Clone()
+    {
+        var itstate = new InteractionState(this);
+        return itstate;
+    }
 }
 
 [Serializable]
@@ -120,6 +180,10 @@ public class GenericState : PersistentObjectState
     public bool active = true;
 
     public GenericState(string id) : base(id) {}
+    public override object Clone()
+    {
+        return new GenericState(id) {active = active};
+    }
 }
 
 [Serializable]
@@ -128,6 +192,11 @@ public class ItemContainerState : PersistentObjectState
     public List<ItemData> items = new List<ItemData>();
 
     public ItemContainerState(string id) : base(id) {}
+
+    public override object Clone()
+    {
+        return new ItemContainerState(id) {items = items.ToList()};
+    }
 }
 
 [Serializable]
@@ -137,6 +206,10 @@ public class EnemyLevelState : PersistentObjectState
     public bool active = true;
 
     public EnemyLevelState(string id) : base(id) { }
+    public override object Clone()
+    {
+        return new EnemyLevelState(id) {active = active};
+    }
 }
 
 [Serializable]
@@ -149,5 +222,16 @@ public class BreakerState : InteractionState
 
     public BreakerState(string id) : base(id)
     {
+    }
+
+    public override object Clone()
+    {
+        return new BreakerState(id)
+        {
+            opened = opened, 
+            usedFuseCircle = usedFuseCircle, 
+            usedFuseSquare = usedFuseSquare,
+            usedFuseTriangle = usedFuseTriangle
+        };
     }
 }

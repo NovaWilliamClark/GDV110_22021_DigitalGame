@@ -24,6 +24,7 @@ public class LevelCutscene : MonoBehaviour
 
     [SerializeField] private string playerTrack = "Player";
     [SerializeField] private string playerModelTrack = "PlayerModel";
+    [SerializeField] private string expression = "Expression";
     [SerializeField] private CinemachineVirtualCamera vcam;
 
         private bool sanityToggle = false;
@@ -52,6 +53,11 @@ public class LevelCutscene : MonoBehaviour
             if (asset.streamName == playerModelTrack)
             {
                 director.SetGenericBinding(asset.sourceObject,modelAnimator);
+            }
+
+            if (asset.streamName == expression)
+            {
+                director.SetGenericBinding(asset.sourceObject, cc.expressionAnimator);
             }
         }
         lvlController.PlayerSpawned.RemoveListener(OnPlayerSpawned);

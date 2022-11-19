@@ -38,7 +38,7 @@ public class UIFader : MonoBehaviour
 
     public void Fade(float endValue, float duration, UnityAction onComplete = null)
     {
-        tween = image.DOFade(endValue, duration).OnComplete(() =>
+        image.DOFade(endValue, duration).OnComplete(() =>
         {
             onComplete?.Invoke();
 

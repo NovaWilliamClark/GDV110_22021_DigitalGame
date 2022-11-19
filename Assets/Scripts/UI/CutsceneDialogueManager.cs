@@ -107,7 +107,7 @@ public class CutsceneDialogueManager : MonoBehaviour
         {
             // Load the next sentence and show the dialogue
             currentSentence = cutsceneDialogue.sentence;
-            Debug.Log(currentSentence);
+            //Debug.Log(currentSentence);
             uiCutsceneDialogue.Init(cutsceneDialogue.speaker, cutsceneDialogue.iconPosition);
             
             dialogueBox.DOFade(1f, .25f).OnComplete(() =>

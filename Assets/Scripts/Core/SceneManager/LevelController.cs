@@ -29,11 +29,12 @@ public class LevelController : MonoBehaviour
     private List<ItemUse> levelItemInteractions = new List<ItemUse>();
     private List<GameObject> levelEnemies = new List<GameObject>();
     [SerializeField] private GameObject playerPrefab;
-    [FormerlySerializedAs("levelData")] [SerializeField] private LevelData_SO levelDataSo;
+    [FormerlySerializedAs("levelDataSo")] [FormerlySerializedAs("levelData")] [SerializeField] private LevelData_SO levelDataOriginal;
+    private LevelData_SO currentLevelData;
     private CharacterController instancedPlayer;
     public bool safeZone;
 
-    public LevelData_SO LevelDataSo => levelDataSo;
+    public LevelData_SO LevelDataOriginal => levelDataOriginal;
     
     public LevelCutscene onLoadCutscene;
 
@@ -42,8 +43,6 @@ public class LevelController : MonoBehaviour
 
     private Dictionary<string, Nightlight> nightlights = new();
     private Dictionary<int, ItemPickup> levelItems = new();
-
-    [SerializeField] private PlayerData_SO playerDataRef;
 
     public UnityEvent<CharacterController> PlayerSpawned;
     public UnityEvent LevelInitialized;
@@ -64,24 +63,32 @@ public class LevelController : MonoBehaviour
 
     private void Start()
     {
-        if (onLoadCutscene )
+        if (SpawnManager.Instance.PlayerDied)
         {
-            if (!levelDataSo.levelCutscenePlayed)
-            {
-                UIHelpers.Instance.Fader.Fade(0f, 0.1f);
-                onLoadCutscene.gameObject.SetActive(true);
-            }
-            else
-            {
-                onLoadCutscene.gameObject.SetActive(false);
-            }
+            currentLevelData = SpawnManager.Instance.CurrentSpawnPoint.LevelDataAtSpawn;
         }
+        else
+        {
+            var sceneName = SceneManager.GetActiveScene().name;
+            // does spawn manager have initial level data??
+            if (!SpawnManager.Instance.HasLevelData(sceneName))
+            {
+                currentLevelData = Instantiate(levelDataOriginal);
+                currentLevelData.Init();
+                SpawnManager.Instance.AddCurrentLevelData(sceneName, currentLevelData);
+            } else
+            {
+                currentLevelData = SpawnManager.Instance.GetCurrentLevelData(sceneName);
+            }
+
+        }
+        
         LevelInit();
     }
 
     private void OnCutsceneCompleted()
     {
-        levelDataSo.levelCutscenePlayed = true;
+        currentLevelData.levelCutscenePlayed = true;
         AudioManager.Instance.PlayMusic(LevelBGM);
     }
 
@@ -94,12 +101,28 @@ public class LevelController : MonoBehaviour
 
     private void FinaliseInit()
     {
-        if (UIHelpers.Instance.Fader.IsOpaque())
-            UIHelpers.Instance.Fader.Fade(0f, 2f);
-        
+        if (onLoadCutscene && !currentLevelData.levelCutscenePlayed)
+        {
+            UIHelpers.Instance.Fader.Fade(0, 0f, () =>
+            {
+                onLoadCutscene.gameObject.SetActive(true);
+                AudioManager.Instance.StopMusic();
+                onLoadCutscene.Completed.AddListener(OnCutsceneCompleted);
+                onLoadCutscene.Play();
+            });
+        }
+        else
+        {
+            if (onLoadCutscene)
+                onLoadCutscene.gameObject.SetActive(false);
+            if (UIHelpers.Instance.Fader.IsOpaque())
+                UIHelpers.Instance.Fader.Fade(0f, 2f);
+        }
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
     }
+
 
     private void InitLevelData()
     {
@@ -121,11 +144,11 @@ public class LevelController : MonoBehaviour
             #region Set States
             // Level is already initialized: get the object state depending on the MonoBehaviour type
             // Tell the persistent object to set it's state
-            if (levelDataSo.Initialized)
+            if (currentLevelData.Initialized)
             {
                 if (interaction)
                 {
-                    var state = levelDataSo.levelInteractions.GetObjectState(po).State;
+                    var state = currentLevelData.persistentObjectData.GetObjectState(po).State;
                     if (state is InteractionState data)
                     {
                         if (interaction is BreakerObject)
@@ -142,7 +165,7 @@ public class LevelController : MonoBehaviour
                 }
                 if (genericObject)
                 {
-                    if (levelDataSo.levelGenericObjects.GetObjectState(po)?.State is GenericState data)
+                    if (currentLevelData.persistentObjectData.GetObjectState(po)?.State is GenericState data)
                     {
                         genericObject.SetPersistentState(data);
                     }
@@ -153,7 +176,7 @@ public class LevelController : MonoBehaviour
                 }
                 if (container)
                 {
-                    if (levelDataSo.levelContainers.GetObjectState(po)?.State is ItemContainerState data)
+                    if (currentLevelData.persistentObjectData.GetObjectState(po)?.State is ItemContainerState data)
                     {
                         container.SetContainerState(data);
                     }
@@ -164,7 +187,7 @@ public class LevelController : MonoBehaviour
                 }
                 if (mob)
                 {
-                    if (levelDataSo.levelEnemies.GetObjectState(po)?.State is EnemyLevelState data)
+                    if (currentLevelData.persistentObjectData.GetObjectState(po)?.State is EnemyLevelState data)
                     {
                         mob.SetEnemyState(data);
                     }
@@ -177,10 +200,10 @@ public class LevelController : MonoBehaviour
             // Initialize object state in Level Data SO
             else
             {
-                if (interaction) levelDataSo.levelInteractions.AddObjectState(po);
-                if (genericObject) levelDataSo.levelGenericObjects.AddObjectState(po);
-                if (container) levelDataSo.levelContainers.AddObjectState(po);
-                if (mob) levelDataSo.levelEnemies.AddObjectState(po);
+                if (interaction) currentLevelData.persistentObjectData.AddObjectState(po);
+                if (genericObject) currentLevelData.persistentObjectData.AddObjectState(po);
+                if (container) currentLevelData.persistentObjectData.AddObjectState(po);
+                if (mob) currentLevelData.persistentObjectData.AddObjectState(po);
             }
             #endregion
 
@@ -213,9 +236,9 @@ public class LevelController : MonoBehaviour
         }
 
         // Initialize level data to default state
-        if (!levelDataSo.Initialized)
+        if (!currentLevelData.Initialized)
         {
-            levelDataSo.CompleteInitialization();
+            currentLevelData.CompleteInitialization();
         }
         
         // Inform objects that want to do all the things before player is spawned
@@ -224,24 +247,24 @@ public class LevelController : MonoBehaviour
 
     private void DebugPersistence(Component component)
     {
-        Debug.LogWarningFormat("Trying to set persistent state for {0} but LevelData {1} returning Null ref.\b Has state been set? Will be null when default PersistentObjectState", component.gameObject.name, levelDataSo.name);
+        Debug.LogWarningFormat("Trying to set persistent state for {0} but LevelData {1} returning Null ref.\b Has state been set? Will be null when default PersistentObjectState", component.gameObject.name, levelDataOriginal.name);
     }
 
     private void OnEnemyStateChanged(PersistentObject po, EnemyLevelState state)
     {
-        levelDataSo.levelEnemies.SetObjectState(po, state);
+        currentLevelData.persistentObjectData.SetObjectState(po, state);
     }
 
     private void OnContainerStateChanged(ContainerInventory container, ItemContainerState state)
     {
         var po = container.GetComponent<PersistentObject>();
-        levelDataSo.levelContainers.SetObjectState(po, state);
+        currentLevelData.persistentObjectData.SetObjectState(po, state);
     }
 
     private void OnGenericObjectStateChanged(GenericObject ge, GenericState state)
     {
         var po = ge.GetComponent<PersistentObject>();
-        levelDataSo.levelGenericObjects.SetObjectState(po, state);
+        currentLevelData.persistentObjectData.SetObjectState(po, state);
     }
  
     private void OnInteractionPointInteracted(InteractionPoint interactionPoint, InteractionState state)
@@ -250,10 +273,12 @@ public class LevelController : MonoBehaviour
         if (interactionPoint is Nightlight)
         {
             Vector2 ipTrans = interactionPoint.transform.position;
-                Debug.LogFormat("Player spawn set in Scene: {0} at (x:{2} y:{3}): {1} - {4}", SceneManager.GetActiveScene().name, po.name, ipTrans.x, ipTrans.y, po.Id);
-            playerDataRef.spawnPoint.Set(po.Id, SceneManager.GetActiveScene().name);
+            Debug.LogFormat("Player spawn set in Scene: {0} at (x:{2} y:{3}): {1} - {4}", SceneManager.GetActiveScene().name, po.name, ipTrans.x, ipTrans.y, po.Id);
+            //var lvlData = Instantiate(currentLevelData);
+            SpawnManager.Instance.SetSpawnPoint(po.Id, SceneManager.GetActiveScene().name, currentLevelData);
+                //playerDataRef.spawnPoint.Set(po.Id, SceneManager.GetActiveScene().name);
         }
-        levelDataSo.levelInteractions.SetObjectState(po,state);
+        currentLevelData.persistentObjectData.SetObjectState(po,state);
     }
 
     private void InitPlayer()
@@ -291,43 +316,29 @@ public class LevelController : MonoBehaviour
             }
         }
 
-        GameObject player;
-        var existingPlayer = FindObjectOfType<CharacterController>();
+        var spawnMan = SpawnManager.Instance;
 
-        var spawnPointData = playerDataRef.spawnPoint;
-        if (playerDataRef.wasDead)
+        instancedPlayer = Instantiate(playerPrefab).GetComponent<CharacterController>();
+        instancedPlayer.Init(spawnMan.GetPlayerData());
+        
+        if (spawnMan.PlayerDied)
         {
-            if (spawnPointData.isSet && spawnPointData.SceneName == SceneManager.GetActiveScene().name)
+            if (SceneManager.GetActiveScene().name == spawnMan.CurrentSpawnPoint.SceneName)
             {
-                Debug.Log("Spawn point is set, spawning there");
-                var spawnNl = nightlights[spawnPointData.Id];
+                Debug.Log("Player has died, respawning");
+                var spawnNl = nightlights[spawnMan.CurrentSpawnPoint.Id];
                 pos = spawnNl.transform.position;
-                playerDataRef.wasDead = false;
             }
         }
-        if (!playerDataRef.wasDead && existingPlayer)
-        {
-            player = existingPlayer.gameObject;
-            pos = existingPlayer.transform.position;
-            player.transform.position = pos;
-        } else
-        {
-            player = Instantiate(playerPrefab);
-
-            player.transform.position = pos;
-
-            //player.transform.position = pos;
-        }
-
-        instancedPlayer = player.GetComponent<CharacterController>();
+        
+        spawnMan.SetCurrentLevel(this, instancedPlayer);
+        
+        instancedPlayer.transform.position = pos;
         instancedPlayer.SetIsFlipped(direction == PlayerSpawnPoint.FacingDirection.Left);
         instancedPlayer.onDeath.AddListener(OnPlayerDeath);
-        if (!playerDataRef)
-        {
-            playerDataRef = instancedPlayer.PlayerData;
-        }
 
-        var sanity = player.GetComponent<CharacterSanity>();
+        var sanity = instancedPlayer.GetComponent<CharacterSanity>();
+        sanity.Init(instancedPlayer.PlayerData);
         sanityMeter.SetPlayer(sanity);
         if (!safeZone)
         {
@@ -339,27 +350,16 @@ public class LevelController : MonoBehaviour
         }
         
         PlayerSpawned?.Invoke(instancedPlayer);
-
-        if (onLoadCutscene && !levelDataSo.levelCutscenePlayed)
-        {
-            AudioManager.Instance.StopMusic();
-            onLoadCutscene.Completed.AddListener(OnCutsceneCompleted);
-            onLoadCutscene.Play();
-        }
         //playerObj.FetchPersistentData();
-    }
-
-    public void SetSpawnPoint(int id)
-    {
     }
 
     private void OnPlayerDeath()
     {
-        UIHelpers.Instance.Fader.Fade(1f, 1f, () =>
+        UIHelpers.Instance.Fader.Fade(1f, 3f, () =>
         {
             UIHelpers.Instance.SanityMeter.UnsetPlayer();
             UIHelpers.Instance.SanityMeter.Disable();
-            playerDataRef.wasDead = true;
+            SpawnManager.Instance.SetPlayerDied(true);
             instancedPlayer = null;
             StartCoroutine(WaitALittleBit());
         });
@@ -368,15 +368,6 @@ public class LevelController : MonoBehaviour
     public IEnumerator WaitALittleBit()
     {
         yield return new WaitForSeconds(2f);
-        if (!playerDataRef.spawnPoint.isSet)
-        {
-            TransitionManager.Instance.LoadScene("Level01_BensBedroom");
-            playerDataRef.Sanity = playerDataRef.initialSanity; 
-        }
-        else
-        {
-            playerDataRef.SetFromCopy(playerDataRef.spawnPoint.DataAsAtSpawn);
-            TransitionManager.Instance.LoadScene(playerDataRef.spawnPoint.SceneName);
-        }
+        TransitionManager.Instance.LoadScene(SpawnManager.Instance.CurrentSpawnPoint.SceneName);
     }
 }

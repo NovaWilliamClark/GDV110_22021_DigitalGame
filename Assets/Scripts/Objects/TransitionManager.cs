@@ -34,6 +34,8 @@ public class TransitionManager : MonoBehaviour
     [SerializeField] private PlayerData_SO originalPlayerData;
 
 
+    public UnityEvent<string> SceneChanged;
+
     private void Awake()
     {
         if (Instance == null)
@@ -68,6 +70,9 @@ public class TransitionManager : MonoBehaviour
         AudioManager.Instance.Cleanup();
         DOTween.KillAll();
 
+        previousScene = SceneManager.GetActiveScene().name;
+        isChangingScenes = true;
+        
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             originalPlayerData.ResetData();
@@ -76,7 +81,10 @@ public class TransitionManager : MonoBehaviour
             {
                 level.MainMenu();
             }
-        } 
+        }
+        
+        SceneChanged?.Invoke(sceneToLoad);
+        
         SceneManager.LoadScene(sceneToLoad);
     }
     

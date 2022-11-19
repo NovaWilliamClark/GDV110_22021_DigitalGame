@@ -1015,6 +1015,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1963636384838680171, guid: 4651a08fa357e4357b5278d7bfbc25e4, type: 3}
+      propertyPath: originalPlayerData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6a6e040239aaaef4093abdbe5a62e1d1, type: 2}
+    - target: {fileID: 1963636384838680171, guid: 4651a08fa357e4357b5278d7bfbc25e4, type: 3}
       propertyPath: AllLevels.Array.size
       value: 9
       objectReference: {fileID: 0}

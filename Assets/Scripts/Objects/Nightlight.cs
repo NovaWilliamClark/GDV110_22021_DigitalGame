@@ -46,19 +46,25 @@ public class Nightlight : InteractionPoint
         base.Awake();
         litArea = GetComponentInChildren<LitArea>();
         _light = GetComponentInChildren<Light2D>();
-
+        controller = FindObjectOfType<LevelController>();
+        controller.PlayerSpawned.AddListener(OnPlayerSpawned);
+        canInteract = false;
     }
-    
-    protected override void Start()
+
+    private void OnPlayerSpawned(CharacterController cc)
     {
-        base.Start();
-        litArea.isEnabled = false;
-        lightIntensity = _light.intensity;
-        _light.intensity = 0f;
-        if (!requiresBattery && automaticInteraction)
+        canInteract = true;
+        if (requiresBattery)
         {
-                Interact(null);
+            litArea.isEnabled = false;
+            lightIntensity = _light.intensity;
+            _light.intensity = 0f;
         }
+        else
+        {
+            litArea.isEnabled = true;
+        }
+
     }
 
     public void Init(int idInScene, LevelController lvlcontroller)

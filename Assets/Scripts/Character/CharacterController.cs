@@ -9,23 +9,12 @@
 
 using System;
 using System.Collections;
-using Audio;
 using Character;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using Core.LitArea;
-using DG.Tweening;
-using DG.Tweening.Core.Easing;
 using Objects;
-using Unity.VisualScripting;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.Serialization;
-using AudioType = UnityEngine.AudioType;
-using UnityEngine.Rendering.UI;
-using UnityEngine.U2D.IK;
-using Random = Unity.Mathematics.Random;
 
 public enum GroundType
 {
@@ -40,13 +29,15 @@ public class CharacterController : MonoBehaviour
 
     [Header("Character")]
     [SerializeField] public Animator animator = null;
+
+    public Animator expressionAnimator;
     [SerializeField] private Transform puppet = null;
     //[SerializeField] private CharacterAudio audioPlayer = null;
     [SerializeField] public Inventory inventory;
     [SerializeField] private CharacterEquipment equipment;
 
     [Header("Data")] 
-    [SerializeField] private PlayerData_SO playerData;
+    private PlayerData_SO playerData;
 
     public PlayerData_SO PlayerData => playerData;
 
@@ -88,8 +79,9 @@ public class CharacterController : MonoBehaviour
 
     private bool CanMove { get; set; }
 
-    private void Start()
+    public void Init(PlayerData_SO spawnPlayerData)
     {
+        playerData = spawnPlayerData;
         FetchPersistentData();
         //inventory = GetComponentInChildren<Inventory>();
         inventory.gameObject.SetActive(true);

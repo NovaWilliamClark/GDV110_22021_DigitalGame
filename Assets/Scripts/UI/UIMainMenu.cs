@@ -29,6 +29,7 @@ public class UIMainMenu : MonoBehaviour
     private void Start()
     {
         var menus = GetComponentsInChildren<UIMenu>(true);
+        TransitionManager.Instance.previousScene = "MainMenu";
         foreach (var menu in menus)
         {
             menu.gameObject.SetActive(true);
@@ -96,8 +97,10 @@ public class UIMainMenu : MonoBehaviour
         Debug.Log("setting active");
         controlScheme.SetActive(true);
         yield return new WaitForSeconds(4f);
+        
         UIHelpers.Instance.Fader.Fade(1f,2f, () =>
         {
+            Debug.Log(StartGameScene);
             TransitionManager.Instance.LoadScene(StartGameScene);
         });
         

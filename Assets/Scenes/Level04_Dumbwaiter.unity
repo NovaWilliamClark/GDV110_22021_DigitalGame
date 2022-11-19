@@ -911,7 +911,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   sceneToLoad: {fileID: 11400000, guid: 61e270094cef640919ca35fa782d3c14, type: 2}
-  spawnPosition: {x: -0.8, y: -2.54}
+  spawnPosition: {x: -6.69, y: -2.54}
   spawnFacingDirection: 1
 --- !u!114 &660142806
 MonoBehaviour:
@@ -960,7 +960,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660142804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.408528, y: -15.363516, z: -2.5524068}
+  m_LocalPosition: {x: -7.88, y: -15.363516, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -16,8 +16,10 @@ public class TriggeredCutscene : InteractionPoint
 
     public override void SetInteractedState(object state)
     {
-        base.SetInteractedState(state);
-        InteractionState istate = state as InteractionState;
+        if (state is not InteractionState istate)
+        {
+            return;
+        }
         cutscene.gameObject.SetActive(!istate.interacted);
         gameObject.SetActive(!istate.interacted);
     }

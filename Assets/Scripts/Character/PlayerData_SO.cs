@@ -78,14 +78,10 @@ public class PlayerData_SO : ScriptableObject
             BatteryValueChanged.Invoke(currentBattery);
         }
     }
-
-
+    
     public List<ItemData> inventoryItems;
 
-    public SpawnPointData spawnPoint;
-
-
-    private void OnEnable()
+    public void Init()
     {
         CurrentBattery = initialBattery;
         sanity = initialSanity;
@@ -93,11 +89,16 @@ public class PlayerData_SO : ScriptableObject
         sanityLossRate = initialLossRate;
         equipmentState = initialState.Copy();
         inventoryItems.Clear();
-        spawnPoint = new SpawnPointData();
         wasDead = false;
         breakerFixed = false;
+        hideFlags = HideFlags.DontUnloadUnusedAsset;
+    }
 
-        spawnPoint.ResetData(this);
+    public PlayerData_SO CreateInstance()
+    {
+        var instance = Instantiate(this);
+        instance.Init();
+        return instance;
     }
 
     public void SetItems(Inventory inventory)
@@ -125,7 +126,9 @@ public class PlayerData_SO : ScriptableObject
     {
         // Create copy of SO (exclusively for spawn points atm)
         var instance = Instantiate(this);
+        instance.hideFlags = HideFlags.DontUnloadUnusedAsset;
         instance.equipmentState = equipmentState.Copy();
+        //instance.spawnPoint = spawnPoint.Copy();
         
         return instance;
     }
@@ -141,37 +144,5 @@ public class PlayerData_SO : ScriptableObject
         }
 
         name = ogName;
-    }
-}
-
-[Serializable]
-public class SpawnPointData
-{
-    [SerializeField] private string id = "";
-    public string Id => id;
-    [SerializeField] private bool spawnPointSet = false;
-    public bool isSet => spawnPointSet;
-    [SerializeField] private string sceneName;
-    public string SceneName => sceneName;
-
-    [SerializeField] private PlayerData_SO originalData;
-    [SerializeField] private PlayerData_SO dataInstance;
-
-    public PlayerData_SO DataAsAtSpawn => dataInstance;
-
-    public void ResetData(PlayerData_SO original)
-    {
-        id = "";
-        spawnPointSet = false;
-        sceneName = "";
-        originalData = original;
-    }
-
-    public void Set(string _id, string _sceneName)
-    {
-        spawnPointSet = true;
-        id = _id;
-        sceneName = _sceneName;
-        dataInstance = originalData.Copy();
     }
 }

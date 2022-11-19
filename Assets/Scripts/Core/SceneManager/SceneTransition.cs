@@ -35,10 +35,6 @@ namespace Objects
         {
             if (!cc) return;
             cc.SetPersistentData();
-            var tmi = TransitionManager.Instance;
-            tmi.previousScene = SceneManager.GetActiveScene().name;
-            //tmi.transitionInteractable = persistentObject.Id;
-            tmi.isChangingScenes = true;
             Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
             UIHelpers.Instance.Fader.Fade(1f, 1f, () =>
             {

@@ -8,7 +8,7 @@ namespace Character
 {
     public class CharacterSanity : MonoBehaviour, ILightResponder
     {
-        [SerializeField] private PlayerData_SO playerData;
+        private PlayerData_SO playerData;
         public PlayerData_SO GetData => playerData;
         public UnityEvent<float, float> SanityValueChanged;
         public UnityEvent SanityReachedZero;
@@ -19,6 +19,8 @@ namespace Character
         private bool useTempRate = false;
         public bool flashlightIsOn = false;
         public bool inventoryClosed = true;
+
+        private bool initialized = false;
         
         public bool Enabled => sanityEnabled;
 
@@ -90,6 +92,11 @@ namespace Character
         public void OnLightStay(float intensity)
         {
             isInLight = true;
+        }
+
+        public void Init(PlayerData_SO data)
+        {
+            playerData = data;
         }
     }
 }
