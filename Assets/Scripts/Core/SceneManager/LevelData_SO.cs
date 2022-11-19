@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Objects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "Create LevelData", fileName = "LevelData", order = 0)]
 public class LevelData_SO : ScriptableObject
@@ -13,6 +14,7 @@ public class LevelData_SO : ScriptableObject
     public bool Initialized => initialized;
     public bool levelCutscenePlayed = false;
 
+    [FormerlySerializedAs("CreatedAt")] public float createdAt;
     private void OnEnable()
     {
 
@@ -23,12 +25,14 @@ public class LevelData_SO : ScriptableObject
         initialized = false;
         levelCutscenePlayed = false;
         persistentObjectData = new LevelData();
+        createdAt = Time.time;
     }
 
-    public LevelData_SO CreateCopy(LevelData_SO original)
+    public LevelData_SO CreateCopy()
     {
-        var copy = Instantiate(original);
+        var copy = Instantiate(this);
         copy.persistentObjectData = persistentObjectData.Clone();
+        copy.createdAt = Time.time;
         return copy;
     }
     
@@ -95,26 +99,24 @@ public class LevelData
             var entry = new PersistentObjectState(state.Id);
             if (state.State != null)
             {
-                PersistentObjectState newState;
                 switch (state.State)
                 {
                     case InteractionState interactionState:
-                        newState = (PersistentObjectState) interactionState.Clone();
+                        entry.SetState(interactionState.Clone() as InteractionState);
                         break;
                     case GenericState genericState:
-                        newState = (PersistentObjectState) genericState.Clone();
+                        entry.SetState(genericState.Clone() as GenericState);
                         break;
                     case ItemContainerState containerState:
-                        newState = (PersistentObjectState) containerState.Clone();
+                        entry.SetState(containerState.Clone() as ItemContainerState);
                         break;
                     case EnemyLevelState enemyState:
-                        newState = (PersistentObjectState) enemyState.Clone();
+                        entry.SetState(enemyState.Clone() as EnemyLevelState);
                         break;
                     default:
-                        newState = (PersistentObjectState) state.Clone();
+                        entry.SetState(state.Clone() as PersistentObjectState);
                         break;
                 }
-                entry.SetState(newState);
             }
             copy.persistentObjects.Add(entry);
         }
@@ -204,11 +206,12 @@ public class EnemyLevelState : PersistentObjectState
 {
     //public 
     public bool active = true;
+    public bool behaviourEnabled = true;
 
     public EnemyLevelState(string id) : base(id) { }
     public override object Clone()
     {
-        return new EnemyLevelState(id) {active = active};
+        return new EnemyLevelState(id) {active = active, behaviourEnabled = behaviourEnabled};
     }
 }
 

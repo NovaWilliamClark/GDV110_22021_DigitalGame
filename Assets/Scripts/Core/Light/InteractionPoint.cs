@@ -241,7 +241,7 @@ public abstract class InteractionPoint : MonoBehaviour
         
     }
 
-    protected void DisablePrompt()
+    protected virtual void DisablePrompt()
     {
         if (promptBox && !automaticInteraction)
         {

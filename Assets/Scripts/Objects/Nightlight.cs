@@ -83,31 +83,49 @@ public class Nightlight : InteractionPoint
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+        if (SpawnManager.Instance.CurrentSpawnPoint != null)
+        {
+            if (SpawnManager.Instance.CurrentSpawnPoint.Id == persistentObject.Id) return;
+        }
+        if (!other.GetComponent<CharacterController>()) return;
+        if (!canInteract) return;
+        if (!promptBox) return;
+        
+        playerRef = other.GetComponent<CharacterController>();
+        string msg = "";
         if (!automaticInteraction)
         {
-            if (!other.GetComponent<CharacterController>()) return;
-            if (!canInteract) return;
-            if (!promptBox) return;
-            
-            playerRef = other.GetComponent<CharacterController>();
-
             hasItem = playerRef.GetInventory.HasItem(batteryItemData);
-            var msg = !hasItem ? missingBatteryMessage : promptMessage;
-            promptBox.gameObject.SetActive(true);
-            promptBox.Show(msg);
+            msg = !hasItem ? missingBatteryMessage : promptMessage;
         }
         else
         {
-            if (hasInteracted) return;
-            Debug.Log("Auto Interaction!");
-            hasInteracted = true;
-            Interact(other.GetComponent<CharacterController>());
+            msg = "Set Respawn Point - RMB";
         }
+
+        promptBox.gameObject.SetActive(true);
+        promptBox.Show(msg);
     }
 
     protected override void Update()
     {
         base.Update();
+    }
+
+    public override void SetInteractedState(object state)
+    {
+        base.SetInteractedState(state);
+        if (state is not InteractionState interactionState) return;
+        litArea.isEnabled = interactionState.interacted;
+        hasInteracted = interactionState.interacted;
+        canInteract = !interactionState.interacted;
+        
+        if (SpawnManager.Instance.CurrentSpawnPoint.Id == persistentObject.Id)
+        {
+            hasInteracted = true;
+            canInteract = false;
+            litArea.isEnabled = true;
+        }
     }
 
     protected override void Interact(CharacterController cc)
@@ -119,11 +137,24 @@ public class Nightlight : InteractionPoint
             playerRef.GetInventory.UseItem(batteryItemData);
         }
 
-        _light.intensity = lightIntensity;
-        litArea.isEnabled = true;
+        if (!automaticInteraction)
+        {
+            _light.intensity = lightIntensity;
+            litArea.isEnabled = true;
+        }
+
         hasInteracted = true;
         canInteract = false;
+        
         DisablePrompt();
         Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
+    }
+
+    protected override void DisablePrompt()
+    {
+        if (promptBox)
+        {
+            promptBox.Hide();
+        }
     }
 }

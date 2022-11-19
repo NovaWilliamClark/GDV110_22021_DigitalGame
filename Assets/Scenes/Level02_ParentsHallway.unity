@@ -3462,7 +3462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2630670357185478777, guid: e829180730c715b4ea26a3826110d3a1, type: 3}
       propertyPath: uniqueId
-      value: 559e0e70-1220-406b-87e3-34a5664235f8
+      value: 8d85b4f1-7395-441a-9f7f-759b8e3301e1
       objectReference: {fileID: 0}
     - target: {fileID: 2881388848559905271, guid: e829180730c715b4ea26a3826110d3a1, type: 3}
       propertyPath: m_Layer
@@ -12037,7 +12037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3150619256056934064, guid: b8a143379962642bd9ddf80108624370, type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 30.18
+      value: 73.89999
       objectReference: {fileID: 0}
     - target: {fileID: 3150619256251498596, guid: b8a143379962642bd9ddf80108624370, type: 3}
       propertyPath: m_SceneBindings.Array.data[4].value

@@ -75,12 +75,10 @@ public class TransitionManager : MonoBehaviour
         
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            originalPlayerData.ResetData();
-            originalPlayerData = originalPlayerData.Copy();
-            foreach (var level in AllLevels)
-            {
-                level.MainMenu();
-            }
+            //originalPlayerData.ResetData();
+            //originalPlayerData = originalPlayerData.Copy();
+            // tell spawn manager to reset
+            SpawnManager.Instance.ResetState();
         }
         
         SceneChanged?.Invoke(sceneToLoad);

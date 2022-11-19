@@ -1628,7 +1628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3150619256056934064, guid: b8a143379962642bd9ddf80108624370, type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 58.52
+      value: 33.9
       objectReference: {fileID: 0}
     - target: {fileID: 3150619256056934064, guid: b8a143379962642bd9ddf80108624370, type: 3}
       propertyPath: m_Lens.NearClipPlane

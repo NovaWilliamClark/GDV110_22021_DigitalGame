@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -20,7 +21,7 @@ public class SpawnManager : MonoBehaviour
     public SpawnData CurrentSpawnPoint => currentSpawnData; 
     public bool PlayerDied { get; private set; }
 
-    private Dictionary<string, LevelData_SO> currentLevelData; 
+    private List<LevelData_SO> currentLevelData;
 
     // if respawning we need to grab the level data and player data at time of spawn
 
@@ -57,10 +58,24 @@ public class SpawnManager : MonoBehaviour
         // copy of the level data at time of spawn point being set
         // copy the player data at time of spawn point
         currentSpawnData = new SpawnData();
-        var lvl = levelData.CreateCopy(levelData);
+        var lvl = levelData.CreateCopy();
         var player = Instantiate(playerReference.PlayerData);
-        currentLevelData[sceneName] = lvl;
+        //AddCurrentLevelData(sceneName, lvl);
         currentSpawnData.Initialize(nightlightPoId, sceneName, lvl,player);
+    }
+
+    public void DoSpawn()
+    {
+        currentPlayerData = currentSpawnData.PlayerDataAtSpawn;
+        //var index = currentLevelData.FindIndex(i => i.sceneName == currentSpawnData.SceneName);
+        foreach (var dataSo in currentLevelData.ToList())
+        {
+            if (dataSo.sceneName == currentSpawnData.LevelDataAtSpawn.sceneName) continue;
+            if (dataSo.createdAt > currentSpawnData.LevelDataAtSpawn.createdAt)
+            {
+                currentLevelData.Remove(dataSo);
+            }
+        }
     }
 
     public PlayerData_SO GetPlayerData()
@@ -76,17 +91,39 @@ public class SpawnManager : MonoBehaviour
 
     public void AddCurrentLevelData(string sceneName, LevelData_SO data)
     {
-        currentLevelData.Add(sceneName, data);
+        if (HasLevelData(sceneName))
+        {
+            var pos = currentLevelData.FindIndex(i => i.sceneName == sceneName);
+            currentLevelData.RemoveAt(pos);
+        }
+        currentLevelData.Add(data);
     }
 
     public LevelData_SO GetCurrentLevelData(string sceneName)
     {
-        return currentLevelData[sceneName];
+        return currentLevelData.FirstOrDefault(dataSo => dataSo.sceneName == sceneName);
     }
 
     public bool HasLevelData(string sceneName)
     {
-        return currentLevelData.ContainsKey(sceneName);
+        if (currentLevelData.Any(dataSo => dataSo.sceneName == sceneName))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void SetCurrentLevelData(string sceneName, LevelData_SO data)
+    {
+        if (HasLevelData(sceneName))
+        {
+            //currentLevelData[sceneName] = data;
+        }
+        else
+        {
+            AddCurrentLevelData(sceneName, data);
+        }
     }
 
     public void SetCurrentLevel(LevelController levelController, CharacterController player)
@@ -100,6 +137,19 @@ public class SpawnManager : MonoBehaviour
     {
         PlayerDied = false;
         CurrentLevelController.PlayerSpawned.RemoveListener(OnPlayerSpawned);
+    }
+
+    public void ResetState()
+    {
+        currentLevelData.Clear();
+        playerReference = null;
+        currentSpawnData = null;
+        PlayerDied = false;
+        
+        initialSpawnData = new SpawnData();
+        currentPlayerData = Instantiate(originalPlayerData);
+        currentPlayerData.Init();
+
     }
 }
 
