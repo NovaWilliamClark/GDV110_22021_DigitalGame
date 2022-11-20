@@ -31,7 +31,6 @@ public class SpawnManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            initialSpawnData = new SpawnData();
             currentSpawnData = null;
             currentPlayerData = Instantiate(originalPlayerData);
             currentPlayerData.Init();
@@ -60,7 +59,8 @@ public class SpawnManager : MonoBehaviour
         // copy the player data at time of spawn point
         currentSpawnData = new SpawnData();
         var lvl = levelData.CreateCopy();
-        var player = Instantiate(playerReference.PlayerData);
+        var player = playerReference.PlayerData.CreateCopy();
+        player.ResetSanity(); // don't respawn with low sanity
         //AddCurrentLevelData(sceneName, lvl);
         currentSpawnData.Initialize(nightlightPoId, sceneName, lvl,player);
     }
@@ -84,6 +84,7 @@ public class SpawnManager : MonoBehaviour
     {
         if (PlayerDied)
         {
+            currentPlayerData.BatteryValueChanged.RemoveAllListeners();
             currentPlayerData = currentSpawnData.PlayerDataAtSpawn;
             return currentSpawnData.PlayerDataAtSpawn;
         }
@@ -114,6 +115,11 @@ public class SpawnManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void SetupPlayerData()
+    {
+        
     }
 
     public void SetCurrentLevelData(string sceneName, LevelData_SO data)
@@ -151,7 +157,6 @@ public class SpawnManager : MonoBehaviour
         initialSpawnData = new SpawnData();
         currentPlayerData = Instantiate(originalPlayerData);
         currentPlayerData.Init();
-
     }
 }
 

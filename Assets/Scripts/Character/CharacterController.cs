@@ -15,6 +15,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Objects;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public enum GroundType
 {
@@ -76,6 +77,7 @@ public class CharacterController : MonoBehaviour
     [Header("Push & Pull")]
     public bool isMovingObject;
     private float movementAcceleration;
+    private bool flashlightWasOn;
 
     private bool CanMove { get; set; }
 
@@ -217,6 +219,7 @@ public class CharacterController : MonoBehaviour
     {
         // play the cinematic and die
         animator.SetTrigger("Death");
+        ToggleActive(false);
         onDeath.Invoke();
     }
     
@@ -291,6 +294,18 @@ public class CharacterController : MonoBehaviour
     {
         CanMove = value == true ? true : false;
         playerData.flashlightAvailable = value == true ? true : false;
+        if (equipment)
+        {
+
+            if (value)
+            {
+                equipment.EnableInput();
+            }
+            else
+            {
+                equipment.DisableInput();
+            }
+        }
         if (characterSanity)
             characterSanity.inventoryClosed = value == true ? true : false;
     }

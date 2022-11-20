@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f863f78e326045139e754b551060fe67, type: 3}
-  m_Name: Level02_BathroomCabinet
+  m_Name: Level03_BathroomShelf
   m_EditorClassIdentifier: 
   initialItems:
-  - {fileID: 11400000, guid: 8a1f604e86ff54b41a1109ee6cfe75c4, type: 2}
-  - {fileID: 11400000, guid: 0a5bd9dc6ceef45aa943c4446a5dc5b5, type: 2}
+  - {fileID: 11400000, guid: 8ee0b55e44640491289d1bc455144c39, type: 2}
+  - {fileID: 11400000, guid: a8f50460adf374e7d9d62bf522887ae5, type: 2}

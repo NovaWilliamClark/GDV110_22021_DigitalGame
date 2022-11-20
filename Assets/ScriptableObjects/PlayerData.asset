@@ -33,18 +33,13 @@ MonoBehaviour:
     hasBag: 0
     flashlightEquipped: 0
     flashlightIsOn: 0
-    flashlightDecreaseRate: 2
+    flashlightDecreaseRate: 5
   equipmentState:
     hasSockey: 0
     hasBag: 0
     flashlightEquipped: 0
     flashlightIsOn: 0
     flashlightDecreaseRate: 2
+  playingCutscene: 0
   breakerFixed: 0
   inventoryItems: []
-  spawnPoint:
-    id: 
-    spawnPointSet: 0
-    sceneName: 
-    originalData: {fileID: 11400000}
-    dataInstance: {fileID: 0}

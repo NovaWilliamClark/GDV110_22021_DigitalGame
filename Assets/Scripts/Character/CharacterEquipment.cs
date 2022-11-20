@@ -177,7 +177,11 @@ public class CharacterEquipment : MonoBehaviour
     private void OnDisable()
     {
         charController.GetInventory.ItemAdded.RemoveListener(OnItemAddedToInventory);
-        useFlashlightInput.performed -= OnFlashlightInput;
+        if (useFlashlightInput != null)
+        {
+            useFlashlightInput.performed -= OnFlashlightInput;
+        }
+        
     }
 
     private void OnItemAddedToInventory(ItemData original)
@@ -234,20 +238,19 @@ public class EquipmentState : ICloneable
     public bool flashlightEquipped = false;
     public bool flashlightIsOn = false;
     public float flashlightDecreaseRate = 0.1f;
-
-    public EquipmentState Copy()
-    {
-        var copy = new EquipmentState
-        {
-            hasSockey = hasSockey,
-            hasBag = hasBag,
-            flashlightEquipped = flashlightEquipped,
-            flashlightIsOn = flashlightIsOn,
-            flashlightDecreaseRate = flashlightDecreaseRate
-        };
-        return copy;
-    }
     
+    public EquipmentState() {}
+    
+    // constructor for copying
+    public EquipmentState(EquipmentState original)
+    {
+        hasSockey = original.hasSockey;
+        hasBag = original.hasBag;
+        flashlightEquipped = original.flashlightEquipped;
+        flashlightIsOn = original.flashlightIsOn;
+        flashlightDecreaseRate = original.flashlightDecreaseRate;
+    }
+
     public static EquipmentState Reset()
     {
         var copy = new EquipmentState
@@ -263,14 +266,6 @@ public class EquipmentState : ICloneable
 
     public object Clone()
     {
-        var copy = new EquipmentState()
-        {
-            hasSockey = hasSockey,
-            hasBag = hasBag,
-            flashlightEquipped = flashlightEquipped,
-            flashlightIsOn = flashlightIsOn,
-            flashlightDecreaseRate = flashlightDecreaseRate
-        };
-        return copy;
+        return new EquipmentState(this);
     }
 }

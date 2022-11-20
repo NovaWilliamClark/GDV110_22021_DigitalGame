@@ -579,6 +579,7 @@ Transform:
   - {fileID: 7558009856038075664}
   - {fileID: 1376248105}
   - {fileID: 8021154373665883799}
+  - {fileID: 8611919517086638025}
   - {fileID: 2442337540540467342}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -909,7 +910,7 @@ Transform:
   m_Children:
   - {fileID: 3440205773489048860}
   m_Father: {fileID: 286041822936246032}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0.755, z: 4.814}
 --- !u!114 &1430319146624887246
 MonoBehaviour:
@@ -927,7 +928,8 @@ MonoBehaviour:
   pivot: {fileID: 802858724418787787}
   playerData: {fileID: 0}
   flashlightVisual: {fileID: 6542389883007776839}
-  leftPosOffset: {x: -0.58, y: -0.4}
+  light: {fileID: 0}
+  leftPosOffset: {x: -1.48, y: 0.12}
   rightPosOffset: {x: 0, y: 0}
   handPosition: {fileID: 4141109182512862636}
 --- !u!114 &2945340190018329994
@@ -1002,15 +1004,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6542389883007776839}
-  m_LocalRotation: {x: 0, y: 0, z: -0.66728026, w: 0.7448068}
-  m_LocalPosition: {x: 0.02, y: 0.47, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4165563834198457243}
-  m_Father: {fileID: 8611446391345997903}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -83.715}
+  m_Father: {fileID: 286041822936246032}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7410701604460823595
 GameObject:
   m_ObjectHideFlags: 0

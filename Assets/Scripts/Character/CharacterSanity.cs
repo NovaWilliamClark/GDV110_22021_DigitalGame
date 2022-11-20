@@ -52,6 +52,7 @@ namespace Character
 
         public void DecreaseSanity(float amount, bool fromDarkness)
         {
+            if (Time.timeScale == 0) return;
             playerData.Sanity -= amount;
             SanityValueChanged?.Invoke(playerData.Sanity, playerData.MaxSanity);
             if (playerData.Sanity <= 0)

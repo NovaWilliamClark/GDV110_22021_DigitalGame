@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Fuse Square
   m_EditorClassIdentifier: 
   itemID: 0
-  itemName: Fuse
-  itemSprite: {fileID: 0}
-  slotSize: {x: 0, y: 0}
+  itemName: Square Fuse
+  itemSprite: {fileID: 21300000, guid: d20e7091003c2474d8afc4cd9a36812b, type: 3}
+  slotSize: {x: 256, y: 256}
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
   isSingleUse: 1
+  usableInInventory: 0
   reloadable: 0
   itemToReload: {fileID: 0}
   reloadSfx: {fileID: 0}

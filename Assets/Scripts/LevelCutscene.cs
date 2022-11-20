@@ -28,8 +28,9 @@ public class LevelCutscene : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera vcam;
 
         private bool sanityToggle = false;
+        private bool flashlightOnBeforePlay;
 
-    private void Awake()
+        private void Awake()
     {
         director = GetComponent<PlayableDirector>();
         lvlController = FindObjectOfType<LevelController>();
@@ -72,6 +73,13 @@ public class LevelCutscene : MonoBehaviour
             player.PlayerData.playingCutscene = true;
             player.ToggleActive(true);
             var sanity = player.GetComponent<CharacterSanity>();
+            if (player.PlayerData.equipmentState.flashlightEquipped)
+                UIHelpers.Instance.BatteryIndicator.Show(false);
+            if (flashlightOnBeforePlay)
+            {
+                player.Equipment.ToggleFlashlight(true);
+                flashlightOnBeforePlay = false;
+            }
             if (!lvlController.safeZone)
             {
                 sanity.Enable();
@@ -101,6 +109,13 @@ public class LevelCutscene : MonoBehaviour
             var sanity = player.GetComponent<CharacterSanity>();
             player.PlayerData.playingCutscene = true;
             sanity.AdjustDecreaseRate(0f);
+            if (player.PlayerData.equipmentState.flashlightEquipped)
+                UIHelpers.Instance.BatteryIndicator.Hide();
+            if (player.PlayerData.equipmentState.flashlightIsOn)
+            {
+                player.Equipment.ToggleFlashlight(false);
+                flashlightOnBeforePlay = true;
+            }
             sanity.Disable();
             player.enabled = false;
             //vcam.Follow = player.transform;

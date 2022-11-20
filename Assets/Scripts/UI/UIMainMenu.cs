@@ -49,7 +49,7 @@ public class UIMainMenu : MonoBehaviour
         // TODO: Instead of having a specific time delay this should be event based so it waits for the UIHelpers object to be ready
         yield return new WaitForSeconds(startDelay);
         
-        AudioManager.Instance.PlayMusic(menuMusic, .5f);
+        AudioManager.Instance.PlayMusic(menuMusic, 1f);
         UIHelpers.Instance.Fader.Fade(0f, 2f, OnFaded);
     }
 

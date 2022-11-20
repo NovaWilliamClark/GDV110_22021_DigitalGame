@@ -470,8 +470,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: CONTROLS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-  m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
+  m_sharedMaterial: {fileID: 3268150673178957825, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -707,8 +707,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: main menu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-  m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
+  m_sharedMaterial: {fileID: 3268150673178957825, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1201,8 +1201,8 @@ MonoBehaviour:
 
     Climb Box: Space'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-  m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
+  m_sharedMaterial: {fileID: 3268150673178957825, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1722,8 +1722,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: PAUSED
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-  m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
+  m_sharedMaterial: {fileID: 3268150673178957825, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2039,8 +2039,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: resume
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-  m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
+  m_sharedMaterial: {fileID: 3268150673178957825, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2356,9 +2356,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Container: {fileID: 501982620}
-  characterEquipment: {fileID: 1098114397, guid: 8d437f5c5ad29412387761640ab65bd2, type: 3}
-  inventory: {fileID: 2535515143662547529, guid: db5db9c942eab5a4cba393507b16fac9, type: 3}
-  data: {fileID: 11400000, guid: 6a6e040239aaaef4093abdbe5a62e1d1, type: 2}
 --- !u!1 &2088789166
 GameObject:
   m_ObjectHideFlags: 0

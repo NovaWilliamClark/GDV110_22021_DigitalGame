@@ -68,7 +68,7 @@ public class TransitionManager : MonoBehaviour
     public void LoadScene(string sceneToLoad)
     {
         AudioManager.Instance.Cleanup();
-        DOTween.KillAll();
+        //DOTween.KillAll();
 
         previousScene = SceneManager.GetActiveScene().name;
         isChangingScenes = true;
@@ -78,7 +78,7 @@ public class TransitionManager : MonoBehaviour
             //originalPlayerData.ResetData();
             //originalPlayerData = originalPlayerData.Copy();
             // tell spawn manager to reset
-            SpawnManager.Instance.ResetState();
+           SpawnManager.Instance.ResetState();
         }
         
         SceneChanged?.Invoke(sceneToLoad);

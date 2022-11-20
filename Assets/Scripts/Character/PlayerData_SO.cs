@@ -24,9 +24,9 @@ using UnityEngine.Serialization;
 public class PlayerData_SO : ScriptableObject
 {
     [Header("--Sanity--")] 
-    private float sanity = 100f;
+    protected float sanity = 100f;
 
-    [SerializeField] private float maxSanity = 100f;
+    [SerializeField] protected float maxSanity = 100f;
     public float MaxSanity => maxSanity;
     
     public float Sanity
@@ -50,10 +50,10 @@ public class PlayerData_SO : ScriptableObject
     [Header("--Flashlight--")]
     public float initialBattery = 0f;
 
-    [SerializeField] private float maxBattery = 100f;
+    [SerializeField] protected float maxBattery = 100f;
     public float MaxBattery => maxBattery;
 
-    private float currentBattery = 0f;
+    protected float currentBattery = 0f;
 
     public bool flashlightAvailable = false;
 
@@ -88,17 +88,36 @@ public class PlayerData_SO : ScriptableObject
         sanity = initialSanity;
         sanityGainRate = initialGainRate;
         sanityLossRate = initialLossRate;
-        equipmentState = initialState.Copy();
+        equipmentState = initialState.Clone() as EquipmentState;
         inventoryItems.Clear();
         wasDead = false;
         breakerFixed = false;
     }
 
-    public PlayerData_SO CreateInstance()
+    public void InitCopy(PlayerData_SO original)
+    {
+        sanity = original.sanity;
+        maxSanity = original.maxSanity;
+        currentBattery = original.currentBattery;
+        maxBattery = original.maxBattery;
+    }
+
+    public PlayerData_SO CreateCopy()
     {
         var instance = Instantiate(this);
-        instance.Init();
+        instance.equipmentState = equipmentState.Clone() as EquipmentState;
+        instance.inventoryItems = new List<ItemData>();
+        instance.InitCopy(this);
+        foreach (var item in inventoryItems)
+        {
+            instance.inventoryItems.Add(item);
+        }
         return instance;
+    }
+
+    public void ResetSanity()
+    {
+        sanity = maxSanity;
     }
 
     public void SetItems(Inventory inventory)
@@ -112,37 +131,5 @@ public class PlayerData_SO : ScriptableObject
             }
             inventoryItems.Add(item.GetItem);
         }*/
-    }
-
-    public void ResetData()
-    {
-        //sanity = 100f;
-        //sanityGainRate = 0.025f;
-        //sanityLossRate = 0.03f;
-        //inventoryItems.Clear();
-    }
-
-    public PlayerData_SO Copy()
-    {
-        // Create copy of SO (exclusively for spawn points atm)
-        var instance = Instantiate(this);
-        instance.hideFlags = HideFlags.DontUnloadUnusedAsset;
-        instance.equipmentState = equipmentState.Copy();
-        //instance.spawnPoint = spawnPoint.Copy();
-        
-        return instance;
-    }
-
-    // https://stackoverflow.com/questions/930433/apply-properties-values-from-one-object-to-another-of-the-same-type-automaticall
-    public void SetFromCopy(PlayerData_SO copy)
-    {
-        Debug.Log("Overwriting OG PlayerData with Spawn Point copy");
-        var ogName = name;
-        foreach (PropertyInfo property in typeof(PlayerData_SO).GetProperties().Where(p => p.CanWrite))
-        {
-            property.SetValue(this, property.GetValue(copy, null), null);
-        }
-
-        name = ogName;
     }
 }

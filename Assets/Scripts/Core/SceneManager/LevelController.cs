@@ -118,11 +118,19 @@ public class LevelController : MonoBehaviour
             if (onLoadCutscene)
                 onLoadCutscene.gameObject.SetActive(false);
             if (UIHelpers.Instance.Fader.IsOpaque())
-                UIHelpers.Instance.Fader.Fade(0f, 2f);
+            {
+                StartCoroutine(FadeDelay());
+            }
         }
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public IEnumerator FadeDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        UIHelpers.Instance.Fader.Fade(0f, 2f);
     }
 
 
@@ -374,6 +382,14 @@ public class LevelController : MonoBehaviour
     public IEnumerator WaitALittleBit()
     {
         yield return new WaitForSeconds(2f);
+        if (SpawnManager.Instance.CurrentSpawnPoint == null)
+        {
+            var nl = FindObjectOfType<Nightlight>();
+            SpawnManager.Instance.SetSpawnPoint(
+                nl.GetComponent<PersistentObject>().Id,
+                SceneManager.GetActiveScene().name,
+                currentLevelData);
+        }
         TransitionManager.Instance.LoadScene(SpawnManager.Instance.CurrentSpawnPoint.SceneName);
     }
 }

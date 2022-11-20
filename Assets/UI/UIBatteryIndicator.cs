@@ -4,6 +4,8 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Sequence = DG.Tweening.Sequence;
 
@@ -25,6 +27,7 @@ public class UIBatteryIndicator : MonoBehaviour
     [SerializeField] private Image iconOff;
     
     public PlayerData_SO playerData;
+    private LevelController levelController;
 
     private Sequence _introSequence;
 
@@ -41,34 +44,77 @@ public class UIBatteryIndicator : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Show()
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu")
+        {
+            Hide();
+            return;
+        }
+
+        levelController = FindObjectOfType<LevelController>();
+        levelController.PlayerSpawned.AddListener(OnPlayerSpawned);
+    }
+
+    private void OnPlayerSpawned(CharacterController cc)
+    {
+        levelController.PlayerSpawned.RemoveListener(OnPlayerSpawned);
+        playerData = cc.PlayerData; 
+        playerData.BatteryValueChanged.AddListener(OnBatteryValueChanged);
+        var val = playerData.CurrentBattery / playerData.MaxBattery;
+        fillable.fillAmount = val;
+    }
+
+    public void Show(bool firstRun = true)
     {
         gameObject.SetActive(true);
-        fillable.fillAmount = 0f;
         _introSequence = DOTween.Sequence();
-        
-        _introSequence
-            .Append(background.GetComponent<RectTransform>().DOScale(1f, .5f))
-            .Append(icon.GetComponent<RectTransform>().DOScale(1f, .5f))
-            .Append(batteryCanvasGroup.DOFade(1f, 1f))
-            .SetAutoKill(false)
-            .OnComplete(() =>
-            {
-                FlashCritical(4, fillableBg, FinishSetup);
-            });
+        if (firstRun)
+        {
+            fillable.fillAmount = 0f;
+
+            _introSequence
+                .Append(background.GetComponent<RectTransform>().DOScale(1f, .5f))
+                .Append(icon.GetComponent<RectTransform>().DOScale(1f, .5f))
+                .Append(batteryCanvasGroup.DOFade(1f, 1f))
+                .SetAutoKill(false)
+                .OnComplete(() => { FlashCritical(4, fillableBg, FinishSetup); });
+        }
+        else
+        {
+            _introSequence
+                .Append(background.GetComponent<RectTransform>().DOScale(1f, .5f))
+                .Append(icon.GetComponent<RectTransform>().DOScale(1f, .5f))
+                .Append(batteryCanvasGroup.DOFade(1f, 1f))
+                .SetAutoKill(false);
+        }
+
         _introSequence.Play();
     }
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        _introSequence.OnRewind(() =>
+        {
+            gameObject.SetActive(false);
+        });
+        _introSequence.PlayBackwards();
     }
 
     void FinishSetup()
     {
         var curVal = playerData.CurrentBattery / playerData.MaxBattery;
         fillable.fillAmount = curVal;
-        playerData.BatteryValueChanged.AddListener(OnBatteryValueChanged);
     }
 
     private void Update()
@@ -101,29 +147,29 @@ public class UIBatteryIndicator : MonoBehaviour
     {
         playerData.CurrentBattery = value;
     }
-        public void Reduce(float tick)
-    {
-        curTime = tick/60f;
-        StartCoroutine(Degen(tick));
-    }
-        private IEnumerator Degen(float tick)
-    {
-        while (true)
-        {
-            if (playerData.CurrentBattery <= 0f)
-            {
-                break;
-            }
-                curTime -= Time.deltaTime;
-            if (curTime <= 0)
-            {
-                curTime = 0f;
-                break;
-            }
-            playerData.CurrentBattery = Mathf.Lerp(0f,100,curTime/(tick/60));
-            yield return null;
-        }
-    }
+    //     public void Reduce(float tick)
+    // {
+    //     curTime = tick/60f;
+    //     StartCoroutine(Degen(tick));
+    // }
+    //     private IEnumerator Degen(float tick)
+    // {
+    //     while (true)
+    //     {
+    //         if (playerData.CurrentBattery <= 0f)
+    //         {
+    //             break;
+    //         }
+    //             curTime -= Time.deltaTime;
+    //         if (curTime <= 0)
+    //         {
+    //             curTime = 0f;
+    //             break;
+    //         }
+    //         playerData.CurrentBattery = Mathf.Lerp(0f,100,curTime/(tick/60));
+    //         yield return null;
+    //     }
+    // }
 
     public void Toggle(bool on)
     {

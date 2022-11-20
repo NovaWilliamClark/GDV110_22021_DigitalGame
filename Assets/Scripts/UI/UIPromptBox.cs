@@ -40,6 +40,7 @@ public class UIPromptBox : MonoBehaviour
     private void OnDisable()
     {
         StopAllCoroutines();
+        animationSequence.Kill();
     }
 
     private void OnEnable()

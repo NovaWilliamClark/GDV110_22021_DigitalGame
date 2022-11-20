@@ -681,8 +681,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Adjust Gamma
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-  m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c1f07c63368524edb96d548cfa9b1599, type: 2}
+  m_sharedMaterial: {fileID: 3268150673178957825, guid: c1f07c63368524edb96d548cfa9b1599, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4348,8 +4348,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Adjust until left image is barely visible
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-  m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c1f07c63368524edb96d548cfa9b1599, type: 2}
+  m_sharedMaterial: {fileID: 3268150673178957825, guid: c1f07c63368524edb96d548cfa9b1599, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6202,7 +6202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1040836713
 Transform:
   m_ObjectHideFlags: 0
@@ -6937,8 +6937,8 @@ RectTransform:
   m_Father: {fileID: 1170915527}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9330,7 +9330,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10698,8 +10698,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Accept
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
-  m_sharedMaterial: {fileID: 3268150673178957825, guid: 3ece75112ae47437b96673e5999c076d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
+  m_sharedMaterial: {fileID: 3268150673178957825, guid: 4c4526f02e2f848419a67c35ba483992, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -18,7 +18,7 @@ MonoBehaviour:
   slotSize: {x: 150, y: 250}
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
-  isSingleUse: 0
+  isSingleUse: 1
   usableInInventory: 0
   reloadable: 0
   itemToReload: {fileID: 0}

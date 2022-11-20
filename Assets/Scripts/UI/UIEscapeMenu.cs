@@ -10,14 +10,27 @@ public class UIEscapeMenu : MonoBehaviour
 {
     public GameObject Container;
     private CanvasGroup canvasGroup;
-    public CharacterEquipment characterEquipment;
-    public Inventory inventory;
-    public PlayerData_SO data;
+    private LevelController currentLevelController;
+    private CharacterController playerRef;
 
     private void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         ShowHide(false);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu") return;
+        currentLevelController = FindObjectOfType<LevelController>();
+        currentLevelController.PlayerSpawned.AddListener(OnPlayerSpawned);
+    }
+
+    private void OnPlayerSpawned(CharacterController cc)
+    {
+        playerRef = cc;
+        currentLevelController.PlayerSpawned.RemoveListener(OnPlayerSpawned);
     }
 
     private void Update()
@@ -34,6 +47,12 @@ public class UIEscapeMenu : MonoBehaviour
         Container.SetActive(show);
         Time.timeScale = show ? 0f : 1f;
         Cursor.visible = true ? true : false;
+        if (playerRef)
+        {
+            playerRef.ToggleActive(!show);
+            var sanity = playerRef.GetComponent<CharacterSanity>();
+            sanity.AdjustDecreaseRate(0f, !show);
+        }
         // fade audio down
     }
 
@@ -41,9 +60,12 @@ public class UIEscapeMenu : MonoBehaviour
     {
         ShowHide(false);
         
-        if (data.equipmentState.flashlightEquipped)
+        SpawnManager.Instance.ResetState();
+
+        if (playerRef.PlayerData.equipmentState.flashlightEquipped)
         {
-            characterEquipment.FlashlightVisual.SetActive(false);
+            var equipment = playerRef.Equipment;
+            playerRef.Equipment.FlashlightVisual.SetActive(false);
             UIHelpers.Instance.BatteryIndicator.Hide();
         }
         

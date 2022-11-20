@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class MouseFollow : MonoBehaviour
 {
@@ -12,12 +13,15 @@ public class MouseFollow : MonoBehaviour
     [SerializeField] private PlayerData_SO playerData;
     public GameObject flashlightVisual;
     private SpriteRenderer flashlightVisualRenderer;
+    [SerializeField] private Light2D light;
 
     [SerializeField] private Vector2 leftPosOffset;
     [SerializeField] private Vector2 rightPosOffset;
 
     [SerializeField] private GameObject handPosition;
 
+    private Vector3 flashlightRendererStartPos;
+    
     public void Init(PlayerData_SO data, CharacterController player)
     {
         playerData = data;
@@ -27,6 +31,39 @@ public class MouseFollow : MonoBehaviour
     private void Awake()
     {
         flashlightVisualRenderer = flashlightVisual.GetComponentInChildren<SpriteRenderer>();
+        flashlightRendererStartPos = flashlightVisualRenderer.transform.localPosition;
+    }
+
+    private void Update()
+    {
+        if (flashlightVisual)
+        {
+            if (!playerData.equipmentState.flashlightIsOn)
+            {
+                flashlightVisual.transform.position = handPosition.transform.position;
+                flashlightVisual.transform.rotation = handPosition.transform.rotation;
+                if (characterController.IsFacingLeft())
+                {
+                    flashlightVisualRenderer.transform.localPosition = flashlightRendererStartPos + (Vector3) leftPosOffset;
+                    flashlightVisualRenderer.flipY = true;
+                    flashlightVisualRenderer.flipX = true;
+                }
+                else
+                {
+                    flashlightVisualRenderer.transform.localPosition = flashlightRendererStartPos;
+                    flashlightVisualRenderer.flipY = false;
+                    flashlightVisualRenderer.flipX = false;
+                }
+            }
+            else
+            {
+                flashlightVisualRenderer.transform.localPosition = flashlightRendererStartPos;
+                flashlightVisual.transform.position = transform.position;
+                flashlightVisual.transform.rotation = transform.rotation;
+                flashlightVisualRenderer.flipY = false;
+                flashlightVisualRenderer.flipX = false;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -81,23 +118,6 @@ public class MouseFollow : MonoBehaviour
             }
 
             transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
-
-            if (flashlightVisual)
-            {
-                if (characterController.IsFacingLeft())
-                {
-                    flashlightVisualRenderer.flipX = true;
-                    flashlightVisualRenderer.flipY = true;
-                }
-                else
-                {
-                    flashlightVisualRenderer.flipX = false;
-                    flashlightVisualRenderer.flipY = false;
-                }
-
-                flashlightVisual.transform.position = handPosition.transform.position;
-                flashlightVisual.transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
-            }
         }
     }
 }

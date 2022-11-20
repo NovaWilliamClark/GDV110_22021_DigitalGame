@@ -34,13 +34,14 @@ namespace Objects
 
 		private void OnPlayerLoaded(CharacterController controller)
 		{
-			playerController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
+			playerController = controller;
 		}
 
 		protected override void Update()
 		{
 			base.Update();
-			MoveObject();
+			if (playerController)
+				MoveObject();
 		}
 
 		protected override void OnTriggerEnter2D(Collider2D other)
@@ -56,12 +57,11 @@ namespace Objects
 
 		protected override void OnTriggerExit2D(Collider2D other)
 		{
-			if (other.GetComponent<CharacterController>())
+			if (other.CompareTag("Player"))
 			{
 				canMoveObject = false;
 			}
 			base.OnTriggerExit2D(other);
-			
 		}
 
 		private void MoveObject()
