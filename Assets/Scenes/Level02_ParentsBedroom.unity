@@ -1628,7 +1628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3150619256056934064, guid: b8a143379962642bd9ddf80108624370, type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 33.9
+      value: 58.52
       objectReference: {fileID: 0}
     - target: {fileID: 3150619256056934064, guid: b8a143379962642bd9ddf80108624370, type: 3}
       propertyPath: m_Lens.NearClipPlane
@@ -2452,11 +2452,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5773459237369273183, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.439999
+      value: 15.49
       objectReference: {fileID: 0}
     - target: {fileID: 5773459237369273183, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.8800001
+      value: 10.719999
       objectReference: {fileID: 0}
     - target: {fileID: 5773459237369273183, guid: 598d34e2a7ed4416fb68816800d170db, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7659,7 +7659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3022912342552266209, guid: 21d5db5934fbd4bd2ae30cb2ae3d6a80, type: 3}
       propertyPath: spawnPosition.y
-      value: -1.97
+      value: -7.92
       objectReference: {fileID: 0}
     - target: {fileID: 3022912342552266209, guid: 21d5db5934fbd4bd2ae30cb2ae3d6a80, type: 3}
       propertyPath: spawnFacingDirection

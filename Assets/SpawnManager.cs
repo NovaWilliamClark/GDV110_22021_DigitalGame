@@ -67,7 +67,8 @@ public class SpawnManager : MonoBehaviour
     public void DoSpawn()
     {
         currentPlayerData = currentSpawnData.PlayerDataAtSpawn;
-        //var index = currentLevelData.FindIndex(i => i.sceneName == currentSpawnData.SceneName);
+        
+        // loop over level states- remove any that are timestamped after this spawn point was set
         foreach (var dataSo in currentLevelData.ToList())
         {
             if (dataSo.sceneName == currentSpawnData.LevelDataAtSpawn.sceneName) continue;

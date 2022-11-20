@@ -159,7 +159,7 @@ public abstract class InteractionPoint : MonoBehaviour
         else
         {
             if (hasInteracted) return;
-            Debug.LogFormat("{0}: Auto Interaction!", name);
+            //Debug.LogFormat("{0}: Auto Interaction!", name);
             hasInteracted = true;
             Interact(other.GetComponent<CharacterController>());
         }
@@ -212,6 +212,7 @@ public abstract class InteractionPoint : MonoBehaviour
                 visualSequence.Play();
             }
         }
+        
     }
 
     protected virtual void FixedUpdate()

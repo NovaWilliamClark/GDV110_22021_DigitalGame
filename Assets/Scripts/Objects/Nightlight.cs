@@ -36,6 +36,8 @@ public class Nightlight : InteractionPoint
     [FormerlySerializedAs("batteryItem")] [SerializeField] private ItemData batteryItemData;
     [SerializeField] private string missingBatteryMessage;
     private bool inRadius;
+    public float saveCooldown = 5f;
+
 
     //public UnityEvent<int> Interacted;
 
@@ -52,13 +54,19 @@ public class Nightlight : InteractionPoint
         canInteract = false;
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        
+    }
+    
     private void OnPlayerSpawned(CharacterController cc)
     {
         canInteract = true;
+        lightIntensity = _light.intensity;
         if (requiresBattery)
         {
             litArea.isEnabled = false;
-            lightIntensity = _light.intensity;
             _light.intensity = 0f;
         }
         else
@@ -99,13 +107,14 @@ public class Nightlight : InteractionPoint
         else
         {
             var sceneName = SceneManager.GetActiveScene().name;
-            msg = "Spawn Point Set";
+            msg = "Saved";
             
             var newerSpawnPoint = false;
             var nullSpawnPoint = spawnMan.CurrentSpawnPoint == null;
             if (!nullSpawnPoint)
             {
                 var spLvlData = spawnMan.CurrentSpawnPoint.LevelDataAtSpawn;
+                // is this level newer
                 newerSpawnPoint = spLvlData.createdAt < spawnMan.GetCurrentLevelData(sceneName).createdAt || 
                                   spLvlData.sceneName == sceneName && spLvlData.createdAt < Time.time;
             }
@@ -139,7 +148,19 @@ public class Nightlight : InteractionPoint
         if (!other.CompareTag("Player")) return;
         if(!other.GetComponent<CharacterController>()) return;
         playerRef = null;
+        if (automaticInteraction)
+        {
+            StartCoroutine(SaveCooldown());
+        }
+
         DisablePrompt();
+    }
+
+    private IEnumerator SaveCooldown()
+    {
+        yield return new WaitForSeconds(saveCooldown);
+        canInteract = true;
+        hasInteracted = false;
     }
 
     protected override void Update()
@@ -151,15 +172,16 @@ public class Nightlight : InteractionPoint
     {
         base.SetInteractedState(state);
         if (state is not InteractionState interactionState) return;
+        
         litArea.isEnabled = interactionState.interacted;
+        _light.intensity = interactionState.interacted ? _light.intensity : 0f;
         hasInteracted = interactionState.interacted;
         canInteract = !interactionState.interacted;
-        
-        if (SpawnManager.Instance.CurrentSpawnPoint.Id == persistentObject.Id)
+
+        if (hasInteracted)
         {
-            hasInteracted = true;
-            canInteract = false;
-            litArea.isEnabled = true;
+            automaticInteraction = true;
+            requiresBattery = false;
         }
     }
 
@@ -170,6 +192,7 @@ public class Nightlight : InteractionPoint
             hasItem = playerRef.GetInventory.HasItem(batteryItemData);
             if (!hasItem) return;
             playerRef.GetInventory.UseItem(batteryItemData);
+            AudioManager.Instance.PlaySound(ActivateSFX, sfxVolume);
         }
 
         if (!automaticInteraction)
@@ -178,6 +201,8 @@ public class Nightlight : InteractionPoint
             litArea.isEnabled = true;
         }
 
+        requiresBattery = false;
+        automaticInteraction = true;
         hasInteracted = true;
         canInteract = false;
         

@@ -297,10 +297,11 @@ public class LevelController : MonoBehaviour
         var existingPlayer = FindObjectOfType<CharacterController>();
         if (existingPlayer)
             Destroy(existingPlayer.gameObject);
-        
+        var spawnMan = SpawnManager.Instance;
+
         // set up spawn
         var tmi = TransitionManager.Instance;
-        if (tmi.isChangingScenes && tmi.previousScene != "MainMenu")
+        if (tmi.isChangingScenes && tmi.previousScene != "MainMenu" && !spawnMan.PlayerDied)
         {
             tmi.isChangingScenes = false;
             foreach (var sceneTransition in FindObjectsOfType<SceneTransition>())
@@ -322,9 +323,7 @@ public class LevelController : MonoBehaviour
                 Debug.LogWarningFormat("Changing scene set but cannot find spawn location");
             }
         }
-
-        var spawnMan = SpawnManager.Instance;
-
+        
         instancedPlayer = Instantiate(playerPrefab).GetComponent<CharacterController>();
         instancedPlayer.Init(spawnMan.GetPlayerData());
         
