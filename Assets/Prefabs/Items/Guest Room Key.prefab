@@ -239,6 +239,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 858629103
       objectReference: {fileID: 0}
+    - target: {fileID: 2229319080841061121, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061133, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_Name
       value: Guest Room Key
@@ -317,7 +321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7439259373624352844, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: uniqueId
-      value: 9f572fd3-369e-4777-b655-b3e13a8dd0a3
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8171835765223250387, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: InitialModule.startSize.scalar

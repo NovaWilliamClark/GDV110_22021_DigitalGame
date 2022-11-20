@@ -103,6 +103,7 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
+        animator.SetBool("IsPushing", isMovingObject);
         var keyboard = Keyboard.current;
 
         if (!CanMove || keyboard == null)
@@ -146,17 +147,7 @@ public class CharacterController : MonoBehaviour
     
     private void UpdateGrounding()
     {
-        // Use Character Collider to check if touching ground layers
-        if (controllerCollider.IsTouchingLayers(softGroundMask))
-        {
-            groundType = GroundType.Soft;
-        }
-        else if (controllerCollider.IsTouchingLayers(hardGroundMask))
-        {
-            groundType = GroundType.Hard;
-        }
-        else groundType = GroundType.None;
-        
+        animator.SetFloat("Velocity_Y", Mathf.Abs(controllerRigidBody.velocity.y));
     }
 
     private void UpdateVelocity()

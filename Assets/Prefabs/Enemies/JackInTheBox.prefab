@@ -230,7 +230,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isMoving: 0
-  moveVelocity: 0
+  moveVelocity: 15
   canMoveObject: 0
   interactionDistance: 0
   jack: {fileID: 3721555421031154517}
@@ -238,7 +238,7 @@ MonoBehaviour:
   song: {fileID: 8300000, guid: 9714a635a69165549be9ac1a3518a73d, type: 3}
   destination: {x: 0, y: 4}
   popSpeed: 1
-  sanityDamage: 10
+  sanityDamage: 35
   animator: {fileID: 8281961128671013664}
 --- !u!114 &4714347319815985577
 MonoBehaviour:
@@ -278,8 +278,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3879537905480754780}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.19, y: -15.3, z: -0.17838386}
-  m_LocalScale: {x: 11.306379, y: 38.37031, z: 1}
+  m_LocalPosition: {x: -0.19, y: -14.85, z: -0.17838386}
+  m_LocalScale: {x: 11.306379, y: 38.34633, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4491506033769578254}

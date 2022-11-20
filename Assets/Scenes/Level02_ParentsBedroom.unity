@@ -1413,7 +1413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16a77a53a824ca9bc0c9acdca5452b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryItems: {fileID: 11400000, guid: efbd2ee4581c742db91a107a6ca54c1d, type: 2}
+  inventoryItems: {fileID: 11400000, guid: f18f296947bd54b79b6c5bbc6d66f9ea, type: 2}
   containerPrefab: {fileID: 6694977460948337771, guid: 621b03dbddd4c4ca5977e09546ad33b9, type: 3}
   container: {fileID: 0}
   ContainerStateChanged:
@@ -1832,7 +1832,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

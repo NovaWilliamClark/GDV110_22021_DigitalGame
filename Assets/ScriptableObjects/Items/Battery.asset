@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: 6
   itemName: Battery
   itemSprite: {fileID: 21300000, guid: c29d4d3677e3a487fa8a98d1922e8bb2, type: 3}
-  slotSize: {x: 256, y: 256}
+  slotSize: {x: 152, y: 152}
   hasBeenPickedUp: 0
   disappearsOnCombination: 1
   isSingleUse: 1

@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 0
   itemName: Fuse
-  itemSprite: {fileID: 0}
-  slotSize: {x: 0, y: 0}
+  itemSprite: {fileID: 21300000, guid: 4db3bfef9a9dd44bebc9ca574fa345f0, type: 3}
+  slotSize: {x: 256, y: 256}
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
   isSingleUse: 1
+  usableInInventory: 0
   reloadable: 0
   itemToReload: {fileID: 0}
   reloadSfx: {fileID: 0}
-  itemPrefab: {fileID: 0}
+  itemPrefab: {fileID: 4958466166538708528, guid: 1cd3a4974e24acc4b832ab41f35bff70, type: 3}
   itemDataRef: {fileID: 0}
   typeEnum: {fileID: 11400000, guid: 32fa6647c224740aba0cd894355d1f3b, type: 2}
   useSfx: {fileID: 0}

@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 2229319080841061121, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2229319080841061133, guid: 3465ae53abc0065409b1e0832d9a1af2, type: 3}
       propertyPath: m_Name
       value: Flashlight

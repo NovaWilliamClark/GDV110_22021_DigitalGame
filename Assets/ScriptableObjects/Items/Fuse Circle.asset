@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: 0
   itemName: Fuse
   itemSprite: {fileID: 3304629502349806956, guid: ea17160df61b042eea8f2525a5d9b96f, type: 3}
-  slotSize: {x: 300, y: 300}
+  slotSize: {x: 256, y: 256}
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
   isSingleUse: 1
@@ -23,7 +23,7 @@ MonoBehaviour:
   reloadable: 0
   itemToReload: {fileID: 0}
   reloadSfx: {fileID: 0}
-  itemPrefab: {fileID: 0}
+  itemPrefab: {fileID: 4958466166538708528, guid: ca053f02082f8724d812ebee9073dc5c, type: 3}
   itemDataRef: {fileID: 0}
   typeEnum: {fileID: 11400000, guid: 32fa6647c224740aba0cd894355d1f3b, type: 2}
   useSfx: {fileID: 0}

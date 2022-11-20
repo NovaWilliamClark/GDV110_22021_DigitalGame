@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 50
   itemName: Blanket Box Key
-  itemSprite: {fileID: 21300000, guid: 91e0c1041a1f24914ae378f54dbc27de, type: 3}
-  slotSize: {x: 400, y: 400}
+  itemSprite: {fileID: 21300000, guid: 8829ed4d8008f4099b352c87cbfd0feb, type: 3}
+  slotSize: {x: 150, y: 250}
   hasBeenPickedUp: 0
   disappearsOnCombination: 0
   isSingleUse: 0
+  usableInInventory: 0
   reloadable: 0
   itemToReload: {fileID: 0}
   reloadSfx: {fileID: 0}

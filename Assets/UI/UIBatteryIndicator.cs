@@ -30,7 +30,7 @@ public class UIBatteryIndicator : MonoBehaviour
 
     private bool IsCritical => fillable.fillAmount <= criticalValue;
 
-    //private float curTime = 1f;
+    private float curTime = 1f;
     private Sequence criticalSeq;
 
     public void Init()
@@ -97,36 +97,33 @@ public class UIBatteryIndicator : MonoBehaviour
         });
     }
 
-    // public void SetValue(float value)
-    // {
-    //     playerData.CurrentBattery = value;
-    // }
-    //
-    // public void Reduce(float tick)
-    // {
-    //     curTime = tick/60f;
-    //     StartCoroutine(Degen(tick));
-    // }
-    //
-    // private IEnumerator Degen(float tick)
-    // {
-    //     while (true)
-    //     {
-    //         if (playerData.CurrentBattery <= 0f)
-    //         {
-    //             break;
-    //         }
-    //
-    //         curTime -= Time.deltaTime;
-    //         if (curTime <= 0)
-    //         {
-    //             curTime = 0f;
-    //             break;
-    //         }
-    //         playerData.CurrentBattery = Mathf.Lerp(0f,100,curTime/(tick/60));
-    //         yield return null;
-    //     }
-    // }
+    public void SetValue(float value)
+    {
+        playerData.CurrentBattery = value;
+    }
+        public void Reduce(float tick)
+    {
+        curTime = tick/60f;
+        StartCoroutine(Degen(tick));
+    }
+        private IEnumerator Degen(float tick)
+    {
+        while (true)
+        {
+            if (playerData.CurrentBattery <= 0f)
+            {
+                break;
+            }
+                curTime -= Time.deltaTime;
+            if (curTime <= 0)
+            {
+                curTime = 0f;
+                break;
+            }
+            playerData.CurrentBattery = Mathf.Lerp(0f,100,curTime/(tick/60));
+            yield return null;
+        }
+    }
 
     public void Toggle(bool on)
     {
