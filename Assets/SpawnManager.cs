@@ -15,7 +15,7 @@ public class SpawnManager : MonoBehaviour
     public LevelController CurrentLevelController { get; private set; }
 
     [SerializeField] private SpawnData initialSpawnData;
-    private SpawnData currentSpawnData;
+    private SpawnData currentSpawnData = null;
 
     public bool HasSpawnPoint => currentSpawnData != null;
     public SpawnData CurrentSpawnPoint => currentSpawnData; 
@@ -32,6 +32,7 @@ public class SpawnManager : MonoBehaviour
         {
             Instance = this;
             initialSpawnData = new SpawnData();
+            currentSpawnData = null;
             currentPlayerData = Instantiate(originalPlayerData);
             currentPlayerData.Init();
             currentLevelData = new();

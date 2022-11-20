@@ -233,6 +233,11 @@ public abstract class InteractionPoint : MonoBehaviour
             if(!other.GetComponent<CharacterController>()) return;
             playerRef = null;
             DisablePrompt();
+            
+            if (canReInteract)
+            {
+                canInteract = true;
+            }
         }
     }
 

@@ -8,9 +8,12 @@ public class ContainerTrigger : InteractionPoint
     [SerializeField] private ContainerInventory containerInventory;
 
     [SerializeField] private string missingItemMessage;
+
+    protected bool containerEmptied = false;
     
     protected override void Interact(CharacterController cc)
     {
+        if (containerEmptied) return;
         if (requiresItem)
         {
             hasItem = playerRef.GetInventory.HasItem(requiredItem);
@@ -38,15 +41,19 @@ public class ContainerTrigger : InteractionPoint
         playerRef.ToggleActive(true);
         if (!emptied)
         {
+            containerEmptied = false;
             hasInteracted = false;
+            canInteract = true;
             ResetPrompt(promptMessage);
         }
         else
         {
+            containerEmptied = true;
             canInteract = false;
             hasInteracted = true;
             Interacted?.Invoke(this, new InteractionState(persistentObject.Id){interacted = true});
         }
+        containerInventory.ContainerClosed.RemoveListener(OnContainerClosed);
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
@@ -78,6 +85,26 @@ public class ContainerTrigger : InteractionPoint
             Debug.Log("Auto Interaction!");
             hasInteracted = true;
             Interact(other.GetComponent<CharacterController>());
+        }
+    }
+
+    protected override void OnTriggerExit2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player")) return;
+        if (!automaticInteraction)
+        {
+            if(!other.GetComponent<CharacterController>()) return;
+            playerRef = null;
+            DisablePrompt();
+            
+            if (canReInteract && !containerEmptied)
+            {
+                canInteract = true;
+            }
+            else
+            {
+                canInteract = false;
+            }
         }
     }
 

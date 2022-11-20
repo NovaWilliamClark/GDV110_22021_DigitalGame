@@ -42,7 +42,7 @@ public class ItemContainer_SO : ScriptableObject
         }
     }
 
-    public bool AllItemsTaken => itemsTaken.Count == items.Count;
+    public bool AllItemsTaken => itemsTaken.Count >= items.Count;
 
     public void SetToTaken(ItemData data)
     {

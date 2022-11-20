@@ -171,8 +171,7 @@ public class InteractionState : PersistentObjectState
     }
     public override object Clone()
     {
-        var itstate = new InteractionState(this);
-        return itstate;
+        return new InteractionState(this);
     }
 }
 
@@ -182,9 +181,15 @@ public class GenericState : PersistentObjectState
     public bool active = true;
 
     public GenericState(string id) : base(id) {}
+
+    public GenericState(GenericState original) : base(original)
+    {
+        active = original.active;
+        id = original.id;
+    }
     public override object Clone()
     {
-        return new GenericState(id) {active = active};
+        return new GenericState(this);
     }
 }
 
@@ -195,9 +200,18 @@ public class ItemContainerState : PersistentObjectState
 
     public ItemContainerState(string id) : base(id) {}
 
+    public ItemContainerState(ItemContainerState original) : base(original)
+    {
+        foreach (var item in original.items)
+        {
+            items.Add(item);
+            id = original.id;
+        }
+    }
+
     public override object Clone()
     {
-        return new ItemContainerState(id) {items = items.ToList()};
+        return new ItemContainerState(this);
     }
 }
 
@@ -209,9 +223,16 @@ public class EnemyLevelState : PersistentObjectState
     public bool behaviourEnabled = true;
 
     public EnemyLevelState(string id) : base(id) { }
+
+    public EnemyLevelState(EnemyLevelState original) : base(original)
+    {
+        active = original.active;
+        behaviourEnabled = original.behaviourEnabled;
+        id = original.id;
+    }
     public override object Clone()
     {
-        return new EnemyLevelState(id) {active = active, behaviourEnabled = behaviourEnabled};
+        return new EnemyLevelState(this);
     }
 }
 

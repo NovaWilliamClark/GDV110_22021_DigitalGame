@@ -16,8 +16,10 @@ public class EventCallerInteractable : InteractionPoint
         Interaction?.Invoke(active);
         hasInteracted = true;
         canInteract = false;
-        Interacted?.Invoke(this, new InteractionState(persistentObject.Id) {interacted = true});
+        Interacted?.Invoke(this, new InteractionState(persistentObject.Id) {interacted = hasInteracted});
     }
+    
+    
 
     public override void SetInteractedState(object state)
     {
@@ -25,6 +27,12 @@ public class EventCallerInteractable : InteractionPoint
         if (state is not InteractionState st) return;
         active = st.interacted;
         Interaction.Invoke(st.interacted);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        Interacted?.Invoke(this, new InteractionState(persistentObject.Id) {interacted = hasInteracted});
     }
 
     protected override void OnDrawGizmos()

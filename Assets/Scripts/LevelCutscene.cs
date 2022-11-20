@@ -69,6 +69,7 @@ public class LevelCutscene : MonoBehaviour
         if (player)
         {
             player.enabled = true;
+            player.PlayerData.playingCutscene = true;
             player.ToggleActive(true);
             var sanity = player.GetComponent<CharacterSanity>();
             if (!lvlController.safeZone)
@@ -98,6 +99,7 @@ public class LevelCutscene : MonoBehaviour
         if (player)
         {
             var sanity = player.GetComponent<CharacterSanity>();
+            player.PlayerData.playingCutscene = true;
             sanity.AdjustDecreaseRate(0f);
             sanity.Disable();
             player.enabled = false;

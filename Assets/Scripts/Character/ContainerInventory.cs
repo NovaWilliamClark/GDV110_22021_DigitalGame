@@ -6,6 +6,7 @@ using Objects;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(PersistentObject))]
 public class ContainerInventory : MonoBehaviour
 {
     public event Action OnContainerEmptied;

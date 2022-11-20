@@ -30,10 +30,31 @@ public class UIContainer : MonoBehaviour
     public void Setup(ItemContainer_SO containerData, UnityAction<ItemData> takeItem = null, UnityAction takeAllItems = null)
     {
         var activeRect = activeArea.rect;
+        var taken = new Dictionary<ItemData, int>();
+        foreach (var takenItem in containerData.ItemsTaken)
+        {
+            if (!taken.ContainsKey(takenItem))
+            {
+                taken.Add(takenItem, 1);
+            }
+            else
+            {
+                taken[takenItem]++;
+            }
+        }
+        
         foreach (var item in containerData.initialItems)
         {
-            if (containerData.ItemsTaken.Contains(item))
+            if (taken.ContainsKey(item))
+            {
+                taken[item]--;
+                if (taken[item] <= 0)
+                {
+                    taken.Remove(item);
+                }
+
                 continue;
+            }
             var slot = Instantiate(slotPrefab, activeArea.transform);
             var rect = slot.rect;
             var uiSlot = slot.GetComponent<UIContainerSlot>();
@@ -59,6 +80,8 @@ public class UIContainer : MonoBehaviour
             //     }
             // }
         }
+        if (taken.Count > 0)
+            taken.Clear();
     }
 
     private void OnSlotClicked(UIContainerSlot slot)

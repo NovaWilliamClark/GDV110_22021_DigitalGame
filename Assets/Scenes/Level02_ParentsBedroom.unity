@@ -555,6 +555,73 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5454834009845697985, guid: e08b6b74fee35419ebfaa4587ce7b878, type: 3}
   m_PrefabInstance: {fileID: 65235605}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &94216116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 94216117}
+  - component: {fileID: 94216119}
+  - component: {fileID: 94216118}
+  m_Layer: 0
+  m_Name: BathroomBasin_Inventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &94216117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94216116}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 850391816}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &94216118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94216116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e86d805a0d947d5bbf1728e83ea7fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 5752d018-fe24-4d4a-a03a-9ca7f9d5897b
+--- !u!114 &94216119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94216116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a16a77a53a824ca9bc0c9acdca5452b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryItems: {fileID: 11400000, guid: efbd2ee4581c742db91a107a6ca54c1d, type: 2}
+  containerPrefab: {fileID: 6694977460948337771, guid: 621b03dbddd4c4ca5977e09546ad33b9, type: 3}
+  container: {fileID: 0}
+  ContainerStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  ContainerClosed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &100079332
 GameObject:
   m_ObjectHideFlags: 0
@@ -3290,7 +3357,6 @@ GameObject:
   - component: {fileID: 850391816}
   - component: {fileID: 850391815}
   - component: {fileID: 850391814}
-  - component: {fileID: 850391813}
   - component: {fileID: 850391812}
   - component: {fileID: 850391811}
   m_Layer: 0
@@ -3317,7 +3383,7 @@ MonoBehaviour:
   previewPrompt: 1
   automaticInteraction: 0
   canInteract: 1
-  canReInteract: 0
+  canReInteract: 1
   requiresItem: 0
   missingItemPromptMsg: 
   requiredItem: {fileID: 0}
@@ -3331,7 +3397,7 @@ MonoBehaviour:
   Interacted:
     m_PersistentCalls:
       m_Calls: []
-  containerInventory: {fileID: 850391813}
+  containerInventory: {fileID: 94216119}
   missingItemMessage: Need Blanket Box Key
 --- !u!114 &850391812
 MonoBehaviour:
@@ -3346,27 +3412,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueId: 52fbd5fd-d4e4-42bf-97bc-196a9fdf3a5d
---- !u!114 &850391813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 850391810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a16a77a53a824ca9bc0c9acdca5452b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryItems: {fileID: 11400000, guid: efbd2ee4581c742db91a107a6ca54c1d, type: 2}
-  containerPrefab: {fileID: 6694977460948337771, guid: 621b03dbddd4c4ca5977e09546ad33b9, type: 3}
-  container: {fileID: 0}
-  ContainerStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  ContainerClosed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!61 &850391814
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3458,6 +3503,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 118198682}
+  - {fileID: 94216117}
   m_Father: {fileID: 0}
   m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
