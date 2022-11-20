@@ -735,6 +735,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7928201673012255957}
     m_Modifications:
+    - target: {fileID: 422024384568020290, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_text
+      value: Use Battery - RMB
+      objectReference: {fileID: 0}
     - target: {fileID: 1306717890323903876, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -837,6 +841,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2103694458185002684, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6363519421055378764, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6363519421055378764, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6363519421055378764, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6363519421055378764, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6363519421055378764, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 16.2327
+      objectReference: {fileID: 0}
+    - target: {fileID: 6363519421055378764, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6363519421055378764, guid: 4967299195341fd4b9cb6a57882a90a4, type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -704,6 +704,7 @@ MonoBehaviour:
   flashlightItemDataRef: {fileID: 11400000, guid: 8a1f604e86ff54b41a1109ee6cfe75c4, type: 2}
   flashlightObject: {fileID: 7410701604460823595}
   trackingScript: {fileID: 2945340190018329994}
+  mouseFollow: {fileID: 1430319146624887246}
   FlashlightVisual: {fileID: 6542389883007776839}
   flashlightActivateSfx: {fileID: 8300000, guid: 2b3c9b7d145644f1d82a5c9513d163cc, type: 3}
   sfxVolume: 0.7
@@ -924,7 +925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 286041822936246033}
   pivot: {fileID: 802858724418787787}
-  playerData: {fileID: 11400000, guid: 6a6e040239aaaef4093abdbe5a62e1d1, type: 2}
+  playerData: {fileID: 0}
   flashlightVisual: {fileID: 6542389883007776839}
   leftPosOffset: {x: -0.58, y: -0.4}
   rightPosOffset: {x: 0, y: 0}
@@ -945,7 +946,7 @@ MonoBehaviour:
   shoulderBone: {fileID: 991740825476891851}
   target: {fileID: 1061816811}
   distance: 2
-  playerData: {fileID: 11400000, guid: 6a6e040239aaaef4093abdbe5a62e1d1, type: 2}
+  playerData: {fileID: 0}
 --- !u!1 &3729901726649740530
 GameObject:
   m_ObjectHideFlags: 0

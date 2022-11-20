@@ -26,6 +26,7 @@ public class CharacterEquipment : MonoBehaviour
     [SerializeField] private ItemData flashlightItemDataRef;
     [SerializeField] private GameObject flashlightObject;
     [SerializeField] private ArmMouseTracking trackingScript;
+    [SerializeField] private MouseFollow mouseFollow;
     private bool flashlightCooldownComplete = true;
 
     public GameObject FlashlightVisual;
@@ -57,6 +58,8 @@ public class CharacterEquipment : MonoBehaviour
         charController.GetInventory.ItemAdded.AddListener(OnItemAddedToInventory);
         data = pdata;
         input = new PlayerInput();
+        mouseFollow.Init(data, charController);
+        trackingScript.Init(data, charController);
         useFlashlightInput = input.Player.UseFlashlight;
         useFlashlightInput.performed += OnFlashlightInput;
         data.BatteryValueChanged.AddListener(OnBatteryValueChanged);
@@ -223,7 +226,7 @@ public class CharacterEquipment : MonoBehaviour
 }
 
 [Serializable]
-public class EquipmentState
+public class EquipmentState : ICloneable
 {
     public bool hasSockey = false;
     public bool hasBag = false;
@@ -254,6 +257,19 @@ public class EquipmentState
             flashlightEquipped = false,
             flashlightIsOn = false,
             flashlightDecreaseRate = 0.1f
+        };
+        return copy;
+    }
+
+    public object Clone()
+    {
+        var copy = new EquipmentState()
+        {
+            hasSockey = hasSockey,
+            hasBag = hasBag,
+            flashlightEquipped = flashlightEquipped,
+            flashlightIsOn = flashlightIsOn,
+            flashlightDecreaseRate = flashlightDecreaseRate
         };
         return copy;
     }

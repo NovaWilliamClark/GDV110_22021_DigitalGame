@@ -13,6 +13,7 @@ using System.Linq;
 using AI;
 using Audio;
 using Character;
+using Core;
 using Core.SceneManager;
 using DG.Tweening;
 using Objects;
@@ -65,6 +66,7 @@ public class LevelController : MonoBehaviour
     {
         if (SpawnManager.Instance.PlayerDied)
         {
+            SpawnManager.Instance.DoSpawn();
             currentLevelData = SpawnManager.Instance.CurrentSpawnPoint.LevelDataAtSpawn;
         }
         else
@@ -139,7 +141,7 @@ public class LevelController : MonoBehaviour
             var container = po.GetComponent<ContainerInventory>();
 
             // TODO: Make SM01 and other mobs inherit from same base class
-            var mob = po.GetComponent<SM01>();
+            var mob = po.GetComponent<Enemy>();
 
             #region Set States
             // Level is already initialized: get the object state depending on the MonoBehaviour type
@@ -279,6 +281,7 @@ public class LevelController : MonoBehaviour
                 //playerDataRef.spawnPoint.Set(po.Id, SceneManager.GetActiveScene().name);
         }
         currentLevelData.persistentObjectData.SetObjectState(po,state);
+        //SpawnManager.Instance.SetCurrentLevelData(SceneManager.GetActiveScene().name, currentLevelData);
     }
 
     private void InitPlayer()
@@ -294,10 +297,11 @@ public class LevelController : MonoBehaviour
         var existingPlayer = FindObjectOfType<CharacterController>();
         if (existingPlayer)
             Destroy(existingPlayer.gameObject);
-        
+        var spawnMan = SpawnManager.Instance;
+
         // set up spawn
         var tmi = TransitionManager.Instance;
-        if (tmi.isChangingScenes)
+        if (tmi.isChangingScenes && tmi.previousScene != "MainMenu" && !spawnMan.PlayerDied)
         {
             tmi.isChangingScenes = false;
             foreach (var sceneTransition in FindObjectsOfType<SceneTransition>())
@@ -319,9 +323,7 @@ public class LevelController : MonoBehaviour
                 Debug.LogWarningFormat("Changing scene set but cannot find spawn location");
             }
         }
-
-        var spawnMan = SpawnManager.Instance;
-
+        
         instancedPlayer = Instantiate(playerPrefab).GetComponent<CharacterController>();
         instancedPlayer.Init(spawnMan.GetPlayerData());
         

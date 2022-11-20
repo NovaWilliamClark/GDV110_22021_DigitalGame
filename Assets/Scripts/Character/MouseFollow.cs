@@ -17,16 +17,18 @@ public class MouseFollow : MonoBehaviour
     [SerializeField] private Vector2 rightPosOffset;
 
     [SerializeField] private GameObject handPosition;
+
+    public void Init(PlayerData_SO data, CharacterController player)
+    {
+        playerData = data;
+        characterController = player;
+    }
+    
     private void Awake()
     {
         flashlightVisualRenderer = flashlightVisual.GetComponentInChildren<SpriteRenderer>();
     }
 
-    private void Start()
-    {
-        characterController = player.GetComponent<CharacterController>();
-    }
-    
     private void FixedUpdate()
     {
         if (playerData.flashlightAvailable && playerData.CurrentBattery > 0)

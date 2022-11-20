@@ -6,7 +6,7 @@ using UnityEngine.Rendering.UI;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(BoxCollider2D))]
-public class Crawler : MonoBehaviour, ILightResponder
+public class Crawler : Enemy, ILightResponder
 {
     private enum State
     {
@@ -38,13 +38,19 @@ public class Crawler : MonoBehaviour, ILightResponder
     private bool patrolPointReached = false;
     private bool isInLight = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         renderer = GetComponent<SpriteRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
         rigidbody.bodyType = RigidbodyType2D.Kinematic;
         var lc = FindObjectOfType<LevelController>();
         lc.PlayerSpawned.AddListener(OnPlayerLoaded);
+    }
+
+    public override void SetEnemyState(EnemyLevelState data)
+    {
+        gameObject.SetActive(data.active);
     }
 
     private void Start()

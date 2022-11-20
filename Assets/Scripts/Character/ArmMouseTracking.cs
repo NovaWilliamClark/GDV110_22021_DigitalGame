@@ -15,12 +15,13 @@ public class ArmMouseTracking : MonoBehaviour
     
     
     private CharacterController cc;
-    
-    void Start()
+
+    public void Init(PlayerData_SO data, CharacterController player)
     {
-        cc = GetComponentInParent<CharacterController>();
+        playerData = data;
+        cc = player;
     }
-    
+
     public void FixedUpdate()
     {
         if (playerData.flashlightAvailable && playerData.CurrentBattery > 0)
