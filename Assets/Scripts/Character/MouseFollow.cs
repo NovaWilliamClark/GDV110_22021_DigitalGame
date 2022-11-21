@@ -19,6 +19,7 @@ public class MouseFollow : MonoBehaviour
     [SerializeField] private Vector2 rightPosOffset;
 
     [SerializeField] private GameObject handPosition;
+    [SerializeField] private SpriteRenderer handSprite;
 
     private Vector3 flashlightRendererStartPos;
     
@@ -38,6 +39,7 @@ public class MouseFollow : MonoBehaviour
     {
         if (flashlightVisual)
         {
+            flashlightVisualRenderer.sortingOrder = handSprite.sortingOrder - 1;
             if (!playerData.equipmentState.flashlightIsOn)
             {
                 flashlightVisual.transform.position = handPosition.transform.position;

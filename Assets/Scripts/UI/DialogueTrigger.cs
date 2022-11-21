@@ -14,9 +14,24 @@ public class DialogueTrigger : InteractionPoint
 
     private WorldDialogue box;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        canInteract = false;
+        levelController.PlayerSpawned.AddListener(OnPlayerSpawned);
+    }
+
+    private void OnPlayerSpawned(CharacterController cc)
+    {
+        playerRef = cc;
+        canInteract = true;
+        levelController.PlayerSpawned.RemoveListener(OnPlayerSpawned);
+    }
+
     protected override void OnTriggerExit2D(Collider2D collision)
     {
         base.OnTriggerExit2D(collision);
+        if (!hasItem) return;
         if (collision.GameObject().CompareTag("Player"))
         {
             box.End();
@@ -31,6 +46,15 @@ public class DialogueTrigger : InteractionPoint
 
     protected override void Interact(CharacterController cc)
     {
+        if (requiresItem)
+        {
+            hasItem = cc.GetInventory.HasItem(requiredItem);
+            if (!hasItem)
+            {
+                hasInteracted = false;
+                return;
+            }
+        }
         if (!hasStarted)
         {
             hasStarted = true;

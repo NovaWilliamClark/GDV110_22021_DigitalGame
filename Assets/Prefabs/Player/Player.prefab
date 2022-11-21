@@ -782,7 +782,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1539437121
   m_SortingLayer: 2
-  m_SortingOrder: 1500
+  m_SortingOrder: 431
   m_Sprite: {fileID: -2872683274950231908, guid: cd8282e17ab8a4d1385aef4a00b39037, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -932,6 +932,7 @@ MonoBehaviour:
   leftPosOffset: {x: -1.48, y: 0.12}
   rightPosOffset: {x: 0, y: 0}
   handPosition: {fileID: 4141109182512862636}
+  handSprite: {fileID: 8868327500329839936}
 --- !u!114 &2945340190018329994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3875,6 +3876,11 @@ Transform:
 --- !u!4 &8611446391345997903 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2671991546363575973, guid: bbf3e33666e864a9e9825ed19f13e484, type: 3}
+  m_PrefabInstance: {fileID: 5951175926747731690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &8868327500329839936 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2991641506552183722, guid: bbf3e33666e864a9e9825ed19f13e484, type: 3}
   m_PrefabInstance: {fileID: 5951175926747731690}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6582414503712612479

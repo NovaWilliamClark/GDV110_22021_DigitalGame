@@ -33,4 +33,10 @@ public class ItemRequirementTrigger : GenericObject
             RequirementSatisfied?.Invoke();
         }
     }
+
+    public override void SetPersistentState(GenericState state)
+    {
+        RequirementSatisfied.Invoke();
+        base.SetPersistentState(state);
+    }
 }
