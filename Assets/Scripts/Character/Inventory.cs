@@ -62,6 +62,7 @@ namespace Character
         private InventorySlot lastClickedSlot;
         private InventorySlot reloadableClicked;
         private bool isOpen;
+        public bool IsOpen => isOpen;
 
         [Serializable]
         private struct inventoryAnimation

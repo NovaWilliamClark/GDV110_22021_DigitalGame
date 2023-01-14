@@ -21,7 +21,7 @@ public class AudioMenu : MonoBehaviour
         masterSlider.value = Mathf.Pow(10, masterVolume/20);
         AudioManager.Instance.MainAudioMixer.GetFloat("BGMVolume", out var bgmVolume);
         bgmSlider.value = Mathf.Pow(10, bgmVolume/20);
-        AudioManager.Instance.MainAudioMixer.GetFloat("SFXVolume", out var sfxVolume);
+        AudioManager.Instance.MainAudioMixer.GetFloat("FXVolume", out var sfxVolume);
         fxSlider.value = Mathf.Pow(10, sfxVolume/20);
     }
 

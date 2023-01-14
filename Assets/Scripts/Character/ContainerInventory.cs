@@ -23,6 +23,10 @@ public class ContainerInventory : MonoBehaviour
 
     [HideInInspector] public UnityEvent<ContainerInventory, ItemContainerState> ContainerStateChanged;
     public UnityEvent<bool> ContainerClosed;
+
+    private bool inventoryInitialized = false;
+    public bool Emptied => inventoryItems.AllItemsTaken;
+    [HideInInspector] public UnityEvent Ready;
  
     private void Awake()
     {
@@ -30,6 +34,16 @@ public class ContainerInventory : MonoBehaviour
         
         levelController = FindObjectOfType<LevelController>();
         levelController.LevelInitialized.AddListener(OnLevelInitialized);
+    }
+
+    private void Start()
+    {
+        if (!inventoryInitialized)
+        {
+            inventoryInitialized = true;
+            inventoryItems.Init();
+            Ready?.Invoke();
+        }
     }
 
     private void OnLevelInitialized()
@@ -49,11 +63,6 @@ public class ContainerInventory : MonoBehaviour
     public void Init(CharacterController cc, UnityAction closedCallback = null)
     {
         player = cc;
-        if (!accessed)
-        {
-            inventoryItems.Init();
-            accessed = true;
-        }
         container.gameObject.SetActive(true);
         container.Closed.AddListener(OnContainerUIClosed);
         container.ItemClicked.AddListener(TakeItem);
@@ -64,7 +73,15 @@ public class ContainerInventory : MonoBehaviour
     {
         container.gameObject.SetActive(false);
         ContainerClosed?.Invoke(inventoryItems.AllItemsTaken);
+        container.ItemClicked.RemoveListener(TakeItem);
+        container.Closed.RemoveListener(OnContainerUIClosed);
         ContainerStateChanged?.Invoke(this, new ItemContainerState(persistentObject.Id) {items = inventoryItems.ItemsTaken.ToList()});
+    }
+
+    private void OnDisable()
+    {
+        container.ItemClicked.RemoveListener(TakeItem);
+        container.Closed.RemoveListener(OnContainerUIClosed);
     }
 
     public void SpawnItems()
@@ -83,6 +100,8 @@ public class ContainerInventory : MonoBehaviour
         {
             inventoryItems.SetToTaken(item);
         }
-        accessed = true;
+
+        inventoryInitialized = true;
+        Ready?.Invoke();
     }
 }

@@ -64,21 +64,6 @@ public class UIContainer : MonoBehaviour
             itemsContained.Add(uiSlot);
             slot.anchoredPosition = GetRandomPosition(activeRect, rect);
             var containerSlot = slot.GetComponent<UIContainerSlot>();
-            // for (var index = 0; index < itemsContained.Count; index++)
-            // {
-            //     var other = itemsContained[index];
-            //     if (other != containerSlot)
-            //     {
-            //         var otherRect = other.GetComponent<RectTransform>();
-            //     
-            //         if (otherRect.rect.Overlaps(rect))
-            //         {
-            //             slot.anchoredPosition = GetRandomPosition(activeRect, rect); 
-            //             index -= 1;
-            //         }
-            //         
-            //     }
-            // }
         }
         if (taken.Count > 0)
             taken.Clear();
@@ -121,4 +106,6 @@ public class UIContainer : MonoBehaviour
             Closed?.Invoke();
         });
     }
+    
+    
 }

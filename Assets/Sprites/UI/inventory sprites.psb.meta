@@ -90,6 +90,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 0, y: 0}
+    spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
   - name: fuse1
@@ -128,6 +129,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 739, y: 721}
+    spritePosition: {x: 0, y: 0}
   - name: fuse2
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -149,6 +151,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: -717, y: 1505}
+    spritePosition: {x: 0, y: 0}
   - name: baggachips
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -170,6 +173,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: -91, y: 681}
+    spritePosition: {x: 0, y: 0}
   - name: flashlight
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -191,6 +195,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: -832, y: 523}
+    spritePosition: {x: 0, y: 0}
   - name: batteries
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -212,6 +217,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 15, y: 1320}
+    spritePosition: {x: 0, y: 0}
   - name: fuse3
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -232,7 +238,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 632, y: 541}
+    uvTransform: {x: 1465, y: 922}
+    spritePosition: {x: 833, y: 381}
   - name: key
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -254,6 +261,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 93, y: 1390}
+    spritePosition: {x: 0, y: 0}
   - name: sockeyhand
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -275,6 +283,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 922}
+    spritePosition: {x: 0, y: 0}
   - name: randomitem
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -296,6 +305,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 718, y: 1174}
+    spritePosition: {x: 0, y: 0}
   - name: randomitem
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -317,6 +327,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: -910, y: 1622}
+    spritePosition: {x: 0, y: 0}
   - name: inventory_bg
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -338,6 +349,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 0, y: 0}
   characterData:
     bones: []
     parts: []

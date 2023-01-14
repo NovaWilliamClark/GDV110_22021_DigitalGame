@@ -73,8 +73,21 @@ public abstract class InteractionPoint : MonoBehaviour
      {
          triggerArea = GetComponent<BoxCollider2D>();
          levelController = FindObjectOfType<LevelController>();
+
+         if (triggerArea)
+         {
+             triggerArea.isTrigger = true;
+         }
+
+         InitVisuals();
+         
+         persistentObject = GetComponent<PersistentObject>();
+     }
+
+     protected void InitVisuals()
+     {
          if (!renderer)
-            renderer = GetComponent<SpriteRenderer>();
+             renderer = GetComponent<SpriteRenderer>();
          if (renderer && showVisuals)
          {
              var rend = new GameObject("Sprite Outline");
@@ -94,12 +107,6 @@ public abstract class InteractionPoint : MonoBehaviour
              glowRenderer.material.SetFloat("_varTime", 0f);
              
          }
-         if (triggerArea)
-         {
-             triggerArea.isTrigger = true;
-         }
-
-         persistentObject = GetComponent<PersistentObject>();
      }
 
      protected virtual void Start()
@@ -177,10 +184,15 @@ public abstract class InteractionPoint : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!renderer) return;
+        if (showVisuals)
+        {
+            PerformVisuals();
+        }
+    }
 
-        if (!showVisuals) return;
-        
+    protected virtual void PerformVisuals()
+    {
+        if (!renderer) return;
         if (!canInteract || !playerInRange)
         {
             if (!tweening && outlineActive)
@@ -212,7 +224,6 @@ public abstract class InteractionPoint : MonoBehaviour
                 visualSequence.Play();
             }
         }
-        
     }
 
     protected virtual void FixedUpdate()

@@ -90,6 +90,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 0, y: 0}
+    spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
   - name: Dummy Waiter Outside
@@ -112,7 +113,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -47, y: -36}
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 51, y: 40}
   - name: Knob
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -133,7 +135,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 2961, y: -205}
+    uvTransform: {x: 3670, y: 4}
+    spritePosition: {x: 709, y: 209}
   - name: Door
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -154,7 +157,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 2357, y: -187}
+    uvTransform: {x: 2529, y: 4}
+    spritePosition: {x: 172, y: 191}
   - name: Graident Mask
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -175,7 +179,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 1969, y: 761}
+    uvTransform: {x: 2158, y: 1062}
+    spritePosition: {x: 189, y: 301}
   - name: Overlay Multiply
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -196,7 +201,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 893, y: 871}
+    uvTransform: {x: 1082, y: 1062}
+    spritePosition: {x: 189, y: 191}
   - name: DWButton_01
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -217,7 +223,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 1225, y: -82}
+    uvTransform: {x: 1375, y: 4}
+    spritePosition: {x: 150, y: 86}
   - name: Backwall
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -238,7 +245,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: -203, y: 839}
+    uvTransform: {x: 4, y: 1062}
+    spritePosition: {x: 207, y: 223}
   characterData:
     bones: []
     parts: []

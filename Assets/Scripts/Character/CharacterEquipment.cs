@@ -76,6 +76,10 @@ public class CharacterEquipment : MonoBehaviour
         {
             FlashlightVisual.SetActive(true);
         }
+        else
+        {
+            FlashlightVisual.SetActive(false);
+        }
         if (data.equipmentState.flashlightIsOn)
         {
             ToggleFlashlight(true);

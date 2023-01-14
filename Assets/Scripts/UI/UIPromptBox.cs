@@ -23,6 +23,8 @@ public class UIPromptBox : MonoBehaviour
     [SerializeField] private Vector2 endPosition;
     [SerializeField] private Vector2 startPosition;
 
+    public bool IsVisible => canvasGroup.alpha > 0;
+
     public bool isAnimating;
     
     private void Awake()

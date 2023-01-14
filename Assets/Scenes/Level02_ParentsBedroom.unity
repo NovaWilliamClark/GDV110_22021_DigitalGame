@@ -622,6 +622,9 @@ MonoBehaviour:
   ContainerClosed:
     m_PersistentCalls:
       m_Calls: []
+  Ready:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &100079332
 GameObject:
   m_ObjectHideFlags: 0
@@ -3160,6 +3163,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ContainerClosed:
+    m_PersistentCalls:
+      m_Calls: []
+  Ready:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &763700665

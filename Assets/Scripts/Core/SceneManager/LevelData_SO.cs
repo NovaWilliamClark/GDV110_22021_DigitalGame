@@ -196,7 +196,7 @@ public class GenericState : PersistentObjectState
 [Serializable]
 public class ItemContainerState : PersistentObjectState
 {
-    public List<ItemData> items = new List<ItemData>();
+    public List<ItemData> items = new();
 
     public ItemContainerState(string id) : base(id) {}
 
@@ -248,14 +248,38 @@ public class BreakerState : InteractionState
     {
     }
 
+    public BreakerState(BreakerState original) : base(original)
+    {
+        id = original.id;
+        opened = original.opened;
+        usedFuseCircle = original.usedFuseCircle;
+        usedFuseSquare = original.usedFuseSquare;
+        usedFuseTriangle = original.usedFuseTriangle;
+    }
+
     public override object Clone()
     {
-        return new BreakerState(id)
-        {
-            opened = opened, 
-            usedFuseCircle = usedFuseCircle, 
-            usedFuseSquare = usedFuseSquare,
-            usedFuseTriangle = usedFuseTriangle
-        };
+        return new BreakerState(this);
+    }
+}
+
+[Serializable]
+public class MoveableState : InteractionState
+{
+    public Vector3 position;
+
+    public MoveableState(string id) : base(id) {}
+
+    public MoveableState(MoveableState original) : base(original)
+    {
+        id = original.id;
+        position.x = original.position.x;
+        position.y = original.position.y;
+        position.z = original.position.z;
+    }
+
+    public override object Clone()
+    {
+        return new MoveableState(this);
     }
 }

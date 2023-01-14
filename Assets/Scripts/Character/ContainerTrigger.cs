@@ -10,7 +10,22 @@ public class ContainerTrigger : InteractionPoint
     [SerializeField] private string missingItemMessage;
 
     protected bool containerEmptied = false;
-    
+
+    protected override void Awake()
+    {
+        base.Awake();
+        containerInventory.Ready.AddListener(OnContainerInventoryReady);
+    }
+
+    private void OnContainerInventoryReady()
+    {
+        if (containerInventory.Emptied)
+        {
+            containerEmptied = true;
+        }
+        containerInventory.Ready.RemoveListener(OnContainerInventoryReady);
+    }
+
     protected override void Interact(CharacterController cc)
     {
         if (containerEmptied) return;
@@ -91,6 +106,7 @@ public class ContainerTrigger : InteractionPoint
     protected override void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+        if (containerEmptied) return;
         if (!automaticInteraction)
         {
             if(!other.GetComponent<CharacterController>()) return;

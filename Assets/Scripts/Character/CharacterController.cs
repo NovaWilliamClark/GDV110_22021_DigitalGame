@@ -69,6 +69,7 @@ public class CharacterController : MonoBehaviour
     [Header("Flashlight")]
     private CharacterSanity characterSanity;
     private PlayerInput input;
+    public PlayerInput Input => input;
 
     [Header("Animation")]
     private int animatorMoveSpeed;
@@ -76,8 +77,12 @@ public class CharacterController : MonoBehaviour
 
     [Header("Push & Pull")]
     public bool isMovingObject;
+
+    public MovableObject movableObject;
     private float movementAcceleration;
     private bool flashlightWasOn;
+    private bool falling;
+    public bool IsFalling => falling;
 
     private bool CanMove { get; set; }
 
@@ -96,11 +101,27 @@ public class CharacterController : MonoBehaviour
 
         input = new PlayerInput();
         input.Enable();
+        input.Player.OpenInventory.performed += OnInventoryInput;
 
         characterSanity = this.GetComponent<CharacterSanity>();
         characterSanity.SanityReachedZero.AddListener(PerformDeath); 
     
         CanMove = true;
+    }
+
+    private void OnInventoryInput(InputAction.CallbackContext obj)
+    {
+        if (playerData.equipmentState.hasBag)
+        {
+            if (!inventory.IsOpen)
+            {
+                inventory.OpenInventory();
+            }
+            else
+            {
+                inventory.CloseInventory();
+            }
+        }
     }
 
     private void Update()
@@ -128,15 +149,7 @@ public class CharacterController : MonoBehaviour
         }
 
         movementInput = new Vector2(moveHorizontal, 0);
-
-        //Interaction
-        if (Input.GetButtonDown("Inventory") && playerData.equipmentState.hasBag)
-        {
-            ShowInventory();
-        }
         
-
-
         UpdateDirection();
     }
 
@@ -150,6 +163,7 @@ public class CharacterController : MonoBehaviour
     private void UpdateGrounding()
     {
         animator.SetFloat("Velocity_Y", Mathf.Abs(controllerRigidBody.velocity.y));
+        falling = Mathf.Abs(controllerRigidBody.velocity.y) > 0.5f;
     }
 
     private void UpdateVelocity()
@@ -263,10 +277,6 @@ public class CharacterController : MonoBehaviour
         equipment.ToggleFlashlight(false);
     }
 
-    private void ShowInventory()
-    {
-        GetInventory.OpenInventory();
-    }
     public void AddToInventory(ItemData itemData)
     {
         GetInventory.AddToInventory(itemData);

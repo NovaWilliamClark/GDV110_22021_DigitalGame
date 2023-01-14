@@ -73,6 +73,10 @@ public class UIBatteryIndicator : MonoBehaviour
         playerData.BatteryValueChanged.AddListener(OnBatteryValueChanged);
         var val = playerData.CurrentBattery / playerData.MaxBattery;
         fillable.fillAmount = val;
+        if (!playerData.equipmentState.flashlightEquipped)
+        {
+            Hide();
+        }
     }
 
     public void Show(bool firstRun = true)
